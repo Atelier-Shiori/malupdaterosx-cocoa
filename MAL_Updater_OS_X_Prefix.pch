@@ -1,0 +1,7 @@
+//
+// Prefix header for all source files of the 'MAL Updater OS X' target in the 'MAL Updater OS X' project
+//
+
+#ifdef __OBJC__
+    #import <Cocoa/Cocoa.h>
+#endif
