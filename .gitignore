@@ -290,3 +290,8 @@ build/MAL Updater OS X.build/MAL Updater OS X.pbxindex/subclasses.pbxbtree
 build/MAL Updater OS X.build/MAL Updater OS X.pbxindex/symbols0.pbxsymbols
 MAL Updater OS X.xcodeproj/tohnominagi.pbxuser
 MAL Updater OS X.xcodeproj/tohnominagi.perspectivev3
+build/Debug/MAL Updater OS X.app/Contents/Resources/Preferences.nib
+build/MAL Updater OS X.build/Debug/MAL Updater OS X.build/Objects-normal/i386/Base64Category.o
+build/MAL Updater OS X.build/Debug/MAL Updater OS X.build/Objects-normal/i386/MyAnimeList.o
+build/MAL Updater OS X.build/Debug/MAL Updater OS X.build/Objects-normal/i386/PreferenceController.o
+build/MAL Updater OS X.build/Debug/MAL Updater OS X.build/Objects-normal/i386/base64.o

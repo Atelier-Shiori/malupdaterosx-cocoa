@@ -8,13 +8,16 @@
 
 #import <Cocoa/Cocoa.h>
 
+@class PreferenceController;
 @interface MAL_Updater_OS_XAppDelegate : NSObject {
     NSWindow *window;
 	IBOutlet NSMenu *statusMenu;
     NSStatusItem                *statusItem;
     NSImage                        *statusImage;
     NSImage                        *statusHighlightImage;
+	PreferenceController * preferenceController;
 }
-
 @property (assign) IBOutlet NSWindow *window;
+-(void)showPreferences:(id)sender;
+-(IBAction)togglescrobblewindow:(id)sender;
 @end

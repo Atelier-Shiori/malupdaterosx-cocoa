@@ -7,10 +7,24 @@
 //
 
 #import "MAL_Updater_OS_XAppDelegate.h"
+#import "PreferenceController.h"
 
 @implementation MAL_Updater_OS_XAppDelegate
 
 @synthesize window;
++ (void)initialize
+{
+	//Create a Dictionary
+	NSMutableDictionary * defaultValues = [NSMutableDictionary dictionary];
+	
+	// Defaults
+	[defaultValues setObject:@"" forKey:@"Base64Token"];
+	[defaultValues setObject:[NSNumber numberWithInt:0] forKey:@"PlayerSel"];
+	//Register Dictionary
+	[[NSUserDefaults standardUserDefaults]
+	 registerDefaults:defaultValues];
+	
+}
 - (void) awakeFromNib{
     
     //Create the NSStatusBar and set its length
@@ -35,7 +49,37 @@
     [statusItem setHighlightMode:YES];
 }
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
-	// Insert code here to initialize your application 
+	// Insert code here to initialize your application
+	// Hide Window
+	[window orderOut:self];
 }
-
+-(void)showPreferences:(id)sender
+{
+	//Is preferenceController nil?
+	if (!preferenceController) {
+		preferenceController = [[PreferenceController alloc] init];
+	}
+	[preferenceController showWindow:self];
+}
+- (void) dealloc {
+    //Releases the 2 images we loaded into memory
+    [statusImage release];
+    [statusHighlightImage release];
+	[window release];
+	if (!preferenceController) {
+	}
+	else {
+		[preferenceController release];
+	}
+	
+    [super dealloc];
+}
+-(IBAction)togglescrobblewindow:(id)sender
+{
+	if ([window isVisible]) { 
+		[window orderOut:self]; 
+	} else { 
+		[window makeKeyAndOrderFront:self]; 
+	} 
+}
 @end
