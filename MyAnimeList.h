@@ -16,6 +16,8 @@
 	NSString * LastScrobbledEpisode;
 	NSString * DetectedTitle;
 	NSString * DetectedEpisode;
+	NSString * DetectedCurrentEpisode;
+	NSString * TotalEpisodes;
 	BOOL * Success;
 	NSTimer * timer;
 	IBOutlet NSMenuItem * togglescrobbler;
@@ -27,5 +29,8 @@
 -(void)firetimer:(NSTimer *)aTimer;
 -(BOOL)detectmedia;
 -(NSString *)searchanime;
--(NSString *)RegExSearchTitle:(NSString *)ResponseData;
+-(NSString *)regexsearchtitle:(NSString *)ResponseData;
+-(BOOL)checkstatus:(NSString *)AniID;
+-(BOOL)updatetitle:(NSString *)AniID;
+-(BOOL)addtitle:(NSString *)AniID;
 @end

@@ -8,12 +8,13 @@
 
 #import "MyAnimeList.h"
 #import "ASIHTTPRequest.h"
+#import "ASIFormDataRequest.h"
 
 @implementation MyAnimeList
 - (IBAction)toggletimer:(id)sender {
 	if (timer == nil) {
 		//Create Timer
-		timer = [[NSTimer scheduledTimerWithTimeInterval:60
+		timer = [[NSTimer scheduledTimerWithTimeInterval:30
 												  target:self
 												selector:@selector(firetimer:)
 												userInfo:nil
@@ -48,17 +49,39 @@
 }
 - (void)firetimer:(NSTimer *)aTimer {
 	if ([self detectmedia] == 1) {
+		[ScrobblerStatus setObjectValue:@"Scrobble Status: Scrobbling..."];
 		NSLog(@"Detected : %@ - %@", DetectedTitle, DetectedEpisode);
-		[DetectedTitle release];
-		[DetectedEpisode release];
-		NSString * AniID = [self searchanime];
+		NSString * AniID;
+		AniID = [self searchanime];
 		NSLog(@"%@",AniID);
 		if (AniID.length > 0) {
 			// Check Status and Update
-			
+			BOOL * UpdateBool = [self checkstatus:AniID];
+			if (UpdateBool == 1) {
+			switch ([DetectedCurrentEpisode intValue]) {
+				case 0:
+					// Add Title
+					Success = [self addtitle:AniID];
+					break;
+				default:
+					// Update Title as Usual
+					Success = [self updatetitle:AniID];
+					break;
+			}
+				//Retain Scrobbled Title and Episode
+				[LastScrobbledTitle retain];
+				[LastScrobbledEpisode retain];
+			}
 		}
-		[AniID release];
+		else {
+			// Not Successful
+			[ScrobblerStatus setObjectValue:@"Scrobble Status: Scrobbled Failed. Retrying in 5 mins..."];
+			Success = NO;
+		}
+		[DetectedTitle release];
+		[DetectedEpisode release];
 	}
+
 
 }
 -(NSString *)searchanime{
@@ -87,17 +110,13 @@
 	int statusCode = [request responseStatusCode];
 			NSString *response = [request responseString];
 	if (statusCode == 200 ) {
-		return [self RegExSearchTitle:response];
-		//release
-		response = nil;
+		return [self regexsearchtitle:response];
 	}
 	else {
+		Success = NO;
+		[ScrobblerStatus setObjectValue:@"Scrobble Status: Scrobbled Failed. Retrying in 5 mins..."];
 		return @"";
 	}
-
-	//release
-	request = nil;
-	url = nil;
 	
 }
 -(BOOL)detectmedia {
@@ -191,36 +210,163 @@
 		//release
 		regex = nil;
 		enumerator = nil;
-		// Set Status
-		[DetectedTitle retain];
-		[DetectedEpisode retain];
+		// Check if the title was previously scrobbled
+		if ([DetectedTitle isEqualToString:LastScrobbledTitle] && [DetectedEpisode isEqualToString: LastScrobbledEpisode] && Success == 1) {
+			// Do Nothing
+			[ScrobblerStatus setObjectValue:@"Scrobble Status: Same Episode Playing, Scrobble not needed."];
+			[LastScrobbled setObjectValue:[NSString stringWithFormat:@"Last Scrobbled: %@ - %@",DetectedTitle,DetectedEpisode]];
+			[DetectedTitle release];
+			[DetectedEpisode release];
+			return NO;
+		}
+		else {
+			// Not Scrobbled Yet or Unsuccessful
+			[DetectedTitle retain];
+			[DetectedEpisode retain];
 		return YES;
+		}
 	}
 	else {
+		// Nothing detected
 		return NO;
 	}
-	string = nil;
-	
-	
 }
--(NSString *)RegExSearchTitle:(NSString *)ResponseData {
+-(NSString *)regexsearchtitle:(NSString *)ResponseData {
 	OGRegularExpressionMatch    *match;
 	OGRegularExpression    *regex;
-	//Get the filename first
-	regex = [OGRegularExpression regularExpressionWithString:DetectedTitle];
+	//Set Detected Anime Title
+	regex = [OGRegularExpression regularExpressionWithString:[NSString stringWithFormat:@"^%@$",DetectedTitle]];
 	NSEnumerator    *enumerator;
+	// Initalize JSON parser
 	SBJsonParser *parser = [[SBJsonParser alloc] init];
 	NSArray *searchdata = [parser objectWithString:ResponseData error:nil];
+	NSString *titleid;
 	for (id obj in searchdata) {
 		// Look in every RegEx Entry until the extact title is found.
 		enumerator = [regex matchEnumeratorInString:[obj objectForKey:@"title"]];
 		while ((match = [enumerator nextObject]) != nil) {
-			// Return the AniID for the matched title
-			return [obj objectForKey:@"id"];
+			titleid = [NSString stringWithFormat:@"%@" ,[obj objectForKey:@"id"]];
 		}
 	}
 	// Nothing Found, return nothing
-	return @"";
+	return titleid;
 }
+-(BOOL)checkstatus:(NSString *)AniID {
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	//Set Search API
+	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://mal-api.com/anime/%@?mine=1",AniID]];
+	ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
+	//Ignore Cookies
+	[request setUseCookiePersistence:NO];
+	//Set Token
+	[request addRequestHeader:@"Authorization" value:[NSString stringWithFormat:@"Basic %@",[defaults objectForKey:@"Base64Token"]]];
+	//Perform Search
+	[request startSynchronous];
+	// Get Status Code
+	int statusCode = [request responseStatusCode];
+	NSString *response = [request responseString];
+	if (statusCode == 200 ) {
+		NSLog(@"%@", response);
+		// Initalize JSON parser
+		NSDictionary *animeinfo = [response JSONValue];
+		TotalEpisodes = [animeinfo objectForKey:@"episodes"];
+		DetectedCurrentEpisode = [animeinfo objectForKey:@"watched_episodes"];
+		// Makes sure the values don't get released
+		[TotalEpisodes retain];
+		[DetectedCurrentEpisode retain];
+		return YES;
+	}
+	else {
+		// Some Error. Abort
+		[ScrobblerStatus setObjectValue:@"Scrobble Status: Scrobbled Failed. Retrying in 5 mins..."];
+		return NO;
+	}
+	//Should never happen, but...
+	return NO;
+}
+-(BOOL)updatetitle:(NSString *)AniID {
+	if ([DetectedEpisode intValue] == [DetectedCurrentEpisode intValue] ) {
+		// Already Watched, no need to scrobble
+		[ScrobblerStatus setObjectValue:@"Scrobble Status: Same Episode Playing, Scrobble not needed."];
+		[LastScrobbled setObjectValue:[NSString stringWithFormat:@"Last Scrobbled: %@ - %@",DetectedTitle,DetectedEpisode]];
+		return YES;
+	}
+	else {
+		// Update the title
+		NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+		//Set library/scrobble API
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://mal-api.com/animelist/anime/%@",AniID]];
+		ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+		//Ignore Cookies
+		[request setUseCookiePersistence:NO];
+		//Set Token
+		[request addRequestHeader:@"Authorization" value:[NSString stringWithFormat:@"Basic %@",[defaults objectForKey:@"Base64Token"]]];
+	    [request setPostValue:@"PUT" forKey:@"_method"];
+	    [request setPostValue:DetectedEpisode forKey:@"episodes"];
+		//Set Status
+		if ([DetectedEpisode intValue] == [TotalEpisodes intValue]) {
+			// Since Detected Episode = Total Episode, set the status as "Complete"
+			[request setPostValue:@"completed" forKey:@"status"];
+		}
+		else {
+			// Still Watching
+			[request setPostValue:@"watching" forKey:@"status"];
+		}	
+		// Do Update
+		[request startSynchronous];
+		
+		// Store Scrobbled Title and Episode
+		LastScrobbledTitle = DetectedTitle;
+		LastScrobbledEpisode = DetectedEpisode;
+		
+		switch ([request responseStatusCode]) {
+			case 200:
+				// Update Successful
+				[ScrobblerStatus setObjectValue:@"Scrobble Status: Scrobble Successful..."];
+				[LastScrobbled setObjectValue:[NSString stringWithFormat:@"Last Scrobbled: %@ - %@",DetectedTitle,DetectedEpisode]];
+				return YES;
+				break;
+			default:
+				// Update Unsuccessful
+				[ScrobblerStatus setObjectValue:@"Scrobble Status: Scrobbled Failed. Retrying in 5 mins..."];
+				return NO;
+				break;
+		}
 
+	}
+}
+-(BOOL)addtitle:(NSString *)AniID {
+	// Add the title
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	//Set library/scrobble API
+	NSURL *url = [NSURL URLWithString:@"http://mal-api.com/animelist/anime"];
+	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+	//Ignore Cookies
+	[request setUseCookiePersistence:NO];
+	//Set Token
+	[request addRequestHeader:@"Authorization" value:[NSString stringWithFormat:@"Basic %@",[defaults objectForKey:@"Base64Token"]]];
+	[request setPostValue:AniID forKey:@"anime_id"];
+	[request setPostValue:DetectedEpisode forKey:@"episodes"];
+	[request setPostValue:@"watching" forKey:@"status"];	
+	// Do Update
+	[request startSynchronous];
+
+	// Store Scrobbled Title and Episode
+	LastScrobbledTitle = DetectedTitle;
+	LastScrobbledEpisode = DetectedEpisode;
+
+	switch ([request responseStatusCode]) {
+		case 200:
+			// Update Successful
+			[ScrobblerStatus setObjectValue:@"Scrobble Status: Title Added..."];
+			[LastScrobbled setObjectValue:[NSString stringWithFormat:@"Last Scrobbled: %@ - %@",DetectedTitle,DetectedEpisode]];
+			return YES;
+			break;
+		default:
+			// Update Unsuccessful
+			[ScrobblerStatus setObjectValue:@"Scrobble Status: Adding of Title Failed. Retrying in 5 mins..."];
+			return NO;
+			break;
+	}
+}
 @end
