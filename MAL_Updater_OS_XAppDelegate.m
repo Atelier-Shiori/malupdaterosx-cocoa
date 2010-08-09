@@ -35,8 +35,8 @@
     NSBundle *bundle = [NSBundle mainBundle];
     
     //Allocates and loads the images into the application which will be used for our NSStatusItem
-    statusImage = [[NSImage alloc] initWithContentsOfFile:[bundle pathForResource:@"malupdater" ofType:@"tiff"]];
-    statusHighlightImage = [[NSImage alloc] initWithContentsOfFile:[bundle pathForResource:@"malupdater" ofType:@"tiff"]];
+    statusImage = [[NSImage alloc] initWithContentsOfFile:[bundle pathForResource:@"SatusIcon" ofType:@"tiff"]];
+    statusHighlightImage = [[NSImage alloc] initWithContentsOfFile:[bundle pathForResource:@"SatusIcon" ofType:@"tiff"]];
     
     //Sets the images in our NSStatusItem
     [statusItem setImage:statusImage];
@@ -51,6 +51,17 @@
 }
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
 	// Insert code here to initialize your application
+	//Register Growl
+	NSBundle *myBundle = [NSBundle bundleForClass:[MAL_Updater_OS_XAppDelegate class]];
+	NSString *growlPath = [[myBundle privateFrameworksPath] stringByAppendingPathComponent:@"Growl.framework"];
+	NSBundle *growlBundle = [NSBundle bundleWithPath:growlPath];
+	if (growlBundle && [growlBundle load]) {
+		// Register ourselves as a Growl delegate
+		[GrowlApplicationBridge setGrowlDelegate:self];
+	}
+	else {
+		NSLog(@"ERROR: Could not load Growl.framework");
+	}
 	// Hide Window
 	[window orderOut:self];
 }

@@ -9,6 +9,7 @@
 #import "MyAnimeList.h"
 #import "ASIHTTPRequest.h"
 #import "ASIFormDataRequest.h"
+#import "MAL_Updater_OS_XAppDelegate.h"
 
 @implementation MyAnimeList
 - (IBAction)toggletimer:(id)sender {
@@ -21,13 +22,13 @@
 												 repeats:YES] retain];
 		[togglescrobbler setTitle:@"Stop Auto Scrobbling"];
 		[ScrobblerStatus setObjectValue:@"Scrobble Status: Started"];
-		//[GrowlApplicationBridge notifyWithTitle:@"MAL Updater OS X"
-		//							description:@"Auto Scrobble is now turned on."
-		//					   notificationName:@"Message"
-		//							   iconData:nil
-		//							   priority:0
-		//							   isSticky:NO
-		//						   clickContext:[NSDate date]];
+		[GrowlApplicationBridge notifyWithTitle:@"MAL Updater OS X"
+									description:@"Auto Scrobble is now turned on."
+							   notificationName:@"Message"
+									   iconData:nil
+									   priority:0
+									   isSticky:NO
+								   clickContext:[NSDate date]];
 	}
 	else {
 		//Stop Timer
@@ -37,23 +38,21 @@
 		timer = nil;
 		[togglescrobbler setTitle:@"Start Auto Scrobbling"];
 		[ScrobblerStatus setObjectValue:@"Scrobble Status: Stopped"];
-		//[GrowlApplicationBridge notifyWithTitle:@"MAL Updater OS X"
-		//							description:@"Auto Scrobble is now turned off."
-		//					   notificationName:@"Message"
-		//							   iconData:nil
-		//							   priority:0
-		//							   isSticky:NO
-		//						   clickContext:[NSDate date]];
+		[GrowlApplicationBridge notifyWithTitle:@"MAL Updater OS X"
+									description:@"Auto Scrobble is now turned off."
+							   notificationName:@"Message"
+									   iconData:nil
+									   priority:0
+									   isSticky:NO
+								   clickContext:[NSDate date]];
 	}
 	
 }
 - (void)firetimer:(NSTimer *)aTimer {
 	if ([self detectmedia] == 1) {
 		[ScrobblerStatus setObjectValue:@"Scrobble Status: Scrobbling..."];
-		NSLog(@"Detected : %@ - %@", DetectedTitle, DetectedEpisode);
 		NSString * AniID;
 		AniID = [self searchanime];
-		NSLog(@"%@",AniID);
 		if (AniID.length > 0) {
 			// Check Status and Update
 			BOOL * UpdateBool = [self checkstatus:AniID];
@@ -75,7 +74,14 @@
 		}
 		else {
 			// Not Successful
-			[ScrobblerStatus setObjectValue:@"Scrobble Status: Scrobbled Failed. Retrying in 5 mins..."];
+			[ScrobblerStatus setObjectValue:@"Scrobble Status: Scrobble Failed. Retrying in 5 mins..."];
+			[GrowlApplicationBridge notifyWithTitle:@"Scrobble Unsuccessful."
+										description:@"Retrying in 5 mins..."
+								   notificationName:@"Message"
+										   iconData:nil
+										   priority:0
+										   isSticky:NO
+									   clickContext:[NSDate date]];
 			Success = NO;
 		}
 		[DetectedTitle release];
@@ -96,7 +102,6 @@
 
 	//Set Search API
 	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://mal-api.com/anime/search?q=%@",searchterm]];
-	NSLog(@"%@",[NSString stringWithFormat:@"http://mal-api.com/anime/search?q=%@",searchterm]);
 	//Release searchterm
 	[searchterm release];
 	ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
@@ -114,7 +119,14 @@
 	}
 	else {
 		Success = NO;
-		[ScrobblerStatus setObjectValue:@"Scrobble Status: Scrobbled Failed. Retrying in 5 mins..."];
+		[ScrobblerStatus setObjectValue:@"Scrobble Status: Scrobble Failed. Retrying in 5 mins..."];
+		[GrowlApplicationBridge notifyWithTitle:@"Scrobble Unsuccessful."
+									description:@"Retrying in 5 mins..."
+							   notificationName:@"Message"
+									   iconData:nil
+									   priority:0
+									   isSticky:NO
+								   clickContext:[NSDate date]];
 		return @"";
 	}
 	
@@ -266,7 +278,6 @@
 	int statusCode = [request responseStatusCode];
 	NSString *response = [request responseString];
 	if (statusCode == 200 ) {
-		NSLog(@"%@", response);
 		// Initalize JSON parser
 		NSDictionary *animeinfo = [response JSONValue];
 		TotalEpisodes = [animeinfo objectForKey:@"episodes"];
@@ -278,7 +289,7 @@
 	}
 	else {
 		// Some Error. Abort
-		[ScrobblerStatus setObjectValue:@"Scrobble Status: Scrobbled Failed. Retrying in 5 mins..."];
+		[ScrobblerStatus setObjectValue:@"Scrobble Status: Scrobble Failed. Retrying in 5 mins..."];
 		return NO;
 	}
 	//Should never happen, but...
@@ -324,11 +335,25 @@
 				// Update Successful
 				[ScrobblerStatus setObjectValue:@"Scrobble Status: Scrobble Successful..."];
 				[LastScrobbled setObjectValue:[NSString stringWithFormat:@"Last Scrobbled: %@ - %@",DetectedTitle,DetectedEpisode]];
+				[GrowlApplicationBridge notifyWithTitle:@"Scrobble Successful."
+											description:[NSString stringWithFormat:@"%@ - %@",DetectedTitle,DetectedEpisode]
+									   notificationName:@"Message"
+											   iconData:nil
+											   priority:0
+											   isSticky:NO
+										   clickContext:[NSDate date]];
 				return YES;
 				break;
 			default:
 				// Update Unsuccessful
-				[ScrobblerStatus setObjectValue:@"Scrobble Status: Scrobbled Failed. Retrying in 5 mins..."];
+				[ScrobblerStatus setObjectValue:@"Scrobble Status: Scrobble Failed. Retrying in 5 mins..."];
+				[GrowlApplicationBridge notifyWithTitle:@"Scrobble Unsuccessful."
+											description:@"Retrying in 5 mins..."
+									   notificationName:@"Message"
+											   iconData:nil
+											   priority:0
+											   isSticky:NO
+										   clickContext:[NSDate date]];
 				return NO;
 				break;
 		}
@@ -360,11 +385,25 @@
 			// Update Successful
 			[ScrobblerStatus setObjectValue:@"Scrobble Status: Title Added..."];
 			[LastScrobbled setObjectValue:[NSString stringWithFormat:@"Last Scrobbled: %@ - %@",DetectedTitle,DetectedEpisode]];
+			[GrowlApplicationBridge notifyWithTitle:@"Adding of Title Successful."
+										description:[NSString stringWithFormat:@"%@ - %@",DetectedTitle,DetectedEpisode]
+								   notificationName:@"Message"
+										   iconData:nil
+										   priority:0
+										   isSticky:NO
+									   clickContext:[NSDate date]];
 			return YES;
 			break;
 		default:
 			// Update Unsuccessful
 			[ScrobblerStatus setObjectValue:@"Scrobble Status: Adding of Title Failed. Retrying in 5 mins..."];
+			[GrowlApplicationBridge notifyWithTitle:@"Adding of Title Unsuccessful."
+										description:@"Retrying in 5 mins..."
+								   notificationName:@"Message"
+										   iconData:nil
+										   priority:0
+										   isSticky:NO
+									   clickContext:[NSDate date]];
 			return NO;
 			break;
 	}

@@ -19,7 +19,6 @@
 		3A4C61CE120DF3BE0032F63A /* libz.1.2.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A4C61CD120DF3BE0032F63A /* libz.1.2.3.dylib */; };
 		3A4C61D4120DF3ED0032F63A /* OgreKit.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3A4C61D3120DF3ED0032F63A /* OgreKit.framework */; };
 		3A6AB311120F292500D51D2C /* PreferenceController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A6AB310120F292500D51D2C /* PreferenceController.m */; };
-		3A6AB333120F2A3300D51D2C /* Preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A6AB332120F2A3300D51D2C /* Preferences.xib */; };
 		3A6AB37F120F313E00D51D2C /* Base64Category.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A6AB37E120F313E00D51D2C /* Base64Category.m */; };
 		3A6AB38C120F327C00D51D2C /* base64.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A6AB38B120F327C00D51D2C /* base64.c */; };
 		3A6AB40E120F350400D51D2C /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A6AB40D120F350400D51D2C /* Sparkle.framework */; };
@@ -27,6 +26,12 @@
 		3A6AB415120F351B00D51D2C /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3A6AB40D120F350400D51D2C /* Sparkle.framework */; };
 		3A6AB418120F352200D51D2C /* BGHUDAppKit.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3A6AB40F120F351000D51D2C /* BGHUDAppKit.framework */; };
 		3A6AB587120F402A00D51D2C /* OgreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A4C61D3120DF3ED0032F63A /* OgreKit.framework */; };
+		3A851AEF1210A6C300B55720 /* Growl Registration Ticket.growlRegDict in Resources */ = {isa = PBXBuildFile; fileRef = 3A851AEE1210A6C300B55720 /* Growl Registration Ticket.growlRegDict */; };
+		3A851AF21210A70C00B55720 /* Preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A851AF11210A70C00B55720 /* Preferences.xib */; };
+		3A851CC61210AC4F00B55720 /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A851CC51210AC4F00B55720 /* Growl.framework */; };
+		3A851CDA1210AC8400B55720 /* Growl.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3A851CC51210AC4F00B55720 /* Growl.framework */; };
+		3A851D151210AD6800B55720 /* MAL Updater OS X.icns in Resources */ = {isa = PBXBuildFile; fileRef = 3A851D141210AD6800B55720 /* MAL Updater OS X.icns */; };
+		3A851D231210AE0300B55720 /* SatusIcon.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 3A851D221210AE0300B55720 /* SatusIcon.tiff */; };
 		3AE197DB1210718700FB943B /* JSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AE197DA1210718700FB943B /* JSON.framework */; };
 		3AE197DF1210718A00FB943B /* JSON.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3AE197DA1210718700FB943B /* JSON.framework */; };
 		3AFEF129120DF8CE0098B59D /* MyAnimeList.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AFEF128120DF8CE0098B59D /* MyAnimeList.m */; };
@@ -42,6 +47,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				3A851CDA1210AC8400B55720 /* Growl.framework in CopyFiles */,
 				3AE197DF1210718A00FB943B /* JSON.framework in CopyFiles */,
 				3A6AB418120F352200D51D2C /* BGHUDAppKit.framework in CopyFiles */,
 				3A6AB415120F351B00D51D2C /* Sparkle.framework in CopyFiles */,
@@ -82,13 +88,17 @@
 		3A4C61D3120DF3ED0032F63A /* OgreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OgreKit.framework; path = /Users/Shared/tohnominagi/InstalledProducts/OgreKit.framework; sourceTree = "<absolute>"; };
 		3A6AB30F120F292500D51D2C /* PreferenceController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreferenceController.h; sourceTree = "<group>"; };
 		3A6AB310120F292500D51D2C /* PreferenceController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreferenceController.m; sourceTree = "<group>"; };
-		3A6AB332120F2A3300D51D2C /* Preferences.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Preferences.xib; sourceTree = "<group>"; };
+		3A6AB332120F2A3300D51D2C /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/Preferences.xib; sourceTree = "<group>"; };
 		3A6AB37D120F313E00D51D2C /* Base64Category.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Base64Category.h; sourceTree = "<group>"; };
 		3A6AB37E120F313E00D51D2C /* Base64Category.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Base64Category.m; sourceTree = "<group>"; };
 		3A6AB38A120F327C00D51D2C /* base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = base64.h; sourceTree = "<group>"; };
 		3A6AB38B120F327C00D51D2C /* base64.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = base64.c; sourceTree = "<group>"; };
 		3A6AB40D120F350400D51D2C /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sparkle.framework; path = /Users/Shared/tohnominagi/InstalledProducts/Sparkle.framework; sourceTree = "<absolute>"; };
 		3A6AB40F120F351000D51D2C /* BGHUDAppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BGHUDAppKit.framework; path = /Users/Shared/tohnominagi/InstalledProducts/BGHUDAppKit.framework; sourceTree = "<absolute>"; };
+		3A851AEE1210A6C300B55720 /* Growl Registration Ticket.growlRegDict */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "Growl Registration Ticket.growlRegDict"; sourceTree = "<group>"; };
+		3A851CC51210AC4F00B55720 /* Growl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Growl.framework; path = /Users/Shared/tohnominagi/InstalledProducts/Growl.framework; sourceTree = "<absolute>"; };
+		3A851D141210AD6800B55720 /* MAL Updater OS X.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = "MAL Updater OS X.icns"; sourceTree = "<group>"; };
+		3A851D221210AE0300B55720 /* SatusIcon.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = SatusIcon.tiff; sourceTree = "<group>"; };
 		3AE197DA1210718700FB943B /* JSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JSON.framework; path = /Users/Shared/tohnominagi/InstalledProducts/JSON.framework; sourceTree = "<absolute>"; };
 		3AFEF127120DF8CE0098B59D /* MyAnimeList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyAnimeList.h; sourceTree = "<group>"; };
 		3AFEF128120DF8CE0098B59D /* MyAnimeList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyAnimeList.m; sourceTree = "<group>"; };
@@ -109,6 +119,7 @@
 				3A6AB40E120F350400D51D2C /* Sparkle.framework in Frameworks */,
 				3A6AB410120F351000D51D2C /* BGHUDAppKit.framework in Frameworks */,
 				3AE197DB1210718700FB943B /* JSON.framework in Frameworks */,
+				3A851CC61210AC4F00B55720 /* Growl.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -118,8 +129,16 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				3A6AB37D120F313E00D51D2C /* Base64Category.h */,
+				3A6AB37E120F313E00D51D2C /* Base64Category.m */,
+				3A6AB38A120F327C00D51D2C /* base64.h */,
+				3A6AB38B120F327C00D51D2C /* base64.c */,
+				3A6AB30F120F292500D51D2C /* PreferenceController.h */,
 				256AC3D80F4B6AC300CF3369 /* MAL_Updater_OS_XAppDelegate.h */,
+				3AFEF127120DF8CE0098B59D /* MyAnimeList.h */,
+				3AFEF128120DF8CE0098B59D /* MyAnimeList.m */,
 				256AC3D90F4B6AC300CF3369 /* MAL_Updater_OS_XAppDelegate.m */,
+				3A6AB310120F292500D51D2C /* PreferenceController.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -127,6 +146,14 @@
 		1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3A851CC51210AC4F00B55720 /* Growl.framework */,
+				3AE197DA1210718700FB943B /* JSON.framework */,
+				3A6AB40F120F351000D51D2C /* BGHUDAppKit.framework */,
+				3A6AB40D120F350400D51D2C /* Sparkle.framework */,
+				3A4C61D3120DF3ED0032F63A /* OgreKit.framework */,
+				3A4C61CD120DF3BE0032F63A /* libz.1.2.3.dylib */,
+				3A4C61C8120DF37D0032F63A /* CoreServices.framework */,
+				3A4C61C4120DF36E0032F63A /* SystemConfiguration.framework */,
 				1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */,
 			);
 			name = "Linked Frameworks";
@@ -167,27 +194,11 @@
 		29B97314FDCFA39411CA2CEA /* MAL Updater OS X */ = {
 			isa = PBXGroup;
 			children = (
-				3A6AB37D120F313E00D51D2C /* Base64Category.h */,
-				3A6AB37E120F313E00D51D2C /* Base64Category.m */,
-				3A6AB38A120F327C00D51D2C /* base64.h */,
-				3A6AB38B120F327C00D51D2C /* base64.c */,
-				3A6AB332120F2A3300D51D2C /* Preferences.xib */,
-				3A6AB30F120F292500D51D2C /* PreferenceController.h */,
-				3A6AB310120F292500D51D2C /* PreferenceController.m */,
 				080E96DDFE201D6D7F000001 /* Classes */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
-				3A4C61C4120DF36E0032F63A /* SystemConfiguration.framework */,
-				3A4C61C8120DF37D0032F63A /* CoreServices.framework */,
-				3A4C61CD120DF3BE0032F63A /* libz.1.2.3.dylib */,
-				3A4C61D3120DF3ED0032F63A /* OgreKit.framework */,
-				3AFEF127120DF8CE0098B59D /* MyAnimeList.h */,
-				3AFEF128120DF8CE0098B59D /* MyAnimeList.m */,
-				3A6AB40D120F350400D51D2C /* Sparkle.framework */,
-				3A6AB40F120F351000D51D2C /* BGHUDAppKit.framework */,
-				3AE197DA1210718700FB943B /* JSON.framework */,
 			);
 			name = "MAL Updater OS X";
 			sourceTree = "<group>";
@@ -204,6 +215,10 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				3A851D221210AE0300B55720 /* SatusIcon.tiff */,
+				3A851D141210AD6800B55720 /* MAL Updater OS X.icns */,
+				3A851AF11210A70C00B55720 /* Preferences.xib */,
+				3A851AEE1210A6C300B55720 /* Growl Registration Ticket.growlRegDict */,
 				8D1107310486CEB800E47090 /* MAL_Updater_OS_X-Info.plist */,
 				089C165CFE840E0CC02AAC07 /* InfoPlist.strings */,
 				1DDD58140DA1D0A300B32029 /* MainMenu.xib */,
@@ -266,7 +281,10 @@
 			files = (
 				8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */,
 				1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */,
-				3A6AB333120F2A3300D51D2C /* Preferences.xib in Resources */,
+				3A851AF21210A70C00B55720 /* Preferences.xib in Resources */,
+				3A851AEF1210A6C300B55720 /* Growl Registration Ticket.growlRegDict in Resources */,
+				3A851D151210AD6800B55720 /* MAL Updater OS X.icns in Resources */,
+				3A851D231210AE0300B55720 /* SatusIcon.tiff in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -308,6 +326,14 @@
 				1DDD58150DA1D0A300B32029 /* English */,
 			);
 			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+		3A851AF11210A70C00B55720 /* Preferences.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3A6AB332120F2A3300D51D2C /* English */,
+			);
+			name = Preferences.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

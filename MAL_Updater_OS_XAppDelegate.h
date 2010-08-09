@@ -7,9 +7,10 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import <Growl/Growl.h>
 
 @class PreferenceController;
-@interface MAL_Updater_OS_XAppDelegate : NSObject {
+@interface MAL_Updater_OS_XAppDelegate : NSObject <GrowlApplicationBridgeDelegate> {
     NSWindow *window;
 	IBOutlet NSMenu *statusMenu;
     NSStatusItem                *statusItem;
