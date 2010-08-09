@@ -51,6 +51,8 @@
 }
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
 	// Insert code here to initialize your application
+	//Check if Application is in the /Applications Folder
+	PFMoveToApplicationsFolderIfNecessary();
 	//Register Growl
 	NSBundle *myBundle = [NSBundle bundleForClass:[MAL_Updater_OS_XAppDelegate class]];
 	NSString *growlPath = [[myBundle privateFrameworksPath] stringByAppendingPathComponent:@"Growl.framework"];

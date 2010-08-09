@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD58140DA1D0A300B32029 /* MainMenu.xib */; };
 		256AC3DA0F4B6AC300CF3369 /* MAL_Updater_OS_XAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 256AC3D90F4B6AC300CF3369 /* MAL_Updater_OS_XAppDelegate.m */; };
+		3A2DCCB61210B3BF00C920F1 /* PFMoveApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A2DCCB51210B3BF00C920F1 /* PFMoveApplication.m */; };
+		3A2DCCBE1210B3D900C920F1 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A2DCCBD1210B3D900C920F1 /* Security.framework */; };
 		3A4C61B1120DF2BB0032F63A /* ASIFormDataRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A4C61A5120DF2BB0032F63A /* ASIFormDataRequest.m */; };
 		3A4C61B2120DF2BB0032F63A /* ASIHTTPRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A4C61A7120DF2BB0032F63A /* ASIHTTPRequest.m */; };
 		3A4C61B3120DF2BB0032F63A /* ASIInputStream.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A4C61AB120DF2BB0032F63A /* ASIInputStream.m */; };
@@ -68,6 +70,9 @@
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		3A2DCCB41210B3BF00C920F1 /* PFMoveApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PFMoveApplication.h; sourceTree = "<group>"; };
+		3A2DCCB51210B3BF00C920F1 /* PFMoveApplication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PFMoveApplication.m; sourceTree = "<group>"; };
+		3A2DCCBD1210B3D900C920F1 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		3A4C61A3120DF2BA0032F63A /* ASICacheDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASICacheDelegate.h; sourceTree = "<group>"; };
 		3A4C61A4120DF2BA0032F63A /* ASIFormDataRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIFormDataRequest.h; sourceTree = "<group>"; };
 		3A4C61A5120DF2BB0032F63A /* ASIFormDataRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASIFormDataRequest.m; sourceTree = "<group>"; };
@@ -120,6 +125,7 @@
 				3A6AB410120F351000D51D2C /* BGHUDAppKit.framework in Frameworks */,
 				3AE197DB1210718700FB943B /* JSON.framework in Frameworks */,
 				3A851CC61210AC4F00B55720 /* Growl.framework in Frameworks */,
+				3A2DCCBE1210B3D900C920F1 /* Security.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -129,6 +135,8 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				3A2DCCB41210B3BF00C920F1 /* PFMoveApplication.h */,
+				3A2DCCB51210B3BF00C920F1 /* PFMoveApplication.m */,
 				3A6AB37D120F313E00D51D2C /* Base64Category.h */,
 				3A6AB37E120F313E00D51D2C /* Base64Category.m */,
 				3A6AB38A120F327C00D51D2C /* base64.h */,
@@ -146,6 +154,7 @@
 		1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3A2DCCBD1210B3D900C920F1 /* Security.framework */,
 				3A851CC51210AC4F00B55720 /* Growl.framework */,
 				3AE197DA1210718700FB943B /* JSON.framework */,
 				3A6AB40F120F351000D51D2C /* BGHUDAppKit.framework */,
@@ -306,6 +315,7 @@
 				3A6AB311120F292500D51D2C /* PreferenceController.m in Sources */,
 				3A6AB37F120F313E00D51D2C /* Base64Category.m in Sources */,
 				3A6AB38C120F327C00D51D2C /* base64.c in Sources */,
+				3A2DCCB61210B3BF00C920F1 /* PFMoveApplication.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -389,7 +399,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				ONLY_ACTIVE_ARCH = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				PREBINDING = NO;
 				SDKROOT = macosx10.5;
 			};
@@ -403,7 +413,7 @@
 				GCC_ENABLE_OBJC_GC = required;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				ONLY_ACTIVE_ARCH = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				PREBINDING = NO;
 				SDKROOT = macosx10.5;
 			};
