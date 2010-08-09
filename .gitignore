@@ -295,3 +295,17 @@ build/MAL Updater OS X.build/Debug/MAL Updater OS X.build/Objects-normal/i386/Ba
 build/MAL Updater OS X.build/Debug/MAL Updater OS X.build/Objects-normal/i386/MyAnimeList.o
 build/MAL Updater OS X.build/Debug/MAL Updater OS X.build/Objects-normal/i386/PreferenceController.o
 build/MAL Updater OS X.build/Debug/MAL Updater OS X.build/Objects-normal/i386/base64.o
+build/Debug/MAL Updater OS X.app/Contents/Resources/JSON/JSON.h
+build/Debug/MAL Updater OS X.app/Contents/Resources/JSON/NSObject+SBJSON.h
+build/Debug/MAL Updater OS X.app/Contents/Resources/JSON/NSObject+SBJSON.m
+build/Debug/MAL Updater OS X.app/Contents/Resources/JSON/NSString+SBJSON.h
+build/Debug/MAL Updater OS X.app/Contents/Resources/JSON/NSString+SBJSON.m
+build/Debug/MAL Updater OS X.app/Contents/Resources/JSON/SBJsonBase.h
+build/Debug/MAL Updater OS X.app/Contents/Resources/JSON/SBJsonBase.m
+build/Debug/MAL Updater OS X.app/Contents/Resources/JSON/SBJsonParser.h
+build/Debug/MAL Updater OS X.app/Contents/Resources/JSON/SBJsonParser.m
+build/Debug/MAL Updater OS X.app/Contents/Resources/JSON/SBJsonWriter.h
+build/Debug/MAL Updater OS X.app/Contents/Resources/JSON/SBJsonWriter.m
+build/MAL Updater OS X.build/Debug/MAL Updater OS X.build/Objects-normal/i386/MyAnimeList.o~$
+build/MAL Updater OS X.build/Debug/MAL Updater OS X.build/Objects-normal/i386/MyAnimeList.o~>
+build/MAL Updater OS X.build/Debug/MAL Updater OS X.build/Objects-normal/i386/MyAnimeList.o~?

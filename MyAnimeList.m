@@ -7,6 +7,7 @@
 //
 
 #import "MyAnimeList.h"
+#import "ASIHTTPRequest.h"
 
 @implementation MyAnimeList
 - (IBAction)toggletimer:(id)sender {
@@ -50,8 +51,52 @@
 		NSLog(@"Detected : %@ - %@", DetectedTitle, DetectedEpisode);
 		[DetectedTitle release];
 		[DetectedEpisode release];
+		NSString * AniID = [self searchanime];
+		NSLog(@"%@",AniID);
+		[AniID release];
 	}
 
+}
+-(NSString *)searchanime{
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	//Escape Search Term
+	NSString * searchterm = (NSString *)CFURLCreateStringByAddingPercentEscapes(
+																				NULL,
+																				(CFStringRef)DetectedTitle,
+																				NULL,
+																				(CFStringRef)@"!*'();:@&=+$,/?%#[]",
+																				kCFStringEncodingUTF8 );
+
+	//Set Search API
+	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://mal-api.com/anime/search?q=%@",searchterm]];
+	NSLog(@"%@",[NSString stringWithFormat:@"http://mal-api.com/anime/search?q=%@",searchterm]);
+	//Release searchterm
+	[searchterm release];
+	ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
+	//Ignore Cookies
+	[request setUseCookiePersistence:NO];
+	//Set Token
+	[request addRequestHeader:@"Authorization" value:[NSString stringWithFormat:@"Basic %@",[defaults objectForKey:@"Base64Token"]]];
+	//Vertify Username/Password
+	[request startSynchronous];
+	// Get Status Code
+	int statusCode = [request responseStatusCode];
+			NSString *response = [request responseString];
+	if (statusCode == 200 ) {
+		//Login successful
+		choice = NSRunAlertPanel(@"Search Successful", response, @"OK", nil, nil, 8);
+		return response;
+		//release
+		response = nil;
+	}
+	else {
+		return @"";
+	}
+
+	//release
+	request = nil;
+	url = nil;
+	
 }
 -(BOOL)detectmedia {
 	// LSOF mplayer to get the media title and segment

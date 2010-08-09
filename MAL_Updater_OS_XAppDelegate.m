@@ -8,6 +8,7 @@
 
 #import "MAL_Updater_OS_XAppDelegate.h"
 #import "PreferenceController.h"
+#import "JSON/JSON.h"
 
 @implementation MAL_Updater_OS_XAppDelegate
 

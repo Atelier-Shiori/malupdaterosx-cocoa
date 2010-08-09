@@ -20,9 +20,11 @@
 	IBOutlet NSMenuItem * togglescrobbler;
 	IBOutlet NSTextField * ScrobblerStatus;
 	IBOutlet NSTextField * LastScrobbled;
+	int * choice;
 }
 -(IBAction)toggletimer:(id)sender;
 -(void)firetimer:(NSTimer *)aTimer;
 -(BOOL)detectmedia;
+-(NSString *)searchanime;
 
 @end
