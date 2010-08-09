@@ -53,6 +53,10 @@
 		[DetectedEpisode release];
 		NSString * AniID = [self searchanime];
 		NSLog(@"%@",AniID);
+		if (AniID.length > 0) {
+			// Check Status and Update
+			
+		}
 		[AniID release];
 	}
 
@@ -77,15 +81,13 @@
 	[request setUseCookiePersistence:NO];
 	//Set Token
 	[request addRequestHeader:@"Authorization" value:[NSString stringWithFormat:@"Basic %@",[defaults objectForKey:@"Base64Token"]]];
-	//Vertify Username/Password
+	//Perform Search
 	[request startSynchronous];
 	// Get Status Code
 	int statusCode = [request responseStatusCode];
 			NSString *response = [request responseString];
 	if (statusCode == 200 ) {
-		//Login successful
-		choice = NSRunAlertPanel(@"Search Successful", response, @"OK", nil, nil, 8);
-		return response;
+		return [self RegExSearchTitle:response];
 		//release
 		response = nil;
 	}
@@ -201,4 +203,24 @@
 	
 	
 }
+-(NSString *)RegExSearchTitle:(NSString *)ResponseData {
+	OGRegularExpressionMatch    *match;
+	OGRegularExpression    *regex;
+	//Get the filename first
+	regex = [OGRegularExpression regularExpressionWithString:DetectedTitle];
+	NSEnumerator    *enumerator;
+	SBJsonParser *parser = [[SBJsonParser alloc] init];
+	NSArray *searchdata = [parser objectWithString:ResponseData error:nil];
+	for (id obj in searchdata) {
+		// Look in every RegEx Entry until the extact title is found.
+		enumerator = [regex matchEnumeratorInString:[obj objectForKey:@"title"]];
+		while ((match = [enumerator nextObject]) != nil) {
+			// Return the AniID for the matched title
+			return [obj objectForKey:@"id"];
+		}
+	}
+	// Nothing Found, return nothing
+	return @"";
+}
+
 @end

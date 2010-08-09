@@ -309,3 +309,16 @@ build/Debug/MAL Updater OS X.app/Contents/Resources/JSON/SBJsonWriter.m
 build/MAL Updater OS X.build/Debug/MAL Updater OS X.build/Objects-normal/i386/MyAnimeList.o~$
 build/MAL Updater OS X.build/Debug/MAL Updater OS X.build/Objects-normal/i386/MyAnimeList.o~>
 build/MAL Updater OS X.build/Debug/MAL Updater OS X.build/Objects-normal/i386/MyAnimeList.o~?
+build/Debug/MAL Updater OS X.app/Contents/Frameworks/JSON.framework/Headers
+build/Debug/MAL Updater OS X.app/Contents/Frameworks/JSON.framework/JSON
+build/Debug/MAL Updater OS X.app/Contents/Frameworks/JSON.framework/PrivateHeaders
+build/Debug/MAL Updater OS X.app/Contents/Frameworks/JSON.framework/Resources
+build/Debug/MAL Updater OS X.app/Contents/Frameworks/JSON.framework/Versions/A/Headers/JSON.h
+build/Debug/MAL Updater OS X.app/Contents/Frameworks/JSON.framework/Versions/A/JSON
+build/Debug/MAL Updater OS X.app/Contents/Frameworks/JSON.framework/Versions/A/PrivateHeaders/NSObject+SBJSON.h
+build/Debug/MAL Updater OS X.app/Contents/Frameworks/JSON.framework/Versions/A/PrivateHeaders/NSString+SBJSON.h
+build/Debug/MAL Updater OS X.app/Contents/Frameworks/JSON.framework/Versions/A/PrivateHeaders/SBJsonBase.h
+build/Debug/MAL Updater OS X.app/Contents/Frameworks/JSON.framework/Versions/A/PrivateHeaders/SBJsonParser.h
+build/Debug/MAL Updater OS X.app/Contents/Frameworks/JSON.framework/Versions/A/PrivateHeaders/SBJsonWriter.h
+build/Debug/MAL Updater OS X.app/Contents/Frameworks/JSON.framework/Versions/A/Resources/Info.plist
+build/Debug/MAL Updater OS X.app/Contents/Frameworks/JSON.framework/Versions/Current

@@ -27,7 +27,8 @@
 		3A6AB415120F351B00D51D2C /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3A6AB40D120F350400D51D2C /* Sparkle.framework */; };
 		3A6AB418120F352200D51D2C /* BGHUDAppKit.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3A6AB40F120F351000D51D2C /* BGHUDAppKit.framework */; };
 		3A6AB587120F402A00D51D2C /* OgreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A4C61D3120DF3ED0032F63A /* OgreKit.framework */; };
-		3A6C0D9F120F7B67001D591F /* JSON in Resources */ = {isa = PBXBuildFile; fileRef = 3A6C0D92120F7B67001D591F /* JSON */; };
+		3AE197DB1210718700FB943B /* JSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AE197DA1210718700FB943B /* JSON.framework */; };
+		3AE197DF1210718A00FB943B /* JSON.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3AE197DA1210718700FB943B /* JSON.framework */; };
 		3AFEF129120DF8CE0098B59D /* MyAnimeList.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AFEF128120DF8CE0098B59D /* MyAnimeList.m */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
@@ -41,6 +42,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				3AE197DF1210718A00FB943B /* JSON.framework in CopyFiles */,
 				3A6AB418120F352200D51D2C /* BGHUDAppKit.framework in CopyFiles */,
 				3A6AB415120F351B00D51D2C /* Sparkle.framework in CopyFiles */,
 				3A4C61D4120DF3ED0032F63A /* OgreKit.framework in CopyFiles */,
@@ -87,7 +89,7 @@
 		3A6AB38B120F327C00D51D2C /* base64.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = base64.c; sourceTree = "<group>"; };
 		3A6AB40D120F350400D51D2C /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sparkle.framework; path = /Users/Shared/tohnominagi/InstalledProducts/Sparkle.framework; sourceTree = "<absolute>"; };
 		3A6AB40F120F351000D51D2C /* BGHUDAppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BGHUDAppKit.framework; path = /Users/Shared/tohnominagi/InstalledProducts/BGHUDAppKit.framework; sourceTree = "<absolute>"; };
-		3A6C0D92120F7B67001D591F /* JSON */ = {isa = PBXFileReference; lastKnownFileType = folder; path = JSON; sourceTree = "<group>"; };
+		3AE197DA1210718700FB943B /* JSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JSON.framework; path = /Users/Shared/tohnominagi/InstalledProducts/JSON.framework; sourceTree = "<absolute>"; };
 		3AFEF127120DF8CE0098B59D /* MyAnimeList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyAnimeList.h; sourceTree = "<group>"; };
 		3AFEF128120DF8CE0098B59D /* MyAnimeList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyAnimeList.m; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* MAL_Updater_OS_X-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "MAL_Updater_OS_X-Info.plist"; sourceTree = "<group>"; };
@@ -106,6 +108,7 @@
 				3A4C61CE120DF3BE0032F63A /* libz.1.2.3.dylib in Frameworks */,
 				3A6AB40E120F350400D51D2C /* Sparkle.framework in Frameworks */,
 				3A6AB410120F351000D51D2C /* BGHUDAppKit.framework in Frameworks */,
+				3AE197DB1210718700FB943B /* JSON.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -115,7 +118,6 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				3A6C0D92120F7B67001D591F /* JSON */,
 				256AC3D80F4B6AC300CF3369 /* MAL_Updater_OS_XAppDelegate.h */,
 				256AC3D90F4B6AC300CF3369 /* MAL_Updater_OS_XAppDelegate.m */,
 			);
@@ -185,6 +187,7 @@
 				3AFEF128120DF8CE0098B59D /* MyAnimeList.m */,
 				3A6AB40D120F350400D51D2C /* Sparkle.framework */,
 				3A6AB40F120F351000D51D2C /* BGHUDAppKit.framework */,
+				3AE197DA1210718700FB943B /* JSON.framework */,
 			);
 			name = "MAL Updater OS X";
 			sourceTree = "<group>";
@@ -264,7 +267,6 @@
 				8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */,
 				1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */,
 				3A6AB333120F2A3300D51D2C /* Preferences.xib in Resources */,
-				3A6C0D9F120F7B67001D591F /* JSON in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

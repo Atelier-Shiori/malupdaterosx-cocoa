@@ -8,6 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import <OgreKit/OgreKit.h>
+#import <JSON/JSON.h>
 
 @interface MyAnimeList : NSObject {
 	NSString * Base64Token;
@@ -26,5 +27,5 @@
 -(void)firetimer:(NSTimer *)aTimer;
 -(BOOL)detectmedia;
 -(NSString *)searchanime;
-
+-(NSString *)RegExSearchTitle:(NSString *)ResponseData;
 @end
