@@ -15,12 +15,12 @@
 - (IBAction)toggletimer:(id)sender {
 	if (timer == nil) {
 		//Create Timer
-		timer = [[NSTimer scheduledTimerWithTimeInterval:300
+		timer = [[NSTimer scheduledTimerWithTimeInterval:10
 												  target:self
 												selector:@selector(firetimer:)
 												userInfo:nil
 												 repeats:YES] retain];
-		[togglescrobbler setTitle:@"Stop Auto Scrobbling"];
+		[togglescrobbler setTitle:@"Stop Scrobbling"];
 		[ScrobblerStatus setObjectValue:@"Scrobble Status: Started"];
 		[GrowlApplicationBridge notifyWithTitle:@"MAL Updater OS X"
 									description:@"Auto Scrobble is now turned on."
@@ -36,7 +36,7 @@
 		[timer invalidate];
 		[timer release];
 		timer = nil;
-		[togglescrobbler setTitle:@"Start Auto Scrobbling"];
+		[togglescrobbler setTitle:@"Start Scrobbling"];
 		[ScrobblerStatus setObjectValue:@"Scrobble Status: Stopped"];
 		[GrowlApplicationBridge notifyWithTitle:@"MAL Updater OS X"
 									description:@"Auto Scrobble is now turned off."
@@ -51,7 +51,8 @@
 - (void)firetimer:(NSTimer *)aTimer {
 	if ([self detectmedia] == 1) {
 		[ScrobblerStatus setObjectValue:@"Scrobble Status: Scrobbling..."];
-		NSString * AniID;
+			NSString * AniID;
+		NSLog(@"Getting AniID");
 		AniID = [self searchanime];
 		if (AniID.length > 0) {
 			// Check Status and Update
@@ -115,7 +116,7 @@
 	int statusCode = [request responseStatusCode];
 			NSString *response = [request responseString];
 	if (statusCode == 200 ) {
-		return [self regexsearchtitle:response];
+		return [self getaniid:response];
 	}
 	else {
 		Success = NO;
@@ -243,24 +244,18 @@
 		return NO;
 	}
 }
--(NSString *)regexsearchtitle:(NSString *)ResponseData {
-	OGRegularExpressionMatch    *match;
-	OGRegularExpression    *regex;
-	//Set Detected Anime Title
-	regex = [OGRegularExpression regularExpressionWithString:[NSString stringWithFormat:@"^%@$",DetectedTitle]];
-	NSEnumerator    *enumerator;
+-(NSString *)getaniid:(NSString *)ResponseData {
 	// Initalize JSON parser
 	SBJsonParser *parser = [[SBJsonParser alloc] init];
 	NSArray *searchdata = [parser objectWithString:ResponseData error:nil];
-	NSString *titleid;
-	for (id obj in searchdata) {
-		// Look in every RegEx Entry until the extact title is found.
-		enumerator = [regex matchEnumeratorInString:[obj objectForKey:@"title"]];
-		while ((match = [enumerator nextObject]) != nil) {
-			titleid = [NSString stringWithFormat:@"%@" ,[obj objectForKey:@"id"]];
-		}
+	NSString *titleid = @"";
+	//Retrieve the ID. Note that the most matched title will be on the top
+	for (NSDictionary *serchentry in searchdata) {
+			titleid = [NSString stringWithFormat:@"%@",[serchentry objectForKey:@"id"]];
+		goto foundtitle;
 	}
-	// Nothing Found, return nothing
+foundtitle:
+	//Return the AniID
 	return titleid;
 }
 -(BOOL)checkstatus:(NSString *)AniID {

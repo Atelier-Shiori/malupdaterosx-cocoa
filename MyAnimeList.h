@@ -29,7 +29,7 @@
 -(void)firetimer:(NSTimer *)aTimer;
 -(BOOL)detectmedia;
 -(NSString *)searchanime;
--(NSString *)regexsearchtitle:(NSString *)ResponseData;
+-(NSString *)getaniid:(NSString *)ResponseData;
 -(BOOL)checkstatus:(NSString *)AniID;
 -(BOOL)updatetitle:(NSString *)AniID;
 -(BOOL)addtitle:(NSString *)AniID;
