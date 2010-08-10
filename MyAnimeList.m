@@ -15,7 +15,7 @@
 - (IBAction)toggletimer:(id)sender {
 	if (timer == nil) {
 		//Create Timer
-		timer = [[NSTimer scheduledTimerWithTimeInterval:10
+		timer = [[NSTimer scheduledTimerWithTimeInterval:300
 												  target:self
 												selector:@selector(firetimer:)
 												userInfo:nil
