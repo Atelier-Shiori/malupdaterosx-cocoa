@@ -56,7 +56,7 @@
 		AniID = [self searchanime];
 		if (AniID.length > 0) {
 			// Check Status and Update
-			BOOL * UpdateBool = [self checkstatus:AniID];
+			BOOL UpdateBool = [self checkstatus:AniID];
 			if (UpdateBool == 1) {
 			switch ([DetectedCurrentEpisode intValue]) {
 				case 0:
@@ -85,6 +85,10 @@
 									   clickContext:[NSDate date]];
 			Success = NO;
 		}
+		// Empty out Detected Title/Episode to prevent same title detection
+		DetectedTitle = @"";
+		DetectedEpisode = @"";
+		// Release Detected Title/Episode.
 		[DetectedTitle release];
 		[DetectedEpisode release];
 	}
@@ -223,6 +227,7 @@
 		//release
 		regex = nil;
 		enumerator = nil;
+		string = @""
 		// Check if the title was previously scrobbled
 		if ([DetectedTitle isEqualToString:LastScrobbledTitle] && [DetectedEpisode isEqualToString: LastScrobbledEpisode] && Success == 1) {
 			// Do Nothing
