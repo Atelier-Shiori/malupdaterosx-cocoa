@@ -13,43 +13,50 @@
 
 @implementation MyAnimeList
 - (IBAction)toggletimer:(id)sender {
-	if (timer == nil) {
-		//Create Timer
-		timer = [[NSTimer scheduledTimerWithTimeInterval:300
-												  target:self
-												selector:@selector(firetimer:)
-												userInfo:nil
-												 repeats:YES] retain];
-		[togglescrobbler setTitle:@"Stop Scrobbling"];
-		[ScrobblerStatus setObjectValue:@"Scrobble Status: Started"];
-		[GrowlApplicationBridge notifyWithTitle:@"MAL Updater OS X"
-									description:@"Auto Scrobble is now turned on."
-							   notificationName:@"Message"
-									   iconData:nil
-									   priority:0
-									   isSticky:NO
-								   clickContext:[NSDate date]];
+	//Check to see if there is an API Key stored
+		NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	if ([[defaults objectForKey:@"Base64Token"] length] == 0) {
+		choice = NSRunCriticalAlertPanel(@"MAL Updater OS X was unable to start scrobbling since you have no auth token stored.", @"Verify and save your login in Preferences and then try again.", @"OK", nil, nil, 8);
 	}
 	else {
-		//Stop Timer
-		// Remove Timer
-		[timer invalidate];
-		[timer release];
-		timer = nil;
-		[togglescrobbler setTitle:@"Start Scrobbling"];
-		[ScrobblerStatus setObjectValue:@"Scrobble Status: Stopped"];
-		[GrowlApplicationBridge notifyWithTitle:@"MAL Updater OS X"
-									description:@"Auto Scrobble is now turned off."
-							   notificationName:@"Message"
-									   iconData:nil
-									   priority:0
-									   isSticky:NO
-								   clickContext:[NSDate date]];
+		if (timer == nil) {
+			//Create Timer
+			timer = [[NSTimer scheduledTimerWithTimeInterval:300
+													  target:self
+													selector:@selector(firetimer:)
+													userInfo:nil
+													 repeats:YES] retain];
+			[togglescrobbler setTitle:@"Stop Scrobbling"];
+			[ScrobblerStatus setObjectValue:@"Scrobble Status: Started"];
+			[GrowlApplicationBridge notifyWithTitle:@"MAL Updater OS X"
+										description:@"Auto Scrobble is now turned on."
+								   notificationName:@"Message"
+										   iconData:nil
+										   priority:0
+										   isSticky:NO
+									   clickContext:[NSDate date]];
+		}
+		else {
+			//Stop Timer
+			// Remove Timer
+			[timer invalidate];
+			[timer release];
+			timer = nil;
+			[togglescrobbler setTitle:@"Start Scrobbling"];
+			[ScrobblerStatus setObjectValue:@"Scrobble Status: Stopped"];
+			[GrowlApplicationBridge notifyWithTitle:@"MAL Updater OS X"
+										description:@"Auto Scrobble is now turned off."
+								   notificationName:@"Message"
+										   iconData:nil
+										   priority:0
+										   isSticky:NO
+									   clickContext:[NSDate date]];
+		}
 	}
 	
 }
 - (void)firetimer:(NSTimer *)aTimer {
-	if ([self detectmedia] == 1) {
+	if ([self detectmedia] == 1) { // Detects Title
 		[ScrobblerStatus setObjectValue:@"Scrobble Status: Scrobbling..."];
 			NSString * AniID;
 		NSLog(@"Getting AniID");
@@ -227,7 +234,7 @@
 		//release
 		regex = nil;
 		enumerator = nil;
-		string = @""
+		string = @"";
 		// Check if the title was previously scrobbled
 		if ([DetectedTitle isEqualToString:LastScrobbledTitle] && [DetectedEpisode isEqualToString: LastScrobbledEpisode] && Success == 1) {
 			// Do Nothing
@@ -246,6 +253,7 @@
 	}
 	else {
 		// Nothing detected
+		[ScrobblerStatus setObjectValue:@"Scrobble Status: Idle..."];
 		return NO;
 	}
 }
@@ -296,7 +304,7 @@ foundtitle:
 	return NO;
 }
 -(BOOL)updatetitle:(NSString *)AniID {
-	if ([DetectedEpisode intValue] == [DetectedCurrentEpisode intValue] ) {
+	if ([DetectedEpisode intValue] <= [DetectedCurrentEpisode intValue] ) {
 		// Already Watched, no need to scrobble
 		[ScrobblerStatus setObjectValue:@"Scrobble Status: Same Episode Playing, Scrobble not needed."];
 		[LastScrobbled setObjectValue:[NSString stringWithFormat:@"Last Scrobbled: %@ - %@",DetectedTitle,DetectedEpisode]];
