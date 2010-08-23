@@ -2,8 +2,8 @@
 //  MyAnimeList.m
 //  MAL Updater OS X
 //
-//  Created by Tohno Minagi on 8/7/10.
-//  Copyright 2010 __MyCompanyName__. All rights reserved.
+//  Created by James M. on 8/7/10.
+//  Copyright 2009-2010 Chikorita157's Anime Blog. All rights reserved. Code licensed under New BSD License
 //
 
 #import "MyAnimeList.h"
@@ -160,7 +160,7 @@
 			player = @"QTKitServer";
 			break;
 		case 2:
-			player = @"vlc";
+			player = @"VLC";
 			break;
 		case 3:
 			player = @"QuickTime Player";
@@ -350,6 +350,10 @@ foundtitle:
 											   priority:0
 											   isSticky:NO
 										   clickContext:[NSDate date]];
+				//Set up Delegate
+				MAL_Updater_OS_XAppDelegate* appDelegate=[NSApp delegate];
+				//Add History Record
+				[appDelegate addrecord:DetectedTitle :DetectedEpisode :[NSDate date]];
 				return YES;
 				break;
 			default:
@@ -400,6 +404,10 @@ foundtitle:
 										   priority:0
 										   isSticky:NO
 									   clickContext:[NSDate date]];
+			//Set up Delegate
+			MAL_Updater_OS_XAppDelegate* appDelegate=[NSApp delegate];
+			//Add History Record
+			[appDelegate addrecord:DetectedTitle :DetectedEpisode :[NSDate date]];
 			return YES;
 			break;
 		default:
