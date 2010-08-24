@@ -31,6 +31,11 @@
 -(void)showPreferences:(id)sender;
 -(void)showhistory:(id)sender;
 -(IBAction)togglescrobblewindow:(id)sender;
--(void)addrecord:(NSString *)title:(NSString *)episode:(NSDate *)date;
+-(void)addrecord:(NSString *)title
+		 Episode:(NSString *)episode
+			Date:(NSDate *)date;
 -(IBAction)clearhistory:(id)sender;
+-(void)clearhistoryended:(NSAlert *)alert
+					code:(int)choice
+				  conext:(void *)v;
 @end

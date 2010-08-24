@@ -353,7 +353,7 @@ foundtitle:
 				//Set up Delegate
 				MAL_Updater_OS_XAppDelegate* appDelegate=[NSApp delegate];
 				//Add History Record
-				[appDelegate addrecord:DetectedTitle :DetectedEpisode :[NSDate date]];
+				[appDelegate addrecord:DetectedTitle Episode:DetectedEpisode Date:[NSDate date]];
 				return YES;
 				break;
 			default:
@@ -407,7 +407,7 @@ foundtitle:
 			//Set up Delegate
 			MAL_Updater_OS_XAppDelegate* appDelegate=[NSApp delegate];
 			//Add History Record
-			[appDelegate addrecord:DetectedTitle :DetectedEpisode :[NSDate date]];
+			[appDelegate addrecord:DetectedTitle Episode:DetectedEpisode Date:[NSDate date]];
 			return YES;
 			break;
 		default:

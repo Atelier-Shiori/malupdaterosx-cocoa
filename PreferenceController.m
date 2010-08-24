@@ -43,17 +43,19 @@
 }
 -(IBAction)clearlogin:(id)sender
 {
-	choice = NSRunCriticalAlertPanel(@"Are you sure you want to remove this token?", @"Once done, this action cannot be undone,", @"Yes", @"No", nil, 8);
-	NSLog(@"%i", choice);
-	if (choice == 1) {
-		NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-		[defaults setObject:@"" forKey:@"Base64Token"];
-		// Clear Username
-		[defaults setObject:@"" forKey:@"Username"];
-		//Disable Clearbut
-		[clearbut setEnabled: NO];
-		[savebut setEnabled: YES];
-	}
+	// Set Up Prompt Message Window
+	NSAlert * alert = [[[NSAlert alloc] init] autorelease];
+	[alert addButtonWithTitle:@"Yes"];
+	[alert addButtonWithTitle:@"No"];
+	[alert setMessageText:@"Are you sure you want to remove this token?"];
+	[alert setInformativeText:@"Once done, this action cannot be undone."];
+	// Set Message type to Warning
+	[alert setAlertStyle:NSWarningAlertStyle];
+	// Show as Sheet on historywindow
+	[alert beginSheetModalForWindow:[self window]
+					  modalDelegate:self
+					 didEndSelector:@selector(clearcookieended:code:conext:)
+						contextInfo:NULL];
 }
 -(IBAction)startlogin:(id)sender
 {
@@ -64,13 +66,13 @@
 		[savebut displayIfNeeded];
 		if ( [[fieldusername stringValue] length] == 0) {
 			//No Username Entered! Show error message
-			choice = NSRunCriticalAlertPanel(@"MAL Updater OS X was unable to log you in since you didn't enter a username", @"Enter a valid username and try logging in again", @"OK", nil, nil, 8);
+			[self showsheetmessage:@"MAL Updater OS X was unable to log you in since you didn't enter a username" explaination:@"Enter a valid username and try logging in again"];
 			[savebut setEnabled: YES];
 		}
 		else {
 			if ( [[fieldpassword stringValue] length] == 0 ) {
 				//No Password Entered! Show error message.
-				choice = NSRunCriticalAlertPanel(@"MAL Updater OS X was unable to log you in since you didn't enter a password", @"Enter a valid password and try logging in again", @"OK", nil, nil, 8);
+				[self showsheetmessage:@"MAL Updater OS X was unable to log you in since you didn't enter a password" explaination:@"Enter a valid password and try logging in again."];
 				[savebut setEnabled: YES];
 			}
 			else {
@@ -89,7 +91,7 @@
 				switch (statusCode) {
 					case 200:
 						//Login successful
-						choice = NSRunAlertPanel(@"Login Successful", @"Login Token has been created.", @"OK", nil, nil, 8);
+						[self showsheetmessage:@"Login Successful" explaination: @"Login Token has been created."];
 						// Generate API Key
 						NSUserDefaults *defaults = [[NSUserDefaults standardUserDefaults] autorelease];
 						NSString * Token = [NSString stringWithFormat:@"%@:%@", [fieldusername stringValue], [fieldpassword stringValue]];
@@ -99,13 +101,13 @@
 						break;
 					case 401:
 						//Login Failed, show error message
-						choice = NSRunCriticalAlertPanel(@"MAL Updater OS X was unable to log you in since you don't have the correct username and/or password", @"Check your username and password and try logging in again. If you recently changed your password, ener you new password and try again.", @"OK", nil, nil, 8);
+						[self showsheetmessage:@"MAL Updater OS X was unable to log you in since you don't have the correct username and/or password." explaination:@"Check your username and password and try logging in again. If you recently changed your password, enter your new password and try again."];
 						[savebut setEnabled: YES];
 						[savebut setKeyEquivalent:@"\r"];
 						break;
 					default:
 						//Login Failed, show error message
-						choice = NSRunCriticalAlertPanel(@"MAL Updater OS X was unable to log you in because of an unknown error.", [NSString stringWithFormat:@"Error %i", statusCode], @"OK", nil, nil, 8);
+						[self showsheetmessage:@"MAL Updater OS X was unable to log you in because of an unknown error." explaination:[NSString stringWithFormat:@"Error %i", statusCode]];
 						[savebut setEnabled: YES];
 						[savebut setKeyEquivalent:@"\r"];
 						break;
@@ -126,5 +128,35 @@
 {
 	//Show MAL Registration Page
 	[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://myanimelist.net/register.php"]];
+}
+-(void)clearcookieended:(NSAlert *)alert
+				   code:(int)achoice
+				 conext:(void *)v
+{
+	if (achoice == 1000) {
+		NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+		[defaults setObject:@"" forKey:@"Base64Token"];
+		// Clear Username
+		[defaults setObject:@"" forKey:@"Username"];
+		//Disable Clearbut
+		[clearbut setEnabled: NO];
+		[savebut setEnabled: YES];
+	}
+}
+-(void)showsheetmessage:(NSString *)message
+		   explaination:(NSString *)explaination
+{
+	// Set Up Prompt Message Window
+	NSAlert * alert = [[[NSAlert alloc] init] autorelease];
+	[alert addButtonWithTitle:@"OK"];
+	[alert setMessageText:message];
+	[alert setInformativeText:explaination];
+	// Set Message type to Warning
+	[alert setAlertStyle:1];
+	// Show as Sheet on Preference Window
+	[alert beginSheetModalForWindow:[self window]
+					  modalDelegate:self
+					 didEndSelector:nil
+						contextInfo:NULL];
 }
 @end

@@ -9,6 +9,7 @@
 #import "MAL_Updater_OS_XAppDelegate.h"
 #import "PreferenceController.h"
 #import "JSON/JSON.h"
+#import "PFMoveApplication.h"
 
 @implementation MAL_Updater_OS_XAppDelegate
 
@@ -151,6 +152,8 @@
 	// Insert code here to initialize your application
 	//Check if Application is in the /Applications Folder
 	PFMoveToApplicationsFolderIfNecessary();
+	//Since LSUIElement is set to 1 to hide the dock icon, it causes unattended behavior of having the program windows not show to the front.
+	[NSApp activateIgnoringOtherApps:YES];
 	//Register Growl
 	NSBundle *myBundle = [NSBundle bundleForClass:[MAL_Updater_OS_XAppDelegate class]];
 	NSString *growlPath = [[myBundle privateFrameworksPath] stringByAppendingPathComponent:@"Growl.framework"];
@@ -247,10 +250,12 @@
 }
 -(IBAction)showhistory:(id)sender
 {
-		[historywindow makeKeyAndOrderFront:self];
+		[historywindow makeKeyAndOrderFront:nil];
 
 }
--(void)addrecord:(NSString *)title:(NSString *)episode:(NSDate *)date 
+-(void)addrecord:(NSString *)title
+		 Episode:(NSString *)episode
+			Date:(NSDate *)date;
 {
 // Add scrobble history record to the SQLite Database via Core Data
 	NSManagedObjectContext *moc = [self managedObjectContext];
@@ -267,10 +272,25 @@
 }
 -(IBAction)clearhistory:(id)sender
 {
-	int choice;
-	choice = NSRunCriticalAlertPanel(@"Are you sure you want to clear the Scrobble History?", @"Once done, this action cannot be undone,", @"Yes", @"No", nil, 8);
-	NSLog(@"%i", choice);
-	if (choice == 1) {
+	// Set Up Prompt Message Window
+	NSAlert * alert = [[[NSAlert alloc] init] autorelease];
+	[alert addButtonWithTitle:@"Yes"];
+	[alert addButtonWithTitle:@"No"];
+	[alert setMessageText:@"Are you sure you want to clear the Scrobble History?"];
+	[alert setInformativeText:@"Once done, this action cannot be undone."];
+	// Set Message type to Warning
+	[alert setAlertStyle:NSWarningAlertStyle];
+	// Show as Sheet on historywindow
+	[alert beginSheetModalForWindow:historywindow 
+					  modalDelegate:self
+					 didEndSelector:@selector(clearhistoryended:code:conext:)
+						contextInfo:NULL];
+}
+-(void)clearhistoryended:(NSAlert *)alert
+					code:(int)choice
+				  conext:(void *)v
+{
+	if (choice == 1000) {
 		// Remove All Data
 		NSManagedObjectContext *moc = [self managedObjectContext];
 		NSFetchRequest * allHistory = [[NSFetchRequest alloc] init];
@@ -283,6 +303,7 @@
 		for (NSManagedObject * history in histories) {
 			[moc deleteObject:history];
 		}
-	}	
-}
+	}
+	
+}		
 @end

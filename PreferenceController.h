@@ -18,4 +18,9 @@
 -(IBAction)startlogin:(id)sender;
 -(IBAction)clearlogin:(id)sender;
 -(IBAction)registermal:(id)sender;
+-(void)clearcookieended:(NSAlert *)alert
+				   code:(int)achoice
+				 conext:(void *)v;
+-(void)showsheetmessage:(NSString *)message
+		   explaination:(NSString *)explaination;
 @end
