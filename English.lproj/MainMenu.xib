@@ -22,8 +22,8 @@
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
 			<integer value="57"/>
-			<integer value="543"/>
 			<integer value="534"/>
+			<integer value="543"/>
 			<integer value="589"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
@@ -634,13 +634,13 @@
 										<object class="NSTableView" id="324630736">
 											<reference key="NSNextResponder" ref="78472899"/>
 											<int key="NSvFlags">256</int>
-											<string key="NSFrameSize">{333, 117}</string>
+											<string key="NSFrameSize">{344, 133}</string>
 											<reference key="NSSuperview" ref="78472899"/>
 											<bool key="NSEnabled">YES</bool>
 											<object class="NSTableHeaderView" key="NSHeaderView" id="956756565">
 												<reference key="NSNextResponder" ref="348070169"/>
 												<int key="NSvFlags">256</int>
-												<string key="NSFrameSize">{333, 17}</string>
+												<string key="NSFrameSize">{344, 17}</string>
 												<reference key="NSSuperview" ref="348070169"/>
 												<reference key="NSTableView" ref="324630736"/>
 											</object>
@@ -653,7 +653,7 @@
 											<object class="NSMutableArray" key="NSTableColumns">
 												<bool key="EncodedWithXMLCoder">YES</bool>
 												<object class="NSTableColumn" id="93912198">
-													<double key="NSWidth">157</double>
+													<double key="NSWidth">168</double>
 													<double key="NSMinWidth">40</double>
 													<double key="NSMaxWidth">1000</double>
 													<object class="NSTableHeaderCell" key="NSHeaderCell">
@@ -791,7 +791,7 @@
 												</object>
 											</object>
 											<double key="NSRowHeight">17</double>
-											<int key="NSTvFlags">-700448768</int>
+											<int key="NSTvFlags">-692060160</int>
 											<reference key="NSDelegate"/>
 											<reference key="NSDataSource"/>
 											<int key="NSColumnAutoresizingStyle">5</int>
@@ -801,7 +801,7 @@
 											<int key="NSTableViewDraggingDestinationStyle">0</int>
 										</object>
 									</object>
-									<string key="NSFrame">{{1, 17}, {333, 117}}</string>
+									<string key="NSFrame">{{1, 17}, {344, 133}}</string>
 									<reference key="NSSuperview" ref="596747186"/>
 									<reference key="NSNextKeyView" ref="324630736"/>
 									<reference key="NSDocView" ref="324630736"/>
@@ -835,7 +835,7 @@
 										<bool key="EncodedWithXMLCoder">YES</bool>
 										<reference ref="956756565"/>
 									</object>
-									<string key="NSFrame">{{1, 0}, {333, 17}}</string>
+									<string key="NSFrame">{{1, 0}, {344, 17}}</string>
 									<reference key="NSSuperview" ref="596747186"/>
 									<reference key="NSNextKeyView" ref="956756565"/>
 									<reference key="NSDocView" ref="956756565"/>
@@ -844,7 +844,7 @@
 								</object>
 								<reference ref="102122347"/>
 							</object>
-							<string key="NSFrame">{{4, 38}, {335, 135}}</string>
+							<string key="NSFrame">{{-1, 33}, {346, 151}}</string>
 							<reference key="NSSuperview" ref="598881040"/>
 							<reference key="NSNextKeyView" ref="78472899"/>
 							<int key="NSsFlags">562</int>
@@ -858,7 +858,7 @@
 						<object class="NSButton" id="368945695">
 							<reference key="NSNextResponder" ref="598881040"/>
 							<int key="NSvFlags">268</int>
-							<string key="NSFrame">{{116, 8}, {111, 23}}</string>
+							<string key="NSFrame">{{117, 4}, {111, 25}}</string>
 							<reference key="NSSuperview" ref="598881040"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSButtonCell" key="NSCell" id="897678555">
@@ -867,8 +867,8 @@
 								<string key="NSContents">Clear History</string>
 								<reference key="NSSupport" ref="486366753"/>
 								<reference key="NSControlView" ref="368945695"/>
-								<int key="NSButtonFlags">-2033434369</int>
-								<int key="NSButtonFlags2">160</int>
+								<int key="NSButtonFlags">-2038152961</int>
+								<int key="NSButtonFlags2">163</int>
 								<string key="NSAlternateContents"/>
 								<string key="NSKeyEquivalent"/>
 								<int key="NSPeriodicDelay">400</int>
@@ -1221,6 +1221,14 @@
 						<reference key="destination" ref="714674465"/>
 					</object>
 					<int key="connectionID">634</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">historytable</string>
+						<reference key="source" ref="976324537"/>
+						<reference key="destination" ref="324630736"/>
+					</object>
+					<int key="connectionID">635</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -2066,7 +2074,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">634</int>
+			<int key="maxID">635</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -2124,12 +2132,14 @@
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>historytable</string>
 							<string>historywindow</string>
 							<string>statusMenu</string>
 							<string>window</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>NSTableView</string>
 							<string>NSWindow</string>
 							<string>NSMenu</string>
 							<string>NSWindow</string>
@@ -2139,12 +2149,17 @@
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>historytable</string>
 							<string>historywindow</string>
 							<string>statusMenu</string>
 							<string>window</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<object class="IBToOneOutletInfo">
+								<string key="name">historytable</string>
+								<string key="candidateClassName">NSTableView</string>
+							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">historywindow</string>
 								<string key="candidateClassName">NSWindow</string>

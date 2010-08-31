@@ -147,6 +147,10 @@
     [statusItem setToolTip:@"MAL Updater OS X"];
     //Enables highlighting
     [statusItem setHighlightMode:YES];
+	//Sort Date Column by default
+	NSSortDescriptor* sortDescriptor = [[[NSSortDescriptor alloc]
+										 initWithKey: @"Date" ascending: NO] autorelease];
+	[historytable setSortDescriptors:[NSArray arrayWithObject:sortDescriptor]];
 }
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
 	// Insert code here to initialize your application

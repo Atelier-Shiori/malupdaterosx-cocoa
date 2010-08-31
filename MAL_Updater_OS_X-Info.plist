@@ -7,7 +7,7 @@
 	<key>NSUIElement</key>
 	<string>1</string>
 	<key>SUFeedURL</key>
-	<string>http://chikorita157.notcliche.com/malclientosx/malupdaterosx.xml</string>
+	<string>http://chikorita157.com/malclientosx/malupdaterosx.xml</string>
 	<key>SUPublicDSAKeyFile</key>
 	<string>dsa_pub.pem</string>
 	<key>CFBundleExecutable</key>

@@ -14,6 +14,7 @@
     NSWindow *window;
 	NSWindow *historywindow;
 	IBOutlet NSMenu *statusMenu;
+	IBOutlet NSTableView *historytable;
     NSStatusItem                *statusItem;
     NSImage                        *statusImage;
     NSImage                        *statusHighlightImage;
