@@ -82,15 +82,6 @@
 		}
 		else {
 			// Not Successful
-			[ScrobblerStatus setObjectValue:@"Scrobble Status: Scrobble Failed. Retrying in 5 mins..."];
-			[GrowlApplicationBridge notifyWithTitle:@"Scrobble Unsuccessful."
-										description:@"Retrying in 5 mins..."
-								   notificationName:@"Message"
-										   iconData:nil
-										   priority:0
-										   isSticky:NO
-									   clickContext:[NSDate date]];
-			Success = NO;
 		}
 		// Empty out Detected Title/Episode to prevent same title detection
 		DetectedTitle = @"";
@@ -126,20 +117,50 @@
 	// Get Status Code
 	int statusCode = [request responseStatusCode];
 			NSString *response = [request responseString];
-	if (statusCode == 200 ) {
-		return [self getaniid:response];
-	}
-	else {
-		Success = NO;
-		[ScrobblerStatus setObjectValue:@"Scrobble Status: Scrobble Failed. Retrying in 5 mins..."];
-		[GrowlApplicationBridge notifyWithTitle:@"Scrobble Unsuccessful."
-									description:@"Retrying in 5 mins..."
-							   notificationName:@"Message"
-									   iconData:nil
-									   priority:0
-									   isSticky:NO
-								   clickContext:[NSDate date]];
-		return @"";
+	switch (statusCode) {
+		case 200:
+			return [self getaniid:response];
+			break;
+			
+		case 0:
+			Success = NO;
+			[ScrobblerStatus setObjectValue:@"Update Failed: No Internet Connection."];
+			[GrowlApplicationBridge notifyWithTitle:@"Scrobble Unsuccessful."
+										description:@"No Internet Connection. Retrying in 5 mins"
+								   notificationName:@"Message"
+										   iconData:nil
+										   priority:0
+										   isSticky:NO
+									   clickContext:[NSDate date]];
+			return @"";
+			break;
+
+		case 500:
+		case 502:
+			Success = NO;
+			[ScrobblerStatus setObjectValue:@"Unofficial MAL API is unaviliable."];
+			[GrowlApplicationBridge notifyWithTitle:@"Scrobble Unsuccessful."
+										description:@"Unofficial MAL API is unaviliable. Contact the Unofficial MAL API Developers."
+								   notificationName:@"Message"
+										   iconData:nil
+										   priority:0
+										   isSticky:NO
+									   clickContext:[NSDate date]];
+			return @"";
+			break;
+			
+		default:
+			Success = NO;
+			[ScrobblerStatus setObjectValue:@"Scrobble Status: Scrobble Failed. Retrying in 5 mins..."];
+			[GrowlApplicationBridge notifyWithTitle:@"Scrobble Unsuccessful."
+										description:@"Retrying in 5 mins..."
+								   notificationName:@"Message"
+										   iconData:nil
+										   priority:0
+										   isSticky:NO
+									   clickContext:[NSDate date]];
+			return @"";
+			break;
 	}
 	
 }

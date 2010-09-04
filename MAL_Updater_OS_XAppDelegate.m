@@ -171,6 +171,19 @@
 	}
 	// Hide Window
 	[window orderOut:self];
+	
+	// Notify User if there is no Account Info
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	if ([[defaults objectForKey:@"Base64Token"] length] == 0) {
+		//Notify the user that there is no login token.
+		[GrowlApplicationBridge notifyWithTitle:@"MAL Updater OS X"
+									description:@"No Auth Token Detected. \n\nBefore you can use this program, you need to verify your MAL Account. This can be done in Preferences."
+							   notificationName:@"Message"
+									   iconData:nil
+									   priority:0
+									   isSticky:NO
+								   clickContext:[NSDate date]];
+	}
 }
 -(void)showPreferences:(id)sender
 {
@@ -289,6 +302,7 @@
 					  modalDelegate:self
 					 didEndSelector:@selector(clearhistoryended:code:conext:)
 						contextInfo:NULL];
+
 }
 -(void)clearhistoryended:(NSAlert *)alert
 					code:(int)choice
