@@ -153,6 +153,8 @@
 	[historytable setSortDescriptors:[NSArray arrayWithObject:sortDescriptor]];
 }
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
+	// Check for Crash Reports
+	[CMCrashReporter check];
 	// Insert code here to initialize your application
 	//Check if Application is in the /Applications Folder
 	PFMoveToApplicationsFolderIfNecessary();

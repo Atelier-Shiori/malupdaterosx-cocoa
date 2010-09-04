@@ -6,6 +6,7 @@ To use, launch MAL Updater OS X. Go to the MAL Updater OS X icon on the menu bar
 
 To compile, make sure you have these frameworks on your computer.
 BGHUDAppKit.framework
+CMrashReporter.framework
 Sparkle.framework (GC Version)
 OgreKit.framework
 Growl.framework

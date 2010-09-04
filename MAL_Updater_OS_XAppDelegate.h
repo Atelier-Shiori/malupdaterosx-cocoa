@@ -8,6 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import <Growl/Growl.h>
+#import <CMCrashReporter/CMCrashReporter.h>
 
 @class PreferenceController;
 @interface MAL_Updater_OS_XAppDelegate : NSObject <GrowlApplicationBridgeDelegate> {
