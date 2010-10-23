@@ -9,6 +9,7 @@
 @interface PreferenceController  : NSWindowController {
 	IBOutlet NSTextField * fieldusername;
 	IBOutlet NSTextField * fieldpassword;
+	IBOutlet NSTextField * APIUrl;
 	IBOutlet NSButton * savebut;
 	IBOutlet NSButton * clearbut;
 	int choice;
@@ -18,6 +19,8 @@
 -(IBAction)startlogin:(id)sender;
 -(IBAction)clearlogin:(id)sender;
 -(IBAction)registermal:(id)sender;
+-(IBAction)testapi:(id)sender;
+-(IBAction)resetapiurl:(id)sender;
 -(void)clearcookieended:(NSAlert *)alert
 				   code:(int)achoice
 				 conext:(void *)v;

@@ -146,6 +146,36 @@
 		[savebut setEnabled: YES];
 	}
 }
+-(IBAction)testapi:(id)sender
+{
+	//Load API URL
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	//Set URL
+	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/animelist/chikorita157", [defaults objectForKey:@"MALAPIURL"]]];
+	ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
+	//Ignore Cookies
+	[request setUseCookiePersistence:NO];
+	//Test API
+	[request startSynchronous];
+	// Get Status Code
+	int statusCode = [request responseStatusCode];
+	switch (statusCode) {
+		case 200:
+			[self showsheetmessage:@"API Test Successful" explaination:[NSString stringWithFormat:@"HTTP Code: %i", statusCode]];
+			break;
+		default:
+			[self showsheetmessage:@"API Test Unsuccessful" explaination:[NSString stringWithFormat:@"HTTP Code: %i", statusCode]];
+			break;
+	}
+	//release
+	request = nil;
+	url = nil;
+	
+}
+-(IBAction)resetapiurl:(id)sender
+{
+	[APIUrl setStringValue:@"http://mal-api.com/"];
+}
 -(void)showsheetmessage:(NSString *)message
 		   explaination:(NSString *)explaination
 {
