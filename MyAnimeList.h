@@ -12,6 +12,7 @@
 
 @interface MyAnimeList : NSObject {
 	NSString * Base64Token;
+	NSString * MALApiUrl;
 	NSString * LastScrobbledTitle;
 	NSString * LastScrobbledEpisode;
 	NSString * DetectedTitle;

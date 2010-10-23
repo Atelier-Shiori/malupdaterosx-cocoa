@@ -102,9 +102,10 @@
 																				NULL,
 																				(CFStringRef)@"!*'();:@&=+$,/?%#[]",
 																				kCFStringEncodingUTF8 );
+	MALApiUrl = [defaults objectForKey:@"MALAPIURL"];
 
 	//Set Search API
-	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://mal-api.com/anime/search?q=%@",searchterm]];
+	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/anime/search?q=%@",MALApiUrl, searchterm]];
 	//Release searchterm
 	[searchterm release];
 	ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
@@ -124,7 +125,7 @@
 			
 		case 0:
 			Success = NO;
-			[ScrobblerStatus setObjectValue:@"Update Failed: No Internet Connection."];
+			[ScrobblerStatus setObjectValue:@"Scrobble Status: No Internet Connection."];
 			[GrowlApplicationBridge notifyWithTitle:@"Scrobble Unsuccessful."
 										description:@"No Internet Connection. Retrying in 5 mins"
 								   notificationName:@"Message"
@@ -138,7 +139,7 @@
 		case 500:
 		case 502:
 			Success = NO;
-			[ScrobblerStatus setObjectValue:@"Unofficial MAL API is unaviliable."];
+			[ScrobblerStatus setObjectValue:@"Scrobble Status: Unofficial MAL API is unaviliable."];
 			[GrowlApplicationBridge notifyWithTitle:@"Scrobble Unsuccessful."
 										description:@"Unofficial MAL API is unaviliable. Contact the Unofficial MAL API Developers."
 								   notificationName:@"Message"
@@ -295,7 +296,7 @@ foundtitle:
 -(BOOL)checkstatus:(NSString *)AniID {
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	//Set Search API
-	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://mal-api.com/anime/%@?mine=1",AniID]];
+	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/anime/%@?mine=1",MALApiUrl, AniID]];
 	ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
 	//Ignore Cookies
 	[request setUseCookiePersistence:NO];
@@ -335,7 +336,7 @@ foundtitle:
 		// Update the title
 		NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 		//Set library/scrobble API
-		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://mal-api.com/animelist/anime/%@",AniID]];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/animelist/anime/%@", MALApiUrl, AniID]];
 		ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
 		//Ignore Cookies
 		[request setUseCookiePersistence:NO];
@@ -397,7 +398,7 @@ foundtitle:
 	// Add the title
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	//Set library/scrobble API
-	NSURL *url = [NSURL URLWithString:@"http://mal-api.com/animelist/anime"];
+	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/animelist/anime", MALApiUrl]];
 	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
 	//Ignore Cookies
 	[request setUseCookiePersistence:NO];

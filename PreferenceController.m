@@ -24,6 +24,7 @@
 	//Check Login Keychain
 	[self loadlogin];
 }
+
 -(void)loadlogin
 {
 	// Load Username
@@ -64,6 +65,8 @@
 		//Disable Login Button
 		[savebut setEnabled: NO];
 		[savebut displayIfNeeded];
+		//Load API URL
+		NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 		if ( [[fieldusername stringValue] length] == 0) {
 			//No Username Entered! Show error message
 			[self showsheetmessage:@"MAL Updater OS X was unable to log you in since you didn't enter a username" explaination:@"Enter a valid username and try logging in again"];
@@ -77,7 +80,7 @@
 			}
 			else {
 				//Set Login URL
-				NSURL *url = [NSURL URLWithString:@"http://mal-api.com/account/verify_credentials"];
+				NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/account/verify_credentials", [defaults objectForKey:@"MALAPIURL"]]];
 				ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
 				//Ignore Cookies
 				[request setUseCookiePersistence:NO];
