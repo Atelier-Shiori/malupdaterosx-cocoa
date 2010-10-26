@@ -316,7 +316,12 @@ foundtitle:
 	if (statusCode == 200 ) {
 		// Initalize JSON parser
 		NSDictionary *animeinfo = [response JSONValue];
-		TotalEpisodes = [animeinfo objectForKey:@"episodes"];
+		if ([animeinfo objectForKey:@"episodes"] == [NSNull null]) { // To prevent the scrobbler from failing because there is no episode total.
+			TotalEpisodes = @"0"; // No Episode Total, Set to 0.
+		}
+		else { // Episode Total Exists
+			TotalEpisodes = [animeinfo objectForKey:@"episodes"];
+		}
 		DetectedCurrentEpisode = [animeinfo objectForKey:@"watched_episodes"];
 		// Makes sure the values don't get released
 		[TotalEpisodes retain];
@@ -352,12 +357,7 @@ foundtitle:
 	    [request setPostValue:@"PUT" forKey:@"_method"];
 	    [request setPostValue:DetectedEpisode forKey:@"episodes"];
 		//Set Status
-		if (TotalEpisodes == [NSNull null]) { // To prevent the scrobbler from failing because there is no episode total.
-			// No Total Episode Count
-			// Still Watching
-			[request setPostValue:@"watching" forKey:@"status"];
-		}
-		else if([DetectedEpisode intValue] == [TotalEpisodes intValue]) {
+		if([DetectedEpisode intValue] == [TotalEpisodes intValue]) {
 			// Since Detected Episode = Total Episode, set the status as "Complete"
 			[request setPostValue:@"completed" forKey:@"status"];
 		}
