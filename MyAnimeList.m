@@ -58,7 +58,7 @@
 - (void)firetimer:(NSTimer *)aTimer {
 	if ([self detectmedia] == 1) { // Detects Title
 		[ScrobblerStatus setObjectValue:@"Scrobble Status: Scrobbling..."];
-			NSString * AniID;
+		NSString * AniID;
 		NSLog(@"Getting AniID");
 		AniID = [self searchanime];
 		if (AniID.length > 0) {
@@ -75,6 +75,10 @@
 					Success = [self updatetitle:AniID];
 					break;
 			}
+				//Set up Delegate
+				MAL_Updater_OS_XAppDelegate* appDelegate=[NSApp delegate];
+				//Set last successful scrobble to statusItem Tooltip
+				[appDelegate setStatusToolTip:[NSString stringWithFormat:@"MAL Updater OS X - Last Scrobble: %@ - %@", LastScrobbledTitle, LastScrobbledEpisode]];	
 				//Retain Scrobbled Title and Episode
 				[LastScrobbledTitle retain];
 				[LastScrobbledEpisode retain];
@@ -94,6 +98,7 @@
 
 }
 -(NSString *)searchanime{
+	NSLog(@"Searching For Title");
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	//Escape Search Term
 	NSString * searchterm = (NSString *)CFURLCreateStringByAddingPercentEscapes(
@@ -294,6 +299,7 @@ foundtitle:
 	return titleid;
 }
 -(BOOL)checkstatus:(NSString *)AniID {
+	NSLog(@"Checking Status");
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	//Set Search API
 	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/anime/%@?mine=1",MALApiUrl, AniID]];
@@ -326,7 +332,8 @@ foundtitle:
 	return NO;
 }
 -(BOOL)updatetitle:(NSString *)AniID {
-	if ([DetectedEpisode intValue] <= [DetectedCurrentEpisode intValue] ) {
+	NSLog(@"Updating Title");
+	if ([DetectedEpisode intValue] <= [DetectedCurrentEpisode intValue] ) { 
 		// Already Watched, no need to scrobble
 		[ScrobblerStatus setObjectValue:@"Scrobble Status: Same Episode Playing, Scrobble not needed."];
 		[LastScrobbled setObjectValue:[NSString stringWithFormat:@"Last Scrobbled: %@ - %@",DetectedTitle,DetectedEpisode]];
@@ -345,7 +352,12 @@ foundtitle:
 	    [request setPostValue:@"PUT" forKey:@"_method"];
 	    [request setPostValue:DetectedEpisode forKey:@"episodes"];
 		//Set Status
-		if ([DetectedEpisode intValue] == [TotalEpisodes intValue]) {
+		if (TotalEpisodes == [NSNull null]) { // To prevent the scrobbler from failing because there is no episode total.
+			// No Total Episode Count
+			// Still Watching
+			[request setPostValue:@"watching" forKey:@"status"];
+		}
+		else if([DetectedEpisode intValue] == [TotalEpisodes intValue]) {
 			// Since Detected Episode = Total Episode, set the status as "Complete"
 			[request setPostValue:@"completed" forKey:@"status"];
 		}
@@ -395,6 +407,7 @@ foundtitle:
 	}
 }
 -(BOOL)addtitle:(NSString *)AniID {
+	NSLog(@"Adding Title");
 	// Add the title
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	//Set library/scrobble API

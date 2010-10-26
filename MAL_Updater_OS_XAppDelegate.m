@@ -326,5 +326,9 @@
 		}
 	}
 	
-}		
+}	
+-(void)setStatusToolTip:(NSString*)toolTip
+{
+    [statusItem setToolTip:toolTip];
+}
 @end

@@ -40,4 +40,5 @@
 -(void)clearhistoryended:(NSAlert *)alert
 					code:(int)choice
 				  conext:(void *)v;
+-(void)setStatusToolTip:(NSString*)toolTip;
 @end
