@@ -65,15 +65,13 @@
 			// Check Status and Update
 			BOOL UpdateBool = [self checkstatus:AniID];
 			if (UpdateBool == 1) {
-			switch ([DetectedCurrentEpisode intValue]) {
-				case 0:
-					// Add Title
-					Success = [self addtitle:AniID];
-					break;
-				default:
-					// Update Title as Usual
-					Success = [self updatetitle:AniID];
-					break;
+			if ([WatchStatus isEqualToString:@"Nothing"]) {
+				//Title is not on list. Add Title
+				Success = [self addtitle:AniID];
+			}
+			else {
+				// Update Title as Usual
+				Success = [self updatetitle:AniID];
 			}
 				//Set up Delegate
 				MAL_Updater_OS_XAppDelegate* appDelegate=[NSApp delegate];
@@ -323,6 +321,15 @@ foundtitle:
 			TotalEpisodes = [animeinfo objectForKey:@"episodes"];
 		}
 		DetectedCurrentEpisode = [animeinfo objectForKey:@"watched_episodes"];
+		// Watch Status
+		if ([animeinfo objectForKey:@"watched_status"] == [NSNull null]) {
+			NSLog(@"Not on List");
+			WatchStatus = @"Nothing";
+		}
+		else {
+			NSLog(@"Title on Liist");
+			WatchStatus = [animeinfo objectForKey:@"watched_status"];
+		}
 		// Makes sure the values don't get released
 		[TotalEpisodes retain];
 		[DetectedCurrentEpisode retain];

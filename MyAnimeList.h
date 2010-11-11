@@ -19,6 +19,7 @@
 	NSString * DetectedEpisode;
 	NSString * DetectedCurrentEpisode;
 	NSString * TotalEpisodes;
+	NSString * WatchStatus;
 	BOOL Success;
 	NSTimer * timer;
 	IBOutlet NSMenuItem * togglescrobbler;
