@@ -174,7 +174,12 @@
 }
 -(IBAction)resetapiurl:(id)sender
 {
+	//Reset Unofficial MAL API URL
 	[APIUrl setStringValue:@"http://mal-api.com/"];
+	// Generate API Key
+	NSUserDefaults *defaults = [[NSUserDefaults standardUserDefaults] autorelease];
+	[defaults setObject:[APIUrl stringValue] forKey:@"MALAPIURL"];
+	
 }
 -(void)showsheetmessage:(NSString *)message
 		   explaination:(NSString *)explaination
