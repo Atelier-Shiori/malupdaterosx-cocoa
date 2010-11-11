@@ -2,9 +2,9 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="7.10">
 	<data>
 		<int key="IBDocument.SystemTarget">1050</int>
-		<string key="IBDocument.SystemVersion">10F569</string>
-		<string key="IBDocument.InterfaceBuilderVersion">788</string>
-		<string key="IBDocument.AppKitVersion">1038.29</string>
+		<string key="IBDocument.SystemVersion">10H574</string>
+		<string key="IBDocument.InterfaceBuilderVersion">804</string>
+		<string key="IBDocument.AppKitVersion">1038.35</string>
 		<string key="IBDocument.HIToolboxVersion">461.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -15,19 +15,19 @@
 			</object>
 			<object class="NSMutableArray" key="dict.values">
 				<bool key="EncodedWithXMLCoder">YES</bool>
-				<string>788</string>
+				<string>804</string>
 				<string>1.2.5</string>
 			</object>
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="42"/>
 			<integer value="117"/>
+			<integer value="42"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<string>com.brandonwalkin.BWToolkit</string>
 			<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+			<string>com.brandonwalkin.BWToolkit</string>
 		</object>
 		<object class="NSMutableDictionary" key="IBDocument.Metadata">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -94,6 +94,10 @@
 				</object>
 			</object>
 			<object class="NSUserDefaultsController" id="718882257">
+				<object class="NSMutableArray" key="NSDeclaredKeys">
+					<bool key="EncodedWithXMLCoder">YES</bool>
+					<string>SUSendProfileInfo</string>
+				</object>
 				<bool key="NSSharedInstance">YES</bool>
 			</object>
 			<object class="NSWindowTemplate" id="626676764">
@@ -538,7 +542,7 @@
 													<string key="NSColorName">controlColor</string>
 													<object class="NSColor" key="NSColor">
 														<int key="NSColorSpace">3</int>
-														<bytes key="NSWhite">MC42NjY2NjY2ODY1AA</bytes>
+														<bytes key="NSWhite">MC42NjY2NjY2NjY3AA</bytes>
 													</object>
 												</object>
 												<object class="NSColor" key="NSTextColor" id="334685027">
@@ -1011,10 +1015,10 @@
 						</object>
 						<object class="NSMutableData" key="BWSTHWindowSizesByIdentifier">
 							<bytes key="NS.bytes">BAtzdHJlYW10eXBlZIHoA4QBQISEhAxOU0RpY3Rpb25hcnkAhIQITlNPYmplY3QAhYQBaQOShISECE5T
-U3RyaW5nAZSEASskMEQ1OTUwRDEtRDRBOC00NEM2LTlEQkMtMjUxQ0ZFRjg1MkUyhpKEhIQHTlNWYWx1
-ZQCUhAEqhIQMe19OU1NpemU9ZmZ9mgAAhpKElpckN0FFMjREN0ItOTVBNi00M0IxLTlFRDMtNzkwRDc2
-MjRCNzIzhpKEmJmZmoF8AYGwAIaShJaXJEJDQzBGODZDLTNFMzAtNENBQy04MDAwLTc2RjcwQjM4RkI2
-Q4aShJiZmZqBuwGBKgGGhg</bytes>
+U3RyaW5nAZSEASskN0FFMjREN0ItOTVBNi00M0IxLTlFRDMtNzkwRDc2MjRCNzIzhpKEhIQHTlNWYWx1
+ZQCUhAEqhIQLe0NHU2l6ZT1kZH2agXwBgbAAhpKElpckMEQ1OTUwRDEtRDRBOC00NEM2LTlEQkMtMjUx
+Q0ZFRjg1MkUyhpKEmJmZmgAAhpKElpckQkNDMEY4NkMtM0UzMC00Q0FDLTgwMDAtNzZGNzBCMzhGQjZD
+hpKEmJmZmoG7AYEqAYaGA</bytes>
 						</object>
 						<string key="BWSTHSelectedIdentifier">0D5950D1-D4A8-44C6-9DBC-251CFEF852E2</string>
 						<string key="BWSTHOldWindowTitle">Window</string>
@@ -1024,32 +1028,16 @@ Q4aShJiZmZqBuwGBKgGGhg</bytes>
 					<bool key="BWSTIsPreferencesToolbar">YES</bool>
 					<reference key="BWSTEnabledByIdentifier" ref="2"/>
 				</object>
-				<string key="NSWindowContentMaxSize">{3.40282e+38, 3.40282e+38}</string>
+				<string key="NSWindowContentMaxSize">{1.79769e+308, 1.79769e+308}</string>
 				<reference key="NSWindowView" ref="634754456"/>
 				<string key="NSScreenRect">{{0, 0}, {1440, 878}}</string>
-				<string key="NSMaxSize">{3.40282e+38, 3.40282e+38}</string>
+				<string key="NSMaxSize">{1.79769e+308, 1.79769e+308}</string>
 				<string key="NSFrameAutosaveName">PreferenceWindowPos</string>
 			</object>
 		</object>
 		<object class="IBObjectContainer" key="IBDocument.Objects">
 			<object class="NSMutableArray" key="connectionRecords">
 				<bool key="EncodedWithXMLCoder">YES</bool>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: values.SUEnableSystemProfiling</string>
-						<reference key="source" ref="387568996"/>
-						<reference key="destination" ref="718882257"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="387568996"/>
-							<reference key="NSDestination" ref="718882257"/>
-							<string key="NSLabel">value: values.SUEnableSystemProfiling</string>
-							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">values.SUEnableSystemProfiling</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">136</int>
-				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
 						<string key="label">value: values.Username</string>
@@ -1225,6 +1213,22 @@ Q4aShJiZmZqBuwGBKgGGhg</bytes>
 						<reference key="destination" ref="151563113"/>
 					</object>
 					<int key="connectionID">219</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: values.SUSendProfileInfo</string>
+						<reference key="source" ref="387568996"/>
+						<reference key="destination" ref="718882257"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="387568996"/>
+							<reference key="NSDestination" ref="718882257"/>
+							<string key="NSLabel">value: values.SUSendProfileInfo</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">values.SUSendProfileInfo</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">220</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -1869,7 +1873,7 @@ Q4aShJiZmZqBuwGBKgGGhg</bytes>
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">219</int>
+			<int key="maxID">220</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
