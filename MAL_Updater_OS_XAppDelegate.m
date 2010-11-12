@@ -190,6 +190,8 @@
 }
 -(void)showPreferences:(id)sender
 {
+	//Since LSUIElement is set to 1 to hide the dock icon, it causes unattended behavior of having the program windows not show to the front.
+	[NSApp activateIgnoringOtherApps:YES];
 	//Is preferenceController nil?
 	if (!preferenceController) {
 		preferenceController = [[PreferenceController alloc] init];
@@ -270,6 +272,8 @@
 }
 -(IBAction)showhistory:(id)sender
 {
+		//Since LSUIElement is set to 1 to hide the dock icon, it causes unattended behavior of having the program windows not show to the front.
+		[NSApp activateIgnoringOtherApps:YES];
 		[historywindow makeKeyAndOrderFront:nil];
 
 }
