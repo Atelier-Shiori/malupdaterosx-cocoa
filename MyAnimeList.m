@@ -91,6 +91,7 @@
 		// Release Detected Title/Episode.
 		[DetectedTitle release];
 		[DetectedEpisode release];
+		[TitleScore release];
 	}
 
 
@@ -325,10 +326,14 @@ foundtitle:
 		if ([animeinfo objectForKey:@"watched_status"] == [NSNull null]) {
 			NSLog(@"Not on List");
 			WatchStatus = @"Nothing";
+			TitleScore = @"0"; 
 		}
 		else {
-			NSLog(@"Title on Liist");
+			NSLog(@"Title on List");
 			WatchStatus = [animeinfo objectForKey:@"watched_status"];
+			TitleScore = [animeinfo objectForKey:@"score"]; 
+			//Retain Title Score
+			[TitleScore retain];
 		}
 		// Makes sure the values don't get released
 		[TotalEpisodes retain];
@@ -372,6 +377,8 @@ foundtitle:
 			// Still Watching
 			[request setPostValue:@"watching" forKey:@"status"];
 		}	
+		// Set existing score to prevent the score from being erased.
+		[request setPostValue:TitleScore forKey:@"score"];
 		// Do Update
 		[request startSynchronous];
 		
