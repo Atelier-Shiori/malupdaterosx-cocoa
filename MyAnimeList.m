@@ -332,6 +332,7 @@ foundtitle:
 			NSLog(@"Title on List");
 			WatchStatus = [animeinfo objectForKey:@"watched_status"];
 			TitleScore = [animeinfo objectForKey:@"score"]; 
+			NSLog(@"Title Score %@", TitleScore);
 			//Retain Title Score
 			[TitleScore retain];
 		}
