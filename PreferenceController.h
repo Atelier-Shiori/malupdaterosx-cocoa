@@ -7,11 +7,25 @@
 //
 #import <Sparkle/Sparkle.h>
 @interface PreferenceController  : NSWindowController {
+	//General
+	IBOutlet NSTextField * APIUrl;
+	
+	//Login Preferences
 	IBOutlet NSTextField * fieldusername;
 	IBOutlet NSTextField * fieldpassword;
-	IBOutlet NSTextField * APIUrl;
 	IBOutlet NSButton * savebut;
 	IBOutlet NSButton * clearbut;
+	
+	//Twitter Preferences
+	IBOutlet NSButton * twitterlogin;
+	IBOutlet NSButton * twitterlogout;
+	IBOutlet NSTextField * twitterusername;
+	IBOutlet NSTextField * twitterpassword;
+	IBOutlet NSButton * chkenabletwitter;
+	IBOutlet NSTextField * usernamelbl;
+	IBOutlet NSTextField * passwordlbl;
+	IBOutlet NSTextField * logintwitterlbl;
+	IBOutlet NSTextField * authorizedstatus;
 	int choice;
 }
 -(IBAction)checkupdates:(id)sender;

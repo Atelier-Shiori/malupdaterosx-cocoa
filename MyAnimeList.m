@@ -10,6 +10,7 @@
 #import "ASIHTTPRequest.h"
 #import "ASIFormDataRequest.h"
 #import "MAL_Updater_OS_XAppDelegate.h"
+#import "Twitter.h"
 
 @implementation MyAnimeList
 - (IBAction)toggletimer:(id)sender {
@@ -77,6 +78,10 @@
 				MAL_Updater_OS_XAppDelegate* appDelegate=[NSApp delegate];
 				//Set last successful scrobble to statusItem Tooltip
 				[appDelegate setStatusToolTip:[NSString stringWithFormat:@"MAL Updater OS X - Last Scrobble: %@ - %@", LastScrobbledTitle, LastScrobbledEpisode]];	
+				//Twitter
+				//Set up Delegate
+				Twitter* twitterDelegate=[NSApp delegate];
+				[twitterDelegate postupdate:[NSString stringWithFormat:@"Watching %@ - %@. Current Score: %@", LastScrobbledTitle, LastScrobbledEpisode, TitleScore]]
 				//Retain Scrobbled Title and Episode
 				[LastScrobbledTitle retain];
 				[LastScrobbledEpisode retain];

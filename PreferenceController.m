@@ -39,8 +39,35 @@
 		[clearbut setEnabled: NO];
 		[savebut setEnabled: YES];
 	}
+	NSString *TwitterKey = [defaults objectForKey:@"OAUTH_MAL Updater OS X_twitter.com_KEY"];
+	NSString *TwitterSecret = [defaults objectForKey:@"OAUTH_MAL Updater OS X_twitter.com_SECRET"];
+	// Check Twitter Auth
+	if (TwitterKey.length > 0 && TwitterSecret.length > 0) {
+		[twitterlogin setHidden:TRUE];
+		[twitterlogout setHidden:FALSE];
+		[twitterusername setHidden:TRUE];
+		[twitterpassword setHidden:TRUE];
+		[chkenabletwitter setHidden:FALSE];
+		[usernamelbl setHidden:TRUE];
+		[passwordlbl setHidden:TRUE];
+		[logintwitterlbl setHidden:TRUE];
+		[authorizedstatus setHidden:FALSE];
+	}
+	else {
+		[twitterlogin setHidden:FALSE];
+		[twitterlogout setHidden:TRUE];
+		[twitterusername setHidden:FALSE];
+		[twitterpassword setHidden:FALSE];
+		[chkenabletwitter setHidden:TRUE];
+		[usernamelbl setHidden:FALSE];
+		[passwordlbl setHidden:FALSE];
+		[logintwitterlbl setHidden:FALSE];
+		[authorizedstatus setHidden:TRUE];
+	}
 	//Release Keychain Item
 	[Base64Token release];
+	[TwitterKey release];
+	[TwitterSecret release];
 }
 -(IBAction)clearlogin:(id)sender
 {
