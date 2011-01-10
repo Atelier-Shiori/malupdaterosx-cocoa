@@ -13,8 +13,8 @@
 // Twitter Consumer Key and Secret
 // Register for a Key/Secret at Twitter Developers Site - http://dev.twitter.com/
 // Twitter Support will not work without it! XAuth support is required too. 
-NSString * const consumerKey = @"<consumer key here>";
-NSString * const consumerSecret = @"<consumer secret here>";
+//NSString * const consumerKey = @"<consumer key here>";
+//NSString * const consumerSecret = @"<consumer secret here>";
 
 - (IBAction)authTwitter:(id)sender {
 	// See if Twitter Engine is allocated
@@ -75,7 +75,8 @@ NSString * const consumerSecret = @"<consumer secret here>";
 	NSString *TwitterSecret = [defaults objectForKey:@"OAUTH_MAL Updater OS X_twitter.com_SECRET"];
 	// Check Twitter Auth
 	if (TwitterKey.length > 0 && TwitterSecret.length > 0) {
-		if ([defaults boolForKey:@"ShowAtStartup"] == 0) {
+		if ([defaults boolForKey:@"EnableTwitterUpdates"] == 1) {
+			NSLog(@"Posting Update");
 			if (twitterEngine == nil) {
 				NSLog(@"Creating MGTwitterEngine");
 				// Create a TwitterEngine

@@ -36,4 +36,5 @@
 -(BOOL)checkstatus:(NSString *)AniID;
 -(BOOL)updatetitle:(NSString *)AniID;
 -(BOOL)addtitle:(NSString *)AniID;
+-(void)posttwitterupdate:(NSString *)message;
 @end
