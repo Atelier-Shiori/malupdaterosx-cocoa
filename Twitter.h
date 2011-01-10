@@ -1,9 +1,9 @@
 //
 //  Twitter.h
-//  MAL Updater OS X
+//  MAL Updater OS X - Twitter Class
 //
-//  Created by Nanoha Takamachi on 1/9/11.
-//  Copyright 2011 __MyCompanyName__. All rights reserved.
+//  Created by Nanoha Takamachi on 1/5/11.
+//  Copyright 2009-2011 Chikorita157's Anime Blog. All rights reserved. All rights reserved. Code licensed under New BSD License.
 //
 
 #import <Cocoa/Cocoa.h>
@@ -16,18 +16,6 @@
     MGTwitterEngine *twitterEngine;
 	
 	OAToken *token;
-	IBOutlet NSTextField * twitterusername;
-	IBOutlet NSTextField * twitterpassword;
-	IBOutlet NSButton * twitterlogin;
-	IBOutlet NSButton * twitterlogout;
-	IBOutlet NSButton * chkenabletwitter;
-	IBOutlet NSTextField * usernamelbl;
-	IBOutlet NSTextField * passwordlbl;
-	IBOutlet NSTextField * logintwitterlbl;
-	IBOutlet NSTextField * authorizedstatus;
 }
-
--(IBAction)authTwitter:(id)sender;
 -(void)postupdate:(NSString *)message;
--(IBAction)logouttwitter:(id)sender;
 @end

@@ -21,6 +21,7 @@
 	NSString * TotalEpisodes;
 	NSString * WatchStatus;
 	NSString * TitleScore;
+	NSString * TitleState;
 	BOOL Success;
 	NSTimer * timer;
 	IBOutlet NSMenuItem * togglescrobbler;

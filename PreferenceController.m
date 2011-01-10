@@ -3,7 +3,7 @@
 //  MAL Updater OS X
 //
 //  Created by James M. on 8/8/10.
-//  Copyright 2009-2010 Chikorita157's Anime Blog. All rights reserved. Code licensed under New BSD License
+//  Copyright 2009-2011 Chikorita157's Anime Blog. All rights reserved. Code licensed under New BSD License
 //
 
 #import "PreferenceController.h"
@@ -224,4 +224,86 @@
 					 didEndSelector:nil
 						contextInfo:NULL];
 }
+
+- (IBAction)authTwitter:(id)sender {
+	if ( [[twitterusername stringValue] length] == 0) {
+		//No Username Entered! Show error message
+		[self showsheetmessage:@"MAL Updater OS X was unable to authorize your Twitter account since you didn't enter a username" explaination:@"Enter a valid username and try logging in again"];
+		[savebut setEnabled: YES];
+	}
+	else {
+		if ( [[twitterpassword stringValue] length] == 0 ) {
+			//No Password Entered! Show error message.
+			[self showsheetmessage:@"MAL Updater OS X was unable to authorize your Twitter account since you didn't enter a password." explaination:@"Enter a valid password and try logging in again."];
+			[savebut setEnabled: YES];
+		}
+		else {
+			// See if Twitter Engine is allocated
+			if (twitterEngine == nil) {
+				NSLog(@"Creating MGTwitterEngine");
+				// Create a TwitterEngine
+				twitterEngine = [[MGTwitterEngine alloc] initWithDelegate:self];
+				[twitterEngine setUsesSecureConnection:NO];
+				[twitterEngine setConsumerKey:consumerKey secret:consumerSecret];
+			}
+	
+			//Login
+			[twitterEngine getXAuthAccessTokenForUsername:[twitterusername stringValue] password:[twitterpassword stringValue]];
+	
+			[twitterEngine setAccessToken:authtoken];
+			//Release Twitter Stuff
+			[twitterEngine release];
+			[authtoken release];
+		}
+	}
+}
+-(IBAction)logouttwitter:(id)sender {
+	//Logout
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	// Chear Key
+	[defaults setObject:@"" forKey:@"OAUTH_MAL Updater OS X_twitter.com_KEY"];
+	// Clear Secret
+	[defaults setObject:@"" forKey:@"OAUTH_MAL Updater OS X_twitter.com_SECRET"];
+	// Change Button States
+	[twitterlogin setHidden:FALSE];
+	[twitterlogout setHidden:TRUE];
+	[twitterusername setHidden:FALSE];
+	[twitterpassword setHidden:FALSE];
+	[chkenabletwitter setHidden:TRUE];
+	[usernamelbl setHidden:FALSE];
+	[passwordlbl setHidden:FALSE];
+	[logintwitterlbl setHidden:FALSE];
+	[authorizedstatus setHidden:TRUE];
+}
+
+- (void)accessTokenReceived:(OAToken *)aToken forRequest:(NSString *)connectionIdentifier {	
+	NSLog(@"Logged in!");
+	//Retrieve Token
+	authtoken = [aToken retain];
+	//Store Token in keychain
+	[authtoken storeInUserDefaultsWithServiceProviderName:@"MAL Updater OS X" prefix:@"twitter.com"];
+	// Change Button States
+	[twitterlogin setHidden:TRUE];
+	[twitterlogout setHidden:FALSE];
+	[twitterusername setHidden:TRUE];
+	[twitterpassword setHidden:TRUE];
+	[chkenabletwitter setHidden:FALSE];
+	[usernamelbl setHidden:TRUE];
+	[passwordlbl setHidden:TRUE];
+	[logintwitterlbl setHidden:TRUE];
+	[authorizedstatus setHidden:FALSE];
+	[self showsheetmessage:@"Logged in!" explaination:@"You are successfully authorized with Twitter and OAuth keys are created."];
+	//Erase Twitter Username and Password fields
+	[twitterusername setObjectValue:@""];
+	[twitterpassword setObjectValue:@""];
+
+}
+- (void)requestSucceeded:(NSString *)requestIdentifier {
+}
+- (void)requestFailed:(NSString *)requestIdentifier withError:(NSError *)error {
+	// Report Error
+	[self showsheetmessage:@"MAL Updater OS X was unable to authorize your Twitter account" explaination:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
+	 }
+
+
 @end

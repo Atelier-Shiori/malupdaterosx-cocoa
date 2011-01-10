@@ -6,7 +6,9 @@
 //  Copyright 2009-2010 Chikorita157's Anime Blog. All rights reserved. Code licensed under New BSD License
 //
 #import <Sparkle/Sparkle.h>
-@interface PreferenceController  : NSWindowController {
+#import "MGTwitterEngine.h"
+
+@interface PreferenceController  : NSWindowController <MGTwitterEngineDelegate> {
 	//General
 	IBOutlet NSTextField * APIUrl;
 	
@@ -26,6 +28,9 @@
 	IBOutlet NSTextField * passwordlbl;
 	IBOutlet NSTextField * logintwitterlbl;
 	IBOutlet NSTextField * authorizedstatus;
+	MGTwitterEngine *twitterEngine;
+	OAToken *authtoken;
+	
 	int choice;
 }
 -(IBAction)checkupdates:(id)sender;
@@ -40,4 +45,6 @@
 				 conext:(void *)v;
 -(void)showsheetmessage:(NSString *)message
 		   explaination:(NSString *)explaination;
+-(IBAction)authTwitter:(id)sender;
+-(IBAction)logouttwitter:(id)sender;
 @end

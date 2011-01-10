@@ -79,7 +79,7 @@
 				//Set last successful scrobble to statusItem Tooltip
 				[appDelegate setStatusToolTip:[NSString stringWithFormat:@"MAL Updater OS X - Last Scrobble: %@ - %@", LastScrobbledTitle, LastScrobbledEpisode]];	
 				//Post Twitter Update
-				[self posttwitterupdate:[NSString stringWithFormat:@"Watching %@ - %@. Current Score: %@", LastScrobbledTitle, LastScrobbledEpisode, TitleScore]];
+				[self posttwitterupdate:[NSString stringWithFormat:@"%@ %@ - %@/%@. Current Score: %@/10", TitleState, LastScrobbledTitle, LastScrobbledEpisode, TotalEpisodes, TitleScore]];
 				//Retain Scrobbled Title and Episode
 				[LastScrobbledTitle retain];
 				[LastScrobbledEpisode retain];
@@ -374,12 +374,16 @@ foundtitle:
 	    [request setPostValue:DetectedEpisode forKey:@"episodes"];
 		//Set Status
 		if([DetectedEpisode intValue] == [TotalEpisodes intValue]) {
+			//Set Title State for Title (use for Twitter feature)
+			TitleState = @"completed";
 			// Since Detected Episode = Total Episode, set the status as "Complete"
-			[request setPostValue:@"completed" forKey:@"status"];
+			[request setPostValue:TitleState forKey:@"status"];
 		}
 		else {
+			//Set Title State for Title (use for Twitter feature)
+			TitleState = @"watching";
 			// Still Watching
-			[request setPostValue:@"watching" forKey:@"status"];
+			[request setPostValue:TitleState forKey:@"status"];
 		}	
 		// Set existing score to prevent the score from being erased.
 		[request setPostValue:TitleScore forKey:@"score"];
@@ -444,6 +448,9 @@ foundtitle:
 	// Store Scrobbled Title and Episode
 	LastScrobbledTitle = DetectedTitle;
 	LastScrobbledEpisode = DetectedEpisode;
+	
+	//Set Title State for Title (use for Twitter feature)
+	TitleState = @"started watching";
 
 	switch ([request responseStatusCode]) {
 		case 200:
@@ -479,8 +486,11 @@ foundtitle:
 }
 -(void)posttwitterupdate:(NSString *)message {
 	//Twitter
+	//Add Twitter Object
 	Twitter* twitterobj = [[Twitter alloc]init];
+	//Send Message
 	[twitterobj postupdate:message];
+	//Release Twitter Object from memory.
 	[twitterobj release];
 	
 }

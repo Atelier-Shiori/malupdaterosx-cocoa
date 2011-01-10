@@ -3,71 +3,13 @@
 //  MAL Updater OS X - Twitter Class
 //
 //  Created by Nanoha Takamachi on 1/5/11.
-//  Copyright 2009-2011 Chikorita157's Anime Blog. All rights reserved.
+//  Copyright 2009-2011 Chikorita157's Anime Blog. All rights reserved. All rights reserved. Code licensed under New BSD License.
 //
 
 #import "Twitter.h"
 
 
 @implementation Twitter
-// Twitter Consumer Key and Secret
-// Register for a Key/Secret at Twitter Developers Site - http://dev.twitter.com/
-// Twitter Support will not work without it! XAuth support is required too. 
-//NSString * const consumerKey = @"<consumer key here>";
-//NSString * const consumerSecret = @"<consumer secret here>";
-
-- (IBAction)authTwitter:(id)sender {
-	// See if Twitter Engine is allocated
-	if (twitterEngine == nil) {
-		NSLog(@"Creating MGTwitterEngine");
-		// Create a TwitterEngine
-		twitterEngine = [[MGTwitterEngine alloc] initWithDelegate:self];
-		[twitterEngine setUsesSecureConnection:NO];
-		[twitterEngine setConsumerKey:consumerKey secret:consumerSecret];
-	}
-	
-	//Login
-	[twitterEngine getXAuthAccessTokenForUsername:[twitterusername stringValue] password:[twitterpassword stringValue]];
-	
-		[twitterEngine setAccessToken:token];
-}
-
-- (void)accessTokenReceived:(OAToken *)aToken forRequest:(NSString *)connectionIdentifier {	
-	NSLog(@"Logged in!");
-	//Retrieve Token
-	token = [aToken retain];
-	//Store Token in keychain
-	[token storeInUserDefaultsWithServiceProviderName:@"MAL Updater OS X" prefix:@"twitter.com"];
-	// Change Button States
-	[twitterlogin setHidden:TRUE];
-	[twitterlogout setHidden:FALSE];
-	[twitterusername setHidden:TRUE];
-	[twitterpassword setHidden:TRUE];
-	[chkenabletwitter setHidden:FALSE];
-	[usernamelbl setHidden:TRUE];
-	[passwordlbl setHidden:TRUE];
-	[logintwitterlbl setHidden:TRUE];
-	[authorizedstatus setHidden:FALSE];
-}
-
--(IBAction)logouttwitter:(id)sender {
-	//Logout
-	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	// Chear Key
-	[defaults setObject:@"" forKey:@"OAUTH_MAL Updater OS X_twitter.com_KEY"];
-	// Clear Secret
-	[defaults setObject:@"" forKey:@"OAUTH_MAL Updater OS X_twitter.com_SECRET"];
-	// Change Button States
-	[twitterlogin setHidden:FALSE];
-	[twitterlogout setHidden:TRUE];
-	[twitterusername setHidden:FALSE];
-	[twitterpassword setHidden:FALSE];
-	[chkenabletwitter setHidden:TRUE];
-	[usernamelbl setHidden:FALSE];
-	[passwordlbl setHidden:FALSE];
-	[logintwitterlbl setHidden:FALSE];
-	[authorizedstatus setHidden:TRUE];
-}
 -(void)postupdate:(NSString *)message; {
 	//Load Defaults
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];

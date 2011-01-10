@@ -89,9 +89,11 @@
 		5C5C1137123681D200A37706 /* movies.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 5C5C1136123681D200A37706 /* movies.tiff */; };
 		5C7DD3811232C720000B166D /* CMCrashReporter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C7DD3801232C720000B166D /* CMCrashReporter.framework */; };
 		5C7DD4621232C793000B166D /* CMCrashReporter.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5C7DD3801232C720000B166D /* CMCrashReporter.framework */; };
+		5CB31B0912DB87E60071BE0C /* TwitterOAuthKeys.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CB31B0812DB87E60071BE0C /* TwitterOAuthKeys.m */; };
 		5CBA508C12341F9E0059C314 /* BWToolkitFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5CBA508B12341F9E0059C314 /* BWToolkitFramework.framework */; };
 		5CBA5091123420A80059C314 /* BWToolkitFramework.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5CBA508B12341F9E0059C314 /* BWToolkitFramework.framework */; };
 		5CBADA8312D5365000920D7C /* twitter_newbird_blue.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 5CBADA8212D5365000920D7C /* twitter_newbird_blue.tiff */; };
+		5CCCF44D12DACBAB00E1110D /* twitter_newbird_blue-big.png in Resources */ = {isa = PBXBuildFile; fileRef = 5CCCF44C12DACBAB00E1110D /* twitter_newbird_blue-big.png */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
@@ -267,8 +269,11 @@
 		5C2B9DFB1221EB25006DEF0D /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		5C5C1136123681D200A37706 /* movies.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = movies.tiff; sourceTree = "<group>"; };
 		5C7DD3801232C720000B166D /* CMCrashReporter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CMCrashReporter.framework; path = /Users/Shared/tohnominagi/InstalledProducts/CMCrashReporter.framework; sourceTree = "<absolute>"; };
+		5CB31B0712DB87E60071BE0C /* TwitterOAuthKeys.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TwitterOAuthKeys.h; sourceTree = "<group>"; };
+		5CB31B0812DB87E60071BE0C /* TwitterOAuthKeys.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TwitterOAuthKeys.m; sourceTree = "<group>"; };
 		5CBA508B12341F9E0059C314 /* BWToolkitFramework.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BWToolkitFramework.framework; path = /Users/Shared/tohnominagi/InstalledProducts/BWToolkitFramework.framework; sourceTree = "<absolute>"; };
 		5CBADA8212D5365000920D7C /* twitter_newbird_blue.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = twitter_newbird_blue.tiff; sourceTree = "<group>"; };
+		5CCCF44C12DACBAB00E1110D /* twitter_newbird_blue-big.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "twitter_newbird_blue-big.png"; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* MAL_Updater_OS_X-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "MAL_Updater_OS_X-Info.plist"; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* MAL Updater OS X.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MAL Updater OS X.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -330,6 +335,8 @@
 				3AFEF128120DF8CE0098B59D /* MyAnimeList.m */,
 				256AC3D90F4B6AC300CF3369 /* MAL_Updater_OS_XAppDelegate.m */,
 				3A6AB310120F292500D51D2C /* PreferenceController.m */,
+				5CB31B0712DB87E60071BE0C /* TwitterOAuthKeys.h */,
+				5CB31B0812DB87E60071BE0C /* TwitterOAuthKeys.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -398,6 +405,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				5CCCF44C12DACBAB00E1110D /* twitter_newbird_blue-big.png */,
 				5CBADA8212D5365000920D7C /* twitter_newbird_blue.tiff */,
 				5C5C1136123681D200A37706 /* movies.tiff */,
 				5C0A2C4A122C7F960096908D /* Credits.rtf */,
@@ -768,6 +776,7 @@
 				5C0A2C4B122C7F960096908D /* Credits.rtf in Resources */,
 				5C5C1137123681D200A37706 /* movies.tiff in Resources */,
 				5CBADA8312D5365000920D7C /* twitter_newbird_blue.tiff in Resources */,
+				5CCCF44D12DACBAB00E1110D /* twitter_newbird_blue-big.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -835,6 +844,7 @@
 				5C1458D412D531D100C7031C /* CJSONDeserializer.m in Sources */,
 				5C1458D512D531D100C7031C /* CJSONScanner.m in Sources */,
 				5C1458D612D531D100C7031C /* CJSONSerializer.m in Sources */,
+				5CB31B0912DB87E60071BE0C /* TwitterOAuthKeys.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
