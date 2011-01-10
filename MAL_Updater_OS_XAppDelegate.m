@@ -121,6 +121,8 @@
 	[defaultValues setObject:@"" forKey:@"Base64Token"];
 	[defaultValues setObject:@"http://mal-api.com/" forKey:@"MALAPIURL"];
 	[defaultValues setObject:[NSNumber numberWithInt:0] forKey:@"PlayerSel"];
+	[defaultValues setObject:[NSNumber numberWithBool:NO] forKey:@"ScrobbleatStartup"];
+	[defaultValues setObject:[NSNumber numberWithBool:NO] forKey:@"EnableTwitterUpdates"];
 	//Register Dictionary
 	[[NSUserDefaults standardUserDefaults]
 	 registerDefaults:defaultValues];
@@ -154,6 +156,8 @@
 	[historytable setSortDescriptors:[NSArray arrayWithObject:sortDescriptor]];
 }
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
+	// Initialize MALEngine
+	MALEngine = [[MyAnimeList alloc] init];
 	// Check for Crash Reports
 	[CMCrashReporter check];
 	// Insert code here to initialize your application
@@ -172,6 +176,7 @@
 	else {
 		NSLog(@"ERROR: Could not load Growl.framework");
 	}
+
 	// Hide Window
 	[window orderOut:self];
 	
@@ -187,6 +192,88 @@
 									   isSticky:NO
 								   clickContext:[NSDate date]];
 	}
+	// Autostart Scrobble at Startup
+	if ([defaults boolForKey:@"ScrobbleatStartup"] == 1) {
+		[self autostarttimer];
+	}
+}
+- (IBAction)toggletimer:(id)sender {
+	//Check to see if there is an API Key stored
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	if ([[defaults objectForKey:@"Base64Token"] length] == 0) {
+		choice = NSRunCriticalAlertPanel(@"MAL Updater OS X was unable to start scrobbling since you have no auth token stored.", @"Verify and save your login in Preferences and then try again.", @"OK", nil, nil, 8);
+	}
+	else {
+		if (timer == nil) {
+			//Create Timer
+			timer = [[NSTimer scheduledTimerWithTimeInterval:300
+													  target:self
+													selector:@selector(firetimer:)
+													userInfo:nil
+													 repeats:YES] retain];
+			[togglescrobbler setTitle:@"Stop Scrobbling"];
+			[ScrobblerStatus setObjectValue:@"Scrobble Status: Started"];
+			[GrowlApplicationBridge notifyWithTitle:@"MAL Updater OS X"
+										description:@"Auto Scrobble is now turned on."
+								   notificationName:@"Message"
+										   iconData:nil
+										   priority:0
+										   isSticky:NO
+									   clickContext:[NSDate date]];
+		}
+		else {
+			//Stop Timer
+			// Remove Timer
+			[timer invalidate];
+			[timer release];
+			timer = nil;
+			[togglescrobbler setTitle:@"Start Scrobbling"];
+			[ScrobblerStatus setObjectValue:@"Scrobble Status: Stopped"];
+			[GrowlApplicationBridge notifyWithTitle:@"MAL Updater OS X"
+										description:@"Auto Scrobble is now turned off."
+								   notificationName:@"Message"
+										   iconData:nil
+										   priority:0
+										   isSticky:NO
+									   clickContext:[NSDate date]];
+		}
+	}
+	
+}
+-(void)autostarttimer {
+	//Check to see if there is an API Key stored
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	if ([[defaults objectForKey:@"Base64Token"] length] == 0) {
+		[GrowlApplicationBridge notifyWithTitle:@"MAL Updater OS X"
+									description:@"Unable to start scrobbling since there is no auth token. Please verify your login in Preferences."
+							   notificationName:@"Message"
+									   iconData:nil
+									   priority:0
+									   isSticky:NO
+								   clickContext:[NSDate date]];
+	}
+	else {
+		//Create Timer
+		timer = [[NSTimer scheduledTimerWithTimeInterval:300
+												  target:self
+												selector:@selector(firetimer:)
+												userInfo:nil
+												 repeats:YES] retain];
+		[togglescrobbler setTitle:@"Stop Scrobbling"];
+		[ScrobblerStatus setObjectValue:@"Scrobble Status: Started"];
+		[GrowlApplicationBridge notifyWithTitle:@"MAL Updater OS X"
+									description:@"Auto Scrobble is now turned on."
+							   notificationName:@"Message"
+									   iconData:nil
+									   priority:0
+									   isSticky:NO
+								   clickContext:[NSDate date]];
+	}
+}
+- (void)firetimer:(NSTimer *)aTimer {
+	//Tell MALEngine to detect and scrobble if necessary.
+	NSLog(@"Starting...");
+	[MALEngine startscrobbling];
 }
 -(void)showPreferences:(id)sender
 {
@@ -312,10 +399,10 @@
 
 }
 -(void)clearhistoryended:(NSAlert *)alert
-					code:(int)choice
+					code:(int)echoice
 				  conext:(void *)v
 {
-	if (choice == 1000) {
+	if (echoice == 1000) {
 		// Remove All Data
 		NSManagedObjectContext *moc = [self managedObjectContext];
 		NSFetchRequest * allHistory = [[NSFetchRequest alloc] init];
@@ -335,4 +422,12 @@
 {
     [statusItem setToolTip:toolTip];
 }
+-(void)setStatusText:(NSString*)messagetext
+{
+	[ScrobblerStatus setObjectValue:messagetext];
+}
+-(void)setLastScrobbledTitle:(NSString*)messagetext
+	{
+	[LastScrobbled setObjectValue:messagetext];
+	}
 @end

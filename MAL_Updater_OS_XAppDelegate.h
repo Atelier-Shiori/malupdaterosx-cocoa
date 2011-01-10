@@ -9,6 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #import <Growl/Growl.h>
 #import <CMCrashReporter/CMCrashReporter.h>
+#import "MyAnimeList.h"
 
 @class PreferenceController;
 @interface MAL_Updater_OS_XAppDelegate : NSObject <GrowlApplicationBridgeDelegate> {
@@ -23,6 +24,12 @@
 	NSManagedObjectModel *managedObjectModel;
 	NSManagedObjectContext *managedObjectContext;
 	NSPersistentStoreCoordinator *persistentStoreCoordinator;
+	NSTimer * timer;
+	IBOutlet NSMenuItem * togglescrobbler;
+	IBOutlet NSTextField * ScrobblerStatus;
+	IBOutlet NSTextField * LastScrobbled;
+	int choice;
+	MyAnimeList * MALEngine;
 }
 @property (assign) IBOutlet NSWindow *window;
 @property (assign) IBOutlet NSWindow *historywindow;
@@ -41,4 +48,9 @@
 					code:(int)choice
 				  conext:(void *)v;
 -(void)setStatusToolTip:(NSString*)toolTip;
+-(IBAction)toggletimer:(id)sender;
+-(void)autostarttimer;
+- (void)firetimer:(NSTimer *)aTimer;
+-(void)setStatusText:(NSString*)messagetext;
+-(void)setLastScrobbledTitle:(NSString*)messagetext;
 @end

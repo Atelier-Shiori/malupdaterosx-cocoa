@@ -2,10 +2,10 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="7.10">
 	<data>
 		<int key="IBDocument.SystemTarget">1050</int>
-		<string key="IBDocument.SystemVersion">10H574</string>
+		<string key="IBDocument.SystemVersion">10J567</string>
 		<string key="IBDocument.InterfaceBuilderVersion">804</string>
 		<string key="IBDocument.AppKitVersion">1038.35</string>
-		<string key="IBDocument.HIToolboxVersion">461.00</string>
+		<string key="IBDocument.HIToolboxVersion">462.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<bool key="EncodedWithXMLCoder">YES</bool>
 			<object class="NSArray" key="dict.sortedKeys">
@@ -23,7 +23,6 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="588"/>
 			<integer value="29"/>
 			<integer value="533"/>
 			<integer value="543"/>
@@ -599,9 +598,6 @@
 			<object class="NSCustomObject" id="976324537">
 				<string key="NSClassName">MAL_Updater_OS_XAppDelegate</string>
 			</object>
-			<object class="NSCustomObject" id="103156140">
-				<string key="NSClassName">MyAnimeList</string>
-			</object>
 			<object class="NSUserDefaultsController" id="782787527">
 				<bool key="NSSharedInstance">YES</bool>
 			</object>
@@ -615,7 +611,7 @@
 				<nil key="NSViewClass"/>
 				<string key="NSWindowContentMaxSize">{1.79769e+308, 1.79769e+308}</string>
 				<object class="NSView" key="NSWindowView" id="598881040">
-					<reference key="NSNextResponder"/>
+					<nil key="NSNextResponder"/>
 					<int key="NSvFlags">256</int>
 					<object class="NSMutableArray" key="NSSubviews">
 						<bool key="EncodedWithXMLCoder">YES</bool>
@@ -881,7 +877,6 @@
 						</object>
 					</object>
 					<string key="NSFrameSize">{344, 189}</string>
-					<reference key="NSSuperview"/>
 				</object>
 				<string key="NSScreenRect">{{0, 0}, {1440, 878}}</string>
 				<string key="NSMaxSize">{1.79769e+308, 1.79769e+308}</string>
@@ -1075,38 +1070,6 @@
 					<int key="connectionID">564</int>
 				</object>
 				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">togglescrobbler</string>
-						<reference key="source" ref="103156140"/>
-						<reference key="destination" ref="286612240"/>
-					</object>
-					<int key="connectionID">566</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">LastScrobbled</string>
-						<reference key="source" ref="103156140"/>
-						<reference key="destination" ref="569913551"/>
-					</object>
-					<int key="connectionID">570</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">toggletimer:</string>
-						<reference key="source" ref="103156140"/>
-						<reference key="destination" ref="286612240"/>
-					</object>
-					<int key="connectionID">571</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">ScrobblerStatus</string>
-						<reference key="source" ref="103156140"/>
-						<reference key="destination" ref="803954857"/>
-					</object>
-					<int key="connectionID">572</int>
-				</object>
-				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
 						<string key="label">togglescrobblewindow:</string>
 						<reference key="source" ref="976324537"/>
@@ -1121,14 +1084,6 @@
 						<reference key="destination" ref="865963513"/>
 					</object>
 					<int key="connectionID">578</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">delegate</string>
-						<reference key="source" ref="1021"/>
-						<reference key="destination" ref="976324537"/>
-					</object>
-					<int key="connectionID">581</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
@@ -1233,6 +1188,46 @@
 						<reference key="destination" ref="324630736"/>
 					</object>
 					<int key="connectionID">635</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">delegate</string>
+						<reference key="source" ref="1021"/>
+						<reference key="destination" ref="976324537"/>
+					</object>
+					<int key="connectionID">650</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">ScrobblerStatus</string>
+						<reference key="source" ref="976324537"/>
+						<reference key="destination" ref="803954857"/>
+					</object>
+					<int key="connectionID">655</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">LastScrobbled</string>
+						<reference key="source" ref="976324537"/>
+						<reference key="destination" ref="569913551"/>
+					</object>
+					<int key="connectionID">656</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">togglescrobbler</string>
+						<reference key="source" ref="976324537"/>
+						<reference key="destination" ref="286612240"/>
+					</object>
+					<int key="connectionID">657</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">toggletimer:</string>
+						<reference key="source" ref="976324537"/>
+						<reference key="destination" ref="286612240"/>
+					</object>
+					<int key="connectionID">658</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -1608,11 +1603,6 @@
 					<object class="IBObjectRecord">
 						<int key="objectID">560</int>
 						<reference key="object" ref="976324537"/>
-						<reference key="parent" ref="0"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">565</int>
-						<reference key="object" ref="103156140"/>
 						<reference key="parent" ref="0"/>
 					</object>
 					<object class="IBObjectRecord">
@@ -2088,7 +2078,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">647</int>
+			<int key="maxID">658</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -2104,9 +2094,11 @@
 							<string>showPreferences:</string>
 							<string>showhistory:</string>
 							<string>togglescrobblewindow:</string>
+							<string>toggletimer:</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>id</string>
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>
@@ -2121,6 +2113,7 @@
 							<string>showPreferences:</string>
 							<string>showhistory:</string>
 							<string>togglescrobblewindow:</string>
+							<string>toggletimer:</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
@@ -2140,22 +2133,32 @@
 								<string key="name">togglescrobblewindow:</string>
 								<string key="candidateClassName">id</string>
 							</object>
+							<object class="IBActionInfo">
+								<string key="name">toggletimer:</string>
+								<string key="candidateClassName">id</string>
+							</object>
 						</object>
 					</object>
 					<object class="NSMutableDictionary" key="outlets">
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>LastScrobbled</string>
+							<string>ScrobblerStatus</string>
 							<string>historytable</string>
 							<string>historywindow</string>
 							<string>statusMenu</string>
+							<string>togglescrobbler</string>
 							<string>window</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>NSTextField</string>
+							<string>NSTextField</string>
 							<string>NSTableView</string>
 							<string>NSWindow</string>
 							<string>NSMenu</string>
+							<string>NSMenuItem</string>
 							<string>NSWindow</string>
 						</object>
 					</object>
@@ -2163,13 +2166,24 @@
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>LastScrobbled</string>
+							<string>ScrobblerStatus</string>
 							<string>historytable</string>
 							<string>historywindow</string>
 							<string>statusMenu</string>
+							<string>togglescrobbler</string>
 							<string>window</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<object class="IBToOneOutletInfo">
+								<string key="name">LastScrobbled</string>
+								<string key="candidateClassName">NSTextField</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">ScrobblerStatus</string>
+								<string key="candidateClassName">NSTextField</string>
+							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">historytable</string>
 								<string key="candidateClassName">NSTableView</string>
@@ -2183,6 +2197,10 @@
 								<string key="candidateClassName">NSMenu</string>
 							</object>
 							<object class="IBToOneOutletInfo">
+								<string key="name">togglescrobbler</string>
+								<string key="candidateClassName">NSMenuItem</string>
+							</object>
+							<object class="IBToOneOutletInfo">
 								<string key="name">window</string>
 								<string key="candidateClassName">NSWindow</string>
 							</object>
@@ -2191,64 +2209,6 @@
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">MAL_Updater_OS_XAppDelegate.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">MyAnimeList</string>
-					<string key="superclassName">NSObject</string>
-					<object class="NSMutableDictionary" key="actions">
-						<string key="NS.key.0">toggletimer:</string>
-						<string key="NS.object.0">id</string>
-					</object>
-					<object class="NSMutableDictionary" key="actionInfosByName">
-						<string key="NS.key.0">toggletimer:</string>
-						<object class="IBActionInfo" key="NS.object.0">
-							<string key="name">toggletimer:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-					</object>
-					<object class="NSMutableDictionary" key="outlets">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>LastScrobbled</string>
-							<string>ScrobblerStatus</string>
-							<string>togglescrobbler</string>
-						</object>
-						<object class="NSMutableArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>NSTextField</string>
-							<string>NSTextField</string>
-							<string>NSMenuItem</string>
-						</object>
-					</object>
-					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>LastScrobbled</string>
-							<string>ScrobblerStatus</string>
-							<string>togglescrobbler</string>
-						</object>
-						<object class="NSMutableArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<object class="IBToOneOutletInfo">
-								<string key="name">LastScrobbled</string>
-								<string key="candidateClassName">NSTextField</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">ScrobblerStatus</string>
-								<string key="candidateClassName">NSTextField</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">togglescrobbler</string>
-								<string key="candidateClassName">NSMenuItem</string>
-							</object>
-						</object>
-					</object>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">MyAnimeList.h</string>
 					</object>
 				</object>
 			</object>

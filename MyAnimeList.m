@@ -9,56 +9,16 @@
 #import "MyAnimeList.h"
 #import "ASIHTTPRequest.h"
 #import "ASIFormDataRequest.h"
-#import "MAL_Updater_OS_XAppDelegate.h"
 #import "Twitter.h"
 
 @implementation MyAnimeList
-- (IBAction)toggletimer:(id)sender {
-	//Check to see if there is an API Key stored
-		NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	if ([[defaults objectForKey:@"Base64Token"] length] == 0) {
-		choice = NSRunCriticalAlertPanel(@"MAL Updater OS X was unable to start scrobbling since you have no auth token stored.", @"Verify and save your login in Preferences and then try again.", @"OK", nil, nil, 8);
-	}
-	else {
-		if (timer == nil) {
-			//Create Timer
-			timer = [[NSTimer scheduledTimerWithTimeInterval:300
-													  target:self
-													selector:@selector(firetimer:)
-													userInfo:nil
-													 repeats:YES] retain];
-			[togglescrobbler setTitle:@"Stop Scrobbling"];
-			[ScrobblerStatus setObjectValue:@"Scrobble Status: Started"];
-			[GrowlApplicationBridge notifyWithTitle:@"MAL Updater OS X"
-										description:@"Auto Scrobble is now turned on."
-								   notificationName:@"Message"
-										   iconData:nil
-										   priority:0
-										   isSticky:NO
-									   clickContext:[NSDate date]];
-		}
-		else {
-			//Stop Timer
-			// Remove Timer
-			[timer invalidate];
-			[timer release];
-			timer = nil;
-			[togglescrobbler setTitle:@"Start Scrobbling"];
-			[ScrobblerStatus setObjectValue:@"Scrobble Status: Stopped"];
-			[GrowlApplicationBridge notifyWithTitle:@"MAL Updater OS X"
-										description:@"Auto Scrobble is now turned off."
-								   notificationName:@"Message"
-										   iconData:nil
-										   priority:0
-										   isSticky:NO
-									   clickContext:[NSDate date]];
-		}
-	}
-	
-}
-- (void)firetimer:(NSTimer *)aTimer {
+
+
+- (void)startscrobbling {
+	//Set up Delegate
+	MAL_Updater_OS_XAppDelegate* appDelegate=[NSApp delegate];
 	if ([self detectmedia] == 1) { // Detects Title
-		[ScrobblerStatus setObjectValue:@"Scrobble Status: Scrobbling..."];
+		[appDelegate setStatusText:@"Scrobble Status: Scrobbling..."];
 		NSString * AniID;
 		NSLog(@"Getting AniID");
 		AniID = [self searchanime];
@@ -74,8 +34,6 @@
 				// Update Title as Usual
 				Success = [self updatetitle:AniID];
 			}
-				//Set up Delegate
-				MAL_Updater_OS_XAppDelegate* appDelegate=[NSApp delegate];
 				//Set last successful scrobble to statusItem Tooltip
 				[appDelegate setStatusToolTip:[NSString stringWithFormat:@"MAL Updater OS X - Last Scrobble: %@ - %@", LastScrobbledTitle, LastScrobbledEpisode]];	
 				//Post Twitter Update
@@ -122,6 +80,8 @@
 	[request addRequestHeader:@"Authorization" value:[NSString stringWithFormat:@"Basic %@",[defaults objectForKey:@"Base64Token"]]];
 	//Perform Search
 	[request startSynchronous];
+	//Set up Delegate
+	MAL_Updater_OS_XAppDelegate* appDelegate=[NSApp delegate];
 	// Get Status Code
 	int statusCode = [request responseStatusCode];
 			NSString *response = [request responseString];
@@ -132,7 +92,7 @@
 			
 		case 0:
 			Success = NO;
-			[ScrobblerStatus setObjectValue:@"Scrobble Status: No Internet Connection."];
+			[appDelegate setStatusText:@"Scrobble Status: No Internet Connection."];
 			[GrowlApplicationBridge notifyWithTitle:@"Scrobble Unsuccessful."
 										description:@"No Internet Connection. Retrying in 5 mins"
 								   notificationName:@"Message"
@@ -146,7 +106,7 @@
 		case 500:
 		case 502:
 			Success = NO;
-			[ScrobblerStatus setObjectValue:@"Scrobble Status: Unofficial MAL API is unaviliable."];
+			[appDelegate setStatusText:@"Scrobble Status: Unofficial MAL API is unaviliable."];
 			[GrowlApplicationBridge notifyWithTitle:@"Scrobble Unsuccessful."
 										description:@"Unofficial MAL API is unaviliable. Contact the Unofficial MAL API Developers."
 								   notificationName:@"Message"
@@ -159,7 +119,7 @@
 			
 		default:
 			Success = NO;
-			[ScrobblerStatus setObjectValue:@"Scrobble Status: Scrobble Failed. Retrying in 5 mins..."];
+			[appDelegate setStatusText:@"Scrobble Status: Scrobble Failed. Retrying in 5 mins..."];
 			[GrowlApplicationBridge notifyWithTitle:@"Scrobble Unsuccessful."
 										description:@"Retrying in 5 mins..."
 								   notificationName:@"Message"
@@ -173,6 +133,8 @@
 	
 }
 -(BOOL)detectmedia {
+	//Set up Delegate
+	MAL_Updater_OS_XAppDelegate* appDelegate=[NSApp delegate];
 	// LSOF mplayer to get the media title and segment
 	NSTask *task;
 	task = [[NSTask alloc] init];
@@ -267,8 +229,8 @@
 		// Check if the title was previously scrobbled
 		if ([DetectedTitle isEqualToString:LastScrobbledTitle] && [DetectedEpisode isEqualToString: LastScrobbledEpisode] && Success == 1) {
 			// Do Nothing
-			[ScrobblerStatus setObjectValue:@"Scrobble Status: Same Episode Playing, Scrobble not needed."];
-			[LastScrobbled setObjectValue:[NSString stringWithFormat:@"Last Scrobbled: %@ - %@",DetectedTitle,DetectedEpisode]];
+			[appDelegate setStatusText:@"Scrobble Status: Same Episode Playing, Scrobble not needed."];
+			[appDelegate setLastScrobbledTitle:[NSString stringWithFormat:@"Last Scrobbled: %@ - %@",DetectedTitle,DetectedEpisode]];
 			[DetectedTitle release];
 			[DetectedEpisode release];
 			return NO;
@@ -282,7 +244,7 @@
 	}
 	else {
 		// Nothing detected
-		[ScrobblerStatus setObjectValue:@"Scrobble Status: Idle..."];
+		[appDelegate setStatusText:@"Scrobble Status: Idle..."];
 		return NO;
 	}
 }
@@ -346,7 +308,9 @@ foundtitle:
 	}
 	else {
 		// Some Error. Abort
-		[ScrobblerStatus setObjectValue:@"Scrobble Status: Scrobble Failed. Retrying in 5 mins..."];
+		//Set up Delegate
+		MAL_Updater_OS_XAppDelegate* appDelegate=[NSApp delegate];
+		[appDelegate setStatusText:@"Scrobble Status: Scrobble Failed. Retrying in 5 mins..."];
 		return NO;
 	}
 	//Should never happen, but...
@@ -354,10 +318,12 @@ foundtitle:
 }
 -(BOOL)updatetitle:(NSString *)AniID {
 	NSLog(@"Updating Title");
+	//Set up Delegate
+	MAL_Updater_OS_XAppDelegate* appDelegate=[NSApp delegate];
 	if ([DetectedEpisode intValue] <= [DetectedCurrentEpisode intValue] ) { 
 		// Already Watched, no need to scrobble
-		[ScrobblerStatus setObjectValue:@"Scrobble Status: Same Episode Playing, Scrobble not needed."];
-		[LastScrobbled setObjectValue:[NSString stringWithFormat:@"Last Scrobbled: %@ - %@",DetectedTitle,DetectedEpisode]];
+		[appDelegate setStatusText:@"Scrobble Status: Same Episode Playing, Scrobble not needed."];
+		[appDelegate setLastScrobbledTitle:[NSString stringWithFormat:@"Last Scrobbled: %@ - %@",DetectedTitle,DetectedEpisode]];
 		return YES;
 	}
 	else {
@@ -397,8 +363,8 @@ foundtitle:
 		switch ([request responseStatusCode]) {
 			case 200:
 				// Update Successful
-				[ScrobblerStatus setObjectValue:@"Scrobble Status: Scrobble Successful..."];
-				[LastScrobbled setObjectValue:[NSString stringWithFormat:@"Last Scrobbled: %@ - %@",DetectedTitle,DetectedEpisode]];
+				[appDelegate setStatusText:@"Scrobble Status: Scrobble Successful..."];
+				[appDelegate setLastScrobbledTitle:[NSString stringWithFormat:@"Last Scrobbled: %@ - %@",DetectedTitle,DetectedEpisode]];
 				[GrowlApplicationBridge notifyWithTitle:@"Scrobble Successful."
 											description:[NSString stringWithFormat:@"%@ - %@",DetectedTitle,DetectedEpisode]
 									   notificationName:@"Message"
@@ -406,15 +372,15 @@ foundtitle:
 											   priority:0
 											   isSticky:NO
 										   clickContext:[NSDate date]];
-				//Set up Delegate
-				MAL_Updater_OS_XAppDelegate* appDelegate=[NSApp delegate];
+				
+			
 				//Add History Record
 				[appDelegate addrecord:DetectedTitle Episode:DetectedEpisode Date:[NSDate date]];
 				return YES;
 				break;
 			default:
 				// Update Unsuccessful
-				[ScrobblerStatus setObjectValue:@"Scrobble Status: Scrobble Failed. Retrying in 5 mins..."];
+				[appDelegate setStatusText:@"Scrobble Status: Scrobble Failed. Retrying in 5 mins..."];
 				[GrowlApplicationBridge notifyWithTitle:@"Scrobble Unsuccessful."
 											description:@"Retrying in 5 mins..."
 									   notificationName:@"Message"
@@ -430,6 +396,8 @@ foundtitle:
 }
 -(BOOL)addtitle:(NSString *)AniID {
 	NSLog(@"Adding Title");
+	//Set up Delegate
+	MAL_Updater_OS_XAppDelegate* appDelegate=[NSApp delegate];
 	// Add the title
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	//Set library/scrobble API
@@ -455,8 +423,8 @@ foundtitle:
 	switch ([request responseStatusCode]) {
 		case 200:
 			// Update Successful
-			[ScrobblerStatus setObjectValue:@"Scrobble Status: Title Added..."];
-			[LastScrobbled setObjectValue:[NSString stringWithFormat:@"Last Scrobbled: %@ - %@",DetectedTitle,DetectedEpisode]];
+			[appDelegate setStatusText:@"Scrobble Status: Title Added..."];
+			[appDelegate setLastScrobbledTitle:[NSString stringWithFormat:@"Last Scrobbled: %@ - %@",DetectedTitle,DetectedEpisode]];
 			[GrowlApplicationBridge notifyWithTitle:@"Adding of Title Successful."
 										description:[NSString stringWithFormat:@"%@ - %@",DetectedTitle,DetectedEpisode]
 								   notificationName:@"Message"
@@ -464,15 +432,15 @@ foundtitle:
 										   priority:0
 										   isSticky:NO
 									   clickContext:[NSDate date]];
-			//Set up Delegate
-			MAL_Updater_OS_XAppDelegate* appDelegate=[NSApp delegate];
+			
+		
 			//Add History Record
 			[appDelegate addrecord:DetectedTitle Episode:DetectedEpisode Date:[NSDate date]];
 			return YES;
 			break;
 		default:
 			// Update Unsuccessful
-			[ScrobblerStatus setObjectValue:@"Scrobble Status: Adding of Title Failed. Retrying in 5 mins..."];
+			[appDelegate setStatusText:@"Scrobble Status: Adding of Title Failed. Retrying in 5 mins..."];
 			[GrowlApplicationBridge notifyWithTitle:@"Adding of Title Unsuccessful."
 										description:@"Retrying in 5 mins..."
 								   notificationName:@"Message"
