@@ -21,7 +21,7 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="363"/>
+			<integer value="362"/>
 			<integer value="42"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
@@ -94,10 +94,6 @@
 				</object>
 			</object>
 			<object class="NSUserDefaultsController" id="718882257">
-				<object class="NSMutableArray" key="NSDeclaredKeys">
-					<bool key="EncodedWithXMLCoder">YES</bool>
-					<string>ScrobbleatStartup</string>
-				</object>
 				<bool key="NSSharedInstance">YES</bool>
 			</object>
 			<object class="NSWindowTemplate" id="427580682">
@@ -186,7 +182,7 @@
 								<nil key="NSToolbarItemView"/>
 								<object class="NSCustomResource" key="NSToolbarItemImage">
 									<string key="NSClassName">NSImage</string>
-									<string key="NSResourceName">twitter_newbird_blue</string>
+									<string key="NSResourceName">Twitter</string>
 								</object>
 								<nil key="NSToolbarItemTarget"/>
 								<nil key="NSToolbarItemAction"/>
@@ -1091,11 +1087,11 @@
 						</object>
 						<object class="NSMutableData" key="BWSTHWindowSizesByIdentifier">
 							<bytes key="NS.bytes">BAtzdHJlYW10eXBlZIHoA4QBQISEhAxOU0RpY3Rpb25hcnkAhIQITlNPYmplY3QAhYQBaQSShISECE5T
-U3RyaW5nAZSEASskMjIzRUY2OEEtMDRFMS00OEI2LTlCREItOTYyRkU5NUYxODBFhpKEhIQHTlNWYWx1
-ZQCUhAEqhIQLe0NHU2l6ZT1kZH2agY4BgbsAhpKElpckODdEOUFENkUtQ0U3MS00OTdELTk0MUEtQjMw
+U3RyaW5nAZSEASskMEQ1OTUwRDEtRDRBOC00NEM2LTlEQkMtMjUxQ0ZFRjg1MkUyhpKEhIQHTlNWYWx1
+ZQCUhAEqhIQLe0NHU2l6ZT1kZH2agYEBgRYBhpKElpckODdEOUFENkUtQ0U3MS00OTdELTk0MUEtQjMw
 NTJGMjRBRTBDhpKEmJmZmoG+AYEsAYaShJaXJDY0QUVCQ0RCLUFGNTAtNERGNS1BMTU3LTAyMEVEMkQ5
-QTU2OYaShJiZmZqB8AGB+QCGkoSWlyQwRDU5NTBEMS1ENEE4LTQ0QzYtOURCQy0yNTFDRkVGODUyRTKG
-koSYmZmagYEBgRYBhoY</bytes>
+QTU2OYaShJiZmZqB8AGB+QCGkoSWlyQyMjNFRjY4QS0wNEUxLTQ4QjYtOUJEQi05NjJGRTk1RjE4MEWG
+koSYmZmagY4BgbsAhoY</bytes>
 						</object>
 						<string key="BWSTHSelectedIdentifier">0D5950D1-D4A8-44C6-9DBC-251CFEF852E2</string>
 						<string key="BWSTHOldWindowTitle">Window</string>
@@ -2223,7 +2219,7 @@ koSYmZmagYEBgRYBhoY</bytes>
 					<string>{{480, 500}, {385, 202}}</string>
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{378, 688}, {616, 0}}</string>
+					<string>{{364, 702}, {617, 0}}</string>
 					<string>com.brandonwalkin.BWToolkit</string>
 					<string>com.brandonwalkin.BWToolkit</string>
 					<string>com.brandonwalkin.BWToolkit</string>
@@ -2343,7 +2339,7 @@ koSYmZmagYEBgRYBhoY</bytes>
 					<object class="NSAffineTransform">
 						<bytes key="NSTransformStruct">P4AAAL+AAABByAAAw0oAAA</bytes>
 					</object>
-					<string>{{518, 654}, {151, 83}}</string>
+					<string>{{922, 654}, {151, 83}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<object class="NSAffineTransform">
@@ -3282,8 +3278,8 @@ koSYmZmagYEBgRYBhoY</bytes>
 				<string>NSPreferencesGeneral</string>
 				<string>NSSwitch</string>
 				<string>NSUser</string>
+				<string>Twitter</string>
 				<string>movies</string>
-				<string>twitter_newbird_blue</string>
 				<string>twitter_newbird_blue-big</string>
 			</object>
 			<object class="NSMutableArray" key="dict.values">
@@ -3294,7 +3290,7 @@ koSYmZmagYEBgRYBhoY</bytes>
 				<string>{15, 15}</string>
 				<string>{32, 32}</string>
 				<string>{32, 32}</string>
-				<string>{300, 300}</string>
+				<string>{32, 32}</string>
 				<string>{300, 300}</string>
 			</object>
 		</object>

@@ -351,9 +351,11 @@
 }
 -(IBAction)togglescrobblewindow:(id)sender
 {
-	if ([window isVisible]) { 
+	if ([window isVisible]) {
 		[window orderOut:self]; 
 	} else { 
+		//Since LSUIElement is set to 1 to hide the dock icon, it causes unattended behavior of having the program windows not show to the front.
+		[NSApp activateIgnoringOtherApps:YES];
 		[window makeKeyAndOrderFront:self]; 
 	} 
 }
