@@ -35,9 +35,7 @@
 				Success = [self updatetitle:AniID];
 			}
 				//Set last successful scrobble to statusItem Tooltip
-				[appDelegate setStatusToolTip:[NSString stringWithFormat:@"MAL Updater OS X - Last Scrobble: %@ - %@", LastScrobbledTitle, LastScrobbledEpisode]];	
-				//Post Twitter Update
-				[self posttwitterupdate:[NSString stringWithFormat:@"%@ %@ - %@/%@. Current Score: %@/10", TitleState, LastScrobbledTitle, LastScrobbledEpisode, TotalEpisodes, TitleScore]];
+				[appDelegate setStatusToolTip:[NSString stringWithFormat:@"MAL Updater OS X - Last Scrobble: %@ - %@", LastScrobbledTitle, LastScrobbledEpisode]];
 				//Retain Scrobbled Title and Episode
 				[LastScrobbledTitle retain];
 				[LastScrobbledEpisode retain];
@@ -45,6 +43,14 @@
 		}
 		else {
 			// Not Successful
+			[appDelegate setStatusText:@"Scrobble Status: Can't find title. Retrying in 5 mins..."];
+			[GrowlApplicationBridge notifyWithTitle:@"Scrobble Unsuccessful."
+										description:@"Can't find title. Retrying in 5 mins..."
+								   notificationName:@"Message"
+										   iconData:nil
+										   priority:0
+										   isSticky:NO
+									   clickContext:[NSDate date]];
 		}
 		// Empty out Detected Title/Episode to prevent same title detection
 		DetectedTitle = @"";
@@ -218,8 +224,11 @@
 		string = [regex replaceAllMatchesInString:string
 									   withString:@""];
 		regex = [OGRegularExpression regularExpressionWithString: DetectedTitle];
+		string = [regex replaceAllMatchesInString:string
+												withString:@""];
+		regex = [OGRegularExpression regularExpressionWithString:@"v[\\d]"];
 		DetectedEpisode = [regex replaceAllMatchesInString:string
-													  withString:@""];
+												withString:@""];
 		// Trim Whitespace
 		DetectedTitle = [DetectedTitle stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 		//release
@@ -372,7 +381,8 @@ foundtitle:
 											   priority:0
 											   isSticky:NO
 										   clickContext:[NSDate date]];
-				
+				//Post Twitter Update
+				[self posttwitterupdate:[NSString stringWithFormat:@"%@ %@ - %@/%@. Current Score: %@/10", TitleState, LastScrobbledTitle, LastScrobbledEpisode, TotalEpisodes, TitleScore]];
 			
 				//Add History Record
 				[appDelegate addrecord:DetectedTitle Episode:DetectedEpisode Date:[NSDate date]];
@@ -432,7 +442,8 @@ foundtitle:
 										   priority:0
 										   isSticky:NO
 									   clickContext:[NSDate date]];
-			
+			//Post Twitter Update
+			[self posttwitterupdate:[NSString stringWithFormat:@"%@ %@ - %@/%@. Current Score: %@/10", TitleState, LastScrobbledTitle, LastScrobbledEpisode, TotalEpisodes, TitleScore]];
 		
 			//Add History Record
 			[appDelegate addrecord:DetectedTitle Episode:DetectedEpisode Date:[NSDate date]];

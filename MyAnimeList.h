@@ -26,7 +26,6 @@
 	BOOL Success;
 	int choice;
 }
--(void)autostarttimer;
 -(void)startscrobbling;
 -(BOOL)detectmedia;
 -(NSString *)searchanime;
