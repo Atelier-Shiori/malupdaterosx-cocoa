@@ -21,10 +21,10 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="534"/>
-			<integer value="29"/>
 			<integer value="543"/>
+			<integer value="534"/>
 			<integer value="589"/>
+			<integer value="29"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -550,22 +550,22 @@
 					<int key="NSvFlags">256</int>
 					<object class="NSMutableArray" key="NSSubviews">
 						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSTextField" id="588156076">
+						<object class="NSTextField" id="420045391">
 							<reference key="NSNextResponder" ref="575052424"/>
 							<int key="NSvFlags">268</int>
-							<string key="NSFrame">{{4, 0}, {376, 17}}</string>
+							<string key="NSFrame">{{11, 30}, {376, 40}}</string>
 							<reference key="NSSuperview" ref="575052424"/>
 							<bool key="NSEnabled">YES</bool>
-							<object class="NSTextFieldCell" key="NSCell" id="843616528">
+							<object class="NSTextFieldCell" key="NSCell" id="345098589">
 								<int key="NSCellFlags">67239424</int>
 								<int key="NSCellFlags2">272629760</int>
-								<string key="NSContents"/>
-								<object class="NSFont" key="NSSupport" id="263638925">
+								<string key="NSContents">Last Scrobbled: </string>
+								<object class="NSFont" key="NSSupport">
 									<string key="NSName">LucidaGrande</string>
-									<double key="NSSize">11</double>
+									<double key="NSSize">13</double>
 									<int key="NSfFlags">16</int>
 								</object>
-								<reference key="NSControlView" ref="588156076"/>
+								<reference key="NSControlView" ref="420045391"/>
 								<object class="NSColor" key="NSBackgroundColor" id="171981247">
 									<int key="NSColorSpace">6</int>
 									<string key="NSCatalogName">System</string>
@@ -586,26 +586,6 @@
 								</object>
 							</object>
 						</object>
-						<object class="NSTextField" id="420045391">
-							<reference key="NSNextResponder" ref="575052424"/>
-							<int key="NSvFlags">268</int>
-							<string key="NSFrame">{{11, 30}, {376, 40}}</string>
-							<reference key="NSSuperview" ref="575052424"/>
-							<bool key="NSEnabled">YES</bool>
-							<object class="NSTextFieldCell" key="NSCell" id="345098589">
-								<int key="NSCellFlags">67239424</int>
-								<int key="NSCellFlags2">272629760</int>
-								<string key="NSContents">Last Scrobbled: </string>
-								<object class="NSFont" key="NSSupport">
-									<string key="NSName">LucidaGrande</string>
-									<double key="NSSize">13</double>
-									<int key="NSfFlags">16</int>
-								</object>
-								<reference key="NSControlView" ref="420045391"/>
-								<reference key="NSBackgroundColor" ref="171981247"/>
-								<reference key="NSTextColor" ref="701654746"/>
-							</object>
-						</object>
 						<object class="BWAddSmallBottomBar" id="311325922">
 							<reference key="NSNextResponder" ref="575052424"/>
 							<int key="NSvFlags">268</int>
@@ -622,7 +602,11 @@
 								<int key="NSCellFlags">68288064</int>
 								<int key="NSCellFlags2">272630784</int>
 								<string key="NSContents">Scrobble Status: Stopped</string>
-								<reference key="NSSupport" ref="263638925"/>
+								<object class="NSFont" key="NSSupport">
+									<string key="NSName">LucidaGrande</string>
+									<double key="NSSize">11</double>
+									<int key="NSfFlags">16</int>
+								</object>
 								<reference key="NSControlView" ref="567224868"/>
 								<reference key="NSBackgroundColor" ref="171981247"/>
 								<reference key="NSTextColor" ref="701654746"/>
@@ -1396,9 +1380,9 @@
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">ScrobblerStatus</string>
 						<reference key="source" ref="976324537"/>
-						<reference key="destination" ref="588156076"/>
+						<reference key="destination" ref="567224868"/>
 					</object>
-					<int key="connectionID">676</int>
+					<int key="connectionID">723</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -1668,7 +1652,6 @@
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<reference ref="311325922"/>
-							<reference ref="588156076"/>
 							<reference ref="567224868"/>
 							<reference ref="420045391"/>
 						</object>
@@ -1947,20 +1930,6 @@
 						<reference key="parent" ref="271676670"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">671</int>
-						<reference key="object" ref="588156076"/>
-						<object class="NSMutableArray" key="children">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="843616528"/>
-						</object>
-						<reference key="parent" ref="575052424"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">672</int>
-						<reference key="object" ref="843616528"/>
-						<reference key="parent" ref="588156076"/>
-					</object>
-					<object class="IBObjectRecord">
 						<int key="objectID">673</int>
 						<reference key="object" ref="420045391"/>
 						<object class="NSMutableArray" key="children">
@@ -2128,9 +2097,6 @@
 					<string>666.IBPluginDependency</string>
 					<string>667.IBPluginDependency</string>
 					<string>668.IBPluginDependency</string>
-					<string>671.IBPluginDependency</string>
-					<string>671.IBViewBoundsToFrameTransform</string>
-					<string>672.IBPluginDependency</string>
 					<string>673.IBPluginDependency</string>
 					<string>673.IBViewBoundsToFrameTransform</string>
 					<string>674.IBPluginDependency</string>
@@ -2287,11 +2253,6 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<object class="NSAffineTransform">
-						<bytes key="NSTransformStruct">P4AAAL+AAABAoAAAwZgAAA</bytes>
-					</object>
-					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<object class="NSAffineTransform">
 						<bytes key="NSTransformStruct">P4AAAL+AAABBiAAAwoYAAA</bytes>
 					</object>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -2327,7 +2288,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">722</int>
+			<int key="maxID">723</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
