@@ -382,8 +382,13 @@ foundtitle:
 											   priority:0
 											   isSticky:NO
 										   clickContext:[NSDate date]];
+				//mTwitter
+				NSString * TwitMessage = [NSString stringWithFormat:@"%@ %@ - %@/%@. Current Score: %@/10", TitleState, LastScrobbledTitle, LastScrobbledEpisode, TotalEpisodes, TitleScore];
+				if ([defaults boolForKey:@"IncludeSeriesURL"] == 1) {
+					TwitMessage = [NSString stringWithFormat:@"%@ - http://myanimelist.net/anime/%@",TwitMessage, AniID]; 
+				}
 				//Post Twitter Update
-				[self posttwitterupdate:[NSString stringWithFormat:@"%@ %@ - %@/%@. Current Score: %@/10", TitleState, LastScrobbledTitle, LastScrobbledEpisode, TotalEpisodes, TitleScore]];
+				[self posttwitterupdate:TwitMessage];
 			
 				//Add History Record
 				[appDelegate addrecord:DetectedTitle Episode:DetectedEpisode Date:[NSDate date]];
@@ -443,9 +448,13 @@ foundtitle:
 										   priority:0
 										   isSticky:NO
 									   clickContext:[NSDate date]];
+			//Twitter
+			NSString * TwitMessage = [NSString stringWithFormat:@"%@ %@ - %@/%@. Current Score: %@/10", TitleState, LastScrobbledTitle, LastScrobbledEpisode, TotalEpisodes, TitleScore];
+			if ([defaults boolForKey:@"IncludeSeriesURL"] == 1) {
+				TwitMessage = [NSString stringWithFormat:@"%@ - http://myanimelist.net/anime/%@",TwitMessage, AniID]; 
+			}
 			//Post Twitter Update
-			[self posttwitterupdate:[NSString stringWithFormat:@"%@ %@ - %@/%@. Current Score: %@/10", TitleState, LastScrobbledTitle, LastScrobbledEpisode, TotalEpisodes, TitleScore]];
-		
+			[self posttwitterupdate:TwitMessage];
 			//Add History Record
 			[appDelegate addrecord:DetectedTitle Episode:DetectedEpisode Date:[NSDate date]];
 			return YES;

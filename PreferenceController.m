@@ -52,6 +52,7 @@
 		[passwordlbl setHidden:TRUE];
 		[logintwitterlbl setHidden:TRUE];
 		[authorizedstatus setHidden:FALSE];
+		[chkincludeshowurl setHidden:FALSE];
 	}
 	else {
 		[twitterlogin setHidden:FALSE];
@@ -63,6 +64,7 @@
 		[passwordlbl setHidden:FALSE];
 		[logintwitterlbl setHidden:FALSE];
 		[authorizedstatus setHidden:TRUE];
+		[chkincludeshowurl setHidden:TRUE];
 	}
 	//Release Keychain Item
 	[Base64Token release];
@@ -270,6 +272,7 @@
 	[twitterusername setHidden:FALSE];
 	[twitterpassword setHidden:FALSE];
 	[chkenabletwitter setHidden:TRUE];
+	[chkincludeshowurl setHidden:TRUE];
 	[usernamelbl setHidden:FALSE];
 	[passwordlbl setHidden:FALSE];
 	[logintwitterlbl setHidden:FALSE];
@@ -292,6 +295,7 @@
 	[passwordlbl setHidden:TRUE];
 	[logintwitterlbl setHidden:TRUE];
 	[authorizedstatus setHidden:FALSE];
+	[chkincludeshowurl setHidden:FALSE];
 	[self showsheetmessage:@"Logged in!" explaination:@"You are successfully authorized with Twitter and OAuth keys are created."];
 	//Erase Twitter Username and Password fields
 	[twitterusername setObjectValue:@""];

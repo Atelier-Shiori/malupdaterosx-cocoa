@@ -24,6 +24,7 @@
 	IBOutlet NSTextField * twitterusername;
 	IBOutlet NSTextField * twitterpassword;
 	IBOutlet NSButton * chkenabletwitter;
+	IBOutlet NSButton * chkincludeshowurl;
 	IBOutlet NSTextField * usernamelbl;
 	IBOutlet NSTextField * passwordlbl;
 	IBOutlet NSTextField * logintwitterlbl;

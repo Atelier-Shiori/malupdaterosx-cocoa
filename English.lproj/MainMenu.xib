@@ -22,9 +22,9 @@
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
 			<integer value="543"/>
-			<integer value="534"/>
-			<integer value="589"/>
 			<integer value="29"/>
+			<integer value="589"/>
+			<integer value="533"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -552,8 +552,8 @@
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSTextField" id="420045391">
 							<reference key="NSNextResponder" ref="575052424"/>
-							<int key="NSvFlags">268</int>
-							<string key="NSFrame">{{11, 30}, {376, 40}}</string>
+							<int key="NSvFlags">266</int>
+							<string key="NSFrame">{{11, 30}, {382, 40}}</string>
 							<reference key="NSSuperview" ref="575052424"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSTextFieldCell" key="NSCell" id="345098589">
@@ -2171,9 +2171,9 @@
 					<string>{{596, 813}, {202, 23}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{569, 448}, {410, 80}}</string>
+					<string>{{569, 446}, {410, 80}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{569, 448}, {410, 80}}</string>
+					<string>{{569, 446}, {410, 80}}</string>
 					<boolean value="NO"/>
 					<boolean value="YES"/>
 					<boolean value="YES"/>
