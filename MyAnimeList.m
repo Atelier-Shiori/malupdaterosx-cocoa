@@ -306,7 +306,13 @@ foundtitle:
 		else {
 			NSLog(@"Title on List");
 			WatchStatus = [animeinfo objectForKey:@"watched_status"];
-			TitleScore = [animeinfo objectForKey:@"score"]; 
+			if ([animeinfo objectForKey:@"score"] == [NSNull null]){
+				// Score is null, set to 0
+				TitleScore = @"0";
+			}
+			else {
+				TitleScore = [animeinfo objectForKey:@"score"]; 
+			}
 			NSLog(@"Title Score %@", TitleScore);
 			//Retain Title Score
 			[TitleScore retain];
