@@ -333,7 +333,7 @@
 }
 
 - (void) dealloc {
-    //Releases the 2 images we loaded into memory
+    //Deallocate all active objects
     [statusImage release];
     [statusHighlightImage release];
 	[managedObjectContext release];
@@ -341,6 +341,7 @@
     [managedObjectModel release];
 	[window release];
 	[historywindow release];
+    [MALEngine release];
 	if (!preferenceController) {
 	}
 	else {
@@ -429,7 +430,7 @@
 	[ScrobblerStatus setObjectValue:messagetext];
 }
 -(void)setLastScrobbledTitle:(NSString*)messagetext
-	{
+{
 	[LastScrobbled setObjectValue:messagetext];
-	}
+}
 @end

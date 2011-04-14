@@ -23,15 +23,19 @@
 	NSString * WatchStatus;
 	NSString * TitleScore;
 	NSString * TitleState;
+    NSString * AniID;
 	BOOL Success;
 	int choice;
 }
 -(void)startscrobbling;
 -(BOOL)detectmedia;
 -(NSString *)searchanime;
--(NSString *)getaniid:(NSString *)ResponseData;
+-(NSString *)findaniid:(NSString *)ResponseData;
 -(BOOL)checkstatus:(NSString *)AniID;
 -(BOOL)updatetitle:(NSString *)AniID;
 -(BOOL)addtitle:(NSString *)AniID;
 -(void)posttwitterupdate:(NSString *)message;
+-(NSString *)getLastScrobbledTitle;
+-(NSString *)getLastScrobbledEpisode;
+-(NSString *)getAniID;
 @end

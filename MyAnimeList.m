@@ -13,13 +13,35 @@
 
 @implementation MyAnimeList
 
+/* 
+ 
+ Accessors
+ 
+ */
+-(NSString *) getLastScrobbledTitle
+{
+    return LastScrobbledTitle;
+}
+-(NSString *) getLastScrobbledEpisode
+{
+    return LastScrobbledEpisode;
+}
+-(NSString *) getAniID
+{
+    return AniID;
+}
+
+/*
+ 
+ Update Methods
+ 
+ */
 
 - (void)startscrobbling {
 	//Set up Delegate
 	MAL_Updater_OS_XAppDelegate* appDelegate=[NSApp delegate];
 	if ([self detectmedia] == 1) { // Detects Title
 		[appDelegate setStatusText:@"Scrobble Status: Scrobbling..."];
-		NSString * AniID;
 		NSLog(@"Getting AniID");
 		AniID = [self searchanime];
 		if (AniID.length > 0) {
@@ -36,7 +58,8 @@
 			}
 				//Set last successful scrobble to statusItem Tooltip
 				[appDelegate setStatusToolTip:[NSString stringWithFormat:@"MAL Updater OS X - Last Scrobble: %@ - %@", LastScrobbledTitle, LastScrobbledEpisode]];
-				//Retain Scrobbled Title and Episode
+				//Retain Scrobbled Title, Title ID and Episode
+                [AniID retain];
 				[LastScrobbledTitle retain];
 				[LastScrobbledEpisode retain];
 			}
@@ -93,7 +116,7 @@
 			NSString *response = [request responseString];
 	switch (statusCode) {
 		case 200:
-			return [self getaniid:response];
+			return [self findaniid:response];
 			break;
 			
 		case 0:
@@ -258,7 +281,7 @@
 		return NO;
 	}
 }
--(NSString *)getaniid:(NSString *)ResponseData {
+-(NSString *)findaniid:(NSString *)ResponseData {
 	// Initalize JSON parser
 	SBJsonParser *parser = [[SBJsonParser alloc] init];
 	NSArray *searchdata = [parser objectWithString:ResponseData error:nil];
@@ -479,6 +502,13 @@ foundtitle:
 			break;
 	}
 }
+
+/*
+ 
+ Twitter Functions
+ 
+ */
+
 -(void)posttwitterupdate:(NSString *)message {
 	//Twitter
 	//Add Twitter Object
