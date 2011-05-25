@@ -32,7 +32,7 @@
 		3A851CC61210AC4F00B55720 /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A851CC51210AC4F00B55720 /* Growl.framework */; };
 		3A851CDA1210AC8400B55720 /* Growl.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3A851CC51210AC4F00B55720 /* Growl.framework */; };
 		3A851D151210AD6800B55720 /* MAL Updater OS X.icns in Resources */ = {isa = PBXBuildFile; fileRef = 3A851D141210AD6800B55720 /* MAL Updater OS X.icns */; };
-		3A851D231210AE0300B55720 /* SatusIcon.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 3A851D221210AE0300B55720 /* SatusIcon.tiff */; };
+		3A851D231210AE0300B55720 /* StatusIcon.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 3A851D221210AE0300B55720 /* StatusIcon.tiff */; };
 		3AE197DB1210718700FB943B /* JSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AE197DA1210718700FB943B /* JSON.framework */; };
 		3AE197DF1210718A00FB943B /* JSON.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3AE197DA1210718700FB943B /* JSON.framework */; };
 		3AFEF129120DF8CE0098B59D /* MyAnimeList.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AFEF128120DF8CE0098B59D /* MyAnimeList.m */; };
@@ -161,7 +161,7 @@
 		3A851AEE1210A6C300B55720 /* Growl Registration Ticket.growlRegDict */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "Growl Registration Ticket.growlRegDict"; sourceTree = "<group>"; };
 		3A851CC51210AC4F00B55720 /* Growl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Growl.framework; path = /Users/Shared/tohnominagi/InstalledProducts/Growl.framework; sourceTree = "<absolute>"; };
 		3A851D141210AD6800B55720 /* MAL Updater OS X.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = "MAL Updater OS X.icns"; sourceTree = "<group>"; };
-		3A851D221210AE0300B55720 /* SatusIcon.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = SatusIcon.tiff; sourceTree = "<group>"; };
+		3A851D221210AE0300B55720 /* StatusIcon.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = StatusIcon.tiff; sourceTree = "<group>"; };
 		3AE197DA1210718700FB943B /* JSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JSON.framework; path = /Users/Shared/tohnominagi/InstalledProducts/JSON.framework; sourceTree = "<absolute>"; };
 		3AFEF127120DF8CE0098B59D /* MyAnimeList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyAnimeList.h; sourceTree = "<group>"; };
 		3AFEF128120DF8CE0098B59D /* MyAnimeList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyAnimeList.m; sourceTree = "<group>"; };
@@ -413,7 +413,7 @@
 				5C5C1136123681D200A37706 /* movies.tiff */,
 				5C0A2C4A122C7F960096908D /* Credits.rtf */,
 				3A20383112122B2B003813B2 /* dsa_pub.pem */,
-				3A851D221210AE0300B55720 /* SatusIcon.tiff */,
+				3A851D221210AE0300B55720 /* StatusIcon.tiff */,
 				3A851D141210AD6800B55720 /* MAL Updater OS X.icns */,
 				3A851AF11210A70C00B55720 /* Preferences.xib */,
 				3A851AEE1210A6C300B55720 /* Growl Registration Ticket.growlRegDict */,
@@ -774,7 +774,7 @@
 				3A851AF21210A70C00B55720 /* Preferences.xib in Resources */,
 				3A851AEF1210A6C300B55720 /* Growl Registration Ticket.growlRegDict in Resources */,
 				3A851D151210AD6800B55720 /* MAL Updater OS X.icns in Resources */,
-				3A851D231210AE0300B55720 /* SatusIcon.tiff in Resources */,
+				3A851D231210AE0300B55720 /* StatusIcon.tiff in Resources */,
 				3A20383212122B2B003813B2 /* dsa_pub.pem in Resources */,
 				5C0A2C4B122C7F960096908D /* Credits.rtf in Resources */,
 				5C5C1137123681D200A37706 /* movies.tiff in Resources */,
@@ -930,7 +930,7 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_ENABLE_OBJC_GC = unsupported;
+				GCC_ENABLE_OBJC_GC = required;
 				GCC_OPTIMIZATION_LEVEL = s;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
@@ -948,7 +948,7 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				GCC_C_LANGUAGE_STANDARD = c99;
-				GCC_ENABLE_OBJC_GC = unsupported;
+				GCC_ENABLE_OBJC_GC = required;
 				GCC_OPTIMIZATION_LEVEL = s;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;

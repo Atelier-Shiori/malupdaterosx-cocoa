@@ -137,8 +137,8 @@
     NSBundle *bundle = [NSBundle mainBundle];
     
     //Allocates and loads the images into the application which will be used for our NSStatusItem
-    statusImage = [[NSImage alloc] initWithContentsOfFile:[bundle pathForResource:@"SatusIcon" ofType:@"tiff"]];
-    statusHighlightImage = [[NSImage alloc] initWithContentsOfFile:[bundle pathForResource:@"SatusIcon" ofType:@"tiff"]];
+    statusImage = [[NSImage alloc] initWithContentsOfFile:[bundle pathForResource:@"StatusIcon" ofType:@"tiff"]];
+    statusHighlightImage = [[NSImage alloc] initWithContentsOfFile:[bundle pathForResource:@"StatusIcon" ofType:@"tiff"]];
     
     //Sets the images in our NSStatusItem
     [statusItem setImage:statusImage];

@@ -9,7 +9,6 @@
 #import "MyAnimeList.h"
 #import "ASIHTTPRequest.h"
 #import "ASIFormDataRequest.h"
-#import "Twitter.h"
 
 @implementation MyAnimeList
 
@@ -45,6 +44,7 @@
 		NSLog(@"Getting AniID");
 		AniID = [self searchanime];
 		if (AniID.length > 0) {
+            NSLog(@"Found %@", AniID);
 			// Check Status and Update
 			BOOL UpdateBool = [self checkstatus:AniID];
 			if (UpdateBool == 1) {
@@ -511,12 +511,12 @@ foundtitle:
 
 -(void)posttwitterupdate:(NSString *)message {
 	//Twitter
-	//Add Twitter Object
-	Twitter* twitterobj = [[Twitter alloc]init];
+	//Init Twitter Engine if necessary
+    if (!twitterobj) {
+        twitterobj = [[Twitter alloc]init];
+    }
 	//Send Message
 	[twitterobj postupdate:message];
-	//Release Twitter Object from memory.
-	[twitterobj release];
 	
 }
 @end

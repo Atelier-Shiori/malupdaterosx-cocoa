@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #import <OgreKit/OgreKit.h>
 #import <JSON/JSON.h>
-
+#import "Twitter.h"
 
 @interface MyAnimeList : NSObject {
 	NSString * Base64Token;
@@ -24,6 +24,7 @@
 	NSString * TitleScore;
 	NSString * TitleState;
     NSString * AniID;
+    Twitter * twitterobj;
 	BOOL Success;
 	int choice;
 }
