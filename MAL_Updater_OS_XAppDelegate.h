@@ -9,9 +9,9 @@
 #import <Cocoa/Cocoa.h>
 #import <Growl/Growl.h>
 #import <CMCrashReporter/CMCrashReporter.h>
-#import "MyAnimeList.h"
 
 @class PreferenceController;
+@class MyAnimeList;
 @interface MAL_Updater_OS_XAppDelegate : NSObject <GrowlApplicationBridgeDelegate> {
     NSWindow *window;
 	NSWindow *historywindow;
