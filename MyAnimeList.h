@@ -10,6 +10,7 @@
 #import <OgreKit/OgreKit.h>
 #import <JSON/JSON.h>
 #import "MAL_Updater_OS_XAppDelegate.h"
+#import "Twitter.h"
 
 @class Twitter;
 

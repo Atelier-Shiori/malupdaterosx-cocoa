@@ -21,6 +21,7 @@
 	//Twitter Preferences
 	IBOutlet NSButton * twitterlogin;
 	IBOutlet NSButton * twitterlogout;
+	IBOutlet NSButton * twittersignup;
 	IBOutlet NSTextField * twitterusername;
 	IBOutlet NSTextField * twitterpassword;
 	IBOutlet NSButton * chkenabletwitter;
@@ -48,4 +49,7 @@
 		   explaination:(NSString *)explaination;
 -(IBAction)authTwitter:(id)sender;
 -(IBAction)logouttwitter:(id)sender;
+-(IBAction)registertwitter:(id)sender;
+-(void)enabletwitteroptions;
+-(void)disabletwitteroptions;
 @end

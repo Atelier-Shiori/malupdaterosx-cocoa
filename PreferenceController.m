@@ -43,28 +43,10 @@
 	NSString *TwitterSecret = [defaults objectForKey:@"OAUTH_MAL Updater OS X_twitter.com_SECRET"];
 	// Check Twitter Auth
 	if (TwitterKey.length > 0 && TwitterSecret.length > 0) {
-		[twitterlogin setHidden:TRUE];
-		[twitterlogout setHidden:FALSE];
-		[twitterusername setHidden:TRUE];
-		[twitterpassword setHidden:TRUE];
-		[chkenabletwitter setHidden:FALSE];
-		[usernamelbl setHidden:TRUE];
-		[passwordlbl setHidden:TRUE];
-		[logintwitterlbl setHidden:TRUE];
-		[authorizedstatus setHidden:FALSE];
-		[chkincludeshowurl setHidden:FALSE];
+		[self enabletwitteroptions];
 	}
 	else {
-		[twitterlogin setHidden:FALSE];
-		[twitterlogout setHidden:TRUE];
-		[twitterusername setHidden:FALSE];
-		[twitterpassword setHidden:FALSE];
-		[chkenabletwitter setHidden:TRUE];
-		[usernamelbl setHidden:FALSE];
-		[passwordlbl setHidden:FALSE];
-		[logintwitterlbl setHidden:FALSE];
-		[authorizedstatus setHidden:TRUE];
-		[chkincludeshowurl setHidden:TRUE];
+		[self disabletwitteroptions];
 	}
 	//Release Keychain Item
 	[Base64Token release];
@@ -267,16 +249,7 @@
 	// Clear Secret
 	[defaults setObject:@"" forKey:@"OAUTH_MAL Updater OS X_twitter.com_SECRET"];
 	// Change Button States
-	[twitterlogin setHidden:FALSE];
-	[twitterlogout setHidden:TRUE];
-	[twitterusername setHidden:FALSE];
-	[twitterpassword setHidden:FALSE];
-	[chkenabletwitter setHidden:TRUE];
-	[chkincludeshowurl setHidden:TRUE];
-	[usernamelbl setHidden:FALSE];
-	[passwordlbl setHidden:FALSE];
-	[logintwitterlbl setHidden:FALSE];
-	[authorizedstatus setHidden:TRUE];
+	[self disabletwitteroptions];
 }
 
 - (void)accessTokenReceived:(OAToken *)aToken forRequest:(NSString *)connectionIdentifier {	
@@ -286,16 +259,7 @@
 	//Store Token in keychain
 	[authtoken storeInUserDefaultsWithServiceProviderName:@"MAL Updater OS X" prefix:@"twitter.com"];
 	// Change Button States
-	[twitterlogin setHidden:TRUE];
-	[twitterlogout setHidden:FALSE];
-	[twitterusername setHidden:TRUE];
-	[twitterpassword setHidden:TRUE];
-	[chkenabletwitter setHidden:FALSE];
-	[usernamelbl setHidden:TRUE];
-	[passwordlbl setHidden:TRUE];
-	[logintwitterlbl setHidden:TRUE];
-	[authorizedstatus setHidden:FALSE];
-	[chkincludeshowurl setHidden:FALSE];
+	[self enabletwitteroptions];
 	[self showsheetmessage:@"Logged in!" explaination:@"You are successfully authorized with Twitter and OAuth keys are created."];
 	//Erase Twitter Username and Password fields
 	[twitterusername setObjectValue:@""];
@@ -307,7 +271,40 @@
 - (void)requestFailed:(NSString *)requestIdentifier withError:(NSError *)error {
 	// Report Error
 	[self showsheetmessage:@"MAL Updater OS X was unable to authorize your Twitter account" explaination:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
-	 }
-
-
+}
+-(IBAction)registertwitter:(id)sender
+{
+	//Show Twitter's Registration Page
+	[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"https://twitter.com/signup"]];
+}
+-(void)enabletwitteroptions
+{
+	// Enables Twitter Options
+	[twitterlogin setHidden:TRUE];
+	[twitterlogout setHidden:FALSE];
+	[twittersignup setHidden:TRUE];
+	[twitterusername setHidden:TRUE];
+	[twitterpassword setHidden:TRUE];
+	[chkenabletwitter setHidden:FALSE];
+	[usernamelbl setHidden:TRUE];
+	[passwordlbl setHidden:TRUE];
+	[logintwitterlbl setHidden:TRUE];
+	[authorizedstatus setHidden:FALSE];
+	[chkincludeshowurl setHidden:FALSE];
+}
+-(void)disabletwitteroptions
+{
+	//Disables Twitter Options and Shows Login
+	[twitterlogin setHidden:FALSE];
+	[twitterlogout setHidden:TRUE];
+	[twittersignup setHidden:FALSE];
+	[twitterusername setHidden:FALSE];
+	[twitterpassword setHidden:FALSE];
+	[chkenabletwitter setHidden:TRUE];
+	[chkincludeshowurl setHidden:TRUE];
+	[usernamelbl setHidden:FALSE];
+	[passwordlbl setHidden:FALSE];
+	[logintwitterlbl setHidden:FALSE];
+	[authorizedstatus setHidden:TRUE];
+}
 @end
