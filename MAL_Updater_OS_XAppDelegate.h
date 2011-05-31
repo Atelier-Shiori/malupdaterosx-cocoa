@@ -16,6 +16,7 @@
 @interface MAL_Updater_OS_XAppDelegate : NSObject <GrowlApplicationBridgeDelegate> {
     NSWindow *window;
 	NSWindow *historywindow;
+	NSWindow *updatepanel;
 	IBOutlet NSMenu *statusMenu;
 	IBOutlet NSTableView *historytable;
     NSStatusItem                *statusItem;
@@ -34,6 +35,7 @@
 }
 @property (assign) IBOutlet NSWindow *window;
 @property (assign) IBOutlet NSWindow *historywindow;
+@property (assign) IBOutlet NSWindow *updatepanel;
 @property (nonatomic, retain, readonly) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 @property (nonatomic, retain, readonly) NSManagedObjectModel *managedObjectModel;
 @property (nonatomic, retain, readonly) NSManagedObjectContext *managedObjectContext;

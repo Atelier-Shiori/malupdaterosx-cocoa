@@ -433,4 +433,5 @@
 {
 	[LastScrobbled setObjectValue:messagetext];
 }
+
 @end
