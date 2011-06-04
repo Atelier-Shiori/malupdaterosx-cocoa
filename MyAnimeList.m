@@ -58,10 +58,11 @@
 			}
 				//Set last successful scrobble to statusItem Tooltip
 				[appDelegate setStatusToolTip:[NSString stringWithFormat:@"MAL Updater OS X - Last Scrobble: %@ - %@", LastScrobbledTitle, LastScrobbledEpisode]];
-				//Retain Scrobbled Title, Title ID and Episode
+				//Retain Scrobbled Title, Title ID, Title Score and Episode
                 [AniID retain];
 				[LastScrobbledTitle retain];
 				[LastScrobbledEpisode retain];
+				[TitleScore retain];
 			}
 		}
 		else {
@@ -81,7 +82,6 @@
 		// Release Detected Title/Episode.
 		[DetectedTitle release];
 		[DetectedEpisode release];
-		[TitleScore release];
 	}
 
 
@@ -295,11 +295,11 @@ foundtitle:
 	//Return the AniID
 	return titleid;
 }
--(BOOL)checkstatus:(NSString *)AniID {
+-(BOOL)checkstatus:(NSString *)titleid {
 	NSLog(@"Checking Status");
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	//Set Search API
-	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/anime/%@?mine=1",MALApiUrl, AniID]];
+	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/anime/%@?mine=1",MALApiUrl, titleid]];
 	ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
 	//Ignore Cookies
 	[request setUseCookiePersistence:NO];
@@ -355,7 +355,7 @@ foundtitle:
 	//Should never happen, but...
 	return NO;
 }
--(BOOL)updatetitle:(NSString *)AniID {
+-(BOOL)updatetitle:(NSString *)titleid {
 	NSLog(@"Updating Title");
 	//Set up Delegate
 	MAL_Updater_OS_XAppDelegate* appDelegate=[NSApp delegate];
@@ -369,7 +369,7 @@ foundtitle:
 		// Update the title
 		NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 		//Set library/scrobble API
-		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/animelist/anime/%@", MALApiUrl, AniID]];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/animelist/anime/%@", MALApiUrl, titleid]];
 		ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
 		//Ignore Cookies
 		[request setUseCookiePersistence:NO];
@@ -414,7 +414,7 @@ foundtitle:
 				//mTwitter
 				NSString * TwitMessage = [NSString stringWithFormat:@"%@ %@ - %@/%@. Current Score: %@/10", TitleState, LastScrobbledTitle, LastScrobbledEpisode, TotalEpisodes, TitleScore];
 				if ([defaults boolForKey:@"IncludeSeriesURL"] == 1) {
-					TwitMessage = [NSString stringWithFormat:@"%@ - http://myanimelist.net/anime/%@",TwitMessage, AniID]; 
+					TwitMessage = [NSString stringWithFormat:@"%@ - http://myanimelist.net/anime/%@",TwitMessage, titleid]; 
 				}
 				//Post Twitter Update
 				[self posttwitterupdate:TwitMessage];
@@ -439,7 +439,7 @@ foundtitle:
 
 	}
 }
--(BOOL)addtitle:(NSString *)AniID {
+-(BOOL)addtitle:(NSString *)titleid {
 	NSLog(@"Adding Title");
 	//Set up Delegate
 	MAL_Updater_OS_XAppDelegate* appDelegate=[NSApp delegate];
@@ -452,7 +452,7 @@ foundtitle:
 	[request setUseCookiePersistence:NO];
 	//Set Token
 	[request addRequestHeader:@"Authorization" value:[NSString stringWithFormat:@"Basic %@",[defaults objectForKey:@"Base64Token"]]];
-	[request setPostValue:AniID forKey:@"anime_id"];
+	[request setPostValue:titleid forKey:@"anime_id"];
 	[request setPostValue:DetectedEpisode forKey:@"episodes"];
 	[request setPostValue:@"watching" forKey:@"status"];	
 	// Do Update
@@ -480,7 +480,7 @@ foundtitle:
 			//Twitter
 			NSString * TwitMessage = [NSString stringWithFormat:@"%@ %@ - %@/%@. Current Score: %@/10", TitleState, LastScrobbledTitle, LastScrobbledEpisode, TotalEpisodes, TitleScore];
 			if ([defaults boolForKey:@"IncludeSeriesURL"] == 1) {
-				TwitMessage = [NSString stringWithFormat:@"%@ - http://myanimelist.net/anime/%@",TwitMessage, AniID]; 
+				TwitMessage = [NSString stringWithFormat:@"%@ - http://myanimelist.net/anime/%@",TwitMessage, titleid]; 
 			}
 			//Post Twitter Update
 			[self posttwitterupdate:TwitMessage];
