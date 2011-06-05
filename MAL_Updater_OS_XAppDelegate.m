@@ -15,6 +15,12 @@
 
 @synthesize window;
 @synthesize historywindow;
+@synthesize updatepanel;
+/*
+ 
+ Initalization
+ 
+ */
 /**
  Returns the support directory for the application, used to store the Core Data
  store file.  This code uses a directory named "MAL Updater OS X" for
@@ -176,7 +182,8 @@
 	else {
 		NSLog(@"ERROR: Could not load Growl.framework");
 	}
-
+	// Disable Update Button
+	[updatetoolbaritem setEnabled:NO];
 	// Hide Window
 	[window orderOut:self];
 	
@@ -197,6 +204,85 @@
 		[self autostarttimer];
 	}
 }
+/*
+ 
+ General UI Functions
+ 
+ */
+
+-(void)showPreferences:(id)sender
+{
+	//Since LSUIElement is set to 1 to hide the dock icon, it causes unattended behavior of having the program windows not show to the front.
+	[NSApp activateIgnoringOtherApps:YES];
+	//Is preferenceController nil?
+	if (!preferenceController) {
+		preferenceController = [[PreferenceController alloc] init];
+	}
+	[preferenceController showWindow:self];
+}
+- (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender {
+	
+    if (!managedObjectContext) return NSTerminateNow;
+	
+    if (![managedObjectContext commitEditing]) {
+        NSLog(@"%@:%s unable to commit editing to terminate", [self class], _cmd);
+        return NSTerminateCancel;
+    }
+	
+    if (![managedObjectContext hasChanges]) return NSTerminateNow;
+	
+    NSError *error = nil;
+    if (![managedObjectContext save:&error]) {
+		
+        // This error handling simply presents error information in a panel with an 
+        // "Ok" button, which does not include any attempt at error recovery (meaning, 
+        // attempting to fix the error.)  As a result, this implementation will 
+        // present the information to the user and then follow up with a panel asking 
+        // if the user wishes to "Quit Anyway", without saving the changes.
+		
+        // Typically, this process should be altered to include application-specific 
+        // recovery steps.  
+		
+        BOOL result = [sender presentError:error];
+        if (result) return NSTerminateCancel;
+		
+        NSString *question = NSLocalizedString(@"Could not save changes while quitting.  Quit anyway?", @"Quit without saves error question message");
+        NSString *info = NSLocalizedString(@"Quitting now will lose any changes you have made since the last successful save", @"Quit without saves error question info");
+        NSString *quitButton = NSLocalizedString(@"Quit anyway", @"Quit anyway button title");
+        NSString *cancelButton = NSLocalizedString(@"Cancel", @"Cancel button title");
+        NSAlert *alert = [[NSAlert alloc] init];
+        [alert setMessageText:question];
+        [alert setInformativeText:info];
+        [alert addButtonWithTitle:quitButton];
+        [alert addButtonWithTitle:cancelButton];
+		
+        NSInteger answer = [alert runModal];
+        [alert release];
+        alert = nil;
+        
+        if (answer == NSAlertAlternateReturn) return NSTerminateCancel;
+		
+    }
+	
+    return NSTerminateNow;
+}
+-(IBAction)togglescrobblewindow:(id)sender
+{
+	if ([window isVisible]) {
+		[window orderOut:self]; 
+	} else { 
+		//Since LSUIElement is set to 1 to hide the dock icon, it causes unattended behavior of having the program windows not show to the front.
+		[NSApp activateIgnoringOtherApps:YES];
+		[window makeKeyAndOrderFront:self]; 
+	} 
+}
+
+/*
+ 
+ Timer Functions
+ 
+ */
+
 - (IBAction)toggletimer:(id)sender {
 	//Check to see if there is an API Key stored
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -274,92 +360,18 @@
 	//Tell MALEngine to detect and scrobble if necessary.
 	NSLog(@"Starting...");
 	[MALEngine startscrobbling];
-}
--(void)showPreferences:(id)sender
-{
-	//Since LSUIElement is set to 1 to hide the dock icon, it causes unattended behavior of having the program windows not show to the front.
-	[NSApp activateIgnoringOtherApps:YES];
-	//Is preferenceController nil?
-	if (!preferenceController) {
-		preferenceController = [[PreferenceController alloc] init];
+	//Enable the Update button if a title is detected
+	if ([MALEngine getAniID] > 0) {
+		[updatetoolbaritem setEnabled:YES];
 	}
-	[preferenceController showWindow:self];
-}
-- (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender {
-	
-    if (!managedObjectContext) return NSTerminateNow;
-	
-    if (![managedObjectContext commitEditing]) {
-        NSLog(@"%@:%s unable to commit editing to terminate", [self class], _cmd);
-        return NSTerminateCancel;
-    }
-	
-    if (![managedObjectContext hasChanges]) return NSTerminateNow;
-	
-    NSError *error = nil;
-    if (![managedObjectContext save:&error]) {
-		
-        // This error handling simply presents error information in a panel with an 
-        // "Ok" button, which does not include any attempt at error recovery (meaning, 
-        // attempting to fix the error.)  As a result, this implementation will 
-        // present the information to the user and then follow up with a panel asking 
-        // if the user wishes to "Quit Anyway", without saving the changes.
-		
-        // Typically, this process should be altered to include application-specific 
-        // recovery steps.  
-		
-        BOOL result = [sender presentError:error];
-        if (result) return NSTerminateCancel;
-		
-        NSString *question = NSLocalizedString(@"Could not save changes while quitting.  Quit anyway?", @"Quit without saves error question message");
-        NSString *info = NSLocalizedString(@"Quitting now will lose any changes you have made since the last successful save", @"Quit without saves error question info");
-        NSString *quitButton = NSLocalizedString(@"Quit anyway", @"Quit anyway button title");
-        NSString *cancelButton = NSLocalizedString(@"Cancel", @"Cancel button title");
-        NSAlert *alert = [[NSAlert alloc] init];
-        [alert setMessageText:question];
-        [alert setInformativeText:info];
-        [alert addButtonWithTitle:quitButton];
-        [alert addButtonWithTitle:cancelButton];
-		
-        NSInteger answer = [alert runModal];
-        [alert release];
-        alert = nil;
-        
-        if (answer == NSAlertAlternateReturn) return NSTerminateCancel;
-		
-    }
-	
-    return NSTerminateNow;
 }
 
-- (void) dealloc {
-    //Deallocate all active objects
-    [statusImage release];
-    [statusHighlightImage release];
-	[managedObjectContext release];
-    [persistentStoreCoordinator release];
-    [managedObjectModel release];
-	[window release];
-	[historywindow release];
-    [MALEngine release];
-	if (!preferenceController) {
-	}
-	else {
-		[preferenceController release];
-	}
-	
-    [super dealloc];
-}
--(IBAction)togglescrobblewindow:(id)sender
-{
-	if ([window isVisible]) {
-		[window orderOut:self]; 
-	} else { 
-		//Since LSUIElement is set to 1 to hide the dock icon, it causes unattended behavior of having the program windows not show to the front.
-		[NSApp activateIgnoringOtherApps:YES];
-		[window makeKeyAndOrderFront:self]; 
-	} 
-}
+/*
+ 
+ Scrobble History Window
+ 
+ */
+
 -(IBAction)showhistory:(id)sender
 {
 		//Since LSUIElement is set to 1 to hide the dock icon, it causes unattended behavior of having the program windows not show to the front.
@@ -421,6 +433,13 @@
 	}
 	
 }	
+
+/*
+ 
+ StatusIconTooltip, Status Text, Last Scrobbled Title Setters
+ 
+ */
+
 -(void)setStatusToolTip:(NSString*)toolTip
 {
     [statusItem setToolTip:toolTip];
@@ -434,4 +453,64 @@
 	[LastScrobbled setObjectValue:messagetext];
 }
 
+/*
+ 
+ Update Status Sheet Window Functions
+ 
+ */
+
+-(IBAction)updatestatus:(id)sender {
+	// Show Sheet
+	[NSApp beginSheet:updatepanel
+	   modalForWindow:[self window] modalDelegate:self
+	   didEndSelector:@selector(myPanelDidEnd:returnCode:contextInfo:)
+		  contextInfo:(void *)[[NSNumber numberWithFloat:choice] retain]];
+	// Set up UI
+	[showtitle setObjectValue:[MALEngine getLastScrobbledTitle]];
+	[currentepisodes setObjectValue:[MALEngine getLastScrobbledEpisode]];
+	[totalepisodes setObjectValue:[MALEngine getTotalEpisodes]];
+	
+}
+- (void)myPanelDidEnd:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
+{
+	float payload;
+	if (returnCode == NSCancelButton) return;
+	
+	
+	payload = [(NSNumber *)contextInfo floatValue];
+	[(NSNumber *)contextInfo release];
+}
+-(IBAction)closeupdatestatus:(id)sender {
+	[updatepanel orderOut:self];
+	[NSApp endSheet:updatepanel returnCode:0];
+}
+-(IBAction)updatetitlestatus:(id)sender {
+	[updatepanel orderOut:self];
+	[NSApp endSheet:updatepanel returnCode:1];
+}
+
+/* 
+ 
+ Dealloc
+ 
+ */
+
+- (void) dealloc {
+    //Deallocate all active objects
+    [statusImage release];
+    [statusHighlightImage release];
+	[managedObjectContext release];
+    [persistentStoreCoordinator release];
+    [managedObjectModel release];
+	[window release];
+	[historywindow release];
+    [MALEngine release];
+	if (!preferenceController) {
+	}
+	else {
+		[preferenceController release];
+	}
+	
+    [super dealloc];
+}
 @end

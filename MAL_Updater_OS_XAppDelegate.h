@@ -14,9 +14,11 @@
 @class PreferenceController;
 @class MyAnimeList;
 @interface MAL_Updater_OS_XAppDelegate : NSObject <GrowlApplicationBridgeDelegate> {
+	/* Windows */
     NSWindow *window;
 	NSWindow *historywindow;
 	NSWindow *updatepanel;
+	/* General Stuff */
 	IBOutlet NSMenu *statusMenu;
 	IBOutlet NSTableView *historytable;
     NSStatusItem                *statusItem;
@@ -31,7 +33,15 @@
 	IBOutlet NSTextField * ScrobblerStatus;
 	IBOutlet NSTextField * LastScrobbled;
 	int choice;
+	/* MAL Scrobbling/Updating Class */
 	MyAnimeList * MALEngine;
+	/* Update Status Sheet Window IBOutlets */
+	IBOutlet NSToolbarItem * updatetoolbaritem;
+	IBOutlet NSTextField * showtitle;
+	IBOutlet NSTextField * totalepisodes;
+	IBOutlet NSTextField * currentepisodes;
+	IBOutlet NSPopUpButton * showstatus;
+	IBOutlet NSPopUpButton * showscore;
 }
 @property (assign) IBOutlet NSWindow *window;
 @property (assign) IBOutlet NSWindow *historywindow;
@@ -56,4 +66,7 @@
 - (void)firetimer:(NSTimer *)aTimer;
 -(void)setStatusText:(NSString*)messagetext;
 -(void)setLastScrobbledTitle:(NSString*)messagetext;
+-(IBAction)updatestatus:(id)sender;
+-(IBAction)closeupdatestatus:(id)sender;
+-(IBAction)updatetitlestatus:(id)sender;
 @end

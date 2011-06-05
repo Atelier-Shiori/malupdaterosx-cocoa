@@ -42,4 +42,7 @@
 -(NSString *)getLastScrobbledTitle;
 -(NSString *)getLastScrobbledEpisode;
 -(NSString *)getAniID;
+-(NSString *)getTotalEpisodes;
+-(int)getScore;
+-(int)getWatchStatus;
 @end

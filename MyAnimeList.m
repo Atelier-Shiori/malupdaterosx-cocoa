@@ -17,17 +17,38 @@
  Accessors
  
  */
--(NSString *) getLastScrobbledTitle
+-(NSString *)getLastScrobbledTitle
 {
     return LastScrobbledTitle;
 }
--(NSString *) getLastScrobbledEpisode
+-(NSString *)getLastScrobbledEpisode
 {
     return LastScrobbledEpisode;
 }
--(NSString *) getAniID
+-(NSString *)getAniID
 {
     return AniID;
+}
+-(NSString *)getTotalEpisodes
+{
+	return TotalEpisodes;
+}
+-(int)getScore
+{
+    return [TitleScore intValue];
+}
+-(int)getWatchStatus
+{
+	if ([WatchStatus isEqualToString:@"watching"])
+		return 0;
+	else if ([WatchStatus isEqualToString:@"completed"])
+		return 1;
+	else if ([WatchStatus isEqualToString:@"on-hold"])
+		return 2;
+	else if ([WatchStatus isEqualToString:@"dropped"])
+		return 3;
+	else
+		return 0; //fallback
 }
 
 /*
@@ -58,11 +79,12 @@
 			}
 				//Set last successful scrobble to statusItem Tooltip
 				[appDelegate setStatusToolTip:[NSString stringWithFormat:@"MAL Updater OS X - Last Scrobble: %@ - %@", LastScrobbledTitle, LastScrobbledEpisode]];
-				//Retain Scrobbled Title, Title ID, Title Score and Episode
+				//Retain Scrobbled Title, Title ID, Title Score, WatchStatus and Episode
                 [AniID retain];
 				[LastScrobbledTitle retain];
 				[LastScrobbledEpisode retain];
 				[TitleScore retain];
+				[WatchStatus retain];
 			}
 		}
 		else {
