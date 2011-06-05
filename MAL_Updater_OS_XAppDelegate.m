@@ -360,7 +360,7 @@
 -(void)starttimer {
 	NSLog(@"Timer Started.");
 	//Create Timer
-	timer = [[NSTimer scheduledTimerWithTimeInterval:30//0
+	timer = [[NSTimer scheduledTimerWithTimeInterval:300
 											  target:self
 											selector:@selector(firetimer:)
 											userInfo:nil
