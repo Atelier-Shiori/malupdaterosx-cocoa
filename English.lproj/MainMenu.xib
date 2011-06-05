@@ -21,12 +21,12 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="588"/>
-			<integer value="543"/>
-			<integer value="726"/>
 			<integer value="789"/>
+			<integer value="726"/>
+			<integer value="588"/>
 			<integer value="724"/>
 			<integer value="29"/>
+			<integer value="543"/>
 			<integer value="739"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
@@ -866,7 +866,9 @@
 											<bool key="EncodedWithXMLCoder">YES</bool>
 											<string>allowsFloats</string>
 											<string>formatterBehavior</string>
+											<string>lenient</string>
 											<string>locale</string>
+											<string>minimum</string>
 											<string>negativeInfinitySymbol</string>
 											<string>nilSymbol</string>
 											<string>numberStyle</string>
@@ -876,9 +878,11 @@
 											<bool key="EncodedWithXMLCoder">YES</bool>
 											<boolean value="YES"/>
 											<integer value="1040"/>
+											<boolean value="YES"/>
 											<object class="NSLocale">
 												<string key="NS.identifier"/>
 											</object>
+											<real value="0.0"/>
 											<string>-∞</string>
 											<string/>
 											<integer value="0"/>
@@ -905,7 +909,8 @@
 											</object>
 										</object>
 									</object>
-									<object class="NSDecimalNumberPlaceholder" key="NS.min" id="923098738">
+									<real value="0.0" key="NS.min"/>
+									<object class="NSDecimalNumberPlaceholder" key="NS.max">
 										<int key="NS.exponent">0</int>
 										<int key="NS.length">0</int>
 										<bool key="NS.negative">YES</bool>
@@ -913,7 +918,6 @@
 										<int key="NS.mantissa.bo">1</int>
 										<bytes key="NS.mantissa">AAAAAAAAAAAAAAAAAAAAAA</bytes>
 									</object>
-									<reference key="NS.max" ref="923098738"/>
 									<object class="NSDecimalNumberHandler" key="NS.rounding">
 										<int key="NS.roundingmode">3</int>
 										<bool key="NS.raise.overflow">YES</bool>
@@ -1965,14 +1969,6 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
-						<string key="label">currentepisodes</string>
-						<reference key="source" ref="976324537"/>
-						<reference key="destination" ref="613367647"/>
-					</object>
-					<int key="connectionID">786</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
 						<string key="label">totalepisodes</string>
 						<reference key="source" ref="976324537"/>
 						<reference key="destination" ref="892549169"/>
@@ -2042,6 +2038,22 @@
 						<reference key="destination" ref="827838438"/>
 					</object>
 					<int key="connectionID">812</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">currentepisodes</string>
+						<reference key="source" ref="976324537"/>
+						<reference key="destination" ref="613367647"/>
+					</object>
+					<int key="connectionID">813</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">episodefmt</string>
+						<reference key="source" ref="976324537"/>
+						<reference key="destination" ref="968457696"/>
+					</object>
+					<int key="connectionID">814</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -3470,7 +3482,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">812</int>
+			<int key="maxID">814</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -3559,6 +3571,7 @@
 							<string>LastScrobbled</string>
 							<string>ScrobblerStatus</string>
 							<string>currentepisodes</string>
+							<string>episodefmt</string>
 							<string>historytable</string>
 							<string>historywindow</string>
 							<string>showscore</string>
@@ -3576,6 +3589,7 @@
 							<string>NSTextField</string>
 							<string>NSTextField</string>
 							<string>NSTextField</string>
+							<string>NSNumberFormatter</string>
 							<string>NSTableView</string>
 							<string>NSWindow</string>
 							<string>NSPopUpButton</string>
@@ -3596,6 +3610,7 @@
 							<string>LastScrobbled</string>
 							<string>ScrobblerStatus</string>
 							<string>currentepisodes</string>
+							<string>episodefmt</string>
 							<string>historytable</string>
 							<string>historywindow</string>
 							<string>showscore</string>
@@ -3621,6 +3636,10 @@
 							<object class="IBToOneOutletInfo">
 								<string key="name">currentepisodes</string>
 								<string key="candidateClassName">NSTextField</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">episodefmt</string>
+								<string key="candidateClassName">NSNumberFormatter</string>
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">historytable</string>

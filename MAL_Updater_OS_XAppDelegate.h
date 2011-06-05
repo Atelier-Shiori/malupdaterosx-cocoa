@@ -42,6 +42,7 @@
 	IBOutlet NSTextField * currentepisodes;
 	IBOutlet NSPopUpButton * showstatus;
 	IBOutlet NSPopUpButton * showscore;
+    IBOutlet NSNumberFormatter * episodefmt;
 }
 @property (assign) IBOutlet NSWindow *window;
 @property (assign) IBOutlet NSWindow *historywindow;

@@ -385,6 +385,9 @@ foundtitle:
 		// Already Watched, no need to scrobble
 		[appDelegate setStatusText:@"Scrobble Status: Same Episode Playing, Scrobble not needed."];
 		[appDelegate setLastScrobbledTitle:[NSString stringWithFormat:@"Last Scrobbled: %@ - %@",DetectedTitle,DetectedEpisode]];
+        // Store Scrobbled Title and Episode
+		LastScrobbledTitle = DetectedTitle;
+		LastScrobbledEpisode = DetectedEpisode;
 		return YES;
 	}
 	else {
