@@ -35,9 +35,12 @@
 -(BOOL)detectmedia;
 -(NSString *)searchanime;
 -(NSString *)findaniid:(NSString *)ResponseData;
--(BOOL)checkstatus:(NSString *)AniID;
--(BOOL)updatetitle:(NSString *)AniID;
--(BOOL)addtitle:(NSString *)AniID;
+-(BOOL)checkstatus:(NSString *)titleid;
+-(BOOL)updatetitle:(NSString *)titleid;
+-(BOOL)addtitle:(NSString *)titleid;
+-(void)updatestatus:(NSString *)titleid
+			 score:(int)showscore
+	   watchstatus:(NSString*)showwatchstatus;
 -(void)posttwitterupdate:(NSString *)message;
 -(NSString *)getLastScrobbledTitle;
 -(NSString *)getLastScrobbledEpisode;

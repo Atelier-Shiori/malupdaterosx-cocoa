@@ -290,13 +290,8 @@
 		choice = NSRunCriticalAlertPanel(@"MAL Updater OS X was unable to start scrobbling since you have no auth token stored.", @"Verify and save your login in Preferences and then try again.", @"OK", nil, nil, 8);
 	}
 	else {
-		if (timer == nil) {
-			//Create Timer
-			timer = [[NSTimer scheduledTimerWithTimeInterval:300
-													  target:self
-													selector:@selector(firetimer:)
-													userInfo:nil
-													 repeats:YES] retain];
+		if (scrobbling == FALSE) {
+			[self starttimer];
 			[togglescrobbler setTitle:@"Stop Scrobbling"];
 			[ScrobblerStatus setObjectValue:@"Scrobble Status: Started"];
 			[GrowlApplicationBridge notifyWithTitle:@"MAL Updater OS X"
@@ -306,13 +301,11 @@
 										   priority:0
 										   isSticky:NO
 									   clickContext:[NSDate date]];
+			//Set Scrobbling State to true
+			scrobbling = TRUE;
 		}
 		else {
-			//Stop Timer
-			// Remove Timer
-			[timer invalidate];
-			[timer release];
-			timer = nil;
+			[self stoptimer];
 			[togglescrobbler setTitle:@"Start Scrobbling"];
 			[ScrobblerStatus setObjectValue:@"Scrobble Status: Stopped"];
 			[GrowlApplicationBridge notifyWithTitle:@"MAL Updater OS X"
@@ -322,6 +315,8 @@
 										   priority:0
 										   isSticky:NO
 									   clickContext:[NSDate date]];
+			//Set Scrobbling State to false
+			scrobbling = FALSE;
 		}
 	}
 	
@@ -339,12 +334,7 @@
 								   clickContext:[NSDate date]];
 	}
 	else {
-		//Create Timer
-		timer = [[NSTimer scheduledTimerWithTimeInterval:300
-												  target:self
-												selector:@selector(firetimer:)
-												userInfo:nil
-												 repeats:YES] retain];
+		[self starttimer];
 		[togglescrobbler setTitle:@"Stop Scrobbling"];
 		[ScrobblerStatus setObjectValue:@"Scrobble Status: Started"];
 		[GrowlApplicationBridge notifyWithTitle:@"MAL Updater OS X"
@@ -354,9 +344,11 @@
 									   priority:0
 									   isSticky:NO
 								   clickContext:[NSDate date]];
+		//Set Scrobbling State to true
+		scrobbling = TRUE;
 	}
 }
-- (void)firetimer:(NSTimer *)aTimer {
+-(void)firetimer:(NSTimer *)aTimer {
 	//Tell MALEngine to detect and scrobble if necessary.
 	NSLog(@"Starting...");
 	[MALEngine startscrobbling];
@@ -365,7 +357,23 @@
 		[updatetoolbaritem setEnabled:YES];
 	}
 }
-
+-(void)starttimer {
+	NSLog(@"Timer Started.");
+	//Create Timer
+	timer = [[NSTimer scheduledTimerWithTimeInterval:30//0
+											  target:self
+											selector:@selector(firetimer:)
+											userInfo:nil
+											 repeats:YES] retain];
+}
+-(void)stoptimer {
+	NSLog(@"Timer Stopped.");
+	//Stop Timer
+	// Remove Timer
+	[timer invalidate];
+	[timer release];
+	timer = nil;
+}
 /*
  
  Scrobble History Window
@@ -467,15 +475,30 @@
 		  contextInfo:(void *)[[NSNumber numberWithFloat:choice] retain]];
 	// Set up UI
 	[showtitle setObjectValue:[MALEngine getLastScrobbledTitle]];
-	[currentepisodes setObjectValue:[MALEngine getLastScrobbledEpisode]];
-	[totalepisodes setObjectValue:[MALEngine getTotalEpisodes]];
+	[showscore selectItemWithTag:[MALEngine getScore]];
+	[showstatus selectItemAtIndex:[MALEngine getWatchStatus]];
+	// Stop Timer temporarily if scrobbling is turned on
+	if (scrobbling == TRUE) {
+		[self stoptimer];
+	}
 	
 }
 - (void)myPanelDidEnd:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
 {
 	float payload;
-	if (returnCode == NSCancelButton) return;
-	
+switch (returnCode) {
+	case 0:
+		break;
+	case 1:
+		[MALEngine updatestatus:[MALEngine getAniID] score:[showscore selectedTag] watchstatus:[showstatus titleOfSelectedItem]];
+		break;
+	default:
+		break;
+}
+
+	if (scrobbling == TRUE) {
+		[self starttimer];
+	}
 	
 	payload = [(NSNumber *)contextInfo floatValue];
 	[(NSNumber *)contextInfo release];

@@ -35,7 +35,7 @@
 }
 -(int)getScore
 {
-    return [TitleScore intValue];
+    return [TitleScore integerValue];
 }
 -(int)getWatchStatus
 {
@@ -527,7 +527,47 @@ foundtitle:
 			break;
 	}
 }
-
+-(void)updatestatus:(NSString *)titleid
+			 score:(int)showscore
+	   watchstatus:(NSString*)showwatchstatus
+{
+	NSLog(@"Updating Status for %@", titleid);
+	//Set up Delegate
+	MAL_Updater_OS_XAppDelegate* appDelegate=[NSApp delegate];
+	// Update the title
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	//Set library/scrobble API
+	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/animelist/anime/%@", MALApiUrl, titleid]];
+	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+	//Ignore Cookies
+	[request setUseCookiePersistence:NO];
+	//Set Token
+	[request addRequestHeader:@"Authorization" value:[NSString stringWithFormat:@"Basic %@",[defaults objectForKey:@"Base64Token"]]];
+	[request setPostValue:@"PUT" forKey:@"_method"];
+	//Set current episode
+	[request setPostValue:LastScrobbledEpisode forKey:@"episodes"];
+	//Set new watch status
+	[request setPostValue:showwatchstatus forKey:@"status"];	
+	//Set new score.
+	[request setPostValue:[NSString stringWithFormat:@"%i", showscore] forKey:@"score"];
+	// Do Update
+	[request startSynchronous];
+	
+	switch ([request responseStatusCode]) {
+		case 200:
+			// Update Successful
+			[appDelegate setStatusText:@"Scrobble Status: Updating of Watch Status/Score Successful."];
+			//Set New Values
+			TitleScore = [NSString stringWithFormat:@"%i", showscore];
+			WatchStatus = showwatchstatus;
+			break;
+		default:
+			// Update Unsuccessful
+			[appDelegate setStatusText:@"Scrobble Status: Unable to update Watch Status/Score."];
+			break;
+	}
+	
+}
 /*
  
  Twitter Functions

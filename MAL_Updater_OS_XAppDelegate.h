@@ -33,16 +33,14 @@
 	IBOutlet NSTextField * ScrobblerStatus;
 	IBOutlet NSTextField * LastScrobbled;
 	int choice;
+	BOOL scrobbling;
 	/* MAL Scrobbling/Updating Class */
 	MyAnimeList * MALEngine;
 	/* Update Status Sheet Window IBOutlets */
 	IBOutlet NSToolbarItem * updatetoolbaritem;
 	IBOutlet NSTextField * showtitle;
-	IBOutlet NSTextField * totalepisodes;
-	IBOutlet NSTextField * currentepisodes;
 	IBOutlet NSPopUpButton * showstatus;
 	IBOutlet NSPopUpButton * showscore;
-    IBOutlet NSNumberFormatter * episodefmt;
 }
 @property (assign) IBOutlet NSWindow *window;
 @property (assign) IBOutlet NSWindow *historywindow;
@@ -64,7 +62,9 @@
 -(void)setStatusToolTip:(NSString*)toolTip;
 -(IBAction)toggletimer:(id)sender;
 -(void)autostarttimer;
-- (void)firetimer:(NSTimer *)aTimer;
+-(void)firetimer:(NSTimer *)aTimer;
+-(void)starttimer;
+-(void)stoptimer;
 -(void)setStatusText:(NSString*)messagetext;
 -(void)setLastScrobbledTitle:(NSString*)messagetext;
 -(IBAction)updatestatus:(id)sender;
