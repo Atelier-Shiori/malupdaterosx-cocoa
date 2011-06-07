@@ -557,6 +557,18 @@ foundtitle:
 		case 200:
 			// Update Successful
 			[appDelegate setStatusText:@"Scrobble Status: Updating of Watch Status/Score Successful."];
+			if ([TitleScore isEqualToString:[NSString stringWithFormat:@"%i", showscore]] && [WatchStatus isEqualToString:showwatchstatus])
+			{
+			}
+			else {
+				//Twitter
+				NSString * TwitMessage = [NSString stringWithFormat:@"%@ %@ - %@/%@. Current Score: %i/10", showwatchstatus, LastScrobbledTitle, LastScrobbledEpisode, TotalEpisodes, showscore];
+				if ([defaults boolForKey:@"IncludeSeriesURL"] == 1) {
+					TwitMessage = [NSString stringWithFormat:@"%@ - http://myanimelist.net/anime/%@",TwitMessage, titleid]; 
+				}
+				//Post Twitter Update
+				[self posttwitterupdate:TwitMessage];
+			}
 			//Set New Values
 			TitleScore = [NSString stringWithFormat:@"%i", showscore];
 			WatchStatus = showwatchstatus;

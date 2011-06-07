@@ -23,7 +23,7 @@
 			<bool key="EncodedWithXMLCoder">YES</bool>
 			<integer value="543"/>
 			<integer value="29"/>
-			<integer value="727"/>
+			<integer value="726"/>
 			<integer value="739"/>
 			<integer value="791"/>
 			<integer value="588"/>
@@ -1133,7 +1133,7 @@
 					</object>
 					<object class="NSMenuItem" id="116183145">
 						<reference key="NSMenu" ref="553008996"/>
-						<string key="NSTitle">5 - Good</string>
+						<string key="NSTitle">5 - Average</string>
 						<string key="NSKeyEquiv"/>
 						<int key="NSMnemonicLoc">2147483647</int>
 						<reference key="NSOnImage" ref="1068021269"/>
@@ -3101,7 +3101,7 @@
 					<boolean value="NO"/>
 					<string>{196, 240}</string>
 					<string>{{202, 428}, {480, 270}}</string>
-					<string>{{356, 601}, {148, 233}}</string>
+					<string>{{913, 589}, {148, 233}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>

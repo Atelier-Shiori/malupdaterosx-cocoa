@@ -495,7 +495,7 @@ switch (returnCode) {
 	default:
 		break;
 }
-
+    //If scrobbling is on, restart timer
 	if (scrobbling == TRUE) {
 		[self starttimer];
 	}
