@@ -11,13 +11,14 @@ sudo ln -s /Developer/SDKs/MacOSX10.5.sdk /<XCode 4 Directory/SDKs/MacOSX10.5.sd
 4. Go to Product > Build to build the project. Now you can run your newly compiled MAL Updater OS X.
 Note: Since IBPlugins aren’t supported in XCode 4, you will not be able to edit any of the xib files. We will be phasing out BWTookitFramework in the future and use OmniAppkit to design the preferences window. To edit these files, install XCode 3.2.x in a different directory.
 *For Twitter support, you need to obtain your own Consumer Key & Secret. Otherwise, Twitter features will not work.*
-##Dependencies
+
+## Dependencies
 To compile, make sure you have these frameworks on your computer.
-CMCrashReporter.framework
-Sparkle.framework (GC Version)
-OgreKit.framework
-Growl.framework
-JSON.framework
-BWToolkitFramework.framework (Will be depreciated in MAL Updater OS X 2.2a1)
+* CMCrashReporter.framework
+* Sparkle.framework (GC Version)
+* OgreKit.framework
+* Growl.framework
+* JSON.framework
+* BWToolkitFramework.framework (Will be depreciated in MAL Updater OS X 2.2a1)
 
 You may need to find the directory where these frameworks are since they are on a different location on my computer.
