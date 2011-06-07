@@ -559,6 +559,7 @@ foundtitle:
 			[appDelegate setStatusText:@"Scrobble Status: Updating of Watch Status/Score Successful."];
 			if ([TitleScore isEqualToString:[NSString stringWithFormat:@"%i", showscore]] && [WatchStatus isEqualToString:showwatchstatus])
 			{
+				//Nothing changed, do nothing.
 			}
 			else {
 				//Twitter
