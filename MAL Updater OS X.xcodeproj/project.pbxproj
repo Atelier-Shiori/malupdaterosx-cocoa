@@ -81,6 +81,7 @@
 		5C1458D412D531D100C7031C /* CJSONDeserializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C1458CA12D531D100C7031C /* CJSONDeserializer.m */; };
 		5C1458D512D531D100C7031C /* CJSONScanner.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C1458CC12D531D100C7031C /* CJSONScanner.m */; };
 		5C1458D612D531D100C7031C /* CJSONSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C1458CE12D531D100C7031C /* CJSONSerializer.m */; };
+		5C20D07A13A52CE900B93DD5 /* logo_twitter_wordmark_1000.png in Resources */ = {isa = PBXBuildFile; fileRef = 5C20D07913A52CE900B93DD5 /* logo_twitter_wordmark_1000.png */; };
 		5C2B9DC41221E9E5006DEF0D /* MAL_Updater_OS_X_DataModel.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 5C2B9DC31221E9E5006DEF0D /* MAL_Updater_OS_X_DataModel.xcdatamodel */; };
 		5C2B9DFC1221EB25006DEF0D /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C2B9DFB1221EB25006DEF0D /* CoreData.framework */; };
 		5C2D50601329810000B31C08 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C2D505F1329810000B31C08 /* libxml2.dylib */; };
@@ -267,6 +268,7 @@
 		5C1458CD12D531D100C7031C /* CJSONSerializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CJSONSerializer.h; sourceTree = "<group>"; };
 		5C1458CE12D531D100C7031C /* CJSONSerializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CJSONSerializer.m; sourceTree = "<group>"; };
 		5C1458EC12D5320000C7031C /* JSONRepresentation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONRepresentation.h; sourceTree = "<group>"; };
+		5C20D07913A52CE900B93DD5 /* logo_twitter_wordmark_1000.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo_twitter_wordmark_1000.png; sourceTree = "<group>"; };
 		5C2B9DC31221E9E5006DEF0D /* MAL_Updater_OS_X_DataModel.xcdatamodel */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.xcdatamodel; path = MAL_Updater_OS_X_DataModel.xcdatamodel; sourceTree = "<group>"; };
 		5C2B9DFB1221EB25006DEF0D /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		5C2D505F1329810000B31C08 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
@@ -421,6 +423,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				5C20D07913A52CE900B93DD5 /* logo_twitter_wordmark_1000.png */,
 				5C30BC06139A9DD1000B83C5 /* PreferencesSoftwareUpdateIcon.tiff */,
 				5CABD0B31395875800303E08 /* edit.tiff */,
 				5CB1F26E12E22CF5007C5254 /* stopwatch.png */,
@@ -799,6 +802,7 @@
 				5CB1F27112E22CF5007C5254 /* Twitter.png in Resources */,
 				5CABD0B41395875800303E08 /* edit.tiff in Resources */,
 				5C30BC07139A9DD1000B83C5 /* PreferencesSoftwareUpdateIcon.tiff in Resources */,
+				5C20D07A13A52CE900B93DD5 /* logo_twitter_wordmark_1000.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
