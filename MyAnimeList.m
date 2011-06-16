@@ -261,7 +261,7 @@
 		string = [regex replaceAllMatchesInString:string
 									   withString:@" "];
 		// Set Title Info
-		regex = [OGRegularExpression regularExpressionWithString:@"( \\-)? (episode |ep |ep|e)?(\\d+)([\\w\\-! ]*)$"];
+		regex = [OGRegularExpression regularExpressionWithString:@"( \\-) (episode |ep |ep|e)?(\\d+)([\\w\\-! ]*)$"];
 		DetectedTitle = [regex replaceAllMatchesInString:string
 														 withString:@""];
 		// Set Episode Info
