@@ -308,10 +308,23 @@
 	SBJsonParser *parser = [[SBJsonParser alloc] init];
 	NSArray *searchdata = [parser objectWithString:ResponseData error:nil];
 	NSString *titleid = @"";
+	//Initalize NSString to dump the title temporarily
+	NSString *theshowtitle = @"";
+	//Setup OgreKit
+	OGRegularExpression    *regex;
+	//Set Regular Expressions to exactly match the detected title
+	NSString *findpre = [NSString stringWithFormat:@"\\b%@",DetectedTitle];
+	regex = [OGRegularExpression regularExpressionWithString:findpre];
 	//Retrieve the ID. Note that the most matched title will be on the top
 	for (NSDictionary *serchentry in searchdata) {
+		//Store title from search entry
+		theshowtitle = [NSString stringWithFormat:@"%@",[serchentry objectForKey:@"title"]];
+		//Test each title until it matches
+		if ([regex matchInString:theshowtitle] != nil) {
+			//Return titleid
 			titleid = [NSString stringWithFormat:@"%@",[serchentry objectForKey:@"id"]];
-		goto foundtitle;
+			goto foundtitle;
+		}
 	}
 foundtitle:
 	//Return the AniID
@@ -405,15 +418,15 @@ foundtitle:
 		//Set Status
 		if([DetectedEpisode intValue] == [TotalEpisodes intValue]) {
 			//Set Title State for Title (use for Twitter feature)
-			TitleState = @"completed";
+			WatchStatus = @"completed";
 			// Since Detected Episode = Total Episode, set the status as "Complete"
-			[request setPostValue:TitleState forKey:@"status"];
+			[request setPostValue:WatchStatus forKey:@"status"];
 		}
 		else {
 			//Set Title State for Title (use for Twitter feature)
-			TitleState = @"watching";
+			WatchStatus = @"watching";
 			// Still Watching
-			[request setPostValue:TitleState forKey:@"status"];
+			[request setPostValue:WatchStatus forKey:@"status"];
 		}	
 		// Set existing score to prevent the score from being erased.
 		[request setPostValue:TitleScore forKey:@"score"];
@@ -437,7 +450,7 @@ foundtitle:
 											   isSticky:NO
 										   clickContext:[NSDate date]];
 				//mTwitter
-				NSString * TwitMessage = [NSString stringWithFormat:@"%@ %@ - %@/%@. Current Score: %@/10", TitleState, LastScrobbledTitle, LastScrobbledEpisode, TotalEpisodes, TitleScore];
+				NSString * TwitMessage = [NSString stringWithFormat:@"%@ %@ - %@/%@. Current Score: %@/10", WatchStatus, LastScrobbledTitle, LastScrobbledEpisode, TotalEpisodes, TitleScore];
 				if ([defaults boolForKey:@"IncludeSeriesURL"] == 1) {
 					TwitMessage = [NSString stringWithFormat:@"%@ - http://myanimelist.net/anime/%@",TwitMessage, titleid]; 
 				}
@@ -489,6 +502,7 @@ foundtitle:
 	
 	//Set Title State for Title (use for Twitter feature)
 	TitleState = @"started watching";
+	WatchStatus = @"watching";
 
 	switch ([request responseStatusCode]) {
 		case 200:
