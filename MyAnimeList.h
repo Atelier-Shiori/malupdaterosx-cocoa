@@ -27,6 +27,8 @@
 	NSString * TitleScore;
 	NSString * TitleState;
     NSString * AniID;
+	OGRegularExpressionMatch    *match;
+	OGRegularExpression    *regex;
 	BOOL Success;
 	int choice;
     Twitter * twitterobj;

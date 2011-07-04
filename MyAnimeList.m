@@ -234,9 +234,6 @@
 	string = [[[NSString alloc] initWithData: data encoding: NSUTF8StringEncoding]autorelease];
 	if (string.length > 0) {
 		//Regex time
-		//Setup OgreKit
-		OGRegularExpressionMatch    *match;
-		OGRegularExpression    *regex;
 		//Get the filename first
 		regex = [OGRegularExpression regularExpressionWithString:@"^.+(avi|mkv|mp4|ogm)$"];
 		NSEnumerator    *enumerator;
@@ -310,8 +307,6 @@
 	NSString *titleid = @"";
 	//Initalize NSString to dump the title temporarily
 	NSString *theshowtitle = @"";
-	//Setup OgreKit
-	OGRegularExpression    *regex;
 	//Set Regular Expressions to exactly match the detected title
 	NSString *findpre = [NSString stringWithFormat:@"\\b%@",DetectedTitle];
 	regex = [OGRegularExpression regularExpressionWithString:findpre];
@@ -450,7 +445,17 @@ foundtitle:
 											   isSticky:NO
 										   clickContext:[NSDate date]];
 				//mTwitter
-				NSString * TwitMessage = [NSString stringWithFormat:@"%@ %@ - %@/%@. Current Score: %@/10", WatchStatus, LastScrobbledTitle, LastScrobbledEpisode, TotalEpisodes, TitleScore];
+				//Initalize TwitMessage String
+				NSString * TwitMessage;
+				if ([TitleScore isEqualToString:@"0"]) {
+					// Score is zero, omit the Current Score for Tweet
+					TwitMessage = [NSString stringWithFormat:@"%@ %@ - %@/%@.", WatchStatus, LastScrobbledTitle, LastScrobbledEpisode, TotalEpisodes];
+				}
+				else
+				{
+					// There is a score, include Current Score for Tweet
+					TwitMessage = [NSString stringWithFormat:@"%@ %@ - %@/%@. Current Score: %@/10", WatchStatus, LastScrobbledTitle, LastScrobbledEpisode, TotalEpisodes, TitleScore];
+				}
 				if ([defaults boolForKey:@"IncludeSeriesURL"] == 1) {
 					TwitMessage = [NSString stringWithFormat:@"%@ - http://myanimelist.net/anime/%@",TwitMessage, titleid]; 
 				}
@@ -517,7 +522,7 @@ foundtitle:
 										   isSticky:NO
 									   clickContext:[NSDate date]];
 			//Twitter
-			NSString * TwitMessage = [NSString stringWithFormat:@"%@ %@ - %@/%@. Current Score: %@/10", TitleState, LastScrobbledTitle, LastScrobbledEpisode, TotalEpisodes, TitleScore];
+			NSString * TwitMessage = [NSString stringWithFormat:@"%@ %@ - %@/%@", TitleState, LastScrobbledTitle, LastScrobbledEpisode, TotalEpisodes];
 			if ([defaults boolForKey:@"IncludeSeriesURL"] == 1) {
 				TwitMessage = [NSString stringWithFormat:@"%@ - http://myanimelist.net/anime/%@",TwitMessage, titleid]; 
 			}
