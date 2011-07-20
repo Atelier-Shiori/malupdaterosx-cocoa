@@ -241,6 +241,10 @@
 		while ((match = [enumerator nextObject]) != nil) {
 			string = [match matchedString];
 		}
+		//Accented e temporary fix
+		regex = [OGRegularExpression regularExpressionWithString:@"e\\\\xcc\\\\x81"];
+		string = [regex replaceAllMatchesInString:string
+									   withString:@"è"];
 		//Cleanup
 		regex = [OGRegularExpression regularExpressionWithString:@"^.+/"];
 		string = [regex replaceAllMatchesInString:string
