@@ -361,6 +361,9 @@
 		1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				5C14563712D52AB900C7031C /* libxml2.dylib */,
+				5C2D50611329810700B31C08 /* libxml2.2.dylib */,
+				5C2D505F1329810000B31C08 /* libxml2.dylib */,
 				29B97325FDCFA39411CA2CEA /* Foundation.framework */,
 				13E42FB307B3F0F600E4EEF1 /* CoreData.framework */,
 				5C2B9DFB1221EB25006DEF0D /* CoreData.framework */,
@@ -398,14 +401,11 @@
 		29B97314FDCFA39411CA2CEA /* MAL Updater OS X */ = {
 			isa = PBXGroup;
 			children = (
-				5C2D50611329810700B31C08 /* libxml2.2.dylib */,
-				5C2D505F1329810000B31C08 /* libxml2.dylib */,
 				080E96DDFE201D6D7F000001 /* Classes */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
-				5C14563712D52AB900C7031C /* libxml2.dylib */,
 			);
 			name = "MAL Updater OS X";
 			sourceTree = "<group>";

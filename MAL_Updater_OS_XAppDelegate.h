@@ -49,8 +49,8 @@
 @property (nonatomic, retain, readonly) NSManagedObjectModel *managedObjectModel;
 @property (nonatomic, retain, readonly) NSManagedObjectContext *managedObjectContext;
 
--(void)showPreferences:(id)sender;
--(void)showhistory:(id)sender;
+-(IBAction)showPreferences:(id)sender;
+-(IBAction)showhistory:(id)sender;
 -(IBAction)togglescrobblewindow:(id)sender;
 -(void)addrecord:(NSString *)title
 		 Episode:(NSString *)episode
