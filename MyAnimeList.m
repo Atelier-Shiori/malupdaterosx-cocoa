@@ -311,8 +311,8 @@
 	NSString *titleid = @"";
 	//Initalize NSString to dump the title temporarily
 	NSString *theshowtitle = @"";
-	//Set Regular Expressions to exactly match the detected title
-	NSString *findpre = [NSString stringWithFormat:@"\\b%@",DetectedTitle];
+	//Set Regular Expressions to omit any preceding words
+	NSString *findpre = [NSString stringWithFormat:@"^%@",DetectedTitle];
 	regex = [OGRegularExpression regularExpressionWithString:findpre];
 	//Retrieve the ID. Note that the most matched title will be on the top
 	for (NSDictionary *serchentry in searchdata) {
