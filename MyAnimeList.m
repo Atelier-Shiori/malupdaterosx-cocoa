@@ -69,14 +69,14 @@
 			// Check Status and Update
 			BOOL UpdateBool = [self checkstatus:AniID];
 			if (UpdateBool == 1) {
-			if ([WatchStatus isEqualToString:@"Nothing"]) {
-				//Title is not on list. Add Title
-				Success = [self addtitle:AniID];
-			}
-			else {
-				// Update Title as Usual
-				Success = [self updatetitle:AniID];
-			}
+				if ([WatchStatus isEqualToString:@"Nothing"]) {
+					//Title is not on list. Add Title
+					Success = [self addtitle:AniID];
+				}
+				else {
+					// Update Title as Usual
+					Success = [self updatetitle:AniID];
+				}
 				//Set last successful scrobble to statusItem Tooltip
 				[appDelegate setStatusToolTip:[NSString stringWithFormat:@"MAL Updater OS X - Last Scrobble: %@ - %@", LastScrobbledTitle, LastScrobbledEpisode]];
 				//Retain Scrobbled Title, Title ID, Title Score, WatchStatus and Episode
@@ -105,8 +105,8 @@
 		[DetectedTitle release];
 		[DetectedEpisode release];
 	}
-
-
+	
+	
 }
 -(NSString *)searchanime{
 	NSLog(@"Searching For Title");
@@ -119,7 +119,7 @@
 																				(CFStringRef)@"!*'();:@&=+$,/?%#[]",
 																				kCFStringEncodingUTF8 );
 	MALApiUrl = [defaults objectForKey:@"MALAPIURL"];
-
+	
 	//Set Search API
 	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/anime/search?q=%@",MALApiUrl, searchterm]];
 	//Release searchterm
@@ -135,7 +135,7 @@
 	MAL_Updater_OS_XAppDelegate* appDelegate=[NSApp delegate];
 	// Get Status Code
 	int statusCode = [request responseStatusCode];
-			NSString *response = [request responseString];
+	NSString *response = [request responseString];
 	switch (statusCode) {
 		case 200:
 			return [self findaniid:response];
@@ -153,7 +153,7 @@
 									   clickContext:[NSDate date]];
 			return @"";
 			break;
-
+			
 		case 500:
 		case 502:
 			Success = NO;
@@ -264,14 +264,14 @@
 		// Set Title Info
 		regex = [OGRegularExpression regularExpressionWithString:@"( \\-) (episode |ep |ep|e)?(\\d+)([\\w\\-! ]*)$"];
 		DetectedTitle = [regex replaceAllMatchesInString:string
-														 withString:@""];
+											  withString:@""];
 		// Set Episode Info
 		regex = [OGRegularExpression regularExpressionWithString:@" - "];
 		string = [regex replaceAllMatchesInString:string
 									   withString:@""];
 		regex = [OGRegularExpression regularExpressionWithString: DetectedTitle];
 		string = [regex replaceAllMatchesInString:string
-												withString:@""];
+									   withString:@""];
 		regex = [OGRegularExpression regularExpressionWithString:@"v[\\d]"];
 		DetectedEpisode = [regex replaceAllMatchesInString:string
 												withString:@""];
@@ -295,7 +295,7 @@
 			// Not Scrobbled Yet or Unsuccessful
 			[DetectedTitle retain];
 			[DetectedEpisode retain];
-		return YES;
+			return YES;
 		}
 	}
 	else {
@@ -312,7 +312,8 @@
 	//Initalize NSString to dump the title temporarily
 	NSString *theshowtitle = @"";
 	//Set Regular Expressions to omit any preceding words
-	NSString *findpre = [NSString stringWithFormat:@"^%@",DetectedTitle];
+	NSString *findpre = [NSString stringWithFormat:@"(%@)",DetectedTitle];
+	findpre = [findpre stringByReplacingOccurrencesOfString:@" " withString:@"|"]; // NSString *findpre = [NSString stringWithFormat:@"^%@",DetectedTitle];
 	regex = [OGRegularExpression regularExpressionWithString:findpre];
 	//Retrieve the ID. Note that the most matched title will be on the top
 	for (NSDictionary *serchentry in searchdata) {
@@ -465,7 +466,7 @@ foundtitle:
 				}
 				//Post Twitter Update
 				[self posttwitterupdate:TwitMessage];
-			
+				
 				//Add History Record
 				[appDelegate addrecord:DetectedTitle Episode:DetectedEpisode Date:[NSDate date]];
 				return YES;
@@ -483,7 +484,7 @@ foundtitle:
 				return NO;
 				break;
 		}
-
+		
 	}
 }
 -(BOOL)addtitle:(NSString *)titleid {
@@ -504,7 +505,7 @@ foundtitle:
 	[request setPostValue:@"watching" forKey:@"status"];	
 	// Do Update
 	[request startSynchronous];
-
+	
 	// Store Scrobbled Title and Episode
 	LastScrobbledTitle = DetectedTitle;
 	LastScrobbledEpisode = DetectedEpisode;
@@ -512,7 +513,7 @@ foundtitle:
 	//Set Title State for Title (use for Twitter feature)
 	TitleState = @"started watching";
 	WatchStatus = @"watching";
-
+	
 	switch ([request responseStatusCode]) {
 		case 200:
 			// Update Successful
@@ -551,8 +552,8 @@ foundtitle:
 	}
 }
 -(void)updatestatus:(NSString *)titleid
-			 score:(int)showscore
-	   watchstatus:(NSString*)showwatchstatus
+			  score:(int)showscore
+		watchstatus:(NSString*)showwatchstatus
 {
 	NSLog(@"Updating Status for %@", titleid);
 	//Set up Delegate
