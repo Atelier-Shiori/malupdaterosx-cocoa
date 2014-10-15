@@ -413,7 +413,7 @@ foundtitle:
 		[request setUseCookiePersistence:NO];
 		//Set Token
 		[request addRequestHeader:@"Authorization" value:[NSString stringWithFormat:@"Basic %@",[defaults objectForKey:@"Base64Token"]]];
-	    [request setPostValue:@"PUT" forKey:@"_method"];
+	    [request setRequestMethod:@"PUT"];
 	    [request setPostValue:DetectedEpisode forKey:@"episodes"];
 		//Set Status
 		if([DetectedEpisode intValue] == [TotalEpisodes intValue]) {
@@ -436,7 +436,8 @@ foundtitle:
 		// Store Scrobbled Title and Episode
 		LastScrobbledTitle = DetectedTitle;
 		LastScrobbledEpisode = DetectedEpisode;
-		
+		//NSLog(@"%i", [request responseStatusCode]);
+		//NSLog(@"%@", [request responseString]);
 		switch ([request responseStatusCode]) {
 			case 200:
 				// Update Successful
@@ -513,9 +514,11 @@ foundtitle:
 	//Set Title State for Title (use for Twitter feature)
 	TitleState = @"started watching";
 	WatchStatus = @"watching";
-
+	NSLog(@"%i", [request responseStatusCode]);
+	//NSLog(@"%@", [request responseString]);
 	switch ([request responseStatusCode]) {
 		case 200:
+		case 201:
 			// Update Successful
 			[appDelegate setStatusText:@"Scrobble Status: Title Added..."];
 			[appDelegate setLastScrobbledTitle:[NSString stringWithFormat:@"Last Scrobbled: %@ - %@",DetectedTitle,DetectedEpisode]];
@@ -567,7 +570,7 @@ foundtitle:
 	[request setUseCookiePersistence:NO];
 	//Set Token
 	[request addRequestHeader:@"Authorization" value:[NSString stringWithFormat:@"Basic %@",[defaults objectForKey:@"Base64Token"]]];
-	[request setPostValue:@"PUT" forKey:@"_method"];
+	[request setRequestMethod:@"PUT"];
 	//Set current episode
 	[request setPostValue:LastScrobbledEpisode forKey:@"episodes"];
 	//Set new watch status
@@ -576,7 +579,8 @@ foundtitle:
 	[request setPostValue:[NSString stringWithFormat:@"%i", showscore] forKey:@"score"];
 	// Do Update
 	[request startSynchronous];
-	
+	NSLog(@"%i", [request responseStatusCode]);
+	//NSLog(@"%@", [request responseString]);
 	switch ([request responseStatusCode]) {
 		case 200:
 			// Update Successful
