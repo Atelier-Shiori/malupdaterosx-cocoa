@@ -100,6 +100,7 @@
 				[request setPassword:[fieldpassword stringValue]];
 				//Vertify Username/Password
 				[request startSynchronous];
+				NSLog(@"%@",[request responseString]);
 				// Get Status Code
 				int statusCode = [request responseStatusCode];
 				switch (statusCode) {
@@ -186,7 +187,7 @@
 -(IBAction)resetapiurl:(id)sender
 {
 	//Reset Unofficial MAL API URL
-	[APIUrl setStringValue:@"http://mal-api.com/"];
+	[APIUrl setStringValue:@"https://malapi.shioridiary.me"];
 	// Generate API Key
 	NSUserDefaults *defaults = [[NSUserDefaults standardUserDefaults] autorelease];
 	[defaults setObject:[APIUrl stringValue] forKey:@"MALAPIURL"];

@@ -125,7 +125,7 @@
 	
 	// Defaults
 	[defaultValues setObject:@"" forKey:@"Base64Token"];
-	[defaultValues setObject:@"http://mal-api.com/" forKey:@"MALAPIURL"];
+	[defaultValues setObject:@"https://malapi.shioridiary.me" forKey:@"MALAPIURL"];
 	[defaultValues setObject:[NSNumber numberWithInt:0] forKey:@"PlayerSel"];
 	[defaultValues setObject:[NSNumber numberWithBool:NO] forKey:@"ScrobbleatStartup"];
 	[defaultValues setObject:[NSNumber numberWithBool:NO] forKey:@"EnableTwitterUpdates"];

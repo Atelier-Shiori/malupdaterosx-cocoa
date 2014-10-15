@@ -975,7 +975,7 @@
 					i386,
 					x86_64,
 				);
-				CODE_SIGN_IDENTITY = "Chikorita157's Anime Blog";
+				CODE_SIGN_IDENTITY = "Don't Code Sign";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_ENABLE_OBJC_GC = required;
 				GCC_OPTIMIZATION_LEVEL = s;
