@@ -609,6 +609,9 @@ foundtitle:
 	}
 	
 }
+-(NSDictionary *)getLastScrobbledInfo{
+	return LastScrobbledInfo;
+}
 /*
  
  Twitter Functions

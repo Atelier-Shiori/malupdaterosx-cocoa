@@ -21,14 +21,12 @@
 		3A4C61C9120DF37D0032F63A /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A4C61C8120DF37D0032F63A /* CoreServices.framework */; };
 		3A4C61CE120DF3BE0032F63A /* libz.1.2.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A4C61CD120DF3BE0032F63A /* libz.1.2.3.dylib */; };
 		3A4C61D4120DF3ED0032F63A /* OgreKit.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3A4C61D3120DF3ED0032F63A /* OgreKit.framework */; };
-		3A6AB311120F292500D51D2C /* PreferenceController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A6AB310120F292500D51D2C /* PreferenceController.m */; };
 		3A6AB37F120F313E00D51D2C /* Base64Category.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A6AB37E120F313E00D51D2C /* Base64Category.m */; };
 		3A6AB38C120F327C00D51D2C /* base64.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A6AB38B120F327C00D51D2C /* base64.c */; };
 		3A6AB40E120F350400D51D2C /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A6AB40D120F350400D51D2C /* Sparkle.framework */; };
 		3A6AB415120F351B00D51D2C /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3A6AB40D120F350400D51D2C /* Sparkle.framework */; };
 		3A6AB587120F402A00D51D2C /* OgreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A4C61D3120DF3ED0032F63A /* OgreKit.framework */; };
 		3A851AEF1210A6C300B55720 /* Growl Registration Ticket.growlRegDict in Resources */ = {isa = PBXBuildFile; fileRef = 3A851AEE1210A6C300B55720 /* Growl Registration Ticket.growlRegDict */; };
-		3A851AF21210A70C00B55720 /* Preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A851AF11210A70C00B55720 /* Preferences.xib */; };
 		3A851CC61210AC4F00B55720 /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A851CC51210AC4F00B55720 /* Growl.framework */; };
 		3A851CDA1210AC8400B55720 /* Growl.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3A851CC51210AC4F00B55720 /* Growl.framework */; };
 		3A851D151210AD6800B55720 /* MAL Updater OS X.icns in Resources */ = {isa = PBXBuildFile; fileRef = 3A851D141210AD6800B55720 /* MAL Updater OS X.icns */; };
@@ -36,6 +34,8 @@
 		3AE197DB1210718700FB943B /* JSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AE197DA1210718700FB943B /* JSON.framework */; };
 		3AE197DF1210718A00FB943B /* JSON.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3AE197DA1210718700FB943B /* JSON.framework */; };
 		3AFEF129120DF8CE0098B59D /* MyAnimeList.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AFEF128120DF8CE0098B59D /* MyAnimeList.m */; };
+		5C000E3419F30DD10026F350 /* Video.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C000E3319F30DD10026F350 /* Video.m */; };
+		5C000E4419F30EA50026F350 /* SoftwareUpdatesPref.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C000E4319F30EA50026F350 /* SoftwareUpdatesPref.m */; };
 		5C0A2C4B122C7F960096908D /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 5C0A2C4A122C7F960096908D /* Credits.rtf */; };
 		5C13AE8E12D524C6009D39DC /* Twitter.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C13AE8D12D524C6009D39DC /* Twitter.m */; };
 		5C1456F612D5304200C7031C /* MGTwitterEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C1456CE12D5304200C7031C /* MGTwitterEngine.m */; };
@@ -87,18 +87,25 @@
 		5C2D50601329810000B31C08 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C2D505F1329810000B31C08 /* libxml2.dylib */; };
 		5C2D50621329810700B31C08 /* libxml2.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C2D50611329810700B31C08 /* libxml2.2.dylib */; };
 		5C30BC07139A9DD1000B83C5 /* PreferencesSoftwareUpdateIcon.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 5C30BC06139A9DD1000B83C5 /* PreferencesSoftwareUpdateIcon.tiff */; };
+		5C3126F619F313F8001F5CAF /* VideoDetection.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5C3126F519F313F8001F5CAF /* VideoDetection.xib */; };
 		5C5C1137123681D200A37706 /* movies.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 5C5C1136123681D200A37706 /* movies.tiff */; };
 		5C7DD3811232C720000B166D /* CMCrashReporter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C7DD3801232C720000B166D /* CMCrashReporter.framework */; };
 		5C7DD4621232C793000B166D /* CMCrashReporter.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5C7DD3801232C720000B166D /* CMCrashReporter.framework */; };
+		5C97491B19F31175000EC02E /* PlayerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5C97491A19F31175000EC02E /* PlayerView.xib */; };
+		5C97491D19F3117D000EC02E /* SoftwareUpdateView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5C97491C19F3117D000EC02E /* SoftwareUpdateView.xib */; };
 		5CABD0B41395875800303E08 /* edit.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 5CABD0B31395875800303E08 /* edit.tiff */; };
 		5CABD0C613958B3A00303E08 /* ASIDataCompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CABD0C513958B3A00303E08 /* ASIDataCompressor.m */; };
 		5CABD0E613958B8000303E08 /* ASIDataDecompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CABD0E513958B8000303E08 /* ASIDataDecompressor.m */; };
 		5CB1F27012E22CF5007C5254 /* stopwatch.png in Resources */ = {isa = PBXBuildFile; fileRef = 5CB1F26E12E22CF5007C5254 /* stopwatch.png */; };
 		5CB1F27112E22CF5007C5254 /* Twitter.png in Resources */ = {isa = PBXBuildFile; fileRef = 5CB1F26F12E22CF5007C5254 /* Twitter.png */; };
 		5CB31B0912DB87E60071BE0C /* TwitterOAuthKeys.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CB31B0812DB87E60071BE0C /* TwitterOAuthKeys.m */; };
-		5CBA508C12341F9E0059C314 /* BWToolkitFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5CBA508B12341F9E0059C314 /* BWToolkitFramework.framework */; };
-		5CBA5091123420A80059C314 /* BWToolkitFramework.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5CBA508B12341F9E0059C314 /* BWToolkitFramework.framework */; };
+		5CBE9EC319F2F0E300CA3E5D /* LoginPref.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CBE9EC219F2F0E300CA3E5D /* LoginPref.m */; };
+		5CBE9FEC19F2F9CA00CA3E5D /* LoginView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5CBE9FEB19F2F9CA00CA3E5D /* LoginView.xib */; };
+		5CBE9FEF19F2F9E500CA3E5D /* GeneralPreferenceView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5CBE9FEE19F2F9E500CA3E5D /* GeneralPreferenceView.xib */; };
 		5CCCF44D12DACBAB00E1110D /* twitter_newbird_blue-big.png in Resources */ = {isa = PBXBuildFile; fileRef = 5CCCF44C12DACBAB00E1110D /* twitter_newbird_blue-big.png */; };
+		5CD36B9919F2EA9B007BB6B6 /* MASPreferencesWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5CD36B9619F2EA9B007BB6B6 /* MASPreferencesWindow.xib */; };
+		5CD36B9A19F2EA9B007BB6B6 /* MASPreferencesWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CD36B9819F2EA9B007BB6B6 /* MASPreferencesWindowController.m */; };
+		5CD36BBA19F2ED88007BB6B6 /* GeneralPrefController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CD36BB919F2ED88007BB6B6 /* GeneralPrefController.m */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
@@ -111,7 +118,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				5CBA5091123420A80059C314 /* BWToolkitFramework.framework in CopyFiles */,
 				5C7DD4621232C793000B166D /* CMCrashReporter.framework in CopyFiles */,
 				3A851CDA1210AC8400B55720 /* Growl.framework in CopyFiles */,
 				3AE197DF1210718A00FB943B /* JSON.framework in CopyFiles */,
@@ -155,9 +161,6 @@
 		3A4C61C8120DF37D0032F63A /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = System/Library/Frameworks/CoreServices.framework; sourceTree = SDKROOT; };
 		3A4C61CD120DF3BE0032F63A /* libz.1.2.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.2.3.dylib; path = usr/lib/libz.1.2.3.dylib; sourceTree = SDKROOT; };
 		3A4C61D3120DF3ED0032F63A /* OgreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OgreKit.framework; path = /Users/Shared/tohnominagi/InstalledProducts/OgreKit.framework; sourceTree = "<absolute>"; };
-		3A6AB30F120F292500D51D2C /* PreferenceController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreferenceController.h; sourceTree = "<group>"; };
-		3A6AB310120F292500D51D2C /* PreferenceController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreferenceController.m; sourceTree = "<group>"; };
-		3A6AB332120F2A3300D51D2C /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/Preferences.xib; sourceTree = "<group>"; };
 		3A6AB37D120F313E00D51D2C /* Base64Category.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Base64Category.h; sourceTree = "<group>"; };
 		3A6AB37E120F313E00D51D2C /* Base64Category.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Base64Category.m; sourceTree = "<group>"; };
 		3A6AB38A120F327C00D51D2C /* base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = base64.h; sourceTree = "<group>"; };
@@ -170,6 +173,11 @@
 		3AE197DA1210718700FB943B /* JSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JSON.framework; path = /Users/Shared/tohnominagi/InstalledProducts/JSON.framework; sourceTree = "<absolute>"; };
 		3AFEF127120DF8CE0098B59D /* MyAnimeList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyAnimeList.h; sourceTree = "<group>"; };
 		3AFEF128120DF8CE0098B59D /* MyAnimeList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyAnimeList.m; sourceTree = "<group>"; };
+		5C000E3219F30DD10026F350 /* Video.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Video.h; sourceTree = "<group>"; };
+		5C000E3319F30DD10026F350 /* Video.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Video.m; sourceTree = "<group>"; };
+		5C000E3719F30DEB0026F350 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/VideoDetection.xib; sourceTree = "<group>"; };
+		5C000E4219F30EA50026F350 /* SoftwareUpdatesPref.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoftwareUpdatesPref.h; sourceTree = "<group>"; };
+		5C000E4319F30EA50026F350 /* SoftwareUpdatesPref.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SoftwareUpdatesPref.m; sourceTree = "<group>"; };
 		5C0A2C4A122C7F960096908D /* Credits.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = Credits.rtf; sourceTree = "<group>"; };
 		5C13AE8C12D524C6009D39DC /* Twitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Twitter.h; sourceTree = "<group>"; };
 		5C13AE8D12D524C6009D39DC /* Twitter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Twitter.m; sourceTree = "<group>"; };
@@ -285,8 +293,19 @@
 		5CB1F26F12E22CF5007C5254 /* Twitter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Twitter.png; sourceTree = "<group>"; };
 		5CB31B0712DB87E60071BE0C /* TwitterOAuthKeys.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TwitterOAuthKeys.h; sourceTree = "<group>"; };
 		5CB31B0812DB87E60071BE0C /* TwitterOAuthKeys.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TwitterOAuthKeys.m; sourceTree = "<group>"; };
-		5CBA508B12341F9E0059C314 /* BWToolkitFramework.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BWToolkitFramework.framework; path = /Users/Shared/tohnominagi/InstalledProducts/BWToolkitFramework.framework; sourceTree = "<absolute>"; };
+		5CBE9EC119F2F0E300CA3E5D /* LoginPref.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginPref.h; sourceTree = "<group>"; };
+		5CBE9EC219F2F0E300CA3E5D /* LoginPref.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginPref.m; sourceTree = "<group>"; };
 		5CCCF44C12DACBAB00E1110D /* twitter_newbird_blue-big.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "twitter_newbird_blue-big.png"; sourceTree = "<group>"; };
+		5CD36B9519F2EA9B007BB6B6 /* MASPreferencesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASPreferencesViewController.h; sourceTree = "<group>"; };
+		5CD36B9619F2EA9B007BB6B6 /* MASPreferencesWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MASPreferencesWindow.xib; sourceTree = "<group>"; };
+		5CD36B9719F2EA9B007BB6B6 /* MASPreferencesWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASPreferencesWindowController.h; sourceTree = "<group>"; };
+		5CD36B9819F2EA9B007BB6B6 /* MASPreferencesWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MASPreferencesWindowController.m; sourceTree = "<group>"; };
+		5CD36BA419F2ED48007BB6B6 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/GeneralPreferenceView.xib; sourceTree = "<group>"; };
+		5CD36BA819F2ED52007BB6B6 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/LoginView.xib; sourceTree = "<group>"; };
+		5CD36BAC19F2ED5A007BB6B6 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/PlayerView.xib; sourceTree = "<group>"; };
+		5CD36BB219F2ED6D007BB6B6 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/SoftwareUpdateView.xib; sourceTree = "<group>"; };
+		5CD36BB819F2ED88007BB6B6 /* GeneralPrefController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeneralPrefController.h; sourceTree = "<group>"; };
+		5CD36BB919F2ED88007BB6B6 /* GeneralPrefController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeneralPrefController.m; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* MAL_Updater_OS_X-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "MAL_Updater_OS_X-Info.plist"; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* MAL Updater OS X.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MAL Updater OS X.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -309,7 +328,6 @@
 				3A2DCCBE1210B3D900C920F1 /* Security.framework in Frameworks */,
 				5C2B9DFC1221EB25006DEF0D /* CoreData.framework in Frameworks */,
 				5C7DD3811232C720000B166D /* CMCrashReporter.framework in Frameworks */,
-				5CBA508C12341F9E0059C314 /* BWToolkitFramework.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -319,6 +337,7 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				5CD36B9419F2EA91007BB6B6 /* Preferences */,
 				5CABD0C413958B3A00303E08 /* ASIDataCompressor.h */,
 				5CABD0C513958B3A00303E08 /* ASIDataCompressor.m */,
 				5CABD0E413958B8000303E08 /* ASIDataDecompressor.h */,
@@ -346,14 +365,20 @@
 				3A6AB37E120F313E00D51D2C /* Base64Category.m */,
 				3A6AB38A120F327C00D51D2C /* base64.h */,
 				3A6AB38B120F327C00D51D2C /* base64.c */,
-				3A6AB30F120F292500D51D2C /* PreferenceController.h */,
 				256AC3D80F4B6AC300CF3369 /* MAL_Updater_OS_XAppDelegate.h */,
 				3AFEF127120DF8CE0098B59D /* MyAnimeList.h */,
 				3AFEF128120DF8CE0098B59D /* MyAnimeList.m */,
 				256AC3D90F4B6AC300CF3369 /* MAL_Updater_OS_XAppDelegate.m */,
-				3A6AB310120F292500D51D2C /* PreferenceController.m */,
+				5C000E3219F30DD10026F350 /* Video.h */,
+				5C000E3319F30DD10026F350 /* Video.m */,
+				5CD36BB819F2ED88007BB6B6 /* GeneralPrefController.h */,
+				5CD36BB919F2ED88007BB6B6 /* GeneralPrefController.m */,
+				5C000E4219F30EA50026F350 /* SoftwareUpdatesPref.h */,
+				5C000E4319F30EA50026F350 /* SoftwareUpdatesPref.m */,
 				5CB31B0712DB87E60071BE0C /* TwitterOAuthKeys.h */,
 				5CB31B0812DB87E60071BE0C /* TwitterOAuthKeys.m */,
+				5CBE9EC119F2F0E300CA3E5D /* LoginPref.h */,
+				5CBE9EC219F2F0E300CA3E5D /* LoginPref.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -382,7 +407,6 @@
 				3AE197DA1210718700FB943B /* JSON.framework */,
 				3A6AB40D120F350400D51D2C /* Sparkle.framework */,
 				3A4C61D3120DF3ED0032F63A /* OgreKit.framework */,
-				5CBA508B12341F9E0059C314 /* BWToolkitFramework.framework */,
 			);
 			name = "Other Frameworks";
 			sourceTree = "<group>";
@@ -423,6 +447,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				5C3126F519F313F8001F5CAF /* VideoDetection.xib */,
 				5C20D07913A52CE900B93DD5 /* logo_twitter_wordmark_1000.png */,
 				5C30BC06139A9DD1000B83C5 /* PreferencesSoftwareUpdateIcon.tiff */,
 				5CABD0B31395875800303E08 /* edit.tiff */,
@@ -434,11 +459,14 @@
 				3A20383112122B2B003813B2 /* dsa_pub.pem */,
 				3A851D221210AE0300B55720 /* StatusIcon.tiff */,
 				3A851D141210AD6800B55720 /* MAL Updater OS X.icns */,
-				3A851AF11210A70C00B55720 /* Preferences.xib */,
 				3A851AEE1210A6C300B55720 /* Growl Registration Ticket.growlRegDict */,
 				8D1107310486CEB800E47090 /* MAL_Updater_OS_X-Info.plist */,
 				089C165CFE840E0CC02AAC07 /* InfoPlist.strings */,
 				1DDD58140DA1D0A300B32029 /* MainMenu.xib */,
+				5CBE9FEE19F2F9E500CA3E5D /* GeneralPreferenceView.xib */,
+				5CBE9FEB19F2F9CA00CA3E5D /* LoginView.xib */,
+				5C97491A19F31175000EC02E /* PlayerView.xib */,
+				5C97491C19F3117D000EC02E /* SoftwareUpdateView.xib */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -737,6 +765,17 @@
 			path = JSON;
 			sourceTree = "<group>";
 		};
+		5CD36B9419F2EA91007BB6B6 /* Preferences */ = {
+			isa = PBXGroup;
+			children = (
+				5CD36B9519F2EA9B007BB6B6 /* MASPreferencesViewController.h */,
+				5CD36B9619F2EA9B007BB6B6 /* MASPreferencesWindow.xib */,
+				5CD36B9719F2EA9B007BB6B6 /* MASPreferencesWindowController.h */,
+				5CD36B9819F2EA9B007BB6B6 /* MASPreferencesWindowController.m */,
+			);
+			name = Preferences;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -764,6 +803,9 @@
 /* Begin PBXProject section */
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0510;
+			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "MAL Updater OS X" */;
 			compatibilityVersion = "Xcode 3.1";
 			developmentRegion = English;
@@ -790,7 +832,6 @@
 			files = (
 				8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */,
 				1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */,
-				3A851AF21210A70C00B55720 /* Preferences.xib in Resources */,
 				3A851AEF1210A6C300B55720 /* Growl Registration Ticket.growlRegDict in Resources */,
 				3A851D151210AD6800B55720 /* MAL Updater OS X.icns in Resources */,
 				3A851D231210AE0300B55720 /* StatusIcon.tiff in Resources */,
@@ -803,6 +844,12 @@
 				5CABD0B41395875800303E08 /* edit.tiff in Resources */,
 				5C30BC07139A9DD1000B83C5 /* PreferencesSoftwareUpdateIcon.tiff in Resources */,
 				5C20D07A13A52CE900B93DD5 /* logo_twitter_wordmark_1000.png in Resources */,
+				5CD36B9919F2EA9B007BB6B6 /* MASPreferencesWindow.xib in Resources */,
+				5CBE9FEF19F2F9E500CA3E5D /* GeneralPreferenceView.xib in Resources */,
+				5CBE9FEC19F2F9CA00CA3E5D /* LoginView.xib in Resources */,
+				5C97491B19F31175000EC02E /* PlayerView.xib in Resources */,
+				5C97491D19F3117D000EC02E /* SoftwareUpdateView.xib in Resources */,
+				5C3126F619F313F8001F5CAF /* VideoDetection.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -821,7 +868,6 @@
 				3A4C61B4120DF2BB0032F63A /* ASINetworkQueue.m in Sources */,
 				3A4C61B5120DF2BB0032F63A /* ASINSStringAdditions.m in Sources */,
 				3AFEF129120DF8CE0098B59D /* MyAnimeList.m in Sources */,
-				3A6AB311120F292500D51D2C /* PreferenceController.m in Sources */,
 				3A6AB37F120F313E00D51D2C /* Base64Category.m in Sources */,
 				3A6AB38C120F327C00D51D2C /* base64.c in Sources */,
 				3A2DCCB61210B3BF00C920F1 /* PFMoveApplication.m in Sources */,
@@ -873,6 +919,11 @@
 				5CB31B0912DB87E60071BE0C /* TwitterOAuthKeys.m in Sources */,
 				5CABD0C613958B3A00303E08 /* ASIDataCompressor.m in Sources */,
 				5CABD0E613958B8000303E08 /* ASIDataDecompressor.m in Sources */,
+				5CD36B9A19F2EA9B007BB6B6 /* MASPreferencesWindowController.m in Sources */,
+				5CD36BBA19F2ED88007BB6B6 /* GeneralPrefController.m in Sources */,
+				5CBE9EC319F2F0E300CA3E5D /* LoginPref.m in Sources */,
+				5C000E3419F30DD10026F350 /* Video.m in Sources */,
+				5C000E4419F30EA50026F350 /* SoftwareUpdatesPref.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -895,12 +946,44 @@
 			name = MainMenu.xib;
 			sourceTree = "<group>";
 		};
-		3A851AF11210A70C00B55720 /* Preferences.xib */ = {
+		5C3126F519F313F8001F5CAF /* VideoDetection.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				3A6AB332120F2A3300D51D2C /* English */,
+				5C000E3719F30DEB0026F350 /* English */,
 			);
-			name = Preferences.xib;
+			name = VideoDetection.xib;
+			sourceTree = "<group>";
+		};
+		5C97491A19F31175000EC02E /* PlayerView.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5CD36BAC19F2ED5A007BB6B6 /* English */,
+			);
+			name = PlayerView.xib;
+			sourceTree = "<group>";
+		};
+		5C97491C19F3117D000EC02E /* SoftwareUpdateView.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5CD36BB219F2ED6D007BB6B6 /* English */,
+			);
+			name = SoftwareUpdateView.xib;
+			sourceTree = "<group>";
+		};
+		5CBE9FEB19F2F9CA00CA3E5D /* LoginView.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5CD36BA819F2ED52007BB6B6 /* English */,
+			);
+			name = LoginView.xib;
+			sourceTree = "<group>";
+		};
+		5CBE9FEE19F2F9E500CA3E5D /* GeneralPreferenceView.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5CD36BA419F2ED48007BB6B6 /* English */,
+			);
+			name = GeneralPreferenceView.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -970,22 +1053,20 @@
 		C01FCF5008A954540054247B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = (
-					ppc,
-					i386,
-					x86_64,
-				);
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				CODE_SIGN_IDENTITY = "Don't Code Sign";
+				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_ENABLE_OBJC_GC = required;
 				GCC_OPTIMIZATION_LEVEL = s;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = "\"${SDKROOT}/usr/include/libxml2\"/**";
-				MACOSX_DEPLOYMENT_TARGET = 10.5;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				ONLY_ACTIVE_ARCH = NO;
 				PREBINDING = NO;
-				SDKROOT = macosx10.5;
+				SDKROOT = macosx10.6;
+				STRIP_INSTALLED_PRODUCT = NO;
 				USER_HEADER_SEARCH_PATHS = "\"${SDKROOT}/usr/include/libxml2\"/**";
 				VALID_ARCHS = "x86_64 i386 ppc ppc64 ppc7400 ppc970";
 			};

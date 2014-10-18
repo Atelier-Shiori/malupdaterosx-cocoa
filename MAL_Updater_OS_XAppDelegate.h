@@ -41,7 +41,9 @@
 	IBOutlet NSTextField * showtitle;
 	IBOutlet NSPopUpButton * showstatus;
 	IBOutlet NSPopUpButton * showscore;
+	NSWindowController *_preferencesWindowController;
 }
+@property (nonatomic, readonly) NSWindowController *preferencesWindowController;
 @property (assign) IBOutlet NSWindow *window;
 @property (assign) IBOutlet NSWindow *historywindow;
 @property (assign) IBOutlet NSWindow *updatepanel;

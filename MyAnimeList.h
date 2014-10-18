@@ -19,6 +19,7 @@
 	NSString * MALApiUrl;
 	NSString * LastScrobbledTitle;
 	NSString * LastScrobbledEpisode;
+	NSDictionary * LastScrobbledInfo;
 	NSString * DetectedTitle;
 	NSString * DetectedEpisode;
 	NSString * DetectedCurrentEpisode;
@@ -50,4 +51,5 @@
 -(NSString *)getTotalEpisodes;
 -(int)getScore;
 -(int)getWatchStatus;
+-(NSDictionary *)getLastScrobbledInfo;
 @end

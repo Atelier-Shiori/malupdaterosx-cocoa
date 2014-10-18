@@ -7,9 +7,15 @@
 //
 
 #import "MAL_Updater_OS_XAppDelegate.h"
-#import "PreferenceController.h"
+//#import "PreferenceController.h"
 #import "JSON/JSON.h"
 #import "PFMoveApplication.h"
+#import "GeneralPrefController.h"
+#import "MASPreferencesWindowController.h"
+#import "LoginPref.h"
+#import "Video.h"
+#import "SoftwareUpdatesPref.h"
+
 
 @implementation MAL_Updater_OS_XAppDelegate
 
@@ -209,16 +215,42 @@
  General UI Functions
  
  */
+- (NSWindowController *)preferencesWindowController
+{
+    if (_preferencesWindowController == nil)
+    {
+		NSLog(@"Load Pref");
+        NSViewController *generalViewController = [[GeneralPrefController alloc] init];
+        NSViewController *loginViewController = [[LoginPref alloc] init];
+		NSViewController *videoViewController = [[Video alloc] init];
+		NSViewController *suViewController = [[SoftwareUpdatesPref alloc] init];
+        NSArray *controllers = [[NSArray alloc] initWithObjects:generalViewController, loginViewController, videoViewController, suViewController, nil];
+        
+        // To add a flexible space between General and Advanced preference panes insert [NSNull null]:
+        //     NSArray *controllers = [[NSArray alloc] initWithObjects:generalViewController, [NSNull null], advancedViewController, nil];
+        
+        [generalViewController release];
+        [loginViewController release];
+		[videoViewController release];
+		[suViewController release];
+        
+        NSString *title = NSLocalizedString(@"Preferences", @"Common title for Preferences window");
+        _preferencesWindowController = [[MASPreferencesWindowController alloc] initWithViewControllers:controllers title:title];
+        [controllers release];
+    }
+    return _preferencesWindowController;
+}
 
 -(void)showPreferences:(id)sender
 {
 	//Since LSUIElement is set to 1 to hide the dock icon, it causes unattended behavior of having the program windows not show to the front.
 	[NSApp activateIgnoringOtherApps:YES];
+	[self.preferencesWindowController showWindow:nil];
 	//Is preferenceController nil?
-	if (!preferenceController) {
+	/*if (!preferenceController) {
 		preferenceController = [[PreferenceController alloc] init];
 	}
-	[preferenceController showWindow:self];
+	[preferenceController showWindow:self];*/
 }
 - (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender {
 	
@@ -528,11 +560,13 @@ switch (returnCode) {
 	[window release];
 	[historywindow release];
     [MALEngine release];
+	    [_preferencesWindowController release];
+	/*
 	if (!preferenceController) {
 	}
 	else {
 		[preferenceController release];
-	}
+	}*/
 	
     [super dealloc];
 }
