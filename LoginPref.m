@@ -62,13 +62,17 @@
 -(void)loadlogin
 {
 	// Load Username
+	
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	NSString *Base64Token = [defaults objectForKey:@"Base64Token"];
+	NSLog(@"%@", Base64Token);
 	if (Base64Token.length > 0) {
+		NSLog(@"N");
 		[clearbut setEnabled: YES];
 		[savebut setEnabled: NO];
 	}
 	else {
+		NSLog(@"Y");
 		//Disable Clearbut
 		[clearbut setEnabled: NO];
 		[savebut setEnabled: YES];
@@ -166,9 +170,16 @@
 	[alert setMessageText:@"Are you sure you want to remove this token?"];
 	[alert setInformativeText:@"Once done, this action cannot be undone."];
 	// Set Message type to Warning
-	[alert setAlertStyle:NSWarningAlertStyle];
-	// Show as Sheet on historywindow
-	[alert runModal];
+	[alert setAlertStyle:NSWarningAlertStyle];	
+	if ([alert runModal]== NSAlertFirstButtonReturn) {
+		NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+		[defaults setObject:@"" forKey:@"Base64Token"];
+		// Clear Username
+		[defaults setObject:@"" forKey:@"Username"];
+		//Disable Clearbut
+		[clearbut setEnabled: NO];
+		[savebut setEnabled: YES];
+	}
 }
 
 @end

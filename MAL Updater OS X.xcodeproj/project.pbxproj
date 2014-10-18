@@ -422,8 +422,6 @@
 		29B97314FDCFA39411CA2CEA /* MAL Updater OS X */ = {
 			isa = PBXGroup;
 			children = (
-				5C2D50611329810700B31C08 /* libxml2.2.dylib */,
-				5C2D505F1329810000B31C08 /* libxml2.dylib */,
 				080E96DDFE201D6D7F000001 /* Classes */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
@@ -447,7 +445,6 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				5C3126F519F313F8001F5CAF /* VideoDetection.xib */,
 				5C20D07913A52CE900B93DD5 /* logo_twitter_wordmark_1000.png */,
 				5C30BC06139A9DD1000B83C5 /* PreferencesSoftwareUpdateIcon.tiff */,
 				5CABD0B31395875800303E08 /* edit.tiff */,
@@ -461,6 +458,7 @@
 				3A851D141210AD6800B55720 /* MAL Updater OS X.icns */,
 				3A851AEE1210A6C300B55720 /* Growl Registration Ticket.growlRegDict */,
 				8D1107310486CEB800E47090 /* MAL_Updater_OS_X-Info.plist */,
+				5C3126F519F313F8001F5CAF /* VideoDetection.xib */,
 				089C165CFE840E0CC02AAC07 /* InfoPlist.strings */,
 				1DDD58140DA1D0A300B32029 /* MainMenu.xib */,
 				5CBE9FEE19F2F9E500CA3E5D /* GeneralPreferenceView.xib */,
@@ -474,6 +472,8 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				5C2D50611329810700B31C08 /* libxml2.2.dylib */,
+				5C2D505F1329810000B31C08 /* libxml2.dylib */,
 				1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */,
 				1058C7A2FEA54F0111CA2CBB /* Other Frameworks */,
 			);

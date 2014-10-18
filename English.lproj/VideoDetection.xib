@@ -182,7 +182,7 @@
             <int key="NSTextFieldAlignmentRectInsetsVersion">1</int>
           </object>
         </object>
-        <string key="NSFrameSize">{395, 116}</string>
+        <string key="NSFrameSize">{394, 116}</string>
         <reference key="NSSuperview"/>
         <string key="NSReuseIdentifierKey">_NS:1109</string>
         <string key="NSClassName">NSView</string>
@@ -455,7 +455,7 @@
           <string>com.apple.InterfaceBuilder.CocoaPlugin</string>
           <string>com.apple.InterfaceBuilder.CocoaPlugin</string>
           <string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-          <string>{{549, 499}, {395, 116}}</string>
+          <string>{{549, 499}, {394, 116}}</string>
           <string>com.apple.InterfaceBuilder.CocoaPlugin</string>
           <string>{{922, 654}, {151, 83}}</string>
           <string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -502,13 +502,6 @@
       <object class="NSMutableArray" key="referencedPartialClassDescriptionsV3.2+">
         <bool key="EncodedWithXMLCoder">YES</bool>
         <object class="IBPartialClassDescription">
-          <string key="className">NSApplication</string>
-          <object class="IBClassDescriptionSource" key="sourceIdentifier">
-            <string key="majorKey">IBFrameworkSource</string>
-            <string key="minorKey">BWToolkitFramework.framework/Headers/NSApplication+BWAdditions.h</string>
-          </object>
-        </object>
-        <object class="IBPartialClassDescription">
           <string key="className">NSObject</string>
           <object class="IBClassDescriptionSource" key="sourceIdentifier">
             <string key="majorKey">IBFrameworkSource</string>
@@ -534,13 +527,6 @@
           <object class="IBClassDescriptionSource" key="sourceIdentifier">
             <string key="majorKey">IBFrameworkSource</string>
             <string key="minorKey">Sparkle.framework/Headers/SUUpdater.h</string>
-          </object>
-        </object>
-        <object class="IBPartialClassDescription">
-          <string key="className">NSView</string>
-          <object class="IBClassDescriptionSource" key="sourceIdentifier">
-            <string key="majorKey">IBFrameworkSource</string>
-            <string key="minorKey">BWToolkitFramework.framework/Headers/NSView+BWAdditions.h</string>
           </object>
         </object>
       </object>

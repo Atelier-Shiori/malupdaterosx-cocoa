@@ -11,8 +11,8 @@
 // Twitter Consumer Key and Secret
 // Register for a Key/Secret at Twitter Developers Site - http://dev.twitter.com/
 // Twitter Support will not work without it! XAuth support is required too. This will not appear in the final version when I figure out how to implement that.
-//NSString * const consumerKey = @"<consumer key here>";
-//NSString * const consumerSecret = @"<consumer secret here>";
+NSString * const consumerKey = @"<consumer key here>";
+NSString * const consumerSecret = @"<consumer secret here>";
 
 
 @implementation TwitterOAuthKeys
