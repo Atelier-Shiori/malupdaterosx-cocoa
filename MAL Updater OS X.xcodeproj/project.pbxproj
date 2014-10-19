@@ -504,6 +504,7 @@
 				INSTALL_PATH = "$(HOME)/Documents/Build/Debug";
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				PRODUCT_NAME = "MAL Updater OS X";
+				SDKROOT = macosx10.8;
 			};
 			name = Debug;
 		};
@@ -525,6 +526,7 @@
 				INSTALL_PATH = "$(HOME)/Documents/Build/Release";
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				PRODUCT_NAME = "MAL Updater OS X";
+				SDKROOT = macosx10.8;
 			};
 			name = Release;
 		};
