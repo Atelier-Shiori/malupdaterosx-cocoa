@@ -450,7 +450,7 @@ foundtitle:
 											   priority:0
 											   isSticky:NO
 										   clickContext:[NSDate date]];
-				//mTwitter
+				/*//mTwitter
 				//Initalize TwitMessage String
 				NSString * TwitMessage;
 				if ([TitleScore isEqualToString:@"0"]) {
@@ -466,7 +466,7 @@ foundtitle:
 					TwitMessage = [NSString stringWithFormat:@"%@ - http://myanimelist.net/anime/%@",TwitMessage, titleid]; 
 				}
 				//Post Twitter Update
-				[self posttwitterupdate:TwitMessage];
+				[self posttwitterupdate:TwitMessage];*/
 			
 				//Add History Record
 				[appDelegate addrecord:DetectedTitle Episode:DetectedEpisode Date:[NSDate date]];
@@ -529,13 +529,13 @@ foundtitle:
 										   priority:0
 										   isSticky:NO
 									   clickContext:[NSDate date]];
-			//Twitter
+			/*//Twitter
 			NSString * TwitMessage = [NSString stringWithFormat:@"%@ %@ - %@/%@", TitleState, LastScrobbledTitle, LastScrobbledEpisode, TotalEpisodes];
 			if ([defaults boolForKey:@"IncludeSeriesURL"] == 1) {
 				TwitMessage = [NSString stringWithFormat:@"%@ - http://myanimelist.net/anime/%@",TwitMessage, titleid]; 
 			}
 			//Post Twitter Update
-			[self posttwitterupdate:TwitMessage];
+			[self posttwitterupdate:TwitMessage];*/
 			//Add History Record
 			[appDelegate addrecord:DetectedTitle Episode:DetectedEpisode Date:[NSDate date]];
 			return YES;
@@ -590,14 +590,14 @@ foundtitle:
 				//Nothing changed, do nothing.
 			}
 			else {
-				//Twitter
+				/*//Twitter
 				NSString * TwitMessage = [NSString stringWithFormat:@"%@ %@ - %@/%@. Current Score: %i/10", showwatchstatus, LastScrobbledTitle, LastScrobbledEpisode, TotalEpisodes, showscore];
 				if ([defaults boolForKey:@"IncludeSeriesURL"] == 1) {
 					TwitMessage = [NSString stringWithFormat:@"%@ - http://myanimelist.net/anime/%@",TwitMessage, titleid]; 
 				}
 				//Post Twitter Update
 				[self posttwitterupdate:TwitMessage];
-			}
+			}*/
 			//Set New Values
 			TitleScore = [NSString stringWithFormat:@"%i", showscore];
 			WatchStatus = showwatchstatus;
@@ -609,6 +609,7 @@ foundtitle:
 	}
 	
 }
+}
 -(NSDictionary *)getLastScrobbledInfo{
 	return LastScrobbledInfo;
 }
@@ -618,7 +619,7 @@ foundtitle:
  
  */
 
--(void)posttwitterupdate:(NSString *)message {
+/*-(void)posttwitterupdate:(NSString *)message {
 	//Twitter
 	//Init Twitter Engine if necessary
     if (!twitterobj) {
@@ -627,5 +628,6 @@ foundtitle:
 	//Send Message
 	[twitterobj postupdate:message];
 	
-}
+}*/
+    
 @end
