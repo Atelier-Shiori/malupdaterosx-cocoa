@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/chikorita157/malupdaterosx-cocoa.svg?branch=master)](https://travis-ci.org/chikorita157/malupdaterosx-cocoa)
 # MAL Updater OS X 2.1 Cocoa
 MAL Updater OS X is an open source Mac OS X application that automatically detects what's playing and updates the user's MyAnimeList.
 
