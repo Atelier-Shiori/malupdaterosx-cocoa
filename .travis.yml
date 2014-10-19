@@ -1,3 +1,2 @@
 language: objective-c
-xcode_project: MAL Updater OS X.xcodeproj # path to your xcodeproj folder
-xcode_scheme: MAL Updater OS X
+ script: travis/script.sh
