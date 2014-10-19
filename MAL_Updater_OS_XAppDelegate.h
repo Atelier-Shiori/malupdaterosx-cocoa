@@ -13,11 +13,11 @@
 
 @class PreferenceController;
 @class MyAnimeList;
-@interface MAL_Updater_OS_XAppDelegate : NSObject <GrowlApplicationBridgeDelegate> {
+@interface MAL_Updater_OS_XAppDelegate : NSObject <NSApplicationDelegate, NSUserNotificationCenterDelegate> {
 	/* Windows */
-    NSWindow *window;
-	NSWindow *historywindow;
-	NSWindow *updatepanel;
+    __unsafe_unretained NSWindow *window;
+	__unsafe_unretained NSWindow *historywindow;
+	__unsafe_unretained NSWindow *updatepanel;
 	/* General Stuff */
 	IBOutlet NSMenu *statusMenu;
 	IBOutlet NSTableView *historytable;
@@ -41,7 +41,9 @@
 	IBOutlet NSTextField * showtitle;
 	IBOutlet NSPopUpButton * showstatus;
 	IBOutlet NSPopUpButton * showscore;
+	NSWindowController *_preferencesWindowController;
 }
+@property (nonatomic, readonly) NSWindowController *preferencesWindowController;
 @property (assign) IBOutlet NSWindow *window;
 @property (assign) IBOutlet NSWindow *historywindow;
 @property (assign) IBOutlet NSWindow *updatepanel;
@@ -49,8 +51,8 @@
 @property (nonatomic, retain, readonly) NSManagedObjectModel *managedObjectModel;
 @property (nonatomic, retain, readonly) NSManagedObjectContext *managedObjectContext;
 
--(IBAction)showPreferences:(id)sender;
--(IBAction)showhistory:(id)sender;
+-(void)showPreferences:(id)sender;
+-(void)showhistory:(id)sender;
 -(IBAction)togglescrobblewindow:(id)sender;
 -(void)addrecord:(NSString *)title
 		 Episode:(NSString *)episode
@@ -70,4 +72,6 @@
 -(IBAction)updatestatus:(id)sender;
 -(IBAction)closeupdatestatus:(id)sender;
 -(IBAction)updatetitlestatus:(id)sender;
+-(void)showNotication:(NSString *)title message:(NSString *) message;
+
 @end

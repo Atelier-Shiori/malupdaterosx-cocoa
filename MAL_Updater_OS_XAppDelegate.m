@@ -7,9 +7,15 @@
 //
 
 #import "MAL_Updater_OS_XAppDelegate.h"
-#import "PreferenceController.h"
+//#import "PreferenceController.h"
 #import "JSON/JSON.h"
 #import "PFMoveApplication.h"
+#import "GeneralPrefController.h"
+#import "MASPreferencesWindowController.h"
+#import "LoginPref.h"
+#import "Video.h"
+#import "SoftwareUpdatesPref.h"
+
 
 @implementation MAL_Updater_OS_XAppDelegate
 
@@ -45,7 +51,7 @@
 	
     if (managedObjectModel) return managedObjectModel;
 	
-    managedObjectModel = [[NSManagedObjectModel mergedModelFromBundles:nil] retain];    
+    managedObjectModel = [NSManagedObjectModel mergedModelFromBundles:nil];
     return managedObjectModel;
 }
 
@@ -88,7 +94,7 @@
 														options:nil 
 														  error:&error]){
         [[NSApplication sharedApplication] presentError:error];
-        [persistentStoreCoordinator release], persistentStoreCoordinator = nil;
+         persistentStoreCoordinator = nil;
         return nil;
     }    
 	
@@ -125,7 +131,7 @@
 	
 	// Defaults
 	[defaultValues setObject:@"" forKey:@"Base64Token"];
-	[defaultValues setObject:@"http://mal-api.com/" forKey:@"MALAPIURL"];
+	[defaultValues setObject:@"https://malapi.shioridiary.me" forKey:@"MALAPIURL"];
 	[defaultValues setObject:[NSNumber numberWithInt:0] forKey:@"PlayerSel"];
 	[defaultValues setObject:[NSNumber numberWithBool:NO] forKey:@"ScrobbleatStartup"];
 	[defaultValues setObject:[NSNumber numberWithBool:NO] forKey:@"EnableTwitterUpdates"];
@@ -137,7 +143,7 @@
 - (void) awakeFromNib{
     
     //Create the NSStatusBar and set its length
-    statusItem = [[[NSStatusBar systemStatusBar] statusItemWithLength:NSSquareStatusItemLength] retain];
+    statusItem = [[NSStatusBar systemStatusBar] statusItemWithLength:NSSquareStatusItemLength];
     
     //Used to detect where our files are
     NSBundle *bundle = [NSBundle mainBundle];
@@ -157,8 +163,8 @@
     //Enables highlighting
     [statusItem setHighlightMode:YES];
 	//Sort Date Column by default
-	NSSortDescriptor* sortDescriptor = [[[NSSortDescriptor alloc]
-										 initWithKey: @"Date" ascending: NO] autorelease];
+	NSSortDescriptor* sortDescriptor = [[NSSortDescriptor alloc]
+										 initWithKey: @"Date" ascending: NO];
 	[historytable setSortDescriptors:[NSArray arrayWithObject:sortDescriptor]];
 }
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
@@ -171,17 +177,7 @@
 	PFMoveToApplicationsFolderIfNecessary();
 	//Since LSUIElement is set to 1 to hide the dock icon, it causes unattended behavior of having the program windows not show to the front.
 	[NSApp activateIgnoringOtherApps:YES];
-	//Register Growl
-	NSBundle *myBundle = [NSBundle bundleForClass:[MAL_Updater_OS_XAppDelegate class]];
-	NSString *growlPath = [[myBundle privateFrameworksPath] stringByAppendingPathComponent:@"Growl.framework"];
-	NSBundle *growlBundle = [NSBundle bundleWithPath:growlPath];
-	if (growlBundle && [growlBundle load]) {
-		// Register ourselves as a Growl delegate
-		[GrowlApplicationBridge setGrowlDelegate:self];
-	}
-	else {
-		NSLog(@"ERROR: Could not load Growl.framework");
-	}
+ [[NSUserNotificationCenter defaultUserNotificationCenter] setDelegate:self];
 	// Disable Update Button
 	[updatetoolbaritem setEnabled:NO];
 	// Hide Window
@@ -191,13 +187,12 @@
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	if ([[defaults objectForKey:@"Base64Token"] length] == 0) {
 		//Notify the user that there is no login token.
-		[GrowlApplicationBridge notifyWithTitle:@"MAL Updater OS X"
-									description:@"No Auth Token Detected. \n\nBefore you can use this program, you need to verify your MAL Account. This can be done in Preferences."
-							   notificationName:@"Message"
-									   iconData:nil
-									   priority:0
-									   isSticky:NO
-								   clickContext:[NSDate date]];
+        NSUserNotification *notification = [[NSUserNotification alloc] init];
+        notification.title = @"MAL Updater OS X";
+        notification.informativeText = @"Add your login infomation in Preferences before using this program.";
+        notification.soundName = NSUserNotificationDefaultSoundName;
+        
+        [[NSUserNotificationCenter defaultUserNotificationCenter] deliverNotification:notification];
 	}
 	// Autostart Scrobble at Startup
 	if ([defaults boolForKey:@"ScrobbleatStartup"] == 1) {
@@ -209,16 +204,36 @@
  General UI Functions
  
  */
+- (NSWindowController *)preferencesWindowController
+{
+    if (_preferencesWindowController == nil)
+    {
+		NSLog(@"Load Pref");
+        NSViewController *generalViewController = [[GeneralPrefController alloc] init];
+        NSViewController *loginViewController = [[LoginPref alloc] init];
+		NSViewController *videoViewController = [[Video alloc] init];
+		NSViewController *suViewController = [[SoftwareUpdatesPref alloc] init];
+        NSArray *controllers = [[NSArray alloc] initWithObjects:generalViewController, loginViewController, videoViewController, suViewController, nil];
+        
+        // To add a flexible space between General and Advanced preference panes insert [NSNull null]:
+        //     NSArray *controllers = [[NSArray alloc] initWithObjects:generalViewController, [NSNull null], advancedViewController, nil];
+        
+        NSString *title = NSLocalizedString(@"Preferences", @"Common title for Preferences window");
+        _preferencesWindowController = [[MASPreferencesWindowController alloc] initWithViewControllers:controllers title:title];
+    }
+    return _preferencesWindowController;
+}
 
 -(void)showPreferences:(id)sender
 {
 	//Since LSUIElement is set to 1 to hide the dock icon, it causes unattended behavior of having the program windows not show to the front.
 	[NSApp activateIgnoringOtherApps:YES];
+	[self.preferencesWindowController showWindow:nil];
 	//Is preferenceController nil?
-	if (!preferenceController) {
+	/*if (!preferenceController) {
 		preferenceController = [[PreferenceController alloc] init];
 	}
-	[preferenceController showWindow:self];
+	[preferenceController showWindow:self];*/
 }
 - (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender {
 	
@@ -257,7 +272,6 @@
         [alert addButtonWithTitle:cancelButton];
 		
         NSInteger answer = [alert runModal];
-        [alert release];
         alert = nil;
         
         if (answer == NSAlertAlternateReturn) return NSTerminateCancel;
@@ -293,14 +307,8 @@
 		if (scrobbling == FALSE) {
 			[self starttimer];
 			[togglescrobbler setTitle:@"Stop Scrobbling"];
+            [self showNotication:@"MAL Updater OS X" message:@"Auto Scrobble is now turned on."];
 			[ScrobblerStatus setObjectValue:@"Scrobble Status: Started"];
-			[GrowlApplicationBridge notifyWithTitle:@"MAL Updater OS X"
-										description:@"Auto Scrobble is now turned on."
-								   notificationName:@"Message"
-										   iconData:nil
-										   priority:0
-										   isSticky:NO
-									   clickContext:[NSDate date]];
 			//Set Scrobbling State to true
 			scrobbling = TRUE;
 		}
@@ -308,13 +316,7 @@
 			[self stoptimer];
 			[togglescrobbler setTitle:@"Start Scrobbling"];
 			[ScrobblerStatus setObjectValue:@"Scrobble Status: Stopped"];
-			[GrowlApplicationBridge notifyWithTitle:@"MAL Updater OS X"
-										description:@"Auto Scrobble is now turned off."
-								   notificationName:@"Message"
-										   iconData:nil
-										   priority:0
-										   isSticky:NO
-									   clickContext:[NSDate date]];
+            [self showNotication:@"MAL Updater OS X" message:@"Auto Scrobble is now turned off."];
 			//Set Scrobbling State to false
 			scrobbling = FALSE;
 		}
@@ -325,25 +327,13 @@
 	//Check to see if there is an API Key stored
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	if ([[defaults objectForKey:@"Base64Token"] length] == 0) {
-		[GrowlApplicationBridge notifyWithTitle:@"MAL Updater OS X"
-									description:@"Unable to start scrobbling since there is no auth token. Please verify your login in Preferences."
-							   notificationName:@"Message"
-									   iconData:nil
-									   priority:0
-									   isSticky:NO
-								   clickContext:[NSDate date]];
+         [self showNotication:@"MAL Updater OS X" message:@"Unable to start scrobbling since there is no login. Please verify your login in Preferences."];
 	}
 	else {
 		[self starttimer];
 		[togglescrobbler setTitle:@"Stop Scrobbling"];
 		[ScrobblerStatus setObjectValue:@"Scrobble Status: Started"];
-		[GrowlApplicationBridge notifyWithTitle:@"MAL Updater OS X"
-									description:@"Auto Scrobble is now turned on."
-							   notificationName:@"Message"
-									   iconData:nil
-									   priority:0
-									   isSticky:NO
-								   clickContext:[NSDate date]];
+        [self showNotication:@"MAL Updater OS X" message:@"Auto Scrobble is now turned on."];
 		//Set Scrobbling State to true
 		scrobbling = TRUE;
 	}
@@ -360,18 +350,17 @@
 -(void)starttimer {
 	NSLog(@"Timer Started.");
 	//Create Timer
-	timer = [[NSTimer scheduledTimerWithTimeInterval:300
+	timer = [NSTimer scheduledTimerWithTimeInterval:300
 											  target:self
 											selector:@selector(firetimer:)
 											userInfo:nil
-											 repeats:YES] retain];
+											 repeats:YES];
 }
 -(void)stoptimer {
 	NSLog(@"Timer Stopped.");
 	//Stop Timer
 	// Remove Timer
 	[timer invalidate];
-	[timer release];
 	timer = nil;
 }
 /*
@@ -401,13 +390,11 @@
 	[obj setValue:episode forKey:@"Episode"];
 	[obj setValue:date forKey:@"Date"];
 
-	// Release Managed Object
-	[obj release];
 }
 -(IBAction)clearhistory:(id)sender
 {
 	// Set Up Prompt Message Window
-	NSAlert * alert = [[[NSAlert alloc] init] autorelease];
+	NSAlert * alert = [[NSAlert alloc] init];
 	[alert addButtonWithTitle:@"Yes"];
 	[alert addButtonWithTitle:@"No"];
 	[alert setMessageText:@"Are you sure you want to clear the Scrobble History?"];
@@ -433,7 +420,6 @@
 		
 		NSError * error = nil;
 		NSArray * histories = [moc executeFetchRequest:allHistory error:&error];
-		[allHistory release];
 		//error handling goes here
 		for (NSManagedObject * history in histories) {
 			[moc deleteObject:history];
@@ -472,7 +458,7 @@
 	[NSApp beginSheet:updatepanel
 	   modalForWindow:[self window] modalDelegate:self
 	   didEndSelector:@selector(myPanelDidEnd:returnCode:contextInfo:)
-		  contextInfo:(void *)[[NSNumber numberWithFloat:choice] retain]];
+		  contextInfo:(void *)[NSNumber numberWithFloat:choice]];
 	// Set up UI
 	[showtitle setObjectValue:[MALEngine getLastScrobbledTitle]];
 	[showscore selectItemWithTag:[MALEngine getScore]];
@@ -500,8 +486,8 @@ switch (returnCode) {
 		[self starttimer];
 	}
 	
-	payload = [(NSNumber *)contextInfo floatValue];
-	[(NSNumber *)contextInfo release];
+	payload = [(__bridge NSNumber *)contextInfo floatValue];
+	(__bridge NSNumber *)contextInfo;
 }
 -(IBAction)closeupdatestatus:(id)sender {
 	[updatepanel orderOut:self];
@@ -511,29 +497,15 @@ switch (returnCode) {
 	[updatepanel orderOut:self];
 	[NSApp endSheet:updatepanel returnCode:1];
 }
-
-/* 
- 
- Dealloc
- 
- */
-
-- (void) dealloc {
-    //Deallocate all active objects
-    [statusImage release];
-    [statusHighlightImage release];
-	[managedObjectContext release];
-    [persistentStoreCoordinator release];
-    [managedObjectModel release];
-	[window release];
-	[historywindow release];
-    [MALEngine release];
-	if (!preferenceController) {
-	}
-	else {
-		[preferenceController release];
-	}
-	
-    [super dealloc];
+-(void)showNotication:(NSString *)title message:(NSString *) message{
+    NSUserNotification *notification = [[NSUserNotification alloc] init];
+    notification.title = title;
+    notification.informativeText = message;
+    notification.soundName = NSUserNotificationDefaultSoundName;
+    
+    [[NSUserNotificationCenter defaultUserNotificationCenter] deliverNotification:notification];
+}
+- (BOOL)userNotificationCenter:(NSUserNotificationCenter *)center shouldPresentNotification:(NSUserNotification *)notification{
+    return YES;
 }
 @end

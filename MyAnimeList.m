@@ -69,61 +69,46 @@
 			// Check Status and Update
 			BOOL UpdateBool = [self checkstatus:AniID];
 			if (UpdateBool == 1) {
-				if ([WatchStatus isEqualToString:@"Nothing"]) {
-					//Title is not on list. Add Title
-					Success = [self addtitle:AniID];
-				}
-				else {
-					// Update Title as Usual
-					Success = [self updatetitle:AniID];
-				}
+			if ([WatchStatus isEqualToString:@"Nothing"]) {
+				//Title is not on list. Add Title
+				Success = [self addtitle:AniID];
+			}
+			else {
+				// Update Title as Usual
+				Success = [self updatetitle:AniID];
+			}
 				//Set last successful scrobble to statusItem Tooltip
 				[appDelegate setStatusToolTip:[NSString stringWithFormat:@"MAL Updater OS X - Last Scrobble: %@ - %@", LastScrobbledTitle, LastScrobbledEpisode]];
 				//Retain Scrobbled Title, Title ID, Title Score, WatchStatus and Episode
-                [AniID retain];
-				[LastScrobbledTitle retain];
-				[LastScrobbledEpisode retain];
-				[TitleScore retain];
-				[WatchStatus retain];
 			}
 		}
 		else {
 			// Not Successful
 			[appDelegate setStatusText:@"Scrobble Status: Can't find title. Retrying in 5 mins..."];
-			[GrowlApplicationBridge notifyWithTitle:@"Scrobble Unsuccessful."
-										description:@"Can't find title. Retrying in 5 mins..."
-								   notificationName:@"Message"
-										   iconData:nil
-										   priority:0
-										   isSticky:NO
-									   clickContext:[NSDate date]];
+            [appDelegate showNotication:@"Scrobble Unsuccessful." message:@"Can't find title. Retrying in 5 mins..."];
 		}
 		// Empty out Detected Title/Episode to prevent same title detection
 		DetectedTitle = @"";
 		DetectedEpisode = @"";
 		// Release Detected Title/Episode.
-		[DetectedTitle release];
-		[DetectedEpisode release];
 	}
-	
-	
+
+
 }
 -(NSString *)searchanime{
 	NSLog(@"Searching For Title");
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	//Escape Search Term
-	NSString * searchterm = (NSString *)CFURLCreateStringByAddingPercentEscapes(
+	NSString * searchterm = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(
 																				NULL,
 																				(CFStringRef)DetectedTitle,
 																				NULL,
 																				(CFStringRef)@"!*'();:@&=+$,/?%#[]",
-																				kCFStringEncodingUTF8 );
+																				kCFStringEncodingUTF8 ));
 	MALApiUrl = [defaults objectForKey:@"MALAPIURL"];
-	
+
 	//Set Search API
 	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/anime/search?q=%@",MALApiUrl, searchterm]];
-	//Release searchterm
-	[searchterm release];
 	ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
 	//Ignore Cookies
 	[request setUseCookiePersistence:NO];
@@ -135,7 +120,7 @@
 	MAL_Updater_OS_XAppDelegate* appDelegate=[NSApp delegate];
 	// Get Status Code
 	int statusCode = [request responseStatusCode];
-	NSString *response = [request responseString];
+			NSString *response = [request responseString];
 	switch (statusCode) {
 		case 200:
 			return [self findaniid:response];
@@ -144,40 +129,23 @@
 		case 0:
 			Success = NO;
 			[appDelegate setStatusText:@"Scrobble Status: No Internet Connection."];
-			[GrowlApplicationBridge notifyWithTitle:@"Scrobble Unsuccessful."
-										description:@"No Internet Connection. Retrying in 5 mins"
-								   notificationName:@"Message"
-										   iconData:nil
-										   priority:0
-										   isSticky:NO
-									   clickContext:[NSDate date]];
+            [appDelegate showNotication:@"Scrobble Unsuccessful." message:@"No Internet Connection. Retrying in 5 mins"];
 			return @"";
 			break;
-			
+
 		case 500:
 		case 502:
 			Success = NO;
 			[appDelegate setStatusText:@"Scrobble Status: Unofficial MAL API is unaviliable."];
-			[GrowlApplicationBridge notifyWithTitle:@"Scrobble Unsuccessful."
-										description:@"Unofficial MAL API is unaviliable. Contact the Unofficial MAL API Developers."
-								   notificationName:@"Message"
-										   iconData:nil
-										   priority:0
-										   isSticky:NO
-									   clickContext:[NSDate date]];
+                        [appDelegate showNotication:@"Scrobble Unsuccessful." message:@"Unofficial MAL API is unaviliable."];
 			return @"";
 			break;
 			
 		default:
 			Success = NO;
 			[appDelegate setStatusText:@"Scrobble Status: Scrobble Failed. Retrying in 5 mins..."];
-			[GrowlApplicationBridge notifyWithTitle:@"Scrobble Unsuccessful."
-										description:@"Retrying in 5 mins..."
-								   notificationName:@"Message"
-										   iconData:nil
-										   priority:0
-										   isSticky:NO
-									   clickContext:[NSDate date]];
+            [appDelegate setStatusText:@"Scrobble Status: Unofficial MAL API is unaviliable."];
+            [appDelegate showNotication:@"Scrobble Unsuccessful." message:@"Retrying in 5 mins..."];
 			return @"";
 			break;
 	}
@@ -213,7 +181,6 @@
 	//lsof -c '<player name>' -Fn		
 	[task setArguments: [NSArray arrayWithObjects:@"-c", player, @"-F", @"n", nil]];
 	
-	[player release];
 	
 	NSPipe *pipe;
 	pipe = [NSPipe pipe];
@@ -227,11 +194,9 @@
 	NSData *data;
 	data = [file readDataToEndOfFile];
 	
-	//Release task
-	[task autorelease];
 	
 	NSString *string;
-	string = [[[NSString alloc] initWithData: data encoding: NSUTF8StringEncoding]autorelease];
+	string = [[NSString alloc] initWithData: data encoding: NSUTF8StringEncoding];
 	if (string.length > 0) {
 		//Regex time
 		//Get the filename first
@@ -264,14 +229,14 @@
 		// Set Title Info
 		regex = [OGRegularExpression regularExpressionWithString:@"( \\-) (episode |ep |ep|e)?(\\d+)([\\w\\-! ]*)$"];
 		DetectedTitle = [regex replaceAllMatchesInString:string
-											  withString:@""];
+														 withString:@""];
 		// Set Episode Info
 		regex = [OGRegularExpression regularExpressionWithString:@" - "];
 		string = [regex replaceAllMatchesInString:string
 									   withString:@""];
 		regex = [OGRegularExpression regularExpressionWithString: DetectedTitle];
 		string = [regex replaceAllMatchesInString:string
-									   withString:@""];
+												withString:@""];
 		regex = [OGRegularExpression regularExpressionWithString:@"v[\\d]"];
 		DetectedEpisode = [regex replaceAllMatchesInString:string
 												withString:@""];
@@ -287,15 +252,11 @@
 			// Do Nothing
 			[appDelegate setStatusText:@"Scrobble Status: Same Episode Playing, Scrobble not needed."];
 			[appDelegate setLastScrobbledTitle:[NSString stringWithFormat:@"Last Scrobbled: %@ - %@",DetectedTitle,DetectedEpisode]];
-			[DetectedTitle release];
-			[DetectedEpisode release];
 			return NO;
 		}
 		else {
 			// Not Scrobbled Yet or Unsuccessful
-			[DetectedTitle retain];
-			[DetectedEpisode retain];
-			return YES;
+		return YES;
 		}
 	}
 	else {
@@ -373,11 +334,8 @@ foundtitle:
 			}
 			NSLog(@"Title Score %@", TitleScore);
 			//Retain Title Score
-			[TitleScore retain];
 		}
 		// Makes sure the values don't get released
-		[TotalEpisodes retain];
-		[DetectedCurrentEpisode retain];
 		return YES;
 	}
 	else {
@@ -413,7 +371,7 @@ foundtitle:
 		[request setUseCookiePersistence:NO];
 		//Set Token
 		[request addRequestHeader:@"Authorization" value:[NSString stringWithFormat:@"Basic %@",[defaults objectForKey:@"Base64Token"]]];
-	    [request setPostValue:@"PUT" forKey:@"_method"];
+	    [request setRequestMethod:@"PUT"];
 	    [request setPostValue:DetectedEpisode forKey:@"episodes"];
 		//Set Status
 		if([DetectedEpisode intValue] == [TotalEpisodes intValue]) {
@@ -436,20 +394,16 @@ foundtitle:
 		// Store Scrobbled Title and Episode
 		LastScrobbledTitle = DetectedTitle;
 		LastScrobbledEpisode = DetectedEpisode;
-		
+		//NSLog(@"%i", [request responseStatusCode]);
+		//NSLog(@"%@", [request responseString]);
 		switch ([request responseStatusCode]) {
 			case 200:
 				// Update Successful
 				[appDelegate setStatusText:@"Scrobble Status: Scrobble Successful..."];
 				[appDelegate setLastScrobbledTitle:[NSString stringWithFormat:@"Last Scrobbled: %@ - %@",DetectedTitle,DetectedEpisode]];
-				[GrowlApplicationBridge notifyWithTitle:@"Scrobble Successful."
-											description:[NSString stringWithFormat:@"%@ - %@",DetectedTitle,DetectedEpisode]
-									   notificationName:@"Message"
-											   iconData:nil
-											   priority:0
-											   isSticky:NO
-										   clickContext:[NSDate date]];
-				//mTwitter
+                [appDelegate showNotication:@"Scrobble Successful."message:[NSString stringWithFormat:@"%@ - %@",DetectedTitle,DetectedEpisode]];
+
+				/*//mTwitter
 				//Initalize TwitMessage String
 				NSString * TwitMessage;
 				if ([TitleScore isEqualToString:@"0"]) {
@@ -465,26 +419,20 @@ foundtitle:
 					TwitMessage = [NSString stringWithFormat:@"%@ - http://myanimelist.net/anime/%@",TwitMessage, titleid]; 
 				}
 				//Post Twitter Update
-				[self posttwitterupdate:TwitMessage];
-				
+				[self posttwitterupdate:TwitMessage];*/
+			
 				//Add History Record
 				[appDelegate addrecord:DetectedTitle Episode:DetectedEpisode Date:[NSDate date]];
 				return YES;
 				break;
 			default:
 				// Update Unsuccessful
+                [appDelegate showNotication:@"Scrobble Unsuccessful." message:@"Retrying in 5 mins..."];
 				[appDelegate setStatusText:@"Scrobble Status: Scrobble Failed. Retrying in 5 mins..."];
-				[GrowlApplicationBridge notifyWithTitle:@"Scrobble Unsuccessful."
-											description:@"Retrying in 5 mins..."
-									   notificationName:@"Message"
-											   iconData:nil
-											   priority:0
-											   isSticky:NO
-										   clickContext:[NSDate date]];
 				return NO;
 				break;
 		}
-		
+
 	}
 }
 -(BOOL)addtitle:(NSString *)titleid {
@@ -505,7 +453,7 @@ foundtitle:
 	[request setPostValue:@"watching" forKey:@"status"];	
 	// Do Update
 	[request startSynchronous];
-	
+
 	// Store Scrobbled Title and Episode
 	LastScrobbledTitle = DetectedTitle;
 	LastScrobbledEpisode = DetectedEpisode;
@@ -513,26 +461,22 @@ foundtitle:
 	//Set Title State for Title (use for Twitter feature)
 	TitleState = @"started watching";
 	WatchStatus = @"watching";
-	
+	NSLog(@"%i", [request responseStatusCode]);
+	//NSLog(@"%@", [request responseString]);
 	switch ([request responseStatusCode]) {
 		case 200:
+		case 201:
 			// Update Successful
 			[appDelegate setStatusText:@"Scrobble Status: Title Added..."];
 			[appDelegate setLastScrobbledTitle:[NSString stringWithFormat:@"Last Scrobbled: %@ - %@",DetectedTitle,DetectedEpisode]];
-			[GrowlApplicationBridge notifyWithTitle:@"Adding of Title Successful."
-										description:[NSString stringWithFormat:@"%@ - %@",DetectedTitle,DetectedEpisode]
-								   notificationName:@"Message"
-										   iconData:nil
-										   priority:0
-										   isSticky:NO
-									   clickContext:[NSDate date]];
-			//Twitter
+            [appDelegate showNotication:@"Adding of Title Successful." message:[NSString stringWithFormat:@"%@ - %@",DetectedTitle,DetectedEpisode]];
+			/*//Twitter
 			NSString * TwitMessage = [NSString stringWithFormat:@"%@ %@ - %@/%@", TitleState, LastScrobbledTitle, LastScrobbledEpisode, TotalEpisodes];
 			if ([defaults boolForKey:@"IncludeSeriesURL"] == 1) {
 				TwitMessage = [NSString stringWithFormat:@"%@ - http://myanimelist.net/anime/%@",TwitMessage, titleid]; 
 			}
 			//Post Twitter Update
-			[self posttwitterupdate:TwitMessage];
+			[self posttwitterupdate:TwitMessage];*/
 			//Add History Record
 			[appDelegate addrecord:DetectedTitle Episode:DetectedEpisode Date:[NSDate date]];
 			return YES;
@@ -540,20 +484,14 @@ foundtitle:
 		default:
 			// Update Unsuccessful
 			[appDelegate setStatusText:@"Scrobble Status: Adding of Title Failed. Retrying in 5 mins..."];
-			[GrowlApplicationBridge notifyWithTitle:@"Adding of Title Unsuccessful."
-										description:@"Retrying in 5 mins..."
-								   notificationName:@"Message"
-										   iconData:nil
-										   priority:0
-										   isSticky:NO
-									   clickContext:[NSDate date]];
+            [appDelegate showNotication:@"Adding of Title Unsuccessful." message:@"Retrying in 5 mins..."];
 			return NO;
 			break;
 	}
 }
 -(void)updatestatus:(NSString *)titleid
-			  score:(int)showscore
-		watchstatus:(NSString*)showwatchstatus
+			 score:(int)showscore
+	   watchstatus:(NSString*)showwatchstatus
 {
 	NSLog(@"Updating Status for %@", titleid);
 	//Set up Delegate
@@ -567,7 +505,7 @@ foundtitle:
 	[request setUseCookiePersistence:NO];
 	//Set Token
 	[request addRequestHeader:@"Authorization" value:[NSString stringWithFormat:@"Basic %@",[defaults objectForKey:@"Base64Token"]]];
-	[request setPostValue:@"PUT" forKey:@"_method"];
+	[request setRequestMethod:@"PUT"];
 	//Set current episode
 	[request setPostValue:LastScrobbledEpisode forKey:@"episodes"];
 	//Set new watch status
@@ -576,7 +514,8 @@ foundtitle:
 	[request setPostValue:[NSString stringWithFormat:@"%i", showscore] forKey:@"score"];
 	// Do Update
 	[request startSynchronous];
-	
+	NSLog(@"%i", [request responseStatusCode]);
+	//NSLog(@"%@", [request responseString]);
 	switch ([request responseStatusCode]) {
 		case 200:
 			// Update Successful
@@ -586,14 +525,14 @@ foundtitle:
 				//Nothing changed, do nothing.
 			}
 			else {
-				//Twitter
+				/*//Twitter
 				NSString * TwitMessage = [NSString stringWithFormat:@"%@ %@ - %@/%@. Current Score: %i/10", showwatchstatus, LastScrobbledTitle, LastScrobbledEpisode, TotalEpisodes, showscore];
 				if ([defaults boolForKey:@"IncludeSeriesURL"] == 1) {
 					TwitMessage = [NSString stringWithFormat:@"%@ - http://myanimelist.net/anime/%@",TwitMessage, titleid]; 
 				}
 				//Post Twitter Update
 				[self posttwitterupdate:TwitMessage];
-			}
+			}*/
 			//Set New Values
 			TitleScore = [NSString stringWithFormat:@"%i", showscore];
 			WatchStatus = showwatchstatus;
@@ -605,13 +544,17 @@ foundtitle:
 	}
 	
 }
+}
+-(NSDictionary *)getLastScrobbledInfo{
+	return LastScrobbledInfo;
+}
 /*
  
  Twitter Functions
  
  */
 
--(void)posttwitterupdate:(NSString *)message {
+/*-(void)posttwitterupdate:(NSString *)message {
 	//Twitter
 	//Init Twitter Engine if necessary
     if (!twitterobj) {
@@ -620,5 +563,6 @@ foundtitle:
 	//Send Message
 	[twitterobj postupdate:message];
 	
-}
+}*/
+    
 @end

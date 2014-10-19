@@ -10,7 +10,6 @@
 #import <OgreKit/OgreKit.h>
 #import <JSON/JSON.h>
 #import "MAL_Updater_OS_XAppDelegate.h"
-#import "Twitter.h"
 
 @class Twitter;
 
@@ -19,6 +18,7 @@
 	NSString * MALApiUrl;
 	NSString * LastScrobbledTitle;
 	NSString * LastScrobbledEpisode;
+	NSDictionary * LastScrobbledInfo;
 	NSString * DetectedTitle;
 	NSString * DetectedEpisode;
 	NSString * DetectedCurrentEpisode;
@@ -50,4 +50,5 @@
 -(NSString *)getTotalEpisodes;
 -(int)getScore;
 -(int)getWatchStatus;
+-(NSDictionary *)getLastScrobbledInfo;
 @end

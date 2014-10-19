@@ -5,5 +5,5 @@
 #ifdef __OBJC__
     #import <Cocoa/Cocoa.h>
 	//Import Twitter OAuth Key Constants
-	#import "TwitterOAuthKeys.h"
+	//#import "TwitterOAuthKeys.h"
 #endif
