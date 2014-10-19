@@ -19,7 +19,6 @@ All the frameworks are included. Just build! Here are the frameworks that are us
 * CMCrashReporter.framework
 * Sparkle.framework
 * OgreKit.framework
-* Growl.framework (Removed in 2.1.5, hopefully)
 * JSON.framework
 
 ##License
