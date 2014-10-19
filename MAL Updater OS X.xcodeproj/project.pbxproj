@@ -504,7 +504,7 @@
 				INSTALL_PATH = "$(HOME)/Documents/Build/Debug";
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				PRODUCT_NAME = "MAL Updater OS X";
-				SDKROOT = macosx10.8;
+				SDKROOT = macosx;
 			};
 			name = Debug;
 		};
@@ -526,7 +526,7 @@
 				INSTALL_PATH = "$(HOME)/Documents/Build/Release";
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				PRODUCT_NAME = "MAL Updater OS X";
-				SDKROOT = macosx10.8;
+				SDKROOT = macosx;
 			};
 			name = Release;
 		};
@@ -545,7 +545,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				ONLY_ACTIVE_ARCH = NO;
 				PREBINDING = NO;
-				SDKROOT = macosx10.8;
+				SDKROOT = macosx;
 				USER_HEADER_SEARCH_PATHS = "\"${SDKROOT}/usr/include/libxml2\"/**";
 			};
 			name = Debug;
@@ -567,7 +567,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				ONLY_ACTIVE_ARCH = NO;
 				PREBINDING = NO;
-				SDKROOT = macosx10.8;
+				SDKROOT = macosx;
 				STRIP_INSTALLED_PRODUCT = NO;
 				USER_HEADER_SEARCH_PATHS = "\"${SDKROOT}/usr/include/libxml2\"/**";
 				VALID_ARCHS = "x86_64 i386 ppc ppc64 ppc7400 ppc970";
