@@ -490,9 +490,9 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
+					"$(SRCROOT)/**",
+					"$(SRCROOT)/\"Frameworks\"/**",
 					"$(inherited)",
-					"\"$(SRCROOT)/../../../Shared/tohnominagi/InstalledProducts\"",
-					"\"$(SRCROOT)/../../../../Shared/tohnominagi/InstalledProducts\"",
 				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
@@ -515,9 +515,9 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = (
+					"$(SRCROOT)/**",
+					"$(SRCROOT)/\"Frameworks\"/**",
 					"$(inherited)",
-					"\"$(SRCROOT)/../../../Shared/tohnominagi/InstalledProducts\"",
-					"\"$(SRCROOT)/../../../../Shared/tohnominagi/InstalledProducts\"",
 				);
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
