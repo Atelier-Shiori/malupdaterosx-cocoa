@@ -7,7 +7,6 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import <Growl/Growl.h>
 #import <CMCrashReporter/CMCrashReporter.h>
 #import "MyAnimeList.h"
 
