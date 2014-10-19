@@ -150,7 +150,16 @@
     
     //Allocates and loads the images into the application which will be used for our NSStatusItem
     statusImage = [[NSImage alloc] initWithContentsOfFile:[bundle pathForResource:@"StatusIcon" ofType:@"tiff"]];
-    statusHighlightImage = [[NSImage alloc] initWithContentsOfFile:[bundle pathForResource:@"StatusIcon" ofType:@"tiff"]];
+    statusHighlightImage = [[NSImage alloc] initWithContentsOfFile:[bundle pathForResource:@"StatusIconhilight" ofType:@"tiff"]];
+    
+    //Yosemite Dark Menu Support
+    BOOL oldBusted = (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_9);
+    if (!oldBusted)
+    {
+        // 10.10 or higher, so setTemplate: is safe
+        [statusImage setTemplate:YES];
+        [statusHighlightImage setTemplate:YES];
+    }
     
     //Sets the images in our NSStatusItem
     [statusItem setImage:statusImage];
@@ -162,6 +171,7 @@
     [statusItem setToolTip:@"MAL Updater OS X"];
     //Enables highlighting
     [statusItem setHighlightMode:YES];
+
 	//Sort Date Column by default
 	NSSortDescriptor* sortDescriptor = [[NSSortDescriptor alloc]
 										 initWithKey: @"Date" ascending: NO];
@@ -177,7 +187,8 @@
 	PFMoveToApplicationsFolderIfNecessary();
 	//Since LSUIElement is set to 1 to hide the dock icon, it causes unattended behavior of having the program windows not show to the front.
 	[NSApp activateIgnoringOtherApps:YES];
- [[NSUserNotificationCenter defaultUserNotificationCenter] setDelegate:self];
+    //Set Notification Center Delegate
+    [[NSUserNotificationCenter defaultUserNotificationCenter] setDelegate:self];
 	// Disable Update Button
 	[updatetoolbaritem setEnabled:NO];
 	// Hide Window
@@ -229,11 +240,6 @@
 	//Since LSUIElement is set to 1 to hide the dock icon, it causes unattended behavior of having the program windows not show to the front.
 	[NSApp activateIgnoringOtherApps:YES];
 	[self.preferencesWindowController showWindow:nil];
-	//Is preferenceController nil?
-	/*if (!preferenceController) {
-		preferenceController = [[PreferenceController alloc] init];
-	}
-	[preferenceController showWindow:self];*/
 }
 - (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender {
 	

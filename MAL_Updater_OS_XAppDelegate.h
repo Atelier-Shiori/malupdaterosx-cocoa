@@ -41,6 +41,8 @@
 	IBOutlet NSPopUpButton * showstatus;
 	IBOutlet NSPopUpButton * showscore;
 	NSWindowController *_preferencesWindowController;
+    double NSAppKitVersionNumber;
+    #define NSAppKitVersionNumber10_9 1265
 }
 @property (nonatomic, readonly) NSWindowController *preferencesWindowController;
 @property (assign) IBOutlet NSWindow *window;

@@ -31,7 +31,7 @@
 	OGRegularExpression    *regex;
 	BOOL Success;
 	int choice;
-    Twitter * twitterobj;
+    //Twitter * twitterobj;
 }
 -(void)startscrobbling;
 -(BOOL)detectmedia;
