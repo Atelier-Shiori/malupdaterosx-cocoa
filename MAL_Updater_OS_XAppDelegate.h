@@ -31,6 +31,8 @@
 	IBOutlet NSMenuItem * togglescrobbler;
 	IBOutlet NSTextField * ScrobblerStatus;
 	IBOutlet NSTextField * LastScrobbled;
+    IBOutlet NSTextView * animeinfo;
+    IBOutlet NSImageView * img;
 	int choice;
 	BOOL scrobbling;
 	/* MAL Scrobbling/Updating Class */
@@ -73,6 +75,9 @@
 -(IBAction)updatestatus:(id)sender;
 -(IBAction)closeupdatestatus:(id)sender;
 -(IBAction)updatetitlestatus:(id)sender;
+-(IBAction)showPreferences:(id)sender;
+-(IBAction)getHelp:(id)sender;
+- (void)appendToAnimeInfo:(NSString*)text;
 -(void)showNotication:(NSString *)title message:(NSString *) message;
 
 @end

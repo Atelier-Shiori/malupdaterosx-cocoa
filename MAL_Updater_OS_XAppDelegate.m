@@ -15,6 +15,7 @@
 #import "LoginPref.h"
 #import "Video.h"
 #import "SoftwareUpdatesPref.h"
+#import "NSString_stripHtml.h"
 
 
 @implementation MAL_Updater_OS_XAppDelegate
@@ -347,16 +348,24 @@
 -(void)firetimer:(NSTimer *)aTimer {
 	//Tell MALEngine to detect and scrobble if necessary.
 	NSLog(@"Starting...");
-	[MALEngine startscrobbling];
+    dispatch_queue_t queue = dispatch_get_global_queue(
+                                                       DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    
+    dispatch_async(queue, ^{
+        [MALEngine startscrobbling];
 	//Enable the Update button if a title is detected
 	if ([MALEngine getAniID] > 0) {
 		[updatetoolbaritem setEnabled:YES];
-	}
+        //Show Anime Information
+        NSDictionary * ainfo = [MALEngine getLastScrobbledInfo];
+        [self showAnimeInfo:ainfo];
+        
+	}});
 }
 -(void)starttimer {
 	NSLog(@"Timer Started.");
 	//Create Timer
-	timer = [NSTimer scheduledTimerWithTimeInterval:300
+	timer = [NSTimer scheduledTimerWithTimeInterval:30//300
 											  target:self
 											selector:@selector(firetimer:)
 											userInfo:nil
@@ -369,6 +378,32 @@
 	[timer invalidate];
 	timer = nil;
 }
+-(IBAction)getHelp:(id)sender{
+    //Show Help
+ 	[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"https://github.com/chikorita157/malupdaterosx-cocoa/wiki/Getting-Started"]];
+}
+-(void)showAnimeInfo:(NSDictionary *)d{
+    NSLog(@"Adding");
+    //Empty
+    [animeinfo setString:@""];
+    //Description
+    NSString * anidescription = [d objectForKey:@"synopsis"];
+    anidescription = [anidescription stripHtml]; //Removes HTML tags
+    [self appendToAnimeInfo:@"Description"];
+    [self appendToAnimeInfo:anidescription];
+    //Meta Information
+    [self appendToAnimeInfo:@""];
+    [self appendToAnimeInfo:@"Other Information"];
+    [self appendToAnimeInfo:[NSString stringWithFormat:@"Start Date: %@", [d objectForKey:@"start_date"]]];
+    [self appendToAnimeInfo:[NSString stringWithFormat:@"Airing Status: %@", [d objectForKey:@"status"]]];
+    int ep = [d objectForKey:@"episodes"];
+    if(ep==0) {[self appendToAnimeInfo:[NSString stringWithFormat:@"Episodes: Ongoing"]];} else {[self appendToAnimeInfo:[NSString stringWithFormat:@"Episodes: %i", ep]];}
+    [self appendToAnimeInfo:[NSString stringWithFormat:@"Popularity: %@", [d objectForKey:@"popularity_rank"]]];
+    //Image
+    NSImage * dimg = [[NSImage alloc]initByReferencingURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@", [d objectForKey:@"image_url"]]]]; //Downloads Image
+    [img setImage:dimg]; //Sets it
+}
+
 /*
  
  Scrobble History Window
@@ -503,11 +538,21 @@ switch (returnCode) {
 	[updatepanel orderOut:self];
 	[NSApp endSheet:updatepanel returnCode:1];
 }
+
+//Misc Methods
+- (void)appendToAnimeInfo:(NSString*)text
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        NSAttributedString* attr = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ \n", text]];
+        
+        [[animeinfo textStorage] appendAttributedString:attr];
+    });
+}
 -(void)showNotication:(NSString *)title message:(NSString *) message{
     NSUserNotification *notification = [[NSUserNotification alloc] init];
     notification.title = title;
     notification.informativeText = message;
-    notification.soundName = NSUserNotificationDefaultSoundName;
+    notification.soundName = nil;
     
     [[NSUserNotificationCenter defaultUserNotificationCenter] deliverNotification:notification];
 }

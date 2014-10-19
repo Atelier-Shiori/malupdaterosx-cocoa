@@ -335,6 +335,7 @@ foundtitle:
 			NSLog(@"Title Score %@", TitleScore);
 			//Retain Title Score
 		}
+        LastScrobbledInfo = animeinfo;
 		// Makes sure the values don't get released
 		return YES;
 	}
