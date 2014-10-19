@@ -51,7 +51,7 @@
 	
     if (managedObjectModel) return managedObjectModel;
 	
-    managedObjectModel = [[NSManagedObjectModel mergedModelFromBundles:nil] retain];    
+    managedObjectModel = [NSManagedObjectModel mergedModelFromBundles:nil];
     return managedObjectModel;
 }
 
@@ -94,7 +94,7 @@
 														options:nil 
 														  error:&error]){
         [[NSApplication sharedApplication] presentError:error];
-        [persistentStoreCoordinator release], persistentStoreCoordinator = nil;
+         persistentStoreCoordinator = nil;
         return nil;
     }    
 	
@@ -143,7 +143,7 @@
 - (void) awakeFromNib{
     
     //Create the NSStatusBar and set its length
-    statusItem = [[[NSStatusBar systemStatusBar] statusItemWithLength:NSSquareStatusItemLength] retain];
+    statusItem = [[NSStatusBar systemStatusBar] statusItemWithLength:NSSquareStatusItemLength];
     
     //Used to detect where our files are
     NSBundle *bundle = [NSBundle mainBundle];
@@ -163,8 +163,8 @@
     //Enables highlighting
     [statusItem setHighlightMode:YES];
 	//Sort Date Column by default
-	NSSortDescriptor* sortDescriptor = [[[NSSortDescriptor alloc]
-										 initWithKey: @"Date" ascending: NO] autorelease];
+	NSSortDescriptor* sortDescriptor = [[NSSortDescriptor alloc]
+										 initWithKey: @"Date" ascending: NO];
 	[historytable setSortDescriptors:[NSArray arrayWithObject:sortDescriptor]];
 }
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
@@ -229,14 +229,8 @@
         // To add a flexible space between General and Advanced preference panes insert [NSNull null]:
         //     NSArray *controllers = [[NSArray alloc] initWithObjects:generalViewController, [NSNull null], advancedViewController, nil];
         
-        [generalViewController release];
-        [loginViewController release];
-		[videoViewController release];
-		[suViewController release];
-        
         NSString *title = NSLocalizedString(@"Preferences", @"Common title for Preferences window");
         _preferencesWindowController = [[MASPreferencesWindowController alloc] initWithViewControllers:controllers title:title];
-        [controllers release];
     }
     return _preferencesWindowController;
 }
@@ -289,7 +283,6 @@
         [alert addButtonWithTitle:cancelButton];
 		
         NSInteger answer = [alert runModal];
-        [alert release];
         alert = nil;
         
         if (answer == NSAlertAlternateReturn) return NSTerminateCancel;
@@ -392,18 +385,17 @@
 -(void)starttimer {
 	NSLog(@"Timer Started.");
 	//Create Timer
-	timer = [[NSTimer scheduledTimerWithTimeInterval:300
+	timer = [NSTimer scheduledTimerWithTimeInterval:30
 											  target:self
 											selector:@selector(firetimer:)
 											userInfo:nil
-											 repeats:YES] retain];
+											 repeats:YES];
 }
 -(void)stoptimer {
 	NSLog(@"Timer Stopped.");
 	//Stop Timer
 	// Remove Timer
 	[timer invalidate];
-	[timer release];
 	timer = nil;
 }
 /*
@@ -433,13 +425,11 @@
 	[obj setValue:episode forKey:@"Episode"];
 	[obj setValue:date forKey:@"Date"];
 
-	// Release Managed Object
-	[obj release];
 }
 -(IBAction)clearhistory:(id)sender
 {
 	// Set Up Prompt Message Window
-	NSAlert * alert = [[[NSAlert alloc] init] autorelease];
+	NSAlert * alert = [[NSAlert alloc] init];
 	[alert addButtonWithTitle:@"Yes"];
 	[alert addButtonWithTitle:@"No"];
 	[alert setMessageText:@"Are you sure you want to clear the Scrobble History?"];
@@ -465,7 +455,6 @@
 		
 		NSError * error = nil;
 		NSArray * histories = [moc executeFetchRequest:allHistory error:&error];
-		[allHistory release];
 		//error handling goes here
 		for (NSManagedObject * history in histories) {
 			[moc deleteObject:history];
@@ -504,7 +493,7 @@
 	[NSApp beginSheet:updatepanel
 	   modalForWindow:[self window] modalDelegate:self
 	   didEndSelector:@selector(myPanelDidEnd:returnCode:contextInfo:)
-		  contextInfo:(void *)[[NSNumber numberWithFloat:choice] retain]];
+		  contextInfo:(void *)[NSNumber numberWithFloat:choice]];
 	// Set up UI
 	[showtitle setObjectValue:[MALEngine getLastScrobbledTitle]];
 	[showscore selectItemWithTag:[MALEngine getScore]];
@@ -532,8 +521,8 @@ switch (returnCode) {
 		[self starttimer];
 	}
 	
-	payload = [(NSNumber *)contextInfo floatValue];
-	[(NSNumber *)contextInfo release];
+	payload = [(__bridge NSNumber *)contextInfo floatValue];
+	(__bridge NSNumber *)contextInfo;
 }
 -(IBAction)closeupdatestatus:(id)sender {
 	[updatepanel orderOut:self];
@@ -544,30 +533,5 @@ switch (returnCode) {
 	[NSApp endSheet:updatepanel returnCode:1];
 }
 
-/* 
- 
- Dealloc
- 
- */
 
-- (void) dealloc {
-    //Deallocate all active objects
-    [statusImage release];
-    [statusHighlightImage release];
-	[managedObjectContext release];
-    [persistentStoreCoordinator release];
-    [managedObjectModel release];
-	[window release];
-	[historywindow release];
-    [MALEngine release];
-	    [_preferencesWindowController release];
-	/*
-	if (!preferenceController) {
-	}
-	else {
-		[preferenceController release];
-	}*/
-	
-    [super dealloc];
-}
 @end

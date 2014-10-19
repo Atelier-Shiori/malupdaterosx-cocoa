@@ -66,7 +66,7 @@
 	//Reset Unofficial MAL API URL
 	[APIUrl setStringValue:@"https://malapi.shioridiary.me"];
 	// Generate API Key
-	NSUserDefaults *defaults = [[NSUserDefaults standardUserDefaults] autorelease];
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults] ;
 	[defaults setObject:[APIUrl stringValue] forKey:@"MALAPIURL"];
 	
 }
@@ -74,7 +74,7 @@
 		   explaination:(NSString *)explaination
 {
 	// Set Up Prompt Message Window
-	NSAlert * alert = [[[NSAlert alloc] init] autorelease];
+	NSAlert * alert = [[NSAlert alloc] init];
 	[alert addButtonWithTitle:@"OK"];
 	[alert setMessageText:message];
 	[alert setInformativeText:explaination];

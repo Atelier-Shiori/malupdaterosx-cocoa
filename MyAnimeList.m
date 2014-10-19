@@ -80,11 +80,6 @@
 				//Set last successful scrobble to statusItem Tooltip
 				[appDelegate setStatusToolTip:[NSString stringWithFormat:@"MAL Updater OS X - Last Scrobble: %@ - %@", LastScrobbledTitle, LastScrobbledEpisode]];
 				//Retain Scrobbled Title, Title ID, Title Score, WatchStatus and Episode
-                [AniID retain];
-				[LastScrobbledTitle retain];
-				[LastScrobbledEpisode retain];
-				[TitleScore retain];
-				[WatchStatus retain];
 			}
 		}
 		else {
@@ -102,8 +97,6 @@
 		DetectedTitle = @"";
 		DetectedEpisode = @"";
 		// Release Detected Title/Episode.
-		[DetectedTitle release];
-		[DetectedEpisode release];
 	}
 
 
@@ -112,18 +105,16 @@
 	NSLog(@"Searching For Title");
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	//Escape Search Term
-	NSString * searchterm = (NSString *)CFURLCreateStringByAddingPercentEscapes(
+	NSString * searchterm = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(
 																				NULL,
 																				(CFStringRef)DetectedTitle,
 																				NULL,
 																				(CFStringRef)@"!*'();:@&=+$,/?%#[]",
-																				kCFStringEncodingUTF8 );
+																				kCFStringEncodingUTF8 ));
 	MALApiUrl = [defaults objectForKey:@"MALAPIURL"];
 
 	//Set Search API
 	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/anime/search?q=%@",MALApiUrl, searchterm]];
-	//Release searchterm
-	[searchterm release];
 	ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
 	//Ignore Cookies
 	[request setUseCookiePersistence:NO];
@@ -213,7 +204,6 @@
 	//lsof -c '<player name>' -Fn		
 	[task setArguments: [NSArray arrayWithObjects:@"-c", player, @"-F", @"n", nil]];
 	
-	[player release];
 	
 	NSPipe *pipe;
 	pipe = [NSPipe pipe];
@@ -227,11 +217,9 @@
 	NSData *data;
 	data = [file readDataToEndOfFile];
 	
-	//Release task
-	[task autorelease];
 	
 	NSString *string;
-	string = [[[NSString alloc] initWithData: data encoding: NSUTF8StringEncoding]autorelease];
+	string = [[NSString alloc] initWithData: data encoding: NSUTF8StringEncoding];
 	if (string.length > 0) {
 		//Regex time
 		//Get the filename first
@@ -287,14 +275,10 @@
 			// Do Nothing
 			[appDelegate setStatusText:@"Scrobble Status: Same Episode Playing, Scrobble not needed."];
 			[appDelegate setLastScrobbledTitle:[NSString stringWithFormat:@"Last Scrobbled: %@ - %@",DetectedTitle,DetectedEpisode]];
-			[DetectedTitle release];
-			[DetectedEpisode release];
 			return NO;
 		}
 		else {
 			// Not Scrobbled Yet or Unsuccessful
-			[DetectedTitle retain];
-			[DetectedEpisode retain];
 		return YES;
 		}
 	}
@@ -373,11 +357,8 @@ foundtitle:
 			}
 			NSLog(@"Title Score %@", TitleScore);
 			//Retain Title Score
-			[TitleScore retain];
 		}
 		// Makes sure the values don't get released
-		[TotalEpisodes retain];
-		[DetectedCurrentEpisode retain];
 		return YES;
 	}
 	else {

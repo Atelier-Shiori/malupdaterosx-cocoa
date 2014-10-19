@@ -45,7 +45,7 @@
 		   explaination:(NSString *)explaination
 {
 	// Set Up Prompt Message Window
-	NSAlert * alert = [[[NSAlert alloc] init] autorelease];
+	NSAlert * alert = [[NSAlert alloc] init];
 	[alert addButtonWithTitle:@"OK"];
 	[alert setMessageText:message];
 	[alert setInformativeText:explaination];
@@ -85,7 +85,6 @@
 	//Release Keychain Item
 	[TwitterKey release];
 	[TwitterSecret release];*/
-    [Base64Token release];
 }
 -(IBAction)startlogin:(id)sender
 {
@@ -122,28 +121,28 @@
 				// Get Status Code
 				int statusCode = [request responseStatusCode];
 				switch (statusCode) {
-					case 200:
+					case 200:{
 						//Login successful
 						[self showsheetmessage:@"Login Successful" explaination: @"Login Token has been created."];
 						// Generate API Key
-						NSUserDefaults *defaults = [[NSUserDefaults standardUserDefaults] autorelease];
+						NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 						NSString * Token = [NSString stringWithFormat:@"%@:%@", [fieldusername stringValue], [fieldpassword stringValue]];
 						[defaults setObject:[Token base64Encoding] forKey:@"Base64Token"];
 						[defaults setObject:[fieldusername stringValue] forKey:@"Username"];
 						[clearbut setEnabled: YES];
-						break;
-					case 401:
+						break;}
+					case 401:{
 						//Login Failed, show error message
 						[self showsheetmessage:@"MAL Updater OS X was unable to log you in since you don't have the correct username and/or password." explaination:@"Check your username and password and try logging in again. If you recently changed your password, enter your new password and try again."];
 						[savebut setEnabled: YES];
 						[savebut setKeyEquivalent:@"\r"];
-						break;
-					default:
+						break;}
+					default:{
 						//Login Failed, show error message
 						[self showsheetmessage:@"MAL Updater OS X was unable to log you in because of an unknown error." explaination:[NSString stringWithFormat:@"Error %i", statusCode]];
 						[savebut setEnabled: YES];
 						[savebut setKeyEquivalent:@"\r"];
-						break;
+						break;}
 				}
 				//release
 				request = nil;
@@ -160,7 +159,7 @@
 -(IBAction)clearlogin:(id)sender
 {
 	// Set Up Prompt Message Window
-	NSAlert * alert = [[[NSAlert alloc] init] autorelease];
+	NSAlert * alert = [[NSAlert alloc] init] ;
 	[alert addButtonWithTitle:@"Yes"];
 	[alert addButtonWithTitle:@"No"];
 	[alert setMessageText:@"Are you sure you want to remove this token?"];

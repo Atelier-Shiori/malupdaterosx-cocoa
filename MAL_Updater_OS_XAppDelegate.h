@@ -15,9 +15,9 @@
 @class MyAnimeList;
 @interface MAL_Updater_OS_XAppDelegate : NSObject <GrowlApplicationBridgeDelegate> {
 	/* Windows */
-    NSWindow *window;
-	NSWindow *historywindow;
-	NSWindow *updatepanel;
+    __unsafe_unretained NSWindow *window;
+	__unsafe_unretained NSWindow *historywindow;
+	__unsafe_unretained NSWindow *updatepanel;
 	/* General Stuff */
 	IBOutlet NSMenu *statusMenu;
 	IBOutlet NSTableView *historytable;
