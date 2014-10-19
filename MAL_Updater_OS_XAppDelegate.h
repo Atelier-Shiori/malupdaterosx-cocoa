@@ -13,7 +13,7 @@
 
 @class PreferenceController;
 @class MyAnimeList;
-@interface MAL_Updater_OS_XAppDelegate : NSObject <GrowlApplicationBridgeDelegate> {
+@interface MAL_Updater_OS_XAppDelegate : NSObject <NSApplicationDelegate, NSUserNotificationCenterDelegate> {
 	/* Windows */
     __unsafe_unretained NSWindow *window;
 	__unsafe_unretained NSWindow *historywindow;
@@ -72,4 +72,6 @@
 -(IBAction)updatestatus:(id)sender;
 -(IBAction)closeupdatestatus:(id)sender;
 -(IBAction)updatetitlestatus:(id)sender;
+-(void)showNotication:(NSString *)title message:(NSString *) message;
+
 @end

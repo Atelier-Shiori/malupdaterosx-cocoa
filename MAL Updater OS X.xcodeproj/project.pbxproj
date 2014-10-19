@@ -26,8 +26,6 @@
 		3A6AB415120F351B00D51D2C /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3A6AB40D120F350400D51D2C /* Sparkle.framework */; };
 		3A6AB587120F402A00D51D2C /* OgreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A4C61D3120DF3ED0032F63A /* OgreKit.framework */; };
 		3A851AEF1210A6C300B55720 /* Growl Registration Ticket.growlRegDict in Resources */ = {isa = PBXBuildFile; fileRef = 3A851AEE1210A6C300B55720 /* Growl Registration Ticket.growlRegDict */; };
-		3A851CC61210AC4F00B55720 /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A851CC51210AC4F00B55720 /* Growl.framework */; };
-		3A851CDA1210AC8400B55720 /* Growl.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3A851CC51210AC4F00B55720 /* Growl.framework */; };
 		3A851D151210AD6800B55720 /* MAL Updater OS X.icns in Resources */ = {isa = PBXBuildFile; fileRef = 3A851D141210AD6800B55720 /* MAL Updater OS X.icns */; };
 		3A851D231210AE0300B55720 /* StatusIcon.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 3A851D221210AE0300B55720 /* StatusIcon.tiff */; };
 		3AE197DB1210718700FB943B /* JSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AE197DA1210718700FB943B /* JSON.framework */; };
@@ -70,7 +68,6 @@
 			dstSubfolderSpec = 10;
 			files = (
 				5C7DD4621232C793000B166D /* CMCrashReporter.framework in CopyFiles */,
-				3A851CDA1210AC8400B55720 /* Growl.framework in CopyFiles */,
 				3AE197DF1210718A00FB943B /* JSON.framework in CopyFiles */,
 				3A6AB415120F351B00D51D2C /* Sparkle.framework in CopyFiles */,
 				3A4C61D4120DF3ED0032F63A /* OgreKit.framework in CopyFiles */,
@@ -118,7 +115,6 @@
 		3A6AB38B120F327C00D51D2C /* base64.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = base64.c; sourceTree = "<group>"; };
 		3A6AB40D120F350400D51D2C /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sparkle.framework; path = "/Users/ashe/Documents/malupdaterosx-cocoa/Frameworks/Sparkle.framework"; sourceTree = "<absolute>"; };
 		3A851AEE1210A6C300B55720 /* Growl Registration Ticket.growlRegDict */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "Growl Registration Ticket.growlRegDict"; sourceTree = "<group>"; };
-		3A851CC51210AC4F00B55720 /* Growl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Growl.framework; path = "/Users/ashe/Documents/malupdaterosx-cocoa/Frameworks/Growl.framework"; sourceTree = "<absolute>"; };
 		3A851D141210AD6800B55720 /* MAL Updater OS X.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = "MAL Updater OS X.icns"; sourceTree = "<group>"; };
 		3A851D221210AE0300B55720 /* StatusIcon.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = StatusIcon.tiff; sourceTree = "<group>"; };
 		3AE197DA1210718700FB943B /* JSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JSON.framework; path = "/Users/ashe/Documents/malupdaterosx-cocoa/Frameworks/JSON.framework"; sourceTree = "<absolute>"; };
@@ -174,7 +170,6 @@
 				3A4C61C9120DF37D0032F63A /* CoreServices.framework in Frameworks */,
 				3A6AB40E120F350400D51D2C /* Sparkle.framework in Frameworks */,
 				3AE197DB1210718700FB943B /* JSON.framework in Frameworks */,
-				3A851CC61210AC4F00B55720 /* Growl.framework in Frameworks */,
 				3A2DCCBE1210B3D900C920F1 /* Security.framework in Frameworks */,
 				5C2B9DFC1221EB25006DEF0D /* CoreData.framework in Frameworks */,
 				5C7DD3811232C720000B166D /* CMCrashReporter.framework in Frameworks */,
@@ -248,7 +243,6 @@
 			isa = PBXGroup;
 			children = (
 				5C7DD3801232C720000B166D /* CMCrashReporter.framework */,
-				3A851CC51210AC4F00B55720 /* Growl.framework */,
 				3AE197DA1210718700FB943B /* JSON.framework */,
 				3A6AB40D120F350400D51D2C /* Sparkle.framework */,
 				3A4C61D3120DF3ED0032F63A /* OgreKit.framework */,
@@ -549,7 +543,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				ONLY_ACTIVE_ARCH = NO;
 				PREBINDING = NO;
-				SDKROOT = macosx;
+				SDKROOT = macosx10.8;
 				USER_HEADER_SEARCH_PATHS = "\"${SDKROOT}/usr/include/libxml2\"/**";
 			};
 			name = Debug;
@@ -571,7 +565,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				ONLY_ACTIVE_ARCH = NO;
 				PREBINDING = NO;
-				SDKROOT = macosx;
+				SDKROOT = macosx10.8;
 				STRIP_INSTALLED_PRODUCT = NO;
 				USER_HEADER_SEARCH_PATHS = "\"${SDKROOT}/usr/include/libxml2\"/**";
 				VALID_ARCHS = "x86_64 i386 ppc ppc64 ppc7400 ppc970";

@@ -177,17 +177,7 @@
 	PFMoveToApplicationsFolderIfNecessary();
 	//Since LSUIElement is set to 1 to hide the dock icon, it causes unattended behavior of having the program windows not show to the front.
 	[NSApp activateIgnoringOtherApps:YES];
-	//Register Growl
-	NSBundle *myBundle = [NSBundle bundleForClass:[MAL_Updater_OS_XAppDelegate class]];
-	NSString *growlPath = [[myBundle privateFrameworksPath] stringByAppendingPathComponent:@"Growl.framework"];
-	NSBundle *growlBundle = [NSBundle bundleWithPath:growlPath];
-	if (growlBundle && [growlBundle load]) {
-		// Register ourselves as a Growl delegate
-		[GrowlApplicationBridge setGrowlDelegate:self];
-	}
-	else {
-		NSLog(@"ERROR: Could not load Growl.framework");
-	}
+ [[NSUserNotificationCenter defaultUserNotificationCenter] setDelegate:self];
 	// Disable Update Button
 	[updatetoolbaritem setEnabled:NO];
 	// Hide Window
@@ -197,13 +187,12 @@
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	if ([[defaults objectForKey:@"Base64Token"] length] == 0) {
 		//Notify the user that there is no login token.
-		[GrowlApplicationBridge notifyWithTitle:@"MAL Updater OS X"
-									description:@"No Auth Token Detected. \n\nBefore you can use this program, you need to verify your MAL Account. This can be done in Preferences."
-							   notificationName:@"Message"
-									   iconData:nil
-									   priority:0
-									   isSticky:NO
-								   clickContext:[NSDate date]];
+        NSUserNotification *notification = [[NSUserNotification alloc] init];
+        notification.title = @"MAL Updater OS X";
+        notification.informativeText = @"Add your login infomation in Preferences before using this program.";
+        notification.soundName = NSUserNotificationDefaultSoundName;
+        
+        [[NSUserNotificationCenter defaultUserNotificationCenter] deliverNotification:notification];
 	}
 	// Autostart Scrobble at Startup
 	if ([defaults boolForKey:@"ScrobbleatStartup"] == 1) {
@@ -318,14 +307,8 @@
 		if (scrobbling == FALSE) {
 			[self starttimer];
 			[togglescrobbler setTitle:@"Stop Scrobbling"];
+            [self showNotication:@"MAL Updater OS X" message:@"Auto Scrobble is now turned on."];
 			[ScrobblerStatus setObjectValue:@"Scrobble Status: Started"];
-			[GrowlApplicationBridge notifyWithTitle:@"MAL Updater OS X"
-										description:@"Auto Scrobble is now turned on."
-								   notificationName:@"Message"
-										   iconData:nil
-										   priority:0
-										   isSticky:NO
-									   clickContext:[NSDate date]];
 			//Set Scrobbling State to true
 			scrobbling = TRUE;
 		}
@@ -333,13 +316,7 @@
 			[self stoptimer];
 			[togglescrobbler setTitle:@"Start Scrobbling"];
 			[ScrobblerStatus setObjectValue:@"Scrobble Status: Stopped"];
-			[GrowlApplicationBridge notifyWithTitle:@"MAL Updater OS X"
-										description:@"Auto Scrobble is now turned off."
-								   notificationName:@"Message"
-										   iconData:nil
-										   priority:0
-										   isSticky:NO
-									   clickContext:[NSDate date]];
+            [self showNotication:@"MAL Updater OS X" message:@"Auto Scrobble is now turned off."];
 			//Set Scrobbling State to false
 			scrobbling = FALSE;
 		}
@@ -350,25 +327,13 @@
 	//Check to see if there is an API Key stored
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	if ([[defaults objectForKey:@"Base64Token"] length] == 0) {
-		[GrowlApplicationBridge notifyWithTitle:@"MAL Updater OS X"
-									description:@"Unable to start scrobbling since there is no auth token. Please verify your login in Preferences."
-							   notificationName:@"Message"
-									   iconData:nil
-									   priority:0
-									   isSticky:NO
-								   clickContext:[NSDate date]];
+         [self showNotication:@"MAL Updater OS X" message:@"Unable to start scrobbling since there is no login. Please verify your login in Preferences."];
 	}
 	else {
 		[self starttimer];
 		[togglescrobbler setTitle:@"Stop Scrobbling"];
 		[ScrobblerStatus setObjectValue:@"Scrobble Status: Started"];
-		[GrowlApplicationBridge notifyWithTitle:@"MAL Updater OS X"
-									description:@"Auto Scrobble is now turned on."
-							   notificationName:@"Message"
-									   iconData:nil
-									   priority:0
-									   isSticky:NO
-								   clickContext:[NSDate date]];
+        [self showNotication:@"MAL Updater OS X" message:@"Auto Scrobble is now turned on."];
 		//Set Scrobbling State to true
 		scrobbling = TRUE;
 	}
@@ -385,7 +350,7 @@
 -(void)starttimer {
 	NSLog(@"Timer Started.");
 	//Create Timer
-	timer = [NSTimer scheduledTimerWithTimeInterval:30
+	timer = [NSTimer scheduledTimerWithTimeInterval:300
 											  target:self
 											selector:@selector(firetimer:)
 											userInfo:nil
@@ -532,6 +497,15 @@ switch (returnCode) {
 	[updatepanel orderOut:self];
 	[NSApp endSheet:updatepanel returnCode:1];
 }
-
-
+-(void)showNotication:(NSString *)title message:(NSString *) message{
+    NSUserNotification *notification = [[NSUserNotification alloc] init];
+    notification.title = title;
+    notification.informativeText = message;
+    notification.soundName = NSUserNotificationDefaultSoundName;
+    
+    [[NSUserNotificationCenter defaultUserNotificationCenter] deliverNotification:notification];
+}
+- (BOOL)userNotificationCenter:(NSUserNotificationCenter *)center shouldPresentNotification:(NSUserNotification *)notification{
+    return YES;
+}
 @end

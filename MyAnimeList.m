@@ -85,13 +85,7 @@
 		else {
 			// Not Successful
 			[appDelegate setStatusText:@"Scrobble Status: Can't find title. Retrying in 5 mins..."];
-			[GrowlApplicationBridge notifyWithTitle:@"Scrobble Unsuccessful."
-										description:@"Can't find title. Retrying in 5 mins..."
-								   notificationName:@"Message"
-										   iconData:nil
-										   priority:0
-										   isSticky:NO
-									   clickContext:[NSDate date]];
+            [appDelegate showNotication:@"Scrobble Unsuccessful." message:@"Can't find title. Retrying in 5 mins..."];
 		}
 		// Empty out Detected Title/Episode to prevent same title detection
 		DetectedTitle = @"";
@@ -135,13 +129,7 @@
 		case 0:
 			Success = NO;
 			[appDelegate setStatusText:@"Scrobble Status: No Internet Connection."];
-			[GrowlApplicationBridge notifyWithTitle:@"Scrobble Unsuccessful."
-										description:@"No Internet Connection. Retrying in 5 mins"
-								   notificationName:@"Message"
-										   iconData:nil
-										   priority:0
-										   isSticky:NO
-									   clickContext:[NSDate date]];
+            [appDelegate showNotication:@"Scrobble Unsuccessful." message:@"No Internet Connection. Retrying in 5 mins"];
 			return @"";
 			break;
 
@@ -149,26 +137,15 @@
 		case 502:
 			Success = NO;
 			[appDelegate setStatusText:@"Scrobble Status: Unofficial MAL API is unaviliable."];
-			[GrowlApplicationBridge notifyWithTitle:@"Scrobble Unsuccessful."
-										description:@"Unofficial MAL API is unaviliable. Contact the Unofficial MAL API Developers."
-								   notificationName:@"Message"
-										   iconData:nil
-										   priority:0
-										   isSticky:NO
-									   clickContext:[NSDate date]];
+                        [appDelegate showNotication:@"Scrobble Unsuccessful." message:@"Unofficial MAL API is unaviliable."];
 			return @"";
 			break;
 			
 		default:
 			Success = NO;
 			[appDelegate setStatusText:@"Scrobble Status: Scrobble Failed. Retrying in 5 mins..."];
-			[GrowlApplicationBridge notifyWithTitle:@"Scrobble Unsuccessful."
-										description:@"Retrying in 5 mins..."
-								   notificationName:@"Message"
-										   iconData:nil
-										   priority:0
-										   isSticky:NO
-									   clickContext:[NSDate date]];
+            [appDelegate setStatusText:@"Scrobble Status: Unofficial MAL API is unaviliable."];
+            [appDelegate showNotication:@"Scrobble Unsuccessful." message:@"Retrying in 5 mins..."];
 			return @"";
 			break;
 	}
@@ -424,13 +401,8 @@ foundtitle:
 				// Update Successful
 				[appDelegate setStatusText:@"Scrobble Status: Scrobble Successful..."];
 				[appDelegate setLastScrobbledTitle:[NSString stringWithFormat:@"Last Scrobbled: %@ - %@",DetectedTitle,DetectedEpisode]];
-				[GrowlApplicationBridge notifyWithTitle:@"Scrobble Successful."
-											description:[NSString stringWithFormat:@"%@ - %@",DetectedTitle,DetectedEpisode]
-									   notificationName:@"Message"
-											   iconData:nil
-											   priority:0
-											   isSticky:NO
-										   clickContext:[NSDate date]];
+                [appDelegate showNotication:@"Scrobble Successful."message:[NSString stringWithFormat:@"%@ - %@",DetectedTitle,DetectedEpisode]];
+
 				/*//mTwitter
 				//Initalize TwitMessage String
 				NSString * TwitMessage;
@@ -455,14 +427,8 @@ foundtitle:
 				break;
 			default:
 				// Update Unsuccessful
+                [appDelegate showNotication:@"Scrobble Unsuccessful." message:@"Retrying in 5 mins..."];
 				[appDelegate setStatusText:@"Scrobble Status: Scrobble Failed. Retrying in 5 mins..."];
-				[GrowlApplicationBridge notifyWithTitle:@"Scrobble Unsuccessful."
-											description:@"Retrying in 5 mins..."
-									   notificationName:@"Message"
-											   iconData:nil
-											   priority:0
-											   isSticky:NO
-										   clickContext:[NSDate date]];
 				return NO;
 				break;
 		}
@@ -503,13 +469,7 @@ foundtitle:
 			// Update Successful
 			[appDelegate setStatusText:@"Scrobble Status: Title Added..."];
 			[appDelegate setLastScrobbledTitle:[NSString stringWithFormat:@"Last Scrobbled: %@ - %@",DetectedTitle,DetectedEpisode]];
-			[GrowlApplicationBridge notifyWithTitle:@"Adding of Title Successful."
-										description:[NSString stringWithFormat:@"%@ - %@",DetectedTitle,DetectedEpisode]
-								   notificationName:@"Message"
-										   iconData:nil
-										   priority:0
-										   isSticky:NO
-									   clickContext:[NSDate date]];
+            [appDelegate showNotication:@"Adding of Title Successful." message:[NSString stringWithFormat:@"%@ - %@",DetectedTitle,DetectedEpisode]];
 			/*//Twitter
 			NSString * TwitMessage = [NSString stringWithFormat:@"%@ %@ - %@/%@", TitleState, LastScrobbledTitle, LastScrobbledEpisode, TotalEpisodes];
 			if ([defaults boolForKey:@"IncludeSeriesURL"] == 1) {
@@ -524,13 +484,7 @@ foundtitle:
 		default:
 			// Update Unsuccessful
 			[appDelegate setStatusText:@"Scrobble Status: Adding of Title Failed. Retrying in 5 mins..."];
-			[GrowlApplicationBridge notifyWithTitle:@"Adding of Title Unsuccessful."
-										description:@"Retrying in 5 mins..."
-								   notificationName:@"Message"
-										   iconData:nil
-										   priority:0
-										   isSticky:NO
-									   clickContext:[NSDate date]];
+            [appDelegate showNotication:@"Adding of Title Unsuccessful." message:@"Retrying in 5 mins..."];
 			return NO;
 			break;
 	}
