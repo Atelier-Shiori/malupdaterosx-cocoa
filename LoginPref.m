@@ -19,7 +19,6 @@
 	return [super initWithNibName:@"LoginView" bundle:nil];
 }
 -(void)loadView{
-	NSLog(@"Hi!");
     [super loadView];
 	[self loadlogin];
 }
@@ -65,14 +64,11 @@
 	
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	NSString *Base64Token = [defaults objectForKey:@"Base64Token"];
-	NSLog(@"%@", Base64Token);
 	if (Base64Token.length > 0) {
-		NSLog(@"N");
 		[clearbut setEnabled: YES];
 		[savebut setEnabled: NO];
 	}
 	else {
-		NSLog(@"Y");
 		//Disable Clearbut
 		[clearbut setEnabled: NO];
 		[savebut setEnabled: YES];
@@ -89,7 +85,7 @@
 	//Release Keychain Item
 	[TwitterKey release];
 	[TwitterSecret release];*/
-		[Base64Token release];
+    [Base64Token release];
 }
 -(IBAction)startlogin:(id)sender
 {
