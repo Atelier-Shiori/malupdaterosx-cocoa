@@ -354,7 +354,7 @@
     dispatch_async(queue, ^{
         [MALEngine startscrobbling];
 	//Enable the Update button if a title is detected
-	if ([MALEngine getAniID] > 0) {
+	if ([MALEngine getSuccess] == 1) {
 		[updatetoolbaritem setEnabled:YES];
         //Show Anime Information
         NSDictionary * ainfo = [MALEngine getLastScrobbledInfo];
@@ -365,7 +365,7 @@
 -(void)starttimer {
 	NSLog(@"Timer Started.");
 	//Create Timer
-	timer = [NSTimer scheduledTimerWithTimeInterval:30//300
+	timer = [NSTimer scheduledTimerWithTimeInterval:300
 											  target:self
 											selector:@selector(firetimer:)
 											userInfo:nil
@@ -383,7 +383,6 @@
  	[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"https://github.com/chikorita157/malupdaterosx-cocoa/wiki/Getting-Started"]];
 }
 -(void)showAnimeInfo:(NSDictionary *)d{
-    NSLog(@"Adding");
     //Empty
     [animeinfo setString:@""];
     //Description
@@ -394,11 +393,12 @@
     //Meta Information
     [self appendToAnimeInfo:@""];
     [self appendToAnimeInfo:@"Other Information"];
+    [self appendToAnimeInfo:[NSString stringWithFormat:@"Classification: %@", [d objectForKey:@"classification"]]];
     [self appendToAnimeInfo:[NSString stringWithFormat:@"Start Date: %@", [d objectForKey:@"start_date"]]];
     [self appendToAnimeInfo:[NSString stringWithFormat:@"Airing Status: %@", [d objectForKey:@"status"]]];
-    int ep = [d objectForKey:@"episodes"];
-    if(ep==0) {[self appendToAnimeInfo:[NSString stringWithFormat:@"Episodes: Ongoing"]];} else {[self appendToAnimeInfo:[NSString stringWithFormat:@"Episodes: %i", ep]];}
+    [self appendToAnimeInfo:[NSString stringWithFormat:@"Episodes: %@", [d objectForKey:@"episodes"]]];
     [self appendToAnimeInfo:[NSString stringWithFormat:@"Popularity: %@", [d objectForKey:@"popularity_rank"]]];
+    [self appendToAnimeInfo:[NSString stringWithFormat:@"Favorited: %@", [d objectForKey:@"favorited_count"]]];
     //Image
     NSImage * dimg = [[NSImage alloc]initByReferencingURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@", [d objectForKey:@"image_url"]]]]; //Downloads Image
     [img setImage:dimg]; //Sets it
@@ -512,7 +512,6 @@
 }
 - (void)myPanelDidEnd:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
 {
-	float payload;
 switch (returnCode) {
 	case 0:
 		break;
@@ -527,8 +526,8 @@ switch (returnCode) {
 		[self starttimer];
 	}
 	
-	payload = [(__bridge NSNumber *)contextInfo floatValue];
-	(__bridge NSNumber *)contextInfo;
+	//payload = [(__bridge NSNumber *)contextInfo floatValue];
+	//(__bridge NSNumber *)contextInfo;
 }
 -(IBAction)closeupdatestatus:(id)sender {
 	[updatepanel orderOut:self];

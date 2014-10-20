@@ -535,20 +535,20 @@ Gw
                         </textFieldCell>
                     </textField>
                     <scrollView horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" id="Flw-vm-3Ig">
-                        <rect key="frame" x="151" y="22" width="260" height="189"/>
+                        <rect key="frame" x="140" y="22" width="271" height="189"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <clipView key="contentView" id="ypk-hd-jNn">
-                            <rect key="frame" x="1" y="1" width="258" height="187"/>
+                            <rect key="frame" x="1" y="1" width="269" height="187"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <textView editable="NO" importsGraphics="NO" findStyle="panel" continuousSpellChecking="YES" verticallyResizable="YES" allowsNonContiguousLayout="YES" quoteSubstitution="YES" dashSubstitution="YES" smartInsertDelete="YES" id="bGm-dl-hOF">
-                                    <rect key="frame" x="0.0" y="0.0" width="258" height="187"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="269" height="187"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <size key="minSize" width="258" height="187"/>
+                                    <size key="minSize" width="269" height="187"/>
                                     <size key="maxSize" width="463" height="10000000"/>
                                     <color key="insertionPointColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                    <size key="minSize" width="258" height="187"/>
+                                    <size key="minSize" width="269" height="187"/>
                                     <size key="maxSize" width="463" height="10000000"/>
                                 </textView>
                             </subviews>
@@ -559,12 +559,12 @@ Gw
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                         <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="T9f-gy-fHS">
-                            <rect key="frame" x="243" y="1" width="16" height="187"/>
+                            <rect key="frame" x="254" y="1" width="16" height="187"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                     </scrollView>
                     <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" id="gfr-73-DLn">
-                        <rect key="frame" x="-3" y="22" width="155" height="187"/>
+                        <rect key="frame" x="-3" y="22" width="143" height="189"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" imageFrameStyle="photo" id="SDe-v8-QB2"/>
                     </imageView>

@@ -50,6 +50,9 @@
 	else
 		return 0; //fallback
 }
+-(BOOL)getSuccess{
+    return Success;
+}
 
 /*
  

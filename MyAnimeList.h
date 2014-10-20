@@ -50,5 +50,6 @@
 -(NSString *)getTotalEpisodes;
 -(int)getScore;
 -(int)getWatchStatus;
+-(BOOL)getSuccess;
 -(NSDictionary *)getLastScrobbledInfo;
 @end
