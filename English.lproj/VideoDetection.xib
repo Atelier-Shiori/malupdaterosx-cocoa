@@ -2,7 +2,7 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="8.00">
 	<data>
 		<int key="IBDocument.SystemTarget">1090</int>
-		<string key="IBDocument.SystemVersion">14A388b</string>
+		<string key="IBDocument.SystemVersion">14A389</string>
 		<string key="IBDocument.InterfaceBuilderVersion">6185.11</string>
 		<string key="IBDocument.AppKitVersion">1343.14</string>
 		<string key="IBDocument.HIToolboxVersion">755.00</string>
@@ -51,7 +51,7 @@
 						<object class="NSTextFieldCell" key="NSCell" id="297313890">
 							<int key="NSCellFlags">67108864</int>
 							<int key="NSCellFlags2">272629760</int>
-							<string key="NSContents">These settings will affect how MAL Updater OS X will detect what show you are watching.</string>
+							<string key="NSContents">These settings will affect how MAL Updater OS X detect what show you are watching.</string>
 							<object class="NSFont" key="NSSupport" id="574315145">
 								<bool key="IBIsSystemFont">YES</bool>
 								<double key="NSSize">13</double>

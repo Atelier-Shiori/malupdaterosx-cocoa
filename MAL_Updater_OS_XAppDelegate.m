@@ -3,11 +3,10 @@
 //  MAL Updater OS X
 //
 //  Created by James M. on 8/7/10.
-//  Copyright 2009-2010 Chikorita157's Anime Blog. All rights reserved. Code licensed under New BSD License
+//  Copyright 2009-2014 Atelier Shiori. All rights reserved. Code licensed under New BSD License
 //
 
 #import "MAL_Updater_OS_XAppDelegate.h"
-//#import "PreferenceController.h"
 #import "JSON/JSON.h"
 #import "PFMoveApplication.h"
 #import "GeneralPrefController.h"
@@ -154,13 +153,13 @@
     statusHighlightImage = [[NSImage alloc] initWithContentsOfFile:[bundle pathForResource:@"StatusIconhilight" ofType:@"tiff"]];
     
     //Yosemite Dark Menu Support
-    BOOL oldBusted = (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_9);
+    /*BOOL oldBusted = (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_9);
     if (!oldBusted)
-    {
+    {*/
         // 10.10 or higher, so setTemplate: is safe
         [statusImage setTemplate:YES];
         [statusHighlightImage setTemplate:YES];
-    }
+    //}
     
     //Sets the images in our NSStatusItem
     [statusItem setImage:statusImage];

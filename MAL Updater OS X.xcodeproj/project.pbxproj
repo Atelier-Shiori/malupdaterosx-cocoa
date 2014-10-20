@@ -17,8 +17,6 @@
 		3A4C61B3120DF2BB0032F63A /* ASIInputStream.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A4C61AB120DF2BB0032F63A /* ASIInputStream.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		3A4C61B4120DF2BB0032F63A /* ASINetworkQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A4C61AD120DF2BB0032F63A /* ASINetworkQueue.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		3A4C61B5120DF2BB0032F63A /* ASINSStringAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A4C61AF120DF2BB0032F63A /* ASINSStringAdditions.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		3A4C61C5120DF36E0032F63A /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A4C61C4120DF36E0032F63A /* SystemConfiguration.framework */; };
-		3A4C61C9120DF37D0032F63A /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A4C61C8120DF37D0032F63A /* CoreServices.framework */; };
 		3A4C61D4120DF3ED0032F63A /* OgreKit.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3A4C61D3120DF3ED0032F63A /* OgreKit.framework */; };
 		3A6AB37F120F313E00D51D2C /* Base64Category.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A6AB37E120F313E00D51D2C /* Base64Category.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		3A6AB38C120F327C00D51D2C /* base64.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A6AB38B120F327C00D51D2C /* base64.c */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -56,6 +54,8 @@
 		5CD36B9A19F2EA9B007BB6B6 /* MASPreferencesWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CD36B9819F2EA9B007BB6B6 /* MASPreferencesWindowController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		5CD36BBA19F2ED88007BB6B6 /* GeneralPrefController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CD36BB919F2ED88007BB6B6 /* GeneralPrefController.m */; };
 		5CFC037519F3396E006B4DAD /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5CFC037419F3396E006B4DAD /* libz.dylib */; };
+		8209DB7919F5B9CF003DFB20 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A4C61C8120DF37D0032F63A /* CoreServices.framework */; };
+		8209DB7A19F5B9D8003DFB20 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A4C61C4120DF36E0032F63A /* SystemConfiguration.framework */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
@@ -163,13 +163,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8209DB7A19F5B9D8003DFB20 /* SystemConfiguration.framework in Frameworks */,
+				8209DB7919F5B9CF003DFB20 /* CoreServices.framework in Frameworks */,
 				5CFC037519F3396E006B4DAD /* libz.dylib in Frameworks */,
 				5C2D50621329810700B31C08 /* libxml2.2.dylib in Frameworks */,
 				5C2D50601329810000B31C08 /* libxml2.dylib in Frameworks */,
 				3A6AB587120F402A00D51D2C /* OgreKit.framework in Frameworks */,
 				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
-				3A4C61C5120DF36E0032F63A /* SystemConfiguration.framework in Frameworks */,
-				3A4C61C9120DF37D0032F63A /* CoreServices.framework in Frameworks */,
 				3A6AB40E120F350400D51D2C /* Sparkle.framework in Frameworks */,
 				3AE197DB1210718700FB943B /* JSON.framework in Frameworks */,
 				3A2DCCBE1210B3D900C920F1 /* Security.framework in Frameworks */,
@@ -530,7 +530,7 @@
 				GCC_PREFIX_HEADER = MAL_Updater_OS_X_Prefix.pch;
 				INFOPLIST_FILE = "MAL_Updater_OS_X-Info.plist";
 				INSTALL_PATH = "$(HOME)/Documents/Build/Debug";
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				PRODUCT_NAME = "MAL Updater OS X";
 				SDKROOT = macosx10.9;
 			};
@@ -552,7 +552,7 @@
 				GCC_PREFIX_HEADER = MAL_Updater_OS_X_Prefix.pch;
 				INFOPLIST_FILE = "MAL_Updater_OS_X-Info.plist";
 				INSTALL_PATH = "$(HOME)/Documents/Build/Release";
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				PRODUCT_NAME = "MAL Updater OS X";
 				SDKROOT = macosx10.9;
 			};

@@ -3,7 +3,7 @@
 //  MAL Updater OS X
 //
 //  Created by Nanoha Takamachi on 2014/10/18.
-//  Copyright 2014 __MyCompanyName__. All rights reserved.
+//  Copyright 2014 Atelier Shiori. All rights reserved.
 //
 
 #import "Video.h"

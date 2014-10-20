@@ -3,7 +3,7 @@
 //  MAL Updater OS X
 //
 //  Created by James M. on 8/7/10.
-//  Copyright 2009-2011 Chikorita157's Anime Blog. All rights reserved. Code licensed under New BSD License
+//  Copyright 2009-2014 Atelier Shiori. All rights reserved. Code licensed under New BSD License
 //
 
 #import "MyAnimeList.h"
@@ -229,6 +229,9 @@
 		regex = [OGRegularExpression regularExpressionWithString:@"_"];
 		string = [regex replaceAllMatchesInString:string
 									   withString:@" "];
+        regex = [OGRegularExpression regularExpressionWithString:@"~"];
+        string = [regex replaceAllMatchesInString:string
+                                       withString:@""];
 		// Set Title Info
 		regex = [OGRegularExpression regularExpressionWithString:@"( \\-) (episode |ep |ep|e)?(\\d+)([\\w\\-! ]*)$"];
 		DetectedTitle = [regex replaceAllMatchesInString:string
@@ -246,7 +249,18 @@
 		// Trim Whitespace
 		DetectedTitle = [DetectedTitle stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 		DetectedEpisode = [DetectedEpisode stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-		//release
+        if (DetectedEpisode.length == 0) { //Checks to see if there is an episode number
+            //Seperate Episode Number from Detected Title
+            NSString *oldtitle = DetectedTitle;
+            regex = [OGRegularExpression regularExpressionWithString: @"([0-9][0-9])"];
+            oldtitle = [regex replaceAllMatchesInString:oldtitle
+                                           withString:@""];
+            regex = [OGRegularExpression regularExpressionWithString: oldtitle];
+            DetectedEpisode =[regex replaceAllMatchesInString:DetectedTitle
+                                                   withString:@""];
+            DetectedTitle = oldtitle;
+        }
+        //release
 		regex = nil;
 		enumerator = nil;
 		string = @"";
@@ -524,7 +538,7 @@ foundtitle:
 		case 200:
 			// Update Successful
 			[appDelegate setStatusText:@"Scrobble Status: Updating of Watch Status/Score Successful."];
-			if ([TitleScore isEqualToString:[NSString stringWithFormat:@"%i", showscore]] && [WatchStatus isEqualToString:showwatchstatus])
+			if ([TitleScore intValue] == showscore && [WatchStatus isEqualToString:showwatchstatus])
 			{
 				//Nothing changed, do nothing.
 			}
