@@ -22,6 +22,7 @@
 	NSString * DetectedTitle;
 	NSString * DetectedEpisode;
 	NSString * DetectedCurrentEpisode;
+    BOOL* DetectedTitleisMovie;
 	NSString * TotalEpisodes;
 	NSString * WatchStatus;
 	NSString * TitleScore;

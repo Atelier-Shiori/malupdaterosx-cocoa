@@ -236,30 +236,40 @@
 		regex = [OGRegularExpression regularExpressionWithString:@"( \\-) (episode |ep |ep|e)?(\\d+)([\\w\\-! ]*)$"];
 		DetectedTitle = [regex replaceAllMatchesInString:string
 														 withString:@""];
+        regex = [OGRegularExpression regularExpressionWithString: @"([0-9][0-9][0-9][0-9]|[0-9][0-9][0-9]|[0-9][0-9]|[0-9])"];
+        DetectedTitle = [regex replaceAllMatchesInString:DetectedTitle
+                                              withString:@""];
 		// Set Episode Info
-		regex = [OGRegularExpression regularExpressionWithString:@" - "];
+        NSString * string2 = string;
+        regex = [OGRegularExpression regularExpressionWithString:@" - "];
 		string = [regex replaceAllMatchesInString:string
 									   withString:@""];
+        
 		regex = [OGRegularExpression regularExpressionWithString: DetectedTitle];
 		string = [regex replaceAllMatchesInString:string
 												withString:@""];
 		regex = [OGRegularExpression regularExpressionWithString:@"v[\\d]"];
 		DetectedEpisode = [regex replaceAllMatchesInString:string
 												withString:@""];
+        if (DetectedEpisode.length > 3) { // Detected Episode is malformed and is more than 3
+            regex = [OGRegularExpression regularExpressionWithString:@" - "];
+            string = [regex replaceAllMatchesInString:string2
+                                           withString:@" "];
+            
+            regex = [OGRegularExpression regularExpressionWithString: @"([0-9][0-9][0-9][0-9]|[0-9][0-9][0-9]|[0-9][0-9]|[0-9])"];
+            DetectedTitle = [regex replaceAllMatchesInString:string
+                                             withString:@""];
+            regex = [OGRegularExpression regularExpressionWithString: DetectedTitle];
+            string = [regex replaceAllMatchesInString:string
+                                           withString:@""];
+            regex = [OGRegularExpression regularExpressionWithString:@"v[\\d]"];
+            DetectedEpisode = [regex replaceAllMatchesInString:string
+                                                    withString:@""];
+            
+        }
 		// Trim Whitespace
 		DetectedTitle = [DetectedTitle stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 		DetectedEpisode = [DetectedEpisode stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-        if (DetectedEpisode.length == 0) { //Checks to see if there is an episode number
-            //Seperate Episode Number from Detected Title
-            NSString *oldtitle = DetectedTitle;
-            regex = [OGRegularExpression regularExpressionWithString: @"([0-9][0-9])"];
-            oldtitle = [regex replaceAllMatchesInString:oldtitle
-                                           withString:@""];
-            regex = [OGRegularExpression regularExpressionWithString: oldtitle];
-            DetectedEpisode =[regex replaceAllMatchesInString:DetectedTitle
-                                                   withString:@""];
-            DetectedTitle = oldtitle;
-        }
         //release
 		regex = nil;
 		enumerator = nil;
@@ -289,20 +299,56 @@
 	NSString *titleid = @"";
 	//Initalize NSString to dump the title temporarily
 	NSString *theshowtitle = @"";
+    NSString *theshowtype = @"";
 	//Set Regular Expressions to omit any preceding words
 	NSString *findpre = [NSString stringWithFormat:@"(%@)",DetectedTitle];
 	findpre = [findpre stringByReplacingOccurrencesOfString:@" " withString:@"|"]; // NSString *findpre = [NSString stringWithFormat:@"^%@",DetectedTitle];
 	regex = [OGRegularExpression regularExpressionWithString:findpre];
 	//Retrieve the ID. Note that the most matched title will be on the top
-	for (NSDictionary *serchentry in searchdata) {
+    BOOL idok; // Checks the status
+    // For Sanity (TV shows and OVAs usually have more than one episode)
+    if(DetectedEpisode.length == 0){
+        // Title is a movie
+        NSLog(@"Title is a movie");
+        DetectedTitleisMovie = true;
+    }
+    else{
+        // Is TV Show
+        NSLog(@"Title is not a movie.");
+        DetectedTitleisMovie = false;
+    }
+	for (NSDictionary *searchentry in searchdata) {
 		//Store title from search entry
-		theshowtitle = [NSString stringWithFormat:@"%@",[serchentry objectForKey:@"title"]];
+		theshowtitle = [NSString stringWithFormat:@"%@",[searchentry objectForKey:@"title"]];
+        theshowtype = [NSString stringWithFormat:@"%@", [searchentry objectForKey:@"type"]];
+        NSLog(@"%@ - %@", theshowtitle,theshowtype);
+        // Checks to make sure MAL Updater OS X is updating the correct type of show
+        if (DetectedTitleisMovie) {
+            if ([theshowtype isEqualToString:@"Movie"]) {
+                DetectedEpisode = @"1"; // Usually, there is one episode in a movie.
+                idok = true;
+            }
+            else {
+                idok = false;
+            }
+        }
+        else if([theshowtype isEqualToString:@"Movie"]){
+            idok = false; // Rejects result, not a movie.
+        }
+        else{
+            //OK to go
+            idok = true;
+        }
+        if (idok) { // Good to go, check the title with regular expressions
+            if ([regex matchInString:theshowtitle] != nil) {
+                //Return titleid
+                titleid = [NSString stringWithFormat:@"%@",[searchentry objectForKey:@"id"]];
+                goto foundtitle;
+                
+            }
+        }
 		//Test each title until it matches
-		if ([regex matchInString:theshowtitle] != nil) {
-			//Return titleid
-			titleid = [NSString stringWithFormat:@"%@",[serchentry objectForKey:@"id"]];
-			goto foundtitle;
-		}
+
 	}
 foundtitle:
 	//Return the AniID
