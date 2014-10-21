@@ -17,6 +17,7 @@ To use, launch MAL Updater OS X. Go to the MAL Updater OS X icon on the menu bar
 ## Dependencies
 All the frameworks are included. Just build! Here are the frameworks that are used in this app:
 
+* ASIHTTPRequest.framework (This is a framework version to maintain compatibility when building on later versions of OS X. Source code is in the Framework folder)
 * CMCrashReporter.framework
 * Sparkle.framework
 * OgreKit.framework

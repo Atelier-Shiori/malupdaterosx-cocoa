@@ -7,8 +7,6 @@
 //
 
 #import "LoginPref.h"
-#import "ASIHTTPRequest.h"
-#import "ASIFormDataRequest.h"
 #import "Base64Category.h"
 
 

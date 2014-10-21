@@ -7,8 +7,6 @@
 //
 
 #import "MyAnimeList.h"
-#import "ASIHTTPRequest.h"
-#import "ASIFormDataRequest.h"
 
 @implementation MyAnimeList
 

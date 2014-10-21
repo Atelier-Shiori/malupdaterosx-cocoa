@@ -10,6 +10,9 @@
 #import <OgreKit/OgreKit.h>
 #import <JSON/JSON.h>
 #import "MAL_Updater_OS_XAppDelegate.h"
+#import <ASIHTTPRequest/ASIHTTPRequest.h>
+#import <ASIHTTPRequest/ASIHTTPRequest.h>
+#import <ASIHTTPRequest/ASIFormDataRequest.h>
 
 @class Twitter;
 
