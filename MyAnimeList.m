@@ -45,8 +45,6 @@
 		return 2;
 	else if ([WatchStatus isEqualToString:@"dropped"])
 		return 3;
-    else if([WatchStatus isEqualToString:@"plan-to-watch"])
-        return 4;
 	else
 		return 0; //fallback
 }
@@ -164,8 +162,6 @@
 	NSString * player;
 	//Load Selected Player from Preferences
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    // Detect if Stream Support is installed
-    BOOL streamsupport = [[NSFileManager defaultManager] fileExistsAtPath:@"/usr/bin/streamdetection"];
 	// Player Selection
 	switch ([defaults integerForKey:@"PlayerSel"]) {
 		case 0:
@@ -180,9 +176,6 @@
 		case 3:
 			player = @"QuickTime Player";
 			break;
-        case 4:
-            player = @"mpv";
-            break;
 		default:
 			break;
 	}
@@ -272,86 +265,30 @@
                                                     withString:@""];
             
         }
-            // Trim Whitespace
-            DetectedTitle = [DetectedTitle stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-            DetectedEpisode = [DetectedEpisode stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+		// Trim Whitespace
+		DetectedTitle = [DetectedTitle stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+		DetectedEpisode = [DetectedEpisode stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
         //release
 		regex = nil;
 		enumerator = nil;
 		string = @"";
-        goto update;
+		// Check if the title was previously scrobbled
+		if ([DetectedTitle isEqualToString:LastScrobbledTitle] && [DetectedEpisode isEqualToString: LastScrobbledEpisode] && Success == 1) {
+			// Do Nothing
+			[appDelegate setStatusText:@"Scrobble Status: Same Episode Playing, Scrobble not needed."];
+			[appDelegate setLastScrobbledTitle:[NSString stringWithFormat:@"Last Scrobbled: %@ - %@",DetectedTitle,DetectedEpisode]];
+			return NO;
+		}
+		else {
+			// Not Scrobbled Yet or Unsuccessful
+		return YES;
+		}
 	}
-    else if (streamsupport){
-        NSLog(@"Checking Stream...");
-        NSDictionary * detected = [self detectStream];
-
-        if ([detected objectForKey:@"result"]  == [NSNull null]){ // Check to see if anything is playing on stream
-            goto nothingdetected;
-        }
-        else{
-            NSDictionary * c = [detected objectForKey:@"result"];
-            DetectedTitle = [NSString stringWithFormat:@"%@",[c objectForKey:@"anime"]];
-            DetectedEpisode = [NSString stringWithFormat:@"%@",[c objectForKey:@"episode"]];
-            NSLog(@"%@ - %@", DetectedEpisode, DetectedEpisode);
-            goto update;
-        }
-    }
 	else {
-        goto nothingdetected;
+		// Nothing detected
+		[appDelegate setStatusText:@"Scrobble Status: Idle..."];
+		return NO;
 	}
-update:
-    // Check if the title was previously scrobbled
-    if ([DetectedTitle isEqualToString:LastScrobbledTitle] && [DetectedEpisode isEqualToString: LastScrobbledEpisode] && Success == 1) {
-        // Do Nothing
-        [appDelegate setStatusText:@"Scrobble Status: Same Episode Playing, Scrobble not needed."];
-        [appDelegate setLastScrobbledTitle:[NSString stringWithFormat:@"Last Scrobbled: %@ - %@",DetectedTitle,DetectedEpisode]];
-        return NO;
-    }
-    else {
-        // Not Scrobbled Yet or Unsuccessful
-        return YES;
-    }
-nothingdetected:
-    // Nothing detected
-    [appDelegate setStatusText:@"Scrobble Status: Idle..."];
-    return NO;
-}
--(NSDictionary *)detectStream{
-    // LSOF mplayer to get the media title and segment
-    NSDictionary * d;
-    BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:@"/usr/bin/streamdetection"];
-    if (fileExists) {
-        //Set Task and Run it
-        NSTask *task;
-        task = [[NSTask alloc] init];
-        [task setLaunchPath: @"/usr/bin/streamdetection"];
-        
-        
-        NSPipe *pipe;
-        pipe = [NSPipe pipe];
-        [task setStandardOutput: pipe];
-        
-        NSFileHandle *file;
-        file = [pipe fileHandleForReading];
-        
-        [task launch];
-        
-        NSData *data;
-        data = [file readDataToEndOfFile];
-        
-        
-        NSString *string;
-        string = [[NSString alloc] initWithData: data encoding: NSUTF8StringEncoding];
-        //Parse it
-        SBJsonParser *parser = [[SBJsonParser alloc] init];
-        //Create an Array
-        d = [parser objectWithString:string error:nil];
-        NSLog(@"%@", d);
-    }
-    else{
-        d = [[NSDictionary alloc] initWithObjectsAndKeys:[NSNull null],@"result", nil]; // Streaming support not installed, report result as null.
-    }
-    return d;
 }
 -(NSString *)findaniid:(NSString *)ResponseData {
 	// Initalize JSON parser
@@ -673,7 +610,6 @@ foundtitle:
 -(NSDictionary *)getLastScrobbledInfo{
 	return LastScrobbledInfo;
 }
-
 /*
  
  Twitter Functions

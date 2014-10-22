@@ -39,7 +39,6 @@
 }
 -(void)startscrobbling;
 -(BOOL)detectmedia;
--(NSDictionary *)detectStream;
 -(NSString *)searchanime;
 -(NSString *)findaniid:(NSString *)ResponseData;
 -(BOOL)checkstatus:(NSString *)titleid;

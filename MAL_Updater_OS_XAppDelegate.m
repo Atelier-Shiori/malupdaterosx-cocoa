@@ -536,31 +536,6 @@ switch (returnCode) {
 	[updatepanel orderOut:self];
 	[NSApp endSheet:updatepanel returnCode:1];
 }
--(IBAction)installStreamingSupport:(id)sender{
-    BOOL streamsupport = [[NSFileManager defaultManager] fileExistsAtPath:@"/usr/bin/streamdetection"];
-    NSAlert * alert = [[NSAlert alloc] init] ;
-    if (streamsupport) {
-        [alert addButtonWithTitle:@"OK"];
-        [alert setMessageText:@"Installation is not necessary."];
-        [alert setInformativeText:@"Streaming support is already installed."];
-        [alert setAlertStyle:NSInformationalAlertStyle];
-        [alert runModal];
-    }
-    else{
-        // Set Up Prompt Message Window
-        [alert addButtonWithTitle:@"Yes"];
-        [alert addButtonWithTitle:@"No"];
-        [alert setMessageText:@"Do you want to download and install streaming support?"];
-        [alert setInformativeText:@"In order to have your list updated while watching Anime via streaming, you need to install support for streaming detection. "];
-        [alert setAlertStyle:NSInformationalAlertStyle];
-        // Set Message type to Warning
-        [alert setAlertStyle:NSWarningAlertStyle];
-        if ([alert runModal]== NSAlertFirstButtonReturn) {
-             	[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://skitch.chikorita157.com/streakdetect.pkg.zip"]]; //Open up Browser to install Package
-        }
-    }
-    
-}
 
 //Misc Methods
 - (void)appendToAnimeInfo:(NSString*)text

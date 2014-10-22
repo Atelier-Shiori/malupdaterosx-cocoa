@@ -77,7 +77,6 @@
 -(IBAction)updatetitlestatus:(id)sender;
 -(IBAction)showPreferences:(id)sender;
 -(IBAction)getHelp:(id)sender;
--(IBAction)installStreamingSupport:(id)sender;
 - (void)appendToAnimeInfo:(NSString*)text;
 -(void)showNotication:(NSString *)title message:(NSString *) message;
 
