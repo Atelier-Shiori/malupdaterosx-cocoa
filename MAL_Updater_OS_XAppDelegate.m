@@ -12,7 +12,6 @@
 #import "GeneralPrefController.h"
 #import "MASPreferencesWindowController.h"
 #import "LoginPref.h"
-#import "Video.h"
 #import "SoftwareUpdatesPref.h"
 #import "NSString_stripHtml.h"
 
@@ -132,9 +131,7 @@
 	// Defaults
 	[defaultValues setObject:@"" forKey:@"Base64Token"];
 	[defaultValues setObject:@"https://malapi.shioridiary.me" forKey:@"MALAPIURL"];
-	[defaultValues setObject:[NSNumber numberWithInt:0] forKey:@"PlayerSel"];
 	[defaultValues setObject:[NSNumber numberWithBool:NO] forKey:@"ScrobbleatStartup"];
-	[defaultValues setObject:[NSNumber numberWithBool:NO] forKey:@"EnableTwitterUpdates"];
 	//Register Dictionary
 	[[NSUserDefaults standardUserDefaults]
 	 registerDefaults:defaultValues];
@@ -153,13 +150,8 @@
     statusHighlightImage = [[NSImage alloc] initWithContentsOfFile:[bundle pathForResource:@"StatusIconhilight" ofType:@"tiff"]];
     
     //Yosemite Dark Menu Support
-    /*BOOL oldBusted = (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_9);
-    if (!oldBusted)
-    {*/
-        // 10.10 or higher, so setTemplate: is safe
-        [statusImage setTemplate:YES];
-        [statusHighlightImage setTemplate:YES];
-    //}
+    [statusImage setTemplate:YES];
+    [statusHighlightImage setTemplate:YES];
     
     //Sets the images in our NSStatusItem
     [statusItem setImage:statusImage];
@@ -222,9 +214,8 @@
 		NSLog(@"Load Pref");
         NSViewController *generalViewController = [[GeneralPrefController alloc] init];
         NSViewController *loginViewController = [[LoginPref alloc] init];
-		NSViewController *videoViewController = [[Video alloc] init];
 		NSViewController *suViewController = [[SoftwareUpdatesPref alloc] init];
-        NSArray *controllers = [[NSArray alloc] initWithObjects:generalViewController, loginViewController, videoViewController, suViewController, nil];
+        NSArray *controllers = [[NSArray alloc] initWithObjects:generalViewController, loginViewController, suViewController, nil];
         
         // To add a flexible space between General and Advanced preference panes insert [NSNull null]:
         //     NSArray *controllers = [[NSArray alloc] initWithObjects:generalViewController, [NSNull null], advancedViewController, nil];
@@ -364,11 +355,12 @@
 -(void)starttimer {
 	NSLog(@"Timer Started.");
 	//Create Timer
-	timer = [NSTimer scheduledTimerWithTimeInterval:300
-											  target:self
-											selector:@selector(firetimer:)
-											userInfo:nil
-											 repeats:YES];
+    timer = [NSTimer scheduledTimerWithTimeInterval:300
+                                             target:self
+                                           selector:@selector(firetimer:)
+                                           userInfo:nil
+                                            repeats:YES];
+
 }
 -(void)stoptimer {
 	NSLog(@"Timer Stopped.");
@@ -400,7 +392,7 @@
     [self appendToAnimeInfo:[NSString stringWithFormat:@"Favorited: %@", [d objectForKey:@"favorited_count"]]];
     //Image
     NSImage * dimg = [[NSImage alloc]initByReferencingURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@", [d objectForKey:@"image_url"]]]]; //Downloads Image
-    [img setImage:dimg]; //Sets it
+    [img setImage:dimg]; //Get the Image for the title
 }
 
 /*
@@ -524,9 +516,6 @@ switch (returnCode) {
 	if (scrobbling == TRUE) {
 		[self starttimer];
 	}
-	
-	//payload = [(__bridge NSNumber *)contextInfo floatValue];
-	//(__bridge NSNumber *)contextInfo;
 }
 -(IBAction)closeupdatestatus:(id)sender {
 	[updatepanel orderOut:self];

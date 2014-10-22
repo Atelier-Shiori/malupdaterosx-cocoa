@@ -161,33 +161,11 @@
 	NSTask *task;
 	task = [[NSTask alloc] init];
 	[task setLaunchPath: @"/usr/sbin/lsof"];
-	NSString * player;
-	//Load Selected Player from Preferences
-	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	// Player Selection
-	switch ([defaults integerForKey:@"PlayerSel"]) {
-		case 0:
-			player = @"mplayer";
-			break;
-		case 1:
-			player = @"QTKitServer";
-			break;
-		case 2:
-			player = @"VLC";
-			break;
-		case 3:
-			player = @"QuickTime Player";
-			break;
-        case 4:
-            player = @"mpv";
-            break;
-		default:
-			break;
-	}
-	//lsof -c '<player name>' -Fn		
-	[task setArguments: [NSArray arrayWithObjects:@"-c", player, @"-F", @"n", nil]];
+    NSArray * player = [NSArray arrayWithObjects:@"mplayer", @"mpv", @"VLC", @"QTKitServer", @"Quicktime Player", nil];
+    NSString *string;
 	
-	
+    for(int i = 0; i <=4; i++){
+    [task setArguments: [NSArray arrayWithObjects:@"-c", [NSString stringWithFormat:@"%@", [player objectAtIndex:i]], @"-F", @"n", nil]]; 		//lsof -c '<player name>' -Fn
 	NSPipe *pipe;
 	pipe = [NSPipe pipe];
 	[task setStandardOutput: pipe];
@@ -199,10 +177,11 @@
 	
 	NSData *data;
 	data = [file readDataToEndOfFile];
-	
-	
-	NSString *string;
-	string = [[NSString alloc] initWithData: data encoding: NSUTF8StringEncoding];
+
+    string = [[NSString alloc] initWithData: data encoding: NSUTF8StringEncoding];
+    if (string.length > 0)
+        break;
+    }
 	if (string.length > 0) {
 		//Regex time
 		//Get the filename first

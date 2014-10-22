@@ -14,8 +14,6 @@
 #import <ASIHTTPRequest/ASIHTTPRequest.h>
 #import <ASIHTTPRequest/ASIFormDataRequest.h>
 
-@class Twitter;
-
 @interface MyAnimeList : NSObject {
 	NSString * Base64Token;
 	NSString * MALApiUrl;
@@ -35,7 +33,6 @@
 	OGRegularExpression    *regex;
 	BOOL Success;
 	int choice;
-    //Twitter * twitterobj;
 }
 -(void)startscrobbling;
 -(BOOL)detectmedia;
@@ -47,7 +44,6 @@
 -(void)updatestatus:(NSString *)titleid
 			 score:(int)showscore
 	   watchstatus:(NSString*)showwatchstatus;
-//-(void)posttwitterupdate:(NSString *)message;
 -(NSString *)getLastScrobbledTitle;
 -(NSString *)getLastScrobbledEpisode;
 -(NSString *)getAniID;
