@@ -342,8 +342,55 @@
                                                        DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     
     dispatch_async(queue, ^{
-        [MALEngine startscrobbling];
+        [self setStatusText:@"Scrobble Status: Scrobbling..."];
+        int status;
+        status = [MALEngine startscrobbling];
 	//Enable the Update button if a title is detected
+        switch (status) { // 0 - nothing playing; 1 - same episode playing; 21 - Add Title Successful; 22 - Update Title Successful;  51 - Can't find Title; 52 - Add Failed; 53 - Update Failed; 54 - Scrobble Failed; 
+            case 0:
+                [self setStatusText:@"Scrobble Status: Idle..."];
+                break;
+            case 1:
+                [self setStatusText:@"Scrobble Status: Same Episode Playing, Scrobble not needed."];
+                [self setLastScrobbledTitle:[NSString stringWithFormat:@"Last Scrobbled: %@ - %@",[MALEngine getLastScrobbledTitle],[MALEngine getLastScrobbledEpisode]]];
+                [self setStatusToolTip:[NSString stringWithFormat:@"MAL Updater OS X - %@ - %@",[MALEngine getLastScrobbledTitle],[MALEngine getLastScrobbledEpisode]]];
+                break;
+            case 21:
+                [self setStatusText:@"Scrobble Status: Title Added..."];
+                [self setLastScrobbledTitle:[NSString stringWithFormat:@"Last Scrobbled: %@ - %@",[MALEngine getLastScrobbledTitle],[MALEngine getLastScrobbledEpisode]]];
+                [self setStatusToolTip:[NSString stringWithFormat:@"MAL Updater OS X - %@ - %@",[MALEngine getLastScrobbledTitle],[MALEngine getLastScrobbledEpisode]]];
+                [self showNotication:@"Adding of Title Successful."message:[NSString stringWithFormat:@"%@ - %@",[MALEngine getLastScrobbledTitle],[MALEngine getLastScrobbledEpisode]]];
+                //Add History Record
+                [self addrecord:[MALEngine getLastScrobbledTitle] Episode:[MALEngine getLastScrobbledEpisode] Date:[NSDate date]];
+                                break;
+            case 22:
+                [self setStatusText:@"Scrobble Status: Scrobble Successful..."];
+                [self setLastScrobbledTitle:[NSString stringWithFormat:@"Last Scrobbled: %@ - %@",[MALEngine getLastScrobbledTitle],[MALEngine getLastScrobbledEpisode]]];
+                [self setStatusToolTip:[NSString stringWithFormat:@"MAL Updater OS X - %@ - %@",[MALEngine getLastScrobbledTitle],[MALEngine getLastScrobbledEpisode]]];
+                [self showNotication:@"Scrobble Successful."message:[NSString stringWithFormat:@"%@ - %@",[MALEngine getLastScrobbledTitle],[MALEngine getLastScrobbledEpisode]]];
+                //Add History Record
+                [self addrecord:[MALEngine getLastScrobbledTitle] Episode:[MALEngine getLastScrobbledEpisode] Date:[NSDate date]];
+
+                break;
+            case 51:
+                [self setStatusText:@"Scrobble Status: Can't find title. Retrying in 5 mins..."];
+                [self showNotication:@"Scrobble Unsuccessful." message:@"Can't find title. Retrying in 5 mins..."];
+                break;
+            case 52:
+                [self setStatusText:@"Scrobble Status: Adding of Title Failed. Retrying in 5 mins..."];
+                [self showNotication:@"Adding of Title Unsuccessful." message:@"Retrying in 5 mins..."];
+                break;
+            case 53:
+                [self showNotication:@"Scrobble Unsuccessful." message:@"Retrying in 5 mins..."];
+                [self setStatusText:@"Scrobble Status: Scrobble Failed. Retrying in 5 mins..."];
+                break;
+            case 54:
+                [self showNotication:@"Scrobble Unsuccessful." message:@"Retrying in 5 mins..."];
+                [self setStatusText:@"Scrobble Status: Scrobble Failed. Retrying in 5 mins..."];
+            default:
+                NSLog(@"fail");
+                break;
+        }
 	if ([MALEngine getSuccess] == 1) {
 		[updatetoolbaritem setEnabled:YES];
         //Show Anime Information
@@ -501,22 +548,20 @@
 	}
 	
 }
-- (void)myPanelDidEnd:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
-{
-switch (returnCode) {
-	case 0:
-		break;
-	case 1:
-		[MALEngine updatestatus:[MALEngine getAniID] score:[showscore selectedTag] watchstatus:[showstatus titleOfSelectedItem]];
-		break;
-	default:
-		break;
-}
+- (void)myPanelDidEnd:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo {
+    if (returnCode == 1) {
+        BOOL result = [MALEngine updatestatus:[MALEngine getAniID] score:[showscore selectedTag] watchstatus:[showstatus titleOfSelectedItem]];
+        if (result)
+            [self setStatusText:@"Scrobble Status: Updating of Watch Status/Score Successful."];
+        else
+            [self setStatusText:@"Scrobble Status: Unable to update Watch Status/Score."];
+    }
     //If scrobbling is on, restart timer
 	if (scrobbling == TRUE) {
 		[self starttimer];
 	}
 }
+
 -(IBAction)closeupdatestatus:(id)sender {
 	[updatepanel orderOut:self];
 	[NSApp endSheet:updatepanel returnCode:0];

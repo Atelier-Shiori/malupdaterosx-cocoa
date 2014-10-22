@@ -222,7 +222,7 @@
                     </connections>
                 </menuItem>
             </items>
-            <point key="canvasLocation" x="536" y="167.5"/>
+            <point key="canvasLocation" x="190" y="179.5"/>
         </menu>
         <customObject id="560" customClass="MAL_Updater_OS_XAppDelegate">
             <connections>

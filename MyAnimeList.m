@@ -60,11 +60,14 @@
  
  */
 
-- (void)startscrobbling {
+- (int)startscrobbling {
+    // 0 - nothing playing; 1 - same episode playing; 21 - Add Title Successful; 22 - Update Title Successful;  51 - Can't find Title; 52 - Add Failed; 53 - Update Failed; 54 - Scrobble Failed; 
+    int status, detectstatus;
 	//Set up Delegate
-	MAL_Updater_OS_XAppDelegate* appDelegate=[NSApp delegate];
-	if ([self detectmedia] == 1) { // Detects Title
-		[appDelegate setStatusText:@"Scrobble Status: Scrobbling..."];
+	
+    detectstatus = [self detectmedia];
+	if (detectstatus == 2) { // Detects Title
+		
 		NSLog(@"Getting AniID");
 		AniID = [self searchanime];
 		if (AniID.length > 0) {
@@ -75,28 +78,43 @@
 			if ([WatchStatus isEqualToString:@"Nothing"]) {
 				//Title is not on list. Add Title
 				Success = [self addtitle:AniID];
+                if (Success)
+                    status = 21;
+                else
+                    status = 52;
 			}
 			else {
 				// Update Title as Usual
-				Success = [self updatetitle:AniID];
+                int s = [self updatetitle:AniID];
+                if (s == 1 || s == 22) {
+                    Success = true;
+                }
+                else{
+                    Success = false;}
+                status = s;
+                
 			}
 				//Set last successful scrobble to statusItem Tooltip
-				[appDelegate setStatusToolTip:[NSString stringWithFormat:@"MAL Updater OS X - Last Scrobble: %@ - %@", LastScrobbledTitle, LastScrobbledEpisode]];
+				//[appDelegate setStatusToolTip:[NSString stringWithFormat:@"MAL Updater OS X - Last Scrobble: %@ - %@", LastScrobbledTitle, LastScrobbledEpisode]];
 				//Retain Scrobbled Title, Title ID, Title Score, WatchStatus and Episode
 			}
+            else{
+                status = 54;
+            }
 		}
 		else {
 			// Not Successful
-			[appDelegate setStatusText:@"Scrobble Status: Can't find title. Retrying in 5 mins..."];
-            [appDelegate showNotication:@"Scrobble Unsuccessful." message:@"Can't find title. Retrying in 5 mins..."];
+            status = 51;
+			
 		}
 		// Empty out Detected Title/Episode to prevent same title detection
 		DetectedTitle = @"";
 		DetectedEpisode = @"";
 		// Release Detected Title/Episode.
+        return status;
 	}
 
-
+    return detectstatus;
 }
 -(NSString *)searchanime{
 	NSLog(@"Searching For Title");
@@ -120,7 +138,7 @@
 	//Perform Search
 	[request startSynchronous];
 	//Set up Delegate
-	MAL_Updater_OS_XAppDelegate* appDelegate=[NSApp delegate];
+	
 	// Get Status Code
 	int statusCode = [request responseStatusCode];
 			NSString *response = [request responseString];
@@ -129,34 +147,16 @@
 			return [self findaniid:response];
 			break;
 			
-		case 0:
-			Success = NO;
-			[appDelegate setStatusText:@"Scrobble Status: No Internet Connection."];
-            [appDelegate showNotication:@"Scrobble Unsuccessful." message:@"No Internet Connection. Retrying in 5 mins"];
-			return @"";
-			break;
-
-		case 500:
-		case 502:
-			Success = NO;
-			[appDelegate setStatusText:@"Scrobble Status: Unofficial MAL API is unaviliable."];
-                        [appDelegate showNotication:@"Scrobble Unsuccessful." message:@"Unofficial MAL API is unaviliable."];
-			return @"";
-			break;
-			
 		default:
 			Success = NO;
-			[appDelegate setStatusText:@"Scrobble Status: Scrobble Failed. Retrying in 5 mins..."];
-            [appDelegate setStatusText:@"Scrobble Status: Unofficial MAL API is unaviliable."];
-            [appDelegate showNotication:@"Scrobble Unsuccessful." message:@"Retrying in 5 mins..."];
 			return @"";
 			break;
 	}
 	
 }
--(BOOL)detectmedia {
+-(int)detectmedia {
 	//Set up Delegate
-	MAL_Updater_OS_XAppDelegate* appDelegate=[NSApp delegate];
+	//
 	// LSOF mplayer to get the media title and segment
 	NSTask *task;
 	task = [[NSTask alloc] init];
@@ -259,19 +259,19 @@
 		// Check if the title was previously scrobbled
 		if ([DetectedTitle isEqualToString:LastScrobbledTitle] && [DetectedEpisode isEqualToString: LastScrobbledEpisode] && Success == 1) {
 			// Do Nothing
-			[appDelegate setStatusText:@"Scrobble Status: Same Episode Playing, Scrobble not needed."];
-			[appDelegate setLastScrobbledTitle:[NSString stringWithFormat:@"Last Scrobbled: %@ - %@",DetectedTitle,DetectedEpisode]];
-			return NO;
+			//[appDelegate setStatusText:@"Scrobble Status: Same Episode Playing, Scrobble not needed."];
+			//[appDelegate setLastScrobbledTitle:[NSString stringWithFormat:@"Last Scrobbled: %@ - %@",DetectedTitle,DetectedEpisode]];
+            return 1;
 		}
 		else {
 			// Not Scrobbled Yet or Unsuccessful
-		return YES;
+            return 2;
 		}
 	}
 	else {
 		// Nothing detected
-		[appDelegate setStatusText:@"Scrobble Status: Idle..."];
-		return NO;
+		//[appDelegate setStatusText:@"Scrobble Status: Idle..."];
+        return 0;
 	}
 }
 -(NSString *)findaniid:(NSString *)ResponseData {
@@ -387,25 +387,23 @@ foundtitle:
 	else {
 		// Some Error. Abort
 		//Set up Delegate
-		MAL_Updater_OS_XAppDelegate* appDelegate=[NSApp delegate];
-		[appDelegate setStatusText:@"Scrobble Status: Scrobble Failed. Retrying in 5 mins..."];
+		//
+		//[appDelegate setStatusText:@"Scrobble Status: Scrobble Failed. Retrying in 5 mins..."];
 		return NO;
 	}
 	//Should never happen, but...
 	return NO;
 }
--(BOOL)updatetitle:(NSString *)titleid {
+-(int)updatetitle:(NSString *)titleid {
 	NSLog(@"Updating Title");
 	//Set up Delegate
-	MAL_Updater_OS_XAppDelegate* appDelegate=[NSApp delegate];
+	
 	if ([DetectedEpisode intValue] <= [DetectedCurrentEpisode intValue] ) { 
 		// Already Watched, no need to scrobble
-		[appDelegate setStatusText:@"Scrobble Status: Same Episode Playing, Scrobble not needed."];
-		[appDelegate setLastScrobbledTitle:[NSString stringWithFormat:@"Last Scrobbled: %@ - %@",DetectedTitle,DetectedEpisode]];
         // Store Scrobbled Title and Episode
 		LastScrobbledTitle = DetectedTitle;
 		LastScrobbledEpisode = DetectedEpisode;
-		return YES;
+        return 1;
 	}
 	else {
 		// Update the title
@@ -445,37 +443,12 @@ foundtitle:
 		switch ([request responseStatusCode]) {
 			case 200:
 				// Update Successful
-				[appDelegate setStatusText:@"Scrobble Status: Scrobble Successful..."];
-				[appDelegate setLastScrobbledTitle:[NSString stringWithFormat:@"Last Scrobbled: %@ - %@",DetectedTitle,DetectedEpisode]];
-                [appDelegate showNotication:@"Scrobble Successful."message:[NSString stringWithFormat:@"%@ - %@",DetectedTitle,DetectedEpisode]];
-
-				/*//mTwitter
-				//Initalize TwitMessage String
-				NSString * TwitMessage;
-				if ([TitleScore isEqualToString:@"0"]) {
-					// Score is zero, omit the Current Score for Tweet
-					TwitMessage = [NSString stringWithFormat:@"%@ %@ - %@/%@.", WatchStatus, LastScrobbledTitle, LastScrobbledEpisode, TotalEpisodes];
-				}
-				else
-				{
-					// There is a score, include Current Score for Tweet
-					TwitMessage = [NSString stringWithFormat:@"%@ %@ - %@/%@. Current Score: %@/10", WatchStatus, LastScrobbledTitle, LastScrobbledEpisode, TotalEpisodes, TitleScore];
-				}
-				if ([defaults boolForKey:@"IncludeSeriesURL"] == 1) {
-					TwitMessage = [NSString stringWithFormat:@"%@ - http://myanimelist.net/anime/%@",TwitMessage, titleid]; 
-				}
-				//Post Twitter Update
-				[self posttwitterupdate:TwitMessage];*/
-			
-				//Add History Record
-				[appDelegate addrecord:DetectedTitle Episode:DetectedEpisode Date:[NSDate date]];
-				return YES;
+                return 22;
 				break;
 			default:
 				// Update Unsuccessful
-                [appDelegate showNotication:@"Scrobble Unsuccessful." message:@"Retrying in 5 mins..."];
-				[appDelegate setStatusText:@"Scrobble Status: Scrobble Failed. Retrying in 5 mins..."];
-				return NO;
+
+                return 53;
 				break;
 		}
 
@@ -484,7 +457,7 @@ foundtitle:
 -(BOOL)addtitle:(NSString *)titleid {
 	NSLog(@"Adding Title");
 	//Set up Delegate
-	MAL_Updater_OS_XAppDelegate* appDelegate=[NSApp delegate];
+	
 	// Add the title
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	//Set library/scrobble API
@@ -513,35 +486,22 @@ foundtitle:
 		case 200:
 		case 201:
 			// Update Successful
-			[appDelegate setStatusText:@"Scrobble Status: Title Added..."];
-			[appDelegate setLastScrobbledTitle:[NSString stringWithFormat:@"Last Scrobbled: %@ - %@",DetectedTitle,DetectedEpisode]];
-            [appDelegate showNotication:@"Adding of Title Successful." message:[NSString stringWithFormat:@"%@ - %@",DetectedTitle,DetectedEpisode]];
-			/*//Twitter
-			NSString * TwitMessage = [NSString stringWithFormat:@"%@ %@ - %@/%@", TitleState, LastScrobbledTitle, LastScrobbledEpisode, TotalEpisodes];
-			if ([defaults boolForKey:@"IncludeSeriesURL"] == 1) {
-				TwitMessage = [NSString stringWithFormat:@"%@ - http://myanimelist.net/anime/%@",TwitMessage, titleid]; 
-			}
-			//Post Twitter Update
-			[self posttwitterupdate:TwitMessage];*/
-			//Add History Record
-			[appDelegate addrecord:DetectedTitle Episode:DetectedEpisode Date:[NSDate date]];
 			return YES;
 			break;
 		default:
 			// Update Unsuccessful
-			[appDelegate setStatusText:@"Scrobble Status: Adding of Title Failed. Retrying in 5 mins..."];
-            [appDelegate showNotication:@"Adding of Title Unsuccessful." message:@"Retrying in 5 mins..."];
+
 			return NO;
 			break;
 	}
 }
--(void)updatestatus:(NSString *)titleid
+-(BOOL)updatestatus:(NSString *)titleid
 			 score:(int)showscore
 	   watchstatus:(NSString*)showwatchstatus
 {
 	NSLog(@"Updating Status for %@", titleid);
 	//Set up Delegate
-	MAL_Updater_OS_XAppDelegate* appDelegate=[NSApp delegate];
+	
 	// Update the title
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	//Set library/scrobble API
@@ -565,50 +525,27 @@ foundtitle:
 	switch ([request responseStatusCode]) {
 		case 200:
 			// Update Successful
-			[appDelegate setStatusText:@"Scrobble Status: Updating of Watch Status/Score Successful."];
 			if ([TitleScore intValue] == showscore && [WatchStatus isEqualToString:showwatchstatus])
 			{
 				//Nothing changed, do nothing.
 			}
 			else {
-				/*//Twitter
-				NSString * TwitMessage = [NSString stringWithFormat:@"%@ %@ - %@/%@. Current Score: %i/10", showwatchstatus, LastScrobbledTitle, LastScrobbledEpisode, TotalEpisodes, showscore];
-				if ([defaults boolForKey:@"IncludeSeriesURL"] == 1) {
-					TwitMessage = [NSString stringWithFormat:@"%@ - http://myanimelist.net/anime/%@",TwitMessage, titleid]; 
-				}
-				//Post Twitter Update
-				[self posttwitterupdate:TwitMessage];
-			}*/
 			//Set New Values
 			TitleScore = [NSString stringWithFormat:@"%i", showscore];
 			WatchStatus = showwatchstatus;
+                return true;
 			break;
 		default:
 			// Update Unsuccessful
-			[appDelegate setStatusText:@"Scrobble Status: Unable to update Watch Status/Score."];
+                return false;
 			break;
 	}
 	
 }
+    return false;
 }
 -(NSDictionary *)getLastScrobbledInfo{
 	return LastScrobbledInfo;
 }
-/*
- 
- Twitter Functions
- 
- */
-
-/*-(void)posttwitterupdate:(NSString *)message {
-	//Twitter
-	//Init Twitter Engine if necessary
-    if (!twitterobj) {
-        twitterobj = [[Twitter alloc]init];
-    }
-	//Send Message
-	[twitterobj postupdate:message];
-	
-}*/
     
 @end

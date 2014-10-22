@@ -34,16 +34,16 @@
 	BOOL Success;
 	int choice;
 }
--(void)startscrobbling;
--(BOOL)detectmedia;
+- (int)startscrobbling;
+-(int)detectmedia; // 0 - Nothing, 1 - Same, 2 - Update
 -(NSString *)searchanime;
 -(NSString *)findaniid:(NSString *)ResponseData;
 -(BOOL)checkstatus:(NSString *)titleid;
 -(BOOL)updatetitle:(NSString *)titleid;
 -(BOOL)addtitle:(NSString *)titleid;
--(void)updatestatus:(NSString *)titleid
-			 score:(int)showscore
-	   watchstatus:(NSString*)showwatchstatus;
+-(BOOL)updatestatus:(NSString *)titleid
+              score:(int)showscore
+        watchstatus:(NSString*)showwatchstatus;
 -(NSString *)getLastScrobbledTitle;
 -(NSString *)getLastScrobbledEpisode;
 -(NSString *)getAniID;
