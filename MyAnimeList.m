@@ -45,6 +45,8 @@
 		return 2;
 	else if ([WatchStatus isEqualToString:@"dropped"])
 		return 3;
+    else if ([WatchStatus isEqualToString:@"plan-to-watch"])
+        return 4;
 	else
 		return 0; //fallback
 }
@@ -176,6 +178,9 @@
 		case 3:
 			player = @"QuickTime Player";
 			break;
+        case 4:
+            player = @"mpv";
+            break;
 		default:
 			break;
 	}
