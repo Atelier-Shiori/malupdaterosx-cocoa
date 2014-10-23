@@ -158,13 +158,14 @@
 	//Set up Delegate
 	//
 	// LSOF mplayer to get the media title and segment
-	NSTask *task;
-	task = [[NSTask alloc] init];
-	[task setLaunchPath: @"/usr/sbin/lsof"];
+
     NSArray * player = [NSArray arrayWithObjects:@"mplayer", @"mpv", @"VLC", @"QTKitServer", @"Quicktime Player", nil];
     NSString *string;
 	
     for(int i = 0; i <=4; i++){
+    NSTask *task;
+    task = [[NSTask alloc] init];
+    [task setLaunchPath: @"/usr/sbin/lsof"];
     [task setArguments: [NSArray arrayWithObjects:@"-c", [NSString stringWithFormat:@"%@", [player objectAtIndex:i]], @"-F", @"n", nil]]; 		//lsof -c '<player name>' -Fn
 	NSPipe *pipe;
 	pipe = [NSPipe pipe];

@@ -12,7 +12,7 @@
 
 @class PreferenceController;
 @class MyAnimeList;
-@interface MAL_Updater_OS_XAppDelegate : NSObject <NSApplicationDelegate, NSUserNotificationCenterDelegate> {
+@interface MAL_Updater_OS_XAppDelegate : NSObject <NSApplicationDelegate, NSUserNotificationCenterDelegate, NSSharingServiceDelegate, NSSharingServicePickerDelegate> {
 	/* Windows */
     __unsafe_unretained NSWindow *window;
 	__unsafe_unretained NSWindow *historywindow;
@@ -29,22 +29,23 @@
 	NSPersistentStoreCoordinator *persistentStoreCoordinator;
 	NSTimer * timer;
 	IBOutlet NSMenuItem * togglescrobbler;
+    IBOutlet NSMenuItem * updatenow;
 	IBOutlet NSTextField * ScrobblerStatus;
 	IBOutlet NSTextField * LastScrobbled;
     IBOutlet NSTextView * animeinfo;
     IBOutlet NSImageView * img;
 	int choice;
 	BOOL scrobbling;
+    BOOL scrobbleractive;
 	/* MAL Scrobbling/Updating Class */
 	MyAnimeList * MALEngine;
 	/* Update Status Sheet Window IBOutlets */
 	IBOutlet NSToolbarItem * updatetoolbaritem;
+    IBOutlet NSToolbarItem * sharetoolbaritem;
 	IBOutlet NSTextField * showtitle;
 	IBOutlet NSPopUpButton * showstatus;
 	IBOutlet NSPopUpButton * showscore;
 	NSWindowController *_preferencesWindowController;
-    double NSAppKitVersionNumber;
-    #define NSAppKitVersionNumber10_9 1265
 }
 @property (nonatomic, readonly) NSWindowController *preferencesWindowController;
 @property (assign) IBOutlet NSWindow *window;
@@ -73,6 +74,7 @@
 -(void)setStatusText:(NSString*)messagetext;
 -(void)setLastScrobbledTitle:(NSString*)messagetext;
 -(IBAction)updatestatus:(id)sender;
+-(IBAction)updatenow:(id)sender;
 -(IBAction)closeupdatestatus:(id)sender;
 -(IBAction)updatetitlestatus:(id)sender;
 -(IBAction)showPreferences:(id)sender;

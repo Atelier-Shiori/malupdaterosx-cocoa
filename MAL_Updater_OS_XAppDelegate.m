@@ -179,10 +179,12 @@
 	PFMoveToApplicationsFolderIfNecessary();
 	//Since LSUIElement is set to 1 to hide the dock icon, it causes unattended behavior of having the program windows not show to the front.
 	[NSApp activateIgnoringOtherApps:YES];
+
     //Set Notification Center Delegate
     [[NSUserNotificationCenter defaultUserNotificationCenter] setDelegate:self];
-	// Disable Update Button
+	// Disable Update and Share Buttons
 	[updatetoolbaritem setEnabled:NO];
+    [sharetoolbaritem setEnabled:NO];
 	// Hide Window
 	[window orderOut:self];
 	
@@ -287,6 +289,15 @@
 		[window makeKeyAndOrderFront:self]; 
 	} 
 }
+-(IBAction)share:(id)sender{
+    //Generate Items to Share
+    NSArray *shareItems = [NSArray arrayWithObjects:[NSString stringWithFormat:@"%@ - %@", [MALEngine getLastScrobbledTitle], [MALEngine getLastScrobbledEpisode] ], [NSURL URLWithString:[NSString stringWithFormat:@"http://myanimelist.net/anime/%@", [MALEngine getAniID]]] ,nil];
+    //Get Share Picker
+    NSSharingServicePicker *sharePicker = [[NSSharingServicePicker alloc] initWithItems:shareItems];
+    sharePicker.delegate = self;
+    // Show Share Box
+    [sharePicker showRelativeToRect:[sender bounds] ofView:[sharetoolbaritem view] preferredEdge:NSMinYEdge];
+}
 
 /*
  
@@ -338,6 +349,13 @@
 -(void)firetimer:(NSTimer *)aTimer {
 	//Tell MALEngine to detect and scrobble if necessary.
 	NSLog(@"Starting...");
+    if (!scrobbleractive) {
+        scrobbleractive = true;
+        // Disable toggle scrobbler and update now menu items
+        [statusMenu setAutoenablesItems:NO];
+        [updatenow setEnabled:NO];
+        [togglescrobbler setEnabled:NO];
+        [updatenow setTitle:@"Updating..."];
     dispatch_queue_t queue = dispatch_get_global_queue(
                                                        DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     
@@ -393,11 +411,20 @@
         }
 	if ([MALEngine getSuccess] == 1) {
 		[updatetoolbaritem setEnabled:YES];
+        [sharetoolbaritem setEnabled:YES];
         //Show Anime Information
         NSDictionary * ainfo = [MALEngine getLastScrobbledInfo];
         [self showAnimeInfo:ainfo];
         
-	}});
+	}
+        // Enable Menu Items
+        scrobbleractive = false;
+        [updatenow setEnabled:YES];
+        [togglescrobbler setEnabled:YES];
+        [updatenow setTitle:@"Update Now"];
+    });
+    
+    }
 }
 -(void)starttimer {
 	NSLog(@"Timer Started.");
@@ -415,6 +442,9 @@
 	// Remove Timer
 	[timer invalidate];
 	timer = nil;
+}
+-(IBAction)updatenow:(id)sender{
+    [self firetimer:nil];
 }
 -(IBAction)getHelp:(id)sender{
     //Show Help

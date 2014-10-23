@@ -39,7 +39,7 @@
 -(NSString *)searchanime;
 -(NSString *)findaniid:(NSString *)ResponseData;
 -(BOOL)checkstatus:(NSString *)titleid;
--(BOOL)updatetitle:(NSString *)titleid;
+-(int)updatetitle:(NSString *)titleid;
 -(BOOL)addtitle:(NSString *)titleid;
 -(BOOL)updatestatus:(NSString *)titleid
               score:(int)showscore

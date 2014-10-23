@@ -199,10 +199,10 @@
                         <action selector="toggletimer:" target="560" id="658"/>
                     </connections>
                 </menuItem>
-                <menuItem title="Scrobble History" id="590">
+                <menuItem title="Update Now" id="Swq-JZ-crS">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
-                        <action selector="showhistory:" target="560" id="634"/>
+                        <action selector="updatenow:" target="560" id="UpZ-c0-qe6"/>
                     </connections>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="574"/>
@@ -210,6 +210,12 @@
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="togglescrobblewindow:" target="560" id="575"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Scrobble History" id="590">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="showhistory:" target="560" id="634"/>
                     </connections>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="556">
@@ -232,11 +238,13 @@
                 <outlet property="historytable" destination="595" id="635"/>
                 <outlet property="historywindow" destination="588" id="605"/>
                 <outlet property="img" destination="gfr-73-DLn" id="iLO-3a-xch"/>
+                <outlet property="sharetoolbaritem" destination="PDJ-oY-qAN" id="Xw6-jN-k2Z"/>
                 <outlet property="showscore" destination="744" id="784"/>
                 <outlet property="showstatus" destination="742" id="785"/>
                 <outlet property="showtitle" destination="746" id="788"/>
                 <outlet property="statusMenu" destination="543" id="561"/>
                 <outlet property="togglescrobbler" destination="557" id="657"/>
+                <outlet property="updatenow" destination="Swq-JZ-crS" id="wbq-Tb-8xl"/>
                 <outlet property="updatepanel" destination="725" id="777"/>
                 <outlet property="updatetoolbaritem" destination="k8g-Fn-fps" id="jAk-kU-cCA"/>
                 <outlet property="window" destination="789" id="804"/>
@@ -616,7 +624,22 @@ Gw
                             </buttonCell>
                         </button>
                         <connections>
-                            <action selector="showhistory:" target="560" id="tth-nv-my5"/>
+                            <action selector="showhistory:" target="560" id="HCI-hT-Yrn"/>
+                        </connections>
+                    </toolbarItem>
+                    <toolbarItem implicitItemIdentifier="D4D78994-86FE-4D61-81D7-125C5CA16673" label="Share" paletteLabel="Share" toolTip="Share" image="NSShareTemplate" id="PDJ-oY-qAN">
+                        <size key="minSize" width="32" height="25"/>
+                        <size key="maxSize" width="32" height="32"/>
+                        <button key="view" verticalHuggingPriority="750" id="J31-lj-bj2">
+                            <rect key="frame" x="22" y="14" width="32" height="25"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="NSShareTemplate" imagePosition="overlaps" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="jaB-zh-5gn">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                        </button>
+                        <connections>
+                            <action selector="share:" target="560" id="v0G-w8-rYF"/>
                         </connections>
                     </toolbarItem>
                     <toolbarItem implicitItemIdentifier="NSToolbarCustomizeToolbarItem" id="brg-hf-L73"/>
@@ -628,13 +651,16 @@ Gw
                     <toolbarItem reference="wq9-kC-J4D"/>
                     <toolbarItem reference="eo4-15-Ehk"/>
                     <toolbarItem reference="k8g-Fn-fps"/>
+                    <toolbarItem reference="PDJ-oY-qAN"/>
                 </defaultToolbarItems>
             </toolbar>
             <contentBorderThickness minY="22"/>
+            <point key="canvasLocation" x="14" y="215.5"/>
         </window>
     </objects>
     <resources>
         <image name="NSPreferencesGeneral" width="32" height="32"/>
+        <image name="NSShareTemplate" width="11" height="16"/>
         <image name="edit" width="32" height="32"/>
         <image name="stopwatch" width="32" height="32"/>
     </resources>
