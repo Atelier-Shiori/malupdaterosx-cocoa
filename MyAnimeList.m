@@ -220,7 +220,7 @@
 		regex = [OGRegularExpression regularExpressionWithString:@"( \\-) (episode |ep |ep|e)?(\\d+)([\\w\\-! ]*)$"];
 		DetectedTitle = [regex replaceAllMatchesInString:string
 														 withString:@""];
-        regex = [OGRegularExpression regularExpressionWithString: @"([0-9][0-9][0-9][0-9]|[0-9][0-9][0-9]|[0-9][0-9]|[0-9])"];
+        regex = [OGRegularExpression regularExpressionWithString: @"\\b\\S\\d$"];
         DetectedTitle = [regex replaceAllMatchesInString:DetectedTitle
                                               withString:@""];
 		// Set Episode Info
@@ -240,7 +240,7 @@
             string = [regex replaceAllMatchesInString:string2
                                            withString:@" "];
             
-            regex = [OGRegularExpression regularExpressionWithString: @"([0-9][0-9][0-9][0-9]|[0-9][0-9][0-9]|[0-9][0-9]|[0-9])"];
+            regex = [OGRegularExpression regularExpressionWithString: @"\\b\\S\\d$"];
             DetectedTitle = [regex replaceAllMatchesInString:string
                                              withString:@""];
             regex = [OGRegularExpression regularExpressionWithString: DetectedTitle];
