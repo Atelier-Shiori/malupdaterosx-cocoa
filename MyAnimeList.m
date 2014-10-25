@@ -185,72 +185,54 @@
         break;
     }
 	if (string.length > 0) {
-		//Regex time
-		//Get the filename first
-		regex = [OGRegularExpression regularExpressionWithString:@"^.+(avi|mkv|mp4|ogm)$"];
-		NSEnumerator    *enumerator;
-		enumerator = [regex matchEnumeratorInString:string];		
-		while ((match = [enumerator nextObject]) != nil) {
-			string = [match matchedString];
-		}
-		//Accented e temporary fix
-		regex = [OGRegularExpression regularExpressionWithString:@"e\\\\xcc\\\\x81"];
-		string = [regex replaceAllMatchesInString:string
-									   withString:@"è"];
-		//Cleanup
-		regex = [OGRegularExpression regularExpressionWithString:@"^.+/"];
-		string = [regex replaceAllMatchesInString:string
-									   withString:@""];
-		regex = [OGRegularExpression regularExpressionWithString:@"\\.\\w+$"];
-		string = [regex replaceAllMatchesInString:string
-									   withString:@""];
-		regex = [OGRegularExpression regularExpressionWithString:@"[\\s_]*\\[[^\\]]+\\]\\s*"];
-		string = [regex replaceAllMatchesInString:string
-									   withString:@""];
-		regex = [OGRegularExpression regularExpressionWithString:@"[\\s_]*\\([^\\)]+\\)$"];
-		string = [regex replaceAllMatchesInString:string
-									   withString:@""];
-		regex = [OGRegularExpression regularExpressionWithString:@"_"];
-		string = [regex replaceAllMatchesInString:string
-									   withString:@" "];
+        //Regex time
+        //Get the filename first
+        regex = [OGRegularExpression regularExpressionWithString:@"^.+(avi|mkv|mp4|ogm)$"];
+        NSEnumerator    *enumerator;
+        enumerator = [regex matchEnumeratorInString:string];
+        while ((match = [enumerator nextObject]) != nil) {
+            string = [match matchedString];
+        }
+        //Accented e temporary fix
+        regex = [OGRegularExpression regularExpressionWithString:@"e\\\\xcc\\\\x81"];
+        string = [regex replaceAllMatchesInString:string
+                                       withString:@"è"];
+        //Cleanup
+        regex = [OGRegularExpression regularExpressionWithString:@"^.+/"];
+        string = [regex replaceAllMatchesInString:string
+                                       withString:@""];
+        regex = [OGRegularExpression regularExpressionWithString:@"\\.\\w+$"];
+        string = [regex replaceAllMatchesInString:string
+                                       withString:@""];
+        regex = [OGRegularExpression regularExpressionWithString:@"[\\s_]*\\[[^\\]]+\\]\\s*"];
+        string = [regex replaceAllMatchesInString:string
+                                       withString:@""];
+        regex = [OGRegularExpression regularExpressionWithString:@"[\\s_]*\\([^\\)]+\\)$"];
+        string = [regex replaceAllMatchesInString:string
+                                       withString:@""];
+        regex = [OGRegularExpression regularExpressionWithString:@"_"];
+        string = [regex replaceAllMatchesInString:string
+                                       withString:@" "];
         regex = [OGRegularExpression regularExpressionWithString:@"~"];
         string = [regex replaceAllMatchesInString:string
                                        withString:@""];
-		// Set Title Info
-		regex = [OGRegularExpression regularExpressionWithString:@"( \\-) (episode |ep |ep|e)?(\\d+)([\\w\\-! ]*)$"];
-		DetectedTitle = [regex replaceAllMatchesInString:string
-														 withString:@""];
-        regex = [OGRegularExpression regularExpressionWithString: @"\\b\\S\\d$"];
+        // Set Title Info
+        regex = [OGRegularExpression regularExpressionWithString:@"( \\-) (episode |ep |ep|e)?(\\d+)([\\w\\-! ]*)$"];
+        DetectedTitle = [regex replaceAllMatchesInString:string
+                                              withString:@""];
+        regex = [OGRegularExpression regularExpressionWithString:@"-"];
+        string = [regex replaceAllMatchesInString:string
+                                       withString:@""];
+        regex = [OGRegularExpression regularExpressionWithString: @"\\b\\S\\d+$"];
         DetectedTitle = [regex replaceAllMatchesInString:DetectedTitle
                                               withString:@""];
-		// Set Episode Info
-        NSString * string2 = string;
-        regex = [OGRegularExpression regularExpressionWithString:@" - "];
-		string = [regex replaceAllMatchesInString:string
-									   withString:@""];
-        
-		regex = [OGRegularExpression regularExpressionWithString: DetectedTitle];
-		string = [regex replaceAllMatchesInString:string
-												withString:@""];
-		regex = [OGRegularExpression regularExpressionWithString:@"v[\\d]"];
-		DetectedEpisode = [regex replaceAllMatchesInString:string
-												withString:@""];
-        if (DetectedEpisode.length > 3) { // Detected Episode is malformed and is more than 3
-            regex = [OGRegularExpression regularExpressionWithString:@" - "];
-            string = [regex replaceAllMatchesInString:string2
-                                           withString:@" "];
-            
-            regex = [OGRegularExpression regularExpressionWithString: @"\\b\\S\\d$"];
-            DetectedTitle = [regex replaceAllMatchesInString:string
-                                             withString:@""];
-            regex = [OGRegularExpression regularExpressionWithString: DetectedTitle];
-            string = [regex replaceAllMatchesInString:string
-                                           withString:@""];
-            regex = [OGRegularExpression regularExpressionWithString:@"v[\\d]"];
-            DetectedEpisode = [regex replaceAllMatchesInString:string
-                                                    withString:@""];
-            
-        }
+        // Set Episode Info
+        regex = [OGRegularExpression regularExpressionWithString: DetectedTitle];
+        string = [regex replaceAllMatchesInString:string
+                                       withString:@""];
+        regex = [OGRegularExpression regularExpressionWithString:@"v[\\d]"];
+        DetectedEpisode = [regex replaceAllMatchesInString:string
+                                                withString:@""];
 		// Trim Whitespace
 		DetectedTitle = [DetectedTitle stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 		DetectedEpisode = [DetectedEpisode stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
@@ -287,7 +269,7 @@
 	//Set Regular Expressions to omit any preceding words
 	NSString *findpre = [NSString stringWithFormat:@"(%@)",DetectedTitle];
 	findpre = [findpre stringByReplacingOccurrencesOfString:@" " withString:@"|"]; // NSString *findpre = [NSString stringWithFormat:@"^%@",DetectedTitle];
-	regex = [OGRegularExpression regularExpressionWithString:findpre];
+	regex = [OGRegularExpression regularExpressionWithString:findpre options:OgreIgnoreCaseOption];
 	//Retrieve the ID. Note that the most matched title will be on the top
     BOOL idok; // Checks the status
     // For Sanity (TV shows and OVAs usually have more than one episode)
