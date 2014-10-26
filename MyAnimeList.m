@@ -141,10 +141,9 @@
 	
 	// Get Status Code
 	int statusCode = [request responseStatusCode];
-			NSString *response = [request responseString];
 	switch (statusCode) {
 		case 200:
-			return [self findaniid:response];
+			return [self findaniid:[request responseData]];
 			break;
 			
 		default:
@@ -155,41 +154,41 @@
 	
 }
 -(int)detectmedia {
-	//Set up Delegate
-	//
-	// LSOF mplayer to get the media title and segment
-
+    //Set up Delegate
+    //
+    // LSOF mplayer to get the media title and segment
+    
     NSArray * player = [NSArray arrayWithObjects:@"mplayer", @"mpv", @"VLC", @"QTKitServer", nil];
     NSString *string;
-	
+    
     for(int i = 0; i <4; i++){
-    NSTask *task;
-    task = [[NSTask alloc] init];
-    [task setLaunchPath: @"/usr/sbin/lsof"];
-    [task setArguments: [NSArray arrayWithObjects:@"-c", [NSString stringWithFormat:@"%@", [player objectAtIndex:i]], @"-F", @"n", nil]]; 		//lsof -c '<player name>' -Fn
-	NSPipe *pipe;
-	pipe = [NSPipe pipe];
-	[task setStandardOutput: pipe];
-	
-	NSFileHandle *file;
-	file = [pipe fileHandleForReading];
-	
-	[task launch];
-	
-	NSData *data;
-	data = [file readDataToEndOfFile];
-
-    string = [[NSString alloc] initWithData: data encoding: NSUTF8StringEncoding];
-
-    if (string.length > 0)
-        break;
+        NSTask *task;
+        task = [[NSTask alloc] init];
+        [task setLaunchPath: @"/usr/sbin/lsof"];
+        [task setArguments: [NSArray arrayWithObjects:@"-c", [NSString stringWithFormat:@"%@", [player objectAtIndex:i]], @"-F", @"n", nil]]; 		//lsof -c '<player name>' -Fn
+        NSPipe *pipe;
+        pipe = [NSPipe pipe];
+        [task setStandardOutput: pipe];
+        
+        NSFileHandle *file;
+        file = [pipe fileHandleForReading];
+        
+        [task launch];
+        
+        NSData *data;
+        data = [file readDataToEndOfFile];
+        
+        string = [[NSString alloc] initWithData: data encoding: NSUTF8StringEncoding];
+        if (string.length > 0)
+            break;
     }
-	if (string.length > 0) {
+    if (string.length > 0) {
         //Regex time
         //Get the filename first
-        regex = [OGRegularExpression regularExpressionWithString:@"^.+(avi|mkv|mp4|ogm)$"];
+        OGRegularExpression    *regex = [OGRegularExpression regularExpressionWithString:@"^.+(avi|mkv|mp4|ogm)$"];
         NSEnumerator    *enumerator;
         enumerator = [regex matchEnumeratorInString:string];
+        OGRegularExpressionMatch    *match;
         while ((match = [enumerator nextObject]) != nil) {
             string = [match matchedString];
         }
@@ -216,13 +215,13 @@
         regex = [OGRegularExpression regularExpressionWithString:@"~"];
         string = [regex replaceAllMatchesInString:string
                                        withString:@""];
+        regex = [OGRegularExpression regularExpressionWithString:@"-"];
+        string = [regex replaceAllMatchesInString:string
+                                       withString:@""];
         // Set Title Info
         regex = [OGRegularExpression regularExpressionWithString:@"( \\-) (episode |ep |ep|e)?(\\d+)([\\w\\-! ]*)$"];
         DetectedTitle = [regex replaceAllMatchesInString:string
                                               withString:@""];
-        regex = [OGRegularExpression regularExpressionWithString:@"-"];
-        string = [regex replaceAllMatchesInString:string
-                                       withString:@""];
         regex = [OGRegularExpression regularExpressionWithString: @"\\b\\S\\d+$"];
         DetectedTitle = [regex replaceAllMatchesInString:DetectedTitle
                                               withString:@""];
@@ -233,43 +232,51 @@
         regex = [OGRegularExpression regularExpressionWithString:@"v[\\d]"];
         DetectedEpisode = [regex replaceAllMatchesInString:string
                                                 withString:@""];
-		// Trim Whitespace
-		DetectedTitle = [DetectedTitle stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-		DetectedEpisode = [DetectedEpisode stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-        //release
-		regex = nil;
-		enumerator = nil;
-		string = @"";
-		// Check if the title was previously scrobbled
-		if ([DetectedTitle isEqualToString:LastScrobbledTitle] && [DetectedEpisode isEqualToString: LastScrobbledEpisode] && Success == 1) {
-			// Do Nothing
-			//[appDelegate setStatusText:@"Scrobble Status: Same Episode Playing, Scrobble not needed."];
-			//[appDelegate setLastScrobbledTitle:[NSString stringWithFormat:@"Last Scrobbled: %@ - %@",DetectedTitle,DetectedEpisode]];
-            return 1;
-		}
-		else {
-			// Not Scrobbled Yet or Unsuccessful
-            return 2;
-		}
-	}
-	else {
-		// Nothing detected
-		//[appDelegate setStatusText:@"Scrobble Status: Idle..."];
-        return 0;
-	}
+        
+        // Trim Whitespace
+        DetectedTitle = [DetectedTitle stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        DetectedEpisode = [DetectedEpisode stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        goto update;
+    }
+    else {
+        NSLog(@"Checking Stream...");
+        NSDictionary * detected = [self detectStream];
+        
+        if ([detected objectForKey:@"result"]  == [NSNull null]){ // Check to see if anything is playing on stream
+            return 0;
+        }
+        else{
+            NSArray * c = [detected objectForKey:@"result"];
+            NSDictionary * d = [c objectAtIndex:0];
+            DetectedTitle = [NSString stringWithFormat:@"%@",[d objectForKey:@"title"]];
+            DetectedEpisode = [NSString stringWithFormat:@"%@",[d objectForKey:@"episode"]];
+            goto update;
+        }
+        // Nothing detected
+    }
+update:
+    // Check if the title was previously scrobbled
+    if ([DetectedTitle isEqualToString:LastScrobbledTitle] && [DetectedEpisode isEqualToString: LastScrobbledEpisode] && Success == 1) {
+        // Do Nothing
+        return 1;
+    }
+    else {
+        // Not Scrobbled Yet or Unsuccessful
+        return 2;
+    }
 }
--(NSString *)findaniid:(NSString *)ResponseData {
+-(NSString *)findaniid:(NSData *)ResponseData {
 	// Initalize JSON parser
-	SBJsonParser *parser = [[SBJsonParser alloc] init];
-	NSArray *searchdata = [parser objectWithString:ResponseData error:nil];
-	NSString *titleid = @"";
+    NSError* error;
+    NSArray *searchdata = [NSJSONSerialization JSONObjectWithData:ResponseData options:kNilOptions error:&error];
+    NSString *titleid = @"";
 	//Initalize NSString to dump the title temporarily
 	NSString *theshowtitle = @"";
     NSString *theshowtype = @"";
 	//Set Regular Expressions to omit any preceding words
 	NSString *findpre = [NSString stringWithFormat:@"(%@)",DetectedTitle];
 	findpre = [findpre stringByReplacingOccurrencesOfString:@" " withString:@"|"]; // NSString *findpre = [NSString stringWithFormat:@"^%@",DetectedTitle];
-	regex = [OGRegularExpression regularExpressionWithString:findpre options:OgreIgnoreCaseOption];
+	OGRegularExpression    *regex = [OGRegularExpression regularExpressionWithString:findpre options:OgreIgnoreCaseOption];
 	//Retrieve the ID. Note that the most matched title will be on the top
     BOOL idok; // Checks the status
     // For Sanity (TV shows and OVAs usually have more than one episode)
@@ -334,10 +341,9 @@ foundtitle:
 	[request startSynchronous];
 	// Get Status Code
 	int statusCode = [request responseStatusCode];
-	NSString *response = [request responseString];
 	if (statusCode == 200 ) {
-		// Initalize JSON parser
-		NSDictionary *animeinfo = [response JSONValue];
+        NSError* error;
+		NSDictionary *animeinfo = [NSJSONSerialization JSONObjectWithData:[request responseData] options:kNilOptions error:&error];
 		if ([animeinfo objectForKey:@"episodes"] == [NSNull null]) { // To prevent the scrobbler from failing because there is no episode total.
 			TotalEpisodes = @"0"; // No Episode Total, Set to 0.
 		}
@@ -531,5 +537,36 @@ foundtitle:
 -(NSDictionary *)getLastScrobbledInfo{
 	return LastScrobbledInfo;
 }
+-(NSDictionary *)detectStream{
+    // Create Dictionary
+    NSDictionary * d;
+    //Set detectream Task and Run it
+    NSTask *task;
+    task = [[NSTask alloc] init];
+    NSBundle *myBundle = [NSBundle mainBundle];
+    [task setLaunchPath:[myBundle pathForResource:@"detectstream" ofType:@""]];
     
+    
+    NSPipe *pipe;
+    pipe = [NSPipe pipe];
+    [task setStandardOutput: pipe];
+    
+    // Reads Output
+    NSFileHandle *file;
+    file = [pipe fileHandleForReading];
+    
+    // Launch Task
+    [task launch];
+    
+    // Parse Data from JSON and return dictionary
+    NSData *data;
+    data = [file readDataToEndOfFile];
+    
+    
+    NSError* error;
+    
+    d = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+    return d;
+}
+
 @end

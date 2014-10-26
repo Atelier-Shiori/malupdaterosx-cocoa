@@ -8,7 +8,6 @@
 
 #import <Cocoa/Cocoa.h>
 #import <OgreKit/OgreKit.h>
-#import <JSON/JSON.h>
 #import "MAL_Updater_OS_XAppDelegate.h"
 #import <ASIHTTPRequest/ASIHTTPRequest.h>
 #import <ASIHTTPRequest/ASIHTTPRequest.h>
@@ -29,15 +28,13 @@
 	NSString * TitleScore;
 	NSString * TitleState;
     NSString * AniID;
-	OGRegularExpressionMatch    *match;
-	OGRegularExpression    *regex;
 	BOOL Success;
 	int choice;
 }
 - (int)startscrobbling;
 -(int)detectmedia; // 0 - Nothing, 1 - Same, 2 - Update
 -(NSString *)searchanime;
--(NSString *)findaniid:(NSString *)ResponseData;
+-(NSString *)findaniid:(NSData *)ResponseData;
 -(BOOL)checkstatus:(NSString *)titleid;
 -(int)updatetitle:(NSString *)titleid;
 -(BOOL)addtitle:(NSString *)titleid;
