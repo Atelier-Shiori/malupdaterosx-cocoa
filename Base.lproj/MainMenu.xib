@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6250" systemVersion="14A389" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6250" systemVersion="14B17" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
         <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6250"/>
@@ -165,7 +165,7 @@
                 <menuItem title="About MAL Updater OS X" id="547">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
-                        <action selector="orderFrontStandardAboutPanel:" target="-2" id="548"/>
+                        <action selector="showAboutWindow:" target="560" id="nSx-9T-3x2"/>
                     </connections>
                 </menuItem>
                 <menuItem title="Check for Updates…" id="549">
@@ -204,6 +204,26 @@
                     <connections>
                         <action selector="updatenow:" target="560" id="UpZ-c0-qe6"/>
                     </connections>
+                </menuItem>
+                <menuItem title="Last Scrobbled" enabled="NO" id="Xdd-UP-4fa">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <menu key="submenu" title="Last Scrobbled" id="plV-TY-BVe">
+                        <items>
+                            <menuItem title="Show Title" enabled="NO" id="WVZ-pu-Fp5">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                            </menuItem>
+                            <menuItem title="Episode" enabled="NO" id="QVe-wc-Os7">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="vfO-5U-RVy"/>
+                            <menuItem title="Update Status" enabled="NO" id="bnE-RJ-nGF">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="updatestatusmenu:" target="560" id="E6P-7B-Fn7"/>
+                                </connections>
+                            </menuItem>
+                        </items>
+                    </menu>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="574"/>
                 <menuItem title="Show/Hide Status Window" id="573">
@@ -244,6 +264,9 @@
                 <outlet property="showtitle" destination="746" id="788"/>
                 <outlet property="statusMenu" destination="543" id="561"/>
                 <outlet property="togglescrobbler" destination="557" id="657"/>
+                <outlet property="updatedepisode" destination="QVe-wc-Os7" id="1d5-DZ-xbX"/>
+                <outlet property="updatedtitle" destination="WVZ-pu-Fp5" id="Cj3-Gn-5gH"/>
+                <outlet property="updatedtitlemenu" destination="Xdd-UP-4fa" id="hD6-WK-5Sv"/>
                 <outlet property="updatenow" destination="Swq-JZ-crS" id="wbq-Tb-8xl"/>
                 <outlet property="updatepanel" destination="725" id="777"/>
                 <outlet property="updatetoolbaritem" destination="k8g-Fn-fps" id="jAk-kU-cCA"/>

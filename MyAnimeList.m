@@ -61,6 +61,8 @@
  */
 
 - (int)startscrobbling {
+    // Set MAL API URL
+    MALApiUrl = [[NSUserDefaults standardUserDefaults] objectForKey:@"MALAPIURL"];
     // 0 - nothing playing; 1 - same episode playing; 21 - Add Title Successful; 22 - Update Title Successful;  51 - Can't find Title; 52 - Add Failed; 53 - Update Failed; 54 - Scrobble Failed; 
     int status, detectstatus;
 	//Set up Delegate
@@ -69,7 +71,32 @@
 	if (detectstatus == 2) { // Detects Title
 		
 		NSLog(@"Getting AniID");
-		AniID = [self searchanime];
+        if ([[NSUserDefaults standardUserDefaults] boolForKey:@"useSearchCache"]) {
+            NSMutableArray *cache = [NSMutableArray arrayWithArray:[[NSUserDefaults standardUserDefaults] objectForKey:@"searchcache"]];
+            if (cache.count > 0) {
+                NSString * theid;
+                for (NSDictionary *d in cache) {
+                    NSString * title = [d objectForKey:@"detectedtitle"];
+                    if ([title isEqualToString:DetectedTitle]) {
+                        NSLog(@"%@ found in cache!", title);
+                        theid = [d objectForKey:@"showid"];
+                        break;
+                    }
+                }
+                if (theid.length == 0) {
+                    AniID = [self searchanime]; // Not in cache, search
+                }
+                else{
+                    AniID = theid; // Set cached show id as AniID
+                }
+            }
+            else {
+                AniID = [self searchanime];
+            }
+        }
+        else {
+            AniID = [self searchanime];
+        }
 		if (AniID.length > 0) {
             NSLog(@"Found %@", AniID);
 			// Check Status and Update
@@ -126,7 +153,6 @@
 																				NULL,
 																				(CFStringRef)@"!*'();:@&=+$,/?%#[]",
 																				kCFStringEncodingUTF8 ));
-	MALApiUrl = [defaults objectForKey:@"MALAPIURL"];
 
 	//Set Search API
 	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/anime/search?q=%@",MALApiUrl, searchterm]];
@@ -324,6 +350,11 @@ update:
 
 	}
 foundtitle:
+    //Check to see if Seach Cache is enabled. If so, add it to the cache.
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"useSearchCache"]) {
+        //Save AniID
+        [self addtoCache:DetectedTitle showid:titleid];
+    }
 	//Return the AniID
 	return titleid;
 }
@@ -568,5 +599,12 @@ foundtitle:
     d = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
     return d;
 }
-
+-(void)addtoCache:(NSString *)title showid:(NSString *)showid{
+    //Adds ID to cache
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSMutableArray *cache = [NSMutableArray arrayWithArray:[[NSUserDefaults standardUserDefaults] objectForKey:@"searchcache"]];
+    NSDictionary * entry = [[NSDictionary alloc] initWithObjectsAndKeys:title, @"detectedtitle", showid, @"showid", nil];
+    [cache addObject:entry];
+    [defaults setObject:cache forKey:@"searchcache"];
+}
 @end

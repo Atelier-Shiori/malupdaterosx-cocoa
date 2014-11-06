@@ -131,6 +131,8 @@
 	[defaultValues setObject:@"" forKey:@"Base64Token"];
 	[defaultValues setObject:@"https://malapi.shioridiary.me" forKey:@"MALAPIURL"];
 	[defaultValues setObject:[NSNumber numberWithBool:NO] forKey:@"ScrobbleatStartup"];
+    [defaultValues setObject:[[NSMutableArray alloc] init] forKey:@"searchcache"];
+    [defaultValues setObject:[NSNumber numberWithBool:YES] forKey:@"useSearchCache"];
 	//Register Dictionary
 	[[NSUserDefaults standardUserDefaults]
 	 registerDefaults:defaultValues];
@@ -306,9 +308,8 @@
 
 - (IBAction)toggletimer:(id)sender {
 	//Check to see if there is an API Key stored
-	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	if ([[defaults objectForKey:@"Base64Token"] length] == 0) {
-		choice = NSRunCriticalAlertPanel(@"MAL Updater OS X was unable to start scrobbling since you have no auth token stored.", @"Verify and save your login in Preferences and then try again.", @"OK", nil, nil, 8);
+	if (![self checktoken]) {
+        [self showNotication:@"MAL Updater OS X" message:@"Add a login before you start scrobbling."];
 	}
 	else {
 		if (scrobbling == FALSE) {
@@ -332,9 +333,8 @@
 }
 -(void)autostarttimer {
 	//Check to see if there is an API Key stored
-	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	if ([[defaults objectForKey:@"Base64Token"] length] == 0) {
-         [self showNotication:@"MAL Updater OS X" message:@"Unable to start scrobbling since there is no login. Please verify your login in Preferences."];
+	if (![self checktoken]) {
+         [self showNotication:@"MAL Updater OS X" message:@"Add a login before you start scrobbling."];
 	}
 	else {
 		[self starttimer];
@@ -371,12 +371,14 @@
                 [self setStatusText:@"Scrobble Status: Same Episode Playing, Scrobble not needed."];
                 [self setLastScrobbledTitle:[NSString stringWithFormat:@"Last Scrobbled: %@ - %@",[MALEngine getLastScrobbledTitle],[MALEngine getLastScrobbledEpisode]]];
                 [self setStatusToolTip:[NSString stringWithFormat:@"MAL Updater OS X - %@ - %@",[MALEngine getLastScrobbledTitle],[MALEngine getLastScrobbledEpisode]]];
+                [self setStatusMenuTitleEpisode:[MALEngine getLastScrobbledTitle] episode:[MALEngine getLastScrobbledEpisode]];
                 break;
             case 21:
                 [self setStatusText:@"Scrobble Status: Title Added..."];
                 [self setLastScrobbledTitle:[NSString stringWithFormat:@"Last Scrobbled: %@ - %@",[MALEngine getLastScrobbledTitle],[MALEngine getLastScrobbledEpisode]]];
                 [self setStatusToolTip:[NSString stringWithFormat:@"MAL Updater OS X - %@ - %@",[MALEngine getLastScrobbledTitle],[MALEngine getLastScrobbledEpisode]]];
                 [self showNotication:@"Adding of Title Successful."message:[NSString stringWithFormat:@"%@ - %@",[MALEngine getLastScrobbledTitle],[MALEngine getLastScrobbledEpisode]]];
+                [self setStatusMenuTitleEpisode:[MALEngine getLastScrobbledTitle] episode:[MALEngine getLastScrobbledEpisode]];
                 //Add History Record
                 [self addrecord:[MALEngine getLastScrobbledTitle] Episode:[MALEngine getLastScrobbledEpisode] Date:[NSDate date]];
                                 break;
@@ -385,6 +387,7 @@
                 [self setLastScrobbledTitle:[NSString stringWithFormat:@"Last Scrobbled: %@ - %@",[MALEngine getLastScrobbledTitle],[MALEngine getLastScrobbledEpisode]]];
                 [self setStatusToolTip:[NSString stringWithFormat:@"MAL Updater OS X - %@ - %@",[MALEngine getLastScrobbledTitle],[MALEngine getLastScrobbledEpisode]]];
                 [self showNotication:@"Scrobble Successful."message:[NSString stringWithFormat:@"%@ - %@",[MALEngine getLastScrobbledTitle],[MALEngine getLastScrobbledEpisode]]];
+                [self setStatusMenuTitleEpisode:[MALEngine getLastScrobbledTitle] episode:[MALEngine getLastScrobbledEpisode]];
                 //Add History Record
                 [self addrecord:[MALEngine getLastScrobbledTitle] Episode:[MALEngine getLastScrobbledEpisode] Date:[NSDate date]];
 
@@ -404,6 +407,7 @@
             case 54:
                 [self showNotication:@"Scrobble Unsuccessful." message:@"Retrying in 5 mins..."];
                 [self setStatusText:@"Scrobble Status: Scrobble Failed. Retrying in 5 mins..."];
+                break;
             default:
                 NSLog(@"fail");
                 break;
@@ -411,6 +415,7 @@
 	if ([MALEngine getSuccess] == 1) {
 		[updatetoolbaritem setEnabled:YES];
         [sharetoolbaritem setEnabled:YES];
+        [updatedtitlemenu setEnabled:YES];
         //Show Anime Information
         NSDictionary * ainfo = [MALEngine getLastScrobbledInfo];
         [self showAnimeInfo:ainfo];
@@ -443,7 +448,10 @@
 	timer = nil;
 }
 -(IBAction)updatenow:(id)sender{
-    [self firetimer:nil];
+    if (![self checktoken])
+        [self showNotication:@"MAL Updater OS X" message:@"Add a login before you start scrobbling."];
+    else
+        [self firetimer:nil];
 }
 -(IBAction)getHelp:(id)sender{
     //Show Help
@@ -469,6 +477,14 @@
     //Image
     NSImage * dimg = [[NSImage alloc]initByReferencingURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@", [d objectForKey:@"image_url"]]]]; //Downloads Image
     [img setImage:dimg]; //Get the Image for the title
+}
+-(BOOL)checktoken{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    if ([[defaults objectForKey:@"Base64Token"] length] == 0) {
+        return false;
+    }
+    else
+        return true;
 }
 
 /*
@@ -554,17 +570,27 @@
 {
 	[LastScrobbled setObjectValue:messagetext];
 }
+-(void)setStatusMenuTitleEpisode:(NSString *)title episode:(NSString *) episode{
+    //Set New Title and Episode
+    [updatedtitle setTitle:title];
+    [updatedepisode setTitle:[NSString stringWithFormat:@"Episode %@", episode]];
+}
 
 /*
  
  Update Status Sheet Window Functions
  
  */
-
 -(IBAction)updatestatus:(id)sender {
+    [self showUpdateDialog:[self window]];
+}
+-(IBAction)updatestatusmenu:(id)sender{
+    [self showUpdateDialog:nil];
+}
+-(void)showUpdateDialog:(NSWindow *) w{
 	// Show Sheet
 	[NSApp beginSheet:updatepanel
-	   modalForWindow:[self window] modalDelegate:self
+	   modalForWindow:w modalDelegate:self
 	   didEndSelector:@selector(myPanelDidEnd:returnCode:contextInfo:)
 		  contextInfo:(void *)[NSNumber numberWithFloat:choice]];
 	// Set up UI
@@ -619,5 +645,10 @@
 }
 - (BOOL)userNotificationCenter:(NSUserNotificationCenter *)center shouldPresentNotification:(NSUserNotification *)notification{
     return YES;
+}
+-(IBAction)showAboutWindow:(id)sender{
+    // Properly show the about window in a menu item application
+    [NSApp activateIgnoringOtherApps:YES];
+    [[NSApplication sharedApplication] orderFrontStandardAboutPanel:self];
 }
 @end
