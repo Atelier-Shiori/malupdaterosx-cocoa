@@ -369,23 +369,15 @@
                 break;
             case 1:
                 [self setStatusText:@"Scrobble Status: Same Episode Playing, Scrobble not needed."];
-                [self setLastScrobbledTitle:[NSString stringWithFormat:@"Last Scrobbled: %@ - %@",[MALEngine getLastScrobbledTitle],[MALEngine getLastScrobbledEpisode]]];
-                [self setStatusToolTip:[NSString stringWithFormat:@"MAL Updater OS X - %@ - %@",[MALEngine getLastScrobbledTitle],[MALEngine getLastScrobbledEpisode]]];
-                [self setStatusMenuTitleEpisode:[MALEngine getLastScrobbledTitle] episode:[MALEngine getLastScrobbledEpisode]];
                 break;
             case 21:
                 [self setStatusText:@"Scrobble Status: Title Added..."];
-                [self setLastScrobbledTitle:[NSString stringWithFormat:@"Last Scrobbled: %@ - %@",[MALEngine getLastScrobbledTitle],[MALEngine getLastScrobbledEpisode]]];
-                [self setStatusToolTip:[NSString stringWithFormat:@"MAL Updater OS X - %@ - %@",[MALEngine getLastScrobbledTitle],[MALEngine getLastScrobbledEpisode]]];
                 [self showNotication:@"Adding of Title Successful."message:[NSString stringWithFormat:@"%@ - %@",[MALEngine getLastScrobbledTitle],[MALEngine getLastScrobbledEpisode]]];
-                [self setStatusMenuTitleEpisode:[MALEngine getLastScrobbledTitle] episode:[MALEngine getLastScrobbledEpisode]];
                 //Add History Record
                 [self addrecord:[MALEngine getLastScrobbledTitle] Episode:[MALEngine getLastScrobbledEpisode] Date:[NSDate date]];
                                 break;
             case 22:
                 [self setStatusText:@"Scrobble Status: Scrobble Successful..."];
-                [self setLastScrobbledTitle:[NSString stringWithFormat:@"Last Scrobbled: %@ - %@",[MALEngine getLastScrobbledTitle],[MALEngine getLastScrobbledEpisode]]];
-                [self setStatusToolTip:[NSString stringWithFormat:@"MAL Updater OS X - %@ - %@",[MALEngine getLastScrobbledTitle],[MALEngine getLastScrobbledEpisode]]];
                 [self showNotication:@"Scrobble Successful."message:[NSString stringWithFormat:@"%@ - %@",[MALEngine getLastScrobbledTitle],[MALEngine getLastScrobbledEpisode]]];
                 [self setStatusMenuTitleEpisode:[MALEngine getLastScrobbledTitle] episode:[MALEngine getLastScrobbledEpisode]];
                 //Add History Record
@@ -412,20 +404,26 @@
                 NSLog(@"fail");
                 break;
         }
-	if ([MALEngine getSuccess] == 1) {
-		[updatetoolbaritem setEnabled:YES];
-        [sharetoolbaritem setEnabled:YES];
-        [updatedtitlemenu setEnabled:YES];
-        //Show Anime Information
-        NSDictionary * ainfo = [MALEngine getLastScrobbledInfo];
-        [self showAnimeInfo:ainfo];
+        dispatch_async(dispatch_get_main_queue(), ^{
+        if ([MALEngine getSuccess] == 1) {
+            [updatetoolbaritem setEnabled:YES];
+            [sharetoolbaritem setEnabled:YES];
+            [updatedtitlemenu setHidden:NO];
+            // Set Titles
+            [self setLastScrobbledTitle:[NSString stringWithFormat:@"Last Scrobbled: %@ - %@",[MALEngine getLastScrobbledTitle],[MALEngine getLastScrobbledEpisode]]];
+            [self setStatusToolTip:[NSString stringWithFormat:@"MAL Updater OS X - %@ - %@",[MALEngine getLastScrobbledTitle],[MALEngine getLastScrobbledEpisode]]];
+            [self setStatusMenuTitleEpisode:[MALEngine getLastScrobbledTitle] episode:[MALEngine getLastScrobbledEpisode]];
+            //Show Anime Information
+            NSDictionary * ainfo = [MALEngine getLastScrobbledInfo];
+            [self showAnimeInfo:ainfo];
         
-	}
-        // Enable Menu Items
-        scrobbleractive = false;
-        [updatenow setEnabled:YES];
-        [togglescrobbler setEnabled:YES];
-        [updatenow setTitle:@"Update Now"];
+        }
+            // Enable Menu Items
+            scrobbleractive = false;
+            [updatenow setEnabled:YES];
+            [togglescrobbler setEnabled:YES];
+            [updatenow setTitle:@"Update Now"];
+        });
     });
     
     }
