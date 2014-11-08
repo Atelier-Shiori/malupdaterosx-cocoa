@@ -145,22 +145,26 @@
 }
 -(NSString *)searchanime{
 	NSLog(@"Searching For Title");
-	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	//Escape Search Term
-	NSString * searchterm = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(
-																				NULL,
-																				(CFStringRef)DetectedTitle,
-																				NULL,
-																				(CFStringRef)@"!*'();:@&=+$,/?%#[]",
-																				kCFStringEncodingUTF8 ));
+    // Set Season for Search Term if any detected.
+    NSString * searchtitle;
+    if (DetectedSeason > 1) {
+        searchtitle = [NSString stringWithFormat:@"%@ %i season", [self desensitizeSeason:DetectedTitle], DetectedSeason];
+    }
+    else
+        searchtitle = DetectedTitle;
+    //Escape Search Term
+    NSString * searchterm = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(
+                                                                                                  NULL,
+                                                                                                  (CFStringRef)searchtitle,
+                                                                                                  NULL,
+                                                                                                  (CFStringRef)@"!*'();:@&=+$,/?%#[]",
+                                                                                                  kCFStringEncodingUTF8 ));
 
 	//Set Search API
 	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/anime/search?q=%@",MALApiUrl, searchterm]];
 	ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
 	//Ignore Cookies
 	[request setUseCookiePersistence:NO];
-	//Set Token
-	[request addRequestHeader:@"Authorization" value:[NSString stringWithFormat:@"Basic %@",[defaults objectForKey:@"Base64Token"]]];
 	//Perform Search
 	[request startSynchronous];
 	//Set up Delegate
@@ -258,6 +262,29 @@
         regex = [OGRegularExpression regularExpressionWithString:@"v[\\d]"];
         DetectedEpisode = [regex replaceAllMatchesInString:string
                                                 withString:@""];
+        //Season
+        NSString * tmpseason;
+        OGRegularExpressionMatch * smatch;
+        regex = [OGRegularExpression regularExpressionWithString: @"(S|s)\\d"];
+        smatch = [regex matchInString:DetectedTitle];
+        if (smatch != nil) {
+            tmpseason = [smatch matchedString];
+            regex = [OGRegularExpression regularExpressionWithString: @"(S|s)"];
+            tmpseason = [regex replaceAllMatchesInString:tmpseason withString:@""];
+            DetectedSeason = [tmpseason intValue];
+        }
+        else {
+            regex = [OGRegularExpression regularExpressionWithString: @"(second season| third season|fourth season|fifth season|sixth season|seventh season|eighth season|nineth season)"];
+            smatch = [regex matchInString:DetectedTitle];
+            if (smatch !=nil) {
+                tmpseason = [smatch matchedString];
+                DetectedSeason = [self recognizeSeason:tmpseason];
+            }
+            else{
+                DetectedSeason = 1;
+            }
+            
+        }
         
         // Trim Whitespace
         DetectedTitle = [DetectedTitle stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
@@ -599,6 +626,37 @@ foundtitle:
     d = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
     return d;
 }
+-(int)recognizeSeason:(NSString *)season{
+    if ([season caseInsensitiveCompare:@"second season"] == NSOrderedSame)
+        return 2;
+    else if ([season caseInsensitiveCompare:@"third season"] == NSOrderedSame)
+        return 3;
+    else if ([season caseInsensitiveCompare:@"fourth season"] == NSOrderedSame)
+        return 4;
+    else if ([season caseInsensitiveCompare:@"fifth season"] == NSOrderedSame)
+        return 5;
+    else if ([season caseInsensitiveCompare:@"sixth season"] == NSOrderedSame)
+        return 6;
+    else if ([season caseInsensitiveCompare:@"seventh season"] == NSOrderedSame)
+        return 7;
+    else if ([season caseInsensitiveCompare:@"eighth season"] == NSOrderedSame)
+        return 8;
+    else if ([season caseInsensitiveCompare:@"ninth season"] == NSOrderedSame)
+        return 9;
+    else
+        return 0;
+}
+-(NSString *)desensitizeSeason:(NSString *)title {
+    // Get rid of season references
+    OGRegularExpression* regex = [OGRegularExpression regularExpressionWithString: @"(Second Season|Third Season|Fourth Season|Fifth Season|Sixth Season|Seventh Season|Eighth Season|Nineth Season)"];
+    title = [regex replaceAllMatchesInString:title withString:@"" options:OgreIgnoreCaseOption];
+    regex = [OGRegularExpression regularExpressionWithString: @"(s|S)\\d"];
+    title = [regex replaceAllMatchesInString:title withString:@"" options:OgreIgnoreCaseOption];
+    // Remove any Whitespace
+    title = [title stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    return title;
+}
+
 -(void)addtoCache:(NSString *)title showid:(NSString *)showid{
     //Adds ID to cache
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];

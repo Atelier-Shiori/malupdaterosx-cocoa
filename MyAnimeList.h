@@ -23,6 +23,7 @@
 	NSString * DetectedEpisode;
 	NSString * DetectedCurrentEpisode;
     BOOL* DetectedTitleisMovie;
+    int DetectedSeason;
 	NSString * TotalEpisodes;
 	NSString * WatchStatus;
 	NSString * TitleScore;
@@ -48,5 +49,6 @@
 -(int)getScore;
 -(int)getWatchStatus;
 -(BOOL)getSuccess;
+-(int)recognizeSeason:(NSString *)season;
 -(NSDictionary *)getLastScrobbledInfo;
 @end
