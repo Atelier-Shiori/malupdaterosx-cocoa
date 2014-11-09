@@ -121,9 +121,6 @@
                 status = s;
                 
 			}
-				//Set last successful scrobble to statusItem Tooltip
-				//[appDelegate setStatusToolTip:[NSString stringWithFormat:@"MAL Updater OS X - Last Scrobble: %@ - %@", LastScrobbledTitle, LastScrobbledEpisode]];
-				//Retain Scrobbled Title, Title ID, Title Score, WatchStatus and Episode
 			}
             else{
                 status = 54;
@@ -434,9 +431,6 @@ foundtitle:
 	}
 	else {
 		// Some Error. Abort
-		//Set up Delegate
-		//
-		//[appDelegate setStatusText:@"Scrobble Status: Scrobble Failed. Retrying in 5 mins..."];
 		return NO;
 	}
 	//Should never happen, but...

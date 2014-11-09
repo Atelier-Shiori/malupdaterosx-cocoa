@@ -423,6 +423,7 @@
             [updatenow setEnabled:YES];
             [togglescrobbler setEnabled:YES];
             [updatenow setTitle:@"Update Now"];
+            [statusMenu setAutoenablesItems:YES];
         });
     });
     
