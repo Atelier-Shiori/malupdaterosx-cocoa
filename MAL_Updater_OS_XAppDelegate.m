@@ -216,7 +216,7 @@
     {
 		NSLog(@"Load Pref");
         NSViewController *generalViewController = [[GeneralPrefController alloc] init];
-        NSViewController *loginViewController = [[LoginPref alloc] init];
+        NSViewController *loginViewController = [[LoginPref alloc] initwithAppDelegate:self];
 		NSViewController *suViewController = [[SoftwareUpdatesPref alloc] init];
         NSArray *controllers = [[NSArray alloc] initWithObjects:generalViewController, loginViewController, suViewController, nil];
         
@@ -573,7 +573,17 @@
     [updatedtitle setTitle:title];
     [updatedepisode setTitle:[NSString stringWithFormat:@"Episode %@", episode]];
 }
-
+/*
+ 
+Getters
+ 
+ */
+-(bool)getisScrobbling{
+    return scrobbling;
+}
+-(bool)getisScrobblingActive{
+    return scrobbleractive;
+}
 /*
  
  Update Status Sheet Window Functions

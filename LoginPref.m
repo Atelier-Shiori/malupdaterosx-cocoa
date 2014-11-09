@@ -8,6 +8,7 @@
 
 #import "LoginPref.h"
 #import "Base64Category.h"
+#import "MAL_Updater_OS_XAppDelegate.h"
 
 
 @implementation LoginPref
@@ -15,6 +16,10 @@
 - (id)init
 {
 	return [super initWithNibName:@"LoginView" bundle:nil];
+}
+- (id)initwithAppDelegate:(MAL_Updater_OS_XAppDelegate *)adelegate{
+    appdelegate = adelegate;
+    return [super initWithNibName:@"LoginView" bundle:nil];
 }
 -(void)loadView{
     [super loadView];
@@ -156,23 +161,28 @@
 }
 -(IBAction)clearlogin:(id)sender
 {
-	// Set Up Prompt Message Window
-	NSAlert * alert = [[NSAlert alloc] init] ;
-	[alert addButtonWithTitle:@"Yes"];
-	[alert addButtonWithTitle:@"No"];
-	[alert setMessageText:@"Are you sure you want to remove this token?"];
-	[alert setInformativeText:@"Once done, this action cannot be undone."];
-	// Set Message type to Warning
-	[alert setAlertStyle:NSWarningAlertStyle];	
-	if ([alert runModal]== NSAlertFirstButtonReturn) {
-		NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-		[defaults setObject:@"" forKey:@"Base64Token"];
-		// Clear Username
-		[defaults setObject:@"" forKey:@"Username"];
-		//Disable Clearbut
-		[clearbut setEnabled: NO];
-		[savebut setEnabled: YES];
-	}
+    if (![appdelegate getisScrobbling] && ![appdelegate getisScrobblingActive]) {
+        // Set Up Prompt Message Window
+        NSAlert * alert = [[NSAlert alloc] init] ;
+        [alert addButtonWithTitle:@"Yes"];
+        [alert addButtonWithTitle:@"No"];
+        [alert setMessageText:@"Are you sure you want to remove this token?"];
+        [alert setInformativeText:@"Once done, this action cannot be undone."];
+        // Set Message type to Warning
+        [alert setAlertStyle:NSWarningAlertStyle];
+        if ([alert runModal]== NSAlertFirstButtonReturn) {
+            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+            [defaults setObject:@"" forKey:@"Base64Token"];
+            // Clear Username
+            [defaults setObject:@"" forKey:@"Username"];
+            //Disable Clearbut
+            [clearbut setEnabled: NO];
+            [savebut setEnabled: YES];
+        }
+    }
+    else{
+        [self showsheetmessage:@"Cannot Logout" explaination:@"Please turn off automatic scrobbling before logging out."];
+    }
 }
 
 @end

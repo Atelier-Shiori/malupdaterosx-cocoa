@@ -10,6 +10,7 @@
 #import "MASPreferencesViewController.h"
 #import <ASIHTTPRequest/ASIHTTPRequest.h>
 #import <ASIHTTPRequest/ASIFormDataRequest.h>
+#import "MAL_Updater_OS_XAppDelegate.h"
 
 @interface LoginPref : NSViewController <MASPreferencesViewController> {
 	//Login Preferences
@@ -17,7 +18,9 @@
 	IBOutlet NSTextField * fieldpassword;
 	IBOutlet NSButton * savebut;
 	IBOutlet NSButton * clearbut;
+    MAL_Updater_OS_XAppDelegate* appdelegate;
 }
+- (id)initwithAppDelegate:(MAL_Updater_OS_XAppDelegate *)adelegate;
 -(IBAction)startlogin:(id)sender;
 -(IBAction)clearlogin:(id)sender;
 -(void)showsheetmessage:(NSString *)message
