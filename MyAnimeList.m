@@ -7,6 +7,19 @@
 //
 
 #import "MyAnimeList.h"
+#import "Recognition.h"
+
+@interface MyAnimeList ()
+-(int)detectmedia; // 0 - Nothing, 1 - Same, 2 - Update
+-(NSString *)searchanime;
+-(NSString *)findaniid:(NSData *)ResponseData;
+-(BOOL)checkstatus:(NSString *)titleid;
+-(int)updatetitle:(NSString *)titleid;
+-(BOOL)addtitle:(NSString *)titleid;
+-(int)recognizeSeason:(NSString *)season;
+-(NSString *)desensitizeSeason:(NSString *)title;
+-(NSDictionary *)detectStream;
+@end
 
 @implementation MyAnimeList
 
@@ -185,7 +198,7 @@
     //
     // LSOF mplayer to get the media title and segment
     
-    NSArray * player = [NSArray arrayWithObjects:@"mplayer", @"mpv", @"mplayer-mt", @"VLC", @"QTKitServer", nil];
+    NSArray * player = [NSArray arrayWithObjects:@"mplayer", @"mpv", @"mplayer-mt", @"VLC", @"QuickTime Playe", @"QTKitServer", nil];
     NSString *string;
     
     for(int i = 0; i <[player count]; i++){
@@ -219,73 +232,10 @@
         while ((match = [enumerator nextObject]) != nil) {
             string = [match matchedString];
         }
-        //Accented e temporary fix
-        regex = [OGRegularExpression regularExpressionWithString:@"e\\\\xcc\\\\x81"];
-        string = [regex replaceAllMatchesInString:string
-                                       withString:@"è"];
-        //Cleanup
-        regex = [OGRegularExpression regularExpressionWithString:@"^.+/"];
-        string = [regex replaceAllMatchesInString:string
-                                       withString:@""];
-        regex = [OGRegularExpression regularExpressionWithString:@"\\.\\w+$"];
-        string = [regex replaceAllMatchesInString:string
-                                       withString:@""];
-        regex = [OGRegularExpression regularExpressionWithString:@"[\\s_]*\\[[^\\]]+\\]\\s*"];
-        string = [regex replaceAllMatchesInString:string
-                                       withString:@""];
-        regex = [OGRegularExpression regularExpressionWithString:@"[\\s_]*\\([^\\)]+\\)$"];
-        string = [regex replaceAllMatchesInString:string
-                                       withString:@""];
-        regex = [OGRegularExpression regularExpressionWithString:@"_"];
-        string = [regex replaceAllMatchesInString:string
-                                       withString:@" "];
-        regex = [OGRegularExpression regularExpressionWithString:@"~"];
-        string = [regex replaceAllMatchesInString:string
-                                       withString:@""];
-        regex = [OGRegularExpression regularExpressionWithString:@"-"];
-        string = [regex replaceAllMatchesInString:string
-                                       withString:@""];
-        // Set Title Info
-        regex = [OGRegularExpression regularExpressionWithString:@"( \\-) (episode |ep |ep|e)?(\\d+)([\\w\\-! ]*)$"];
-        DetectedTitle = [regex replaceAllMatchesInString:string
-                                              withString:@""];
-        regex = [OGRegularExpression regularExpressionWithString: @"\\b\\S\\d+$"];
-        DetectedTitle = [regex replaceAllMatchesInString:DetectedTitle
-                                              withString:@""];
-        // Set Episode Info
-        regex = [OGRegularExpression regularExpressionWithString: DetectedTitle];
-        string = [regex replaceAllMatchesInString:string
-                                       withString:@""];
-        regex = [OGRegularExpression regularExpressionWithString:@"v[\\d]"];
-        DetectedEpisode = [regex replaceAllMatchesInString:string
-                                                withString:@""];
-        //Season
-        NSString * tmpseason;
-        OGRegularExpressionMatch * smatch;
-        regex = [OGRegularExpression regularExpressionWithString: @"(S|s)\\d"];
-        smatch = [regex matchInString:DetectedTitle];
-        if (smatch != nil) {
-            tmpseason = [smatch matchedString];
-            regex = [OGRegularExpression regularExpressionWithString: @"(S|s)"];
-            tmpseason = [regex replaceAllMatchesInString:tmpseason withString:@""];
-            DetectedSeason = [tmpseason intValue];
-        }
-        else {
-            regex = [OGRegularExpression regularExpressionWithString: @"(second season|third season|fourth season|fifth season|sixth season|seventh season|eighth season|nineth season)"];
-            smatch = [regex matchInString:DetectedTitle];
-            if (smatch !=nil) {
-                tmpseason = [smatch matchedString];
-                DetectedSeason = [self recognizeSeason:tmpseason];
-            }
-            else{
-                DetectedSeason = 1;
-            }
-            
-        }
-        
-        // Trim Whitespace
-        DetectedTitle = [DetectedTitle stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-        DetectedEpisode = [DetectedEpisode stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        NSDictionary *d = [[Recognition alloc] recognize:string];
+        DetectedTitle = [NSString stringWithFormat:@"%@", [d objectForKey:@"title"]];
+        DetectedEpisode = [NSString stringWithFormat:@"%@", [d objectForKey:@"episode"]];
+        DetectedSeason = [[d objectForKey:@"season"] intValue];
         goto update;
     }
     else {

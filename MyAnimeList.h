@@ -33,12 +33,6 @@
 	int choice;
 }
 - (int)startscrobbling;
--(int)detectmedia; // 0 - Nothing, 1 - Same, 2 - Update
--(NSString *)searchanime;
--(NSString *)findaniid:(NSData *)ResponseData;
--(BOOL)checkstatus:(NSString *)titleid;
--(int)updatetitle:(NSString *)titleid;
--(BOOL)addtitle:(NSString *)titleid;
 -(BOOL)updatestatus:(NSString *)titleid
               score:(int)showscore
         watchstatus:(NSString*)showwatchstatus;
@@ -49,6 +43,5 @@
 -(int)getScore;
 -(int)getWatchStatus;
 -(BOOL)getSuccess;
--(int)recognizeSeason:(NSString *)season;
 -(NSDictionary *)getLastScrobbledInfo;
 @end

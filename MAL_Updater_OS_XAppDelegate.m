@@ -173,8 +173,6 @@
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
 	// Initialize MALEngine
 	MALEngine = [[MyAnimeList alloc] init];
-	// Check for Crash Reports
-	[CMCrashReporter check];
 	// Insert code here to initialize your application
 	//Check if Application is in the /Applications Folder
 	PFMoveToApplicationsFolderIfNecessary();
@@ -223,8 +221,7 @@
         // To add a flexible space between General and Advanced preference panes insert [NSNull null]:
         //     NSArray *controllers = [[NSArray alloc] initWithObjects:generalViewController, [NSNull null], advancedViewController, nil];
         
-        NSString *title = NSLocalizedString(@"Preferences", @"Common title for Preferences window");
-        _preferencesWindowController = [[MASPreferencesWindowController alloc] initWithViewControllers:controllers title:title];
+            _preferencesWindowController = [[MASPreferencesWindowController alloc] initWithViewControllers:controllers];
     }
     return _preferencesWindowController;
 }
