@@ -133,6 +133,11 @@
 	[defaultValues setObject:[NSNumber numberWithBool:NO] forKey:@"ScrobbleatStartup"];
     [defaultValues setObject:[[NSMutableArray alloc] init] forKey:@"searchcache"];
     [defaultValues setObject:[NSNumber numberWithBool:YES] forKey:@"useSearchCache"];
+    if (floor(NSAppKitVersionNumber) > NSAppKitVersionNumber10_9){
+        //Yosemite Specific Advanced Options
+        [defaultValues setObject:[NSNumber numberWithBool:NO] forKey:@"DisableYosemiteTitleBar"];
+        [defaultValues setObject:[NSNumber numberWithBool:NO] forKey:@"DisableYosemiteVibrance"];
+    }
 	//Register Dictionary
 	[[NSUserDefaults standardUserDefaults]
 	 registerDefaults:defaultValues];
