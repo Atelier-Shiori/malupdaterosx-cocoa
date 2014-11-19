@@ -39,6 +39,7 @@
 	int choice;
 	BOOL scrobbling;
     BOOL scrobbleractive;
+    IBOutlet NSVisualEffectView * windowcontent;
 	/* MAL Scrobbling/Updating Class */
 	MyAnimeList * MALEngine;
 	/* Update Status Sheet Window IBOutlets */

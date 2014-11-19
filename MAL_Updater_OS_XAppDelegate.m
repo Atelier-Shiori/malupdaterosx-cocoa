@@ -178,6 +178,9 @@
 	PFMoveToApplicationsFolderIfNecessary();
 	//Since LSUIElement is set to 1 to hide the dock icon, it causes unattended behavior of having the program windows not show to the front.
 	[NSApp activateIgnoringOtherApps:YES];
+    
+    //Load Defaults
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 
     //Set Notification Center Delegate
     [[NSUserNotificationCenter defaultUserNotificationCenter] setDelegate:self];
@@ -186,9 +189,40 @@
     [sharetoolbaritem setEnabled:NO];
 	// Hide Window
 	[window orderOut:self];
+    
+    //Set up Yosemite UI Enhancements
+    if (floor(NSAppKitVersionNumber) > NSAppKitVersionNumber10_9)
+    {
+        if ([defaults boolForKey:@"DisableYosemiteTitleBar"] != 1) {
+            // OS X 10.10 code here.
+            //Hide Title Bar
+            self.window.titleVisibility = NSWindowTitleHidden;
+            // Fix Window Size
+            NSRect frame = [window frame];
+            frame.size = CGSizeMake(440, 291);
+            [window setFrame:frame display:YES];
+        }
+        if ([defaults boolForKey:@"DisableYosemiteVibrance"] != 1) {
+            //Add NSVisualEffectView to Window
+            [windowcontent setBlendingMode:NSVisualEffectBlendingModeBehindWindow];
+            [windowcontent setMaterial:NSVisualEffectMaterialLight];
+            [windowcontent setState:NSVisualEffectStateActive];
+            // Set Appearence Options Manually
+            [LastScrobbled setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameVibrantLight]];
+            [animeinfo setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameVibrantLight]];
+        }
+        
+    }
+    // Fix template images
+    // There is a bug where template images are not made even if they are set in XCAssets
+    NSArray *images = [NSArray arrayWithObjects:@"update", @"history", @"correct", nil];
+    NSImage * image;
+    for (NSString *imagename in images){
+        image = [NSImage imageNamed:imagename];
+        [image setTemplate:YES];
+    }
 	
 	// Notify User if there is no Account Info
-	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	if ([[defaults objectForKey:@"Base64Token"] length] == 0) {
 		//Notify the user that there is no login token.
         NSUserNotification *notification = [[NSUserNotification alloc] init];
@@ -202,6 +236,7 @@
 	if ([defaults boolForKey:@"ScrobbleatStartup"] == 1) {
 		[self autostarttimer];
 	}
+    
 }
 /*
  
