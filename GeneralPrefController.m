@@ -18,7 +18,14 @@
 
 #pragma mark -
 #pragma mark MASPreferencesViewController
-
+-(void)loadView{
+    [super loadView];
+    if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_9){
+        // Disable Yosemite UI options
+        [disablenewtitlebar setEnabled:NO];
+        [disablevibarency setEnabled: NO];
+    }
+}
 - (NSString *)identifier
 {
     return @"GeneralPreferences";

@@ -15,6 +15,8 @@
 @interface GeneralPrefController : NSViewController <MASPreferencesViewController> {
 	//General
 	IBOutlet NSTextField * APIUrl;
+    IBOutlet NSButton * disablenewtitlebar;
+    IBOutlet NSButton * disablevibarency;
 }
 -(IBAction)testapi:(id)sender;
 -(IBAction)resetapiurl:(id)sender;
