@@ -85,7 +85,7 @@
 		
 		NSLog(@"Getting AniID");
         if ([[NSUserDefaults standardUserDefaults] boolForKey:@"useSearchCache"]) {
-            NSMutableArray *cache = [NSMutableArray arrayWithArray:[[NSUserDefaults standardUserDefaults] objectForKey:@"searchcache"]];
+            NSArray *cache = [[NSUserDefaults standardUserDefaults] objectForKey:@"searchcache"];
             if (cache.count > 0) {
                 NSString * theid;
                 for (NSDictionary *d in cache) {

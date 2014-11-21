@@ -212,10 +212,11 @@
             //Add NSVisualEffectView to Window
             [windowcontent setBlendingMode:NSVisualEffectBlendingModeBehindWindow];
             [windowcontent setMaterial:NSVisualEffectMaterialLight];
-            [windowcontent setState:NSVisualEffectStateActive];
-            // Set Appearence Options Manually
-            [LastScrobbled setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameVibrantLight]];
-            [animeinfo setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameVibrantLight]];
+            [windowcontent setState:NSVisualEffectStateFollowsWindowActiveState];
+            [windowcontent setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameVibrantLight]];
+            //Make Animeinfo textview transparrent
+            [animeinfooutside setDrawsBackground:NO];
+            [animeinfo setBackgroundColor:[NSColor clearColor]];
         }
         
     }
@@ -230,13 +231,18 @@
 	
 	// Notify User if there is no Account Info
 	if ([[defaults objectForKey:@"Base64Token"] length] == 0) {
-		//Notify the user that there is no login token.
-        NSUserNotification *notification = [[NSUserNotification alloc] init];
-        notification.title = @"MAL Updater OS X";
-        notification.informativeText = @"Add your login infomation in Preferences before using this program.";
-        notification.soundName = NSUserNotificationDefaultSoundName;
-        
-        [[NSUserNotificationCenter defaultUserNotificationCenter] deliverNotification:notification];
+        // First time prompt
+        NSAlert * alert = [[NSAlert alloc] init] ;
+        [alert addButtonWithTitle:@"Yes"];
+        [alert addButtonWithTitle:@"No"];
+        [alert setMessageText:@"Welcome to MAL Updater OS X"];
+        [alert setInformativeText:@"Before using this program, you need to login. Do you want to open Preferences to log in now?"];
+        // Set Message type to Warning
+        [alert setAlertStyle:NSInformationalAlertStyle];
+        if ([alert runModal]== NSAlertFirstButtonReturn) {
+            [NSApp activateIgnoringOtherApps:YES];
+            [self.preferencesWindowController showWindow:nil];
+        }
 	}
 	// Autostart Scrobble at Startup
 	if ([defaults boolForKey:@"ScrobbleatStartup"] == 1) {
@@ -448,7 +454,7 @@
             [sharetoolbaritem setEnabled:YES];
             [updatedtitlemenu setHidden:NO];
             // Set Titles
-            [self setLastScrobbledTitle:[NSString stringWithFormat:@"Last Scrobbled: %@ - %@",[MALEngine getLastScrobbledTitle],[MALEngine getLastScrobbledEpisode]]];
+            [self setLastScrobbledTitle:[NSString stringWithFormat:@"Last Scrobbled: %@ - Episode %@",[MALEngine getLastScrobbledTitle],[MALEngine getLastScrobbledEpisode]]];
             [self setStatusToolTip:[NSString stringWithFormat:@"MAL Updater OS X - %@ - %@",[MALEngine getLastScrobbledTitle],[MALEngine getLastScrobbledEpisode]]];
             [self setStatusMenuTitleEpisode:[MALEngine getLastScrobbledTitle] episode:[MALEngine getLastScrobbledEpisode]];
             //Show Anime Information

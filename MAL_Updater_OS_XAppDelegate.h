@@ -40,6 +40,7 @@
 	BOOL scrobbling;
     BOOL scrobbleractive;
     IBOutlet NSVisualEffectView * windowcontent;
+    IBOutlet NSScrollView *animeinfooutside;
 	/* MAL Scrobbling/Updating Class */
 	MyAnimeList * MALEngine;
 	/* Update Status Sheet Window IBOutlets */

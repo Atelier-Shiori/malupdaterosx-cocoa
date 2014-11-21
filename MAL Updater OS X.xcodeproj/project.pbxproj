@@ -44,8 +44,6 @@
 		8227C1171A1D8D34005F3301 /* anitomy-osx.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8227C1161A1D8D34005F3301 /* anitomy-osx.framework */; };
 		8227C1181A1D8D47005F3301 /* anitomy-osx.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8227C1161A1D8D34005F3301 /* anitomy-osx.framework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		823D4D211A1AB46600392ACB /* Recognition.m in Sources */ = {isa = PBXBuildFile; fileRef = 823D4D201A1AB46600392ACB /* Recognition.m */; };
-		8285DED21A1D528600D6A53F /* FixSearchDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 8285DED01A1D528600D6A53F /* FixSearchDialog.m */; };
-		8285DED31A1D528600D6A53F /* FixSearchDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8285DED11A1D528600D6A53F /* FixSearchDialog.xib */; };
 		8294C45E19F99B2F009DE98B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8294C45D19F99B2F009DE98B /* Images.xcassets */; };
 		82B9559819FD553500A032FB /* detectstream in Resources */ = {isa = PBXBuildFile; fileRef = 82B9559719FD553500A032FB /* detectstream */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
@@ -122,9 +120,6 @@
 		8227C1161A1D8D34005F3301 /* anitomy-osx.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "anitomy-osx.framework"; path = "Frameworks/anitomy-osx.framework"; sourceTree = "<group>"; };
 		823D4D1F1A1AB46600392ACB /* Recognition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Recognition.h; sourceTree = "<group>"; };
 		823D4D201A1AB46600392ACB /* Recognition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Recognition.m; sourceTree = "<group>"; };
-		8285DECF1A1D528600D6A53F /* FixSearchDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FixSearchDialog.h; sourceTree = "<group>"; };
-		8285DED01A1D528600D6A53F /* FixSearchDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FixSearchDialog.m; sourceTree = "<group>"; };
-		8285DED11A1D528600D6A53F /* FixSearchDialog.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FixSearchDialog.xib; sourceTree = "<group>"; };
 		8294C45D19F99B2F009DE98B /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = "MAL Updater OS X/Images.xcassets"; sourceTree = "<group>"; };
 		829FB41D19F739700026EAC2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		829FB41E19F739700026EAC2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/GeneralPreferenceView.xib; sourceTree = "<group>"; };
@@ -306,9 +301,6 @@
 		8285DED41A1D529200D6A53F /* Exception/Correction */ = {
 			isa = PBXGroup;
 			children = (
-				8285DECF1A1D528600D6A53F /* FixSearchDialog.h */,
-				8285DED01A1D528600D6A53F /* FixSearchDialog.m */,
-				8285DED11A1D528600D6A53F /* FixSearchDialog.xib */,
 			);
 			name = Exception/Correction;
 			sourceTree = "<group>";
@@ -379,7 +371,6 @@
 				8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */,
 				8294C45E19F99B2F009DE98B /* Images.xcassets in Resources */,
 				1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */,
-				8285DED31A1D528600D6A53F /* FixSearchDialog.xib in Resources */,
 				5C8ACEB819F409F20001A101 /* StatusIconhilight.tiff in Resources */,
 				3A851D231210AE0300B55720 /* StatusIcon.tiff in Resources */,
 				3A20383212122B2B003813B2 /* dsa_pub.pem in Resources */,
@@ -412,7 +403,6 @@
 				3A6AB38C120F327C00D51D2C /* base64.c in Sources */,
 				3A2DCCB61210B3BF00C920F1 /* PFMoveApplication.m in Sources */,
 				5C2B9DC41221E9E5006DEF0D /* MAL_Updater_OS_X_DataModel.xcdatamodel in Sources */,
-				8285DED21A1D528600D6A53F /* FixSearchDialog.m in Sources */,
 				5CD36B9A19F2EA9B007BB6B6 /* MASPreferencesWindowController.m in Sources */,
 				5CD36BBA19F2ED88007BB6B6 /* GeneralPrefController.m in Sources */,
 				5CBE9EC319F2F0E300CA3E5D /* LoginPref.m in Sources */,
