@@ -12,6 +12,7 @@
 @class FixSearchDialog;
 @interface ExceptionsPref : NSViewController <MASPreferencesViewController>{
     IBOutlet NSArrayController * arraycontroller;
+    IBOutlet NSArrayController * ignorearraycontroller;
     IBOutlet NSTableView * tb;
     FixSearchDialog *fsdialog;
     NSWindow *prefw;

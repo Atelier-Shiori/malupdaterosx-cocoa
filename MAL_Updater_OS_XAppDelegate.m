@@ -136,6 +136,7 @@
     [defaultValues setObject:[[NSMutableArray alloc] init] forKey:@"searchcache"];
     [defaultValues setObject:[NSNumber numberWithBool:YES] forKey:@"useSearchCache"];
     [defaultValues setObject:[[NSMutableArray alloc] init] forKey:@"exceptions"];
+    [defaultValues setObject:[[NSMutableArray alloc] init] forKey:@"ignoredirectories"];
     [defaultValues setObject:[NSNumber numberWithBool:YES] forKey:@"UseNewRecognitionEngine"];
     if (floor(NSAppKitVersionNumber) > NSAppKitVersionNumber10_9){
         //Yosemite Specific Advanced Options
