@@ -597,7 +597,7 @@ Gw
                             <textField verticalHuggingPriority="750" id="792">
                                 <rect key="frame" x="5" y="195" width="444" height="30"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Additional Infomation about the last updated title will appear here." id="796">
+                                <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Additional Info about the last updated title will appear here." id="796">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
