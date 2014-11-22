@@ -228,10 +228,12 @@
             return @"";
             break;
 		case 200:
+            online = true;
 			return [self findaniid:[request responseData]];
 			break;
 			
 		default:
+            online = true;
 			Success = NO;
 			return @"";
 			break;
@@ -408,6 +410,7 @@ foundtitle:
 	// Get Status Code
 	int statusCode = [request responseStatusCode];
 	if (statusCode == 200 ) {
+        online = true;
         NSError* error;
 		NSDictionary *animeinfo = [NSJSONSerialization JSONObjectWithData:[request responseData] options:kNilOptions error:&error];
 		if ([animeinfo objectForKey:@"episodes"] == [NSNull null]) { // To prevent the scrobbler from failing because there is no episode total.
@@ -445,6 +448,7 @@ foundtitle:
         return NO;
     }
 	else {
+        online = true;
 		// Some Error. Abort
 		return NO;
 	}
