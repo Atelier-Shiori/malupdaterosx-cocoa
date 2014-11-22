@@ -13,13 +13,15 @@
 #import "LoginPref.h"
 #import "SoftwareUpdatesPref.h"
 #import "NSString_stripHtml.h"
-
+#import "ExceptionsPref.h"
+#import "FixSearchDialog.h"
 
 @implementation MAL_Updater_OS_XAppDelegate
 
 @synthesize window;
 @synthesize historywindow;
 @synthesize updatepanel;
+@synthesize fsdialog;
 /*
  
  Initalization
@@ -133,6 +135,7 @@
 	[defaultValues setObject:[NSNumber numberWithBool:NO] forKey:@"ScrobbleatStartup"];
     [defaultValues setObject:[[NSMutableArray alloc] init] forKey:@"searchcache"];
     [defaultValues setObject:[NSNumber numberWithBool:YES] forKey:@"useSearchCache"];
+    [defaultValues setObject:[[NSMutableArray alloc] init] forKey:@"exceptions"];
     [defaultValues setObject:[NSNumber numberWithBool:YES] forKey:@"UseNewRecognitionEngine"];
     if (floor(NSAppKitVersionNumber) > NSAppKitVersionNumber10_9){
         //Yosemite Specific Advanced Options
@@ -193,6 +196,7 @@
 	// Disable Update and Share Buttons
 	[updatetoolbaritem setEnabled:NO];
     [sharetoolbaritem setEnabled:NO];
+    [correcttoolbaritem setEnabled:NO];
 	// Hide Window
 	[window orderOut:self];
     
@@ -263,7 +267,8 @@
         NSViewController *generalViewController = [[GeneralPrefController alloc] init];
         NSViewController *loginViewController = [[LoginPref alloc] initwithAppDelegate:self];
 		NSViewController *suViewController = [[SoftwareUpdatesPref alloc] init];
-        NSArray *controllers = [[NSArray alloc] initWithObjects:generalViewController, loginViewController, suViewController, nil];
+        NSViewController *exceptionsViewController = [[ExceptionsPref alloc] init];
+        NSArray *controllers = [[NSArray alloc] initWithObjects:generalViewController, loginViewController, suViewController, exceptionsViewController, nil];
         
         // To add a flexible space between General and Advanced preference panes insert [NSNull null]:
         //     NSArray *controllers = [[NSArray alloc] initWithObjects:generalViewController, [NSNull null], advancedViewController, nil];
@@ -444,6 +449,9 @@
                 [self showNotication:@"Scrobble Unsuccessful." message:@"Retrying in 5 mins..."];
                 [self setStatusText:@"Scrobble Status: Scrobble Failed. Retrying in 5 mins..."];
                 break;
+            case 55:
+                [self setStatusText:@"Scrobble Status: Scrobble Failed. Computer is offline."];
+                break;
             default:
                 NSLog(@"fail");
                 break;
@@ -451,6 +459,7 @@
         dispatch_async(dispatch_get_main_queue(), ^{
         if ([MALEngine getSuccess] == 1) {
             [updatetoolbaritem setEnabled:YES];
+            [correcttoolbaritem setEnabled:YES];
             [sharetoolbaritem setEnabled:YES];
             [updatedtitlemenu setHidden:NO];
             // Set Titles
@@ -529,7 +538,104 @@
     else
         return true;
 }
-
+-(IBAction)showCorrectionSearchWindow:(id)sender{
+    bool isVisible = [window isVisible];
+    // Stop Timer temporarily if scrobbling is turned on
+    if (scrobbling == TRUE) {
+        [self stoptimer];
+    }
+    fsdialog = [FixSearchDialog new];
+    [fsdialog setCorrection:YES];
+    [fsdialog setSearchField:[MALEngine getLastScrobbledTitle]];
+    if (isVisible) {
+        [NSApp beginSheet:[fsdialog window]
+           modalForWindow:window modalDelegate:self
+           didEndSelector:@selector(correctionDidEnd:returnCode:contextInfo:)
+              contextInfo:(void *)nil];
+    }
+    else{
+        [NSApp beginSheet:[fsdialog window]
+           modalForWindow:nil modalDelegate:self
+           didEndSelector:@selector(correctionDidEnd:returnCode:contextInfo:)
+              contextInfo:(void *)nil];
+    }
+    
+}
+-(void)correctionDidEnd:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo {
+    if (returnCode == 1) {
+        if ([[fsdialog getSelectedAniID] isEqualToString:[MALEngine getAniID]]) {
+            NSLog(@"ID matches, correction not needed.");
+        }
+        else{
+            [self addtoExceptions:[MALEngine getLastScrobbledTitle] newtitle:[fsdialog getSelectedTitle] showid:[fsdialog getSelectedAniID]];
+            if([fsdialog getdeleteTitleonCorrection]){
+                if([MALEngine removetitle:[MALEngine getAniID]]){
+                    NSLog(@"Removal Successful");
+                }
+            }
+            NSLog(@"Updating corrected title...");
+            int status = [MALEngine scrobbleagain:[MALEngine getLastScrobbledTitle] Episode:[MALEngine getLastScrobbledEpisode]];
+            switch (status) {
+                case 1:
+                case 21:
+                case 22:{
+                    [self setStatusText:@"Scrobble Status: Correction Successful..."];
+                    [self showNotication:@"Hachidori" message:@"Correction was successful"];
+                    //Show Anime Correct Information
+                    NSDictionary * ainfo = [MALEngine getLastScrobbledInfo];
+                    [self showAnimeInfo:ainfo];
+                    break;
+                }
+                default:
+                    [self setStatusText:@"Scrobble Status: Correction unsuccessful..."];
+                    [self showNotication:@"Hachidori" message:@"Correction was not successful."];
+                    break;
+            }
+        }
+    }
+    else{
+        NSLog(@"Cancel");
+    }
+    fsdialog = nil;
+    //Restart Timer
+    if (scrobbling == TRUE) {
+        [self starttimer];
+    }
+}
+-(void)addtoExceptions:(NSString *)detectedtitle newtitle:(NSString *)title showid:(NSString *)showid{
+    //Adds correct title and ID to exceptions list
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSMutableArray *exceptions = [NSMutableArray arrayWithArray:[[NSUserDefaults standardUserDefaults] objectForKey:@"exceptions"]];
+    //Prevent duplicate
+    BOOL exists = false;
+    for (NSDictionary * d in exceptions){
+        NSString * dt = [d objectForKey:@"detectedtitle"];
+        if (![detectedtitle isEqualToString:dt]) {
+            NSLog(@"Title exists on Exceptions List");
+            exists = true;
+            break;
+        }
+    }
+    if (!exists) {
+        NSDictionary * entry = [[NSDictionary alloc] initWithObjectsAndKeys:detectedtitle, @"detectedtitle", title ,@"correcttitle", showid, @"showid", nil];
+        [exceptions addObject:entry];
+        [defaults setObject:exceptions forKey:@"exceptions"];
+    }
+    //Check if the title exists in the cache. If so, remove it
+    NSMutableArray *cache = [NSMutableArray arrayWithArray:[[NSUserDefaults standardUserDefaults] objectForKey:@"searchcache"]];
+    if (cache.count > 0) {
+        for (int i=0; i<[cache count]; i++) {
+            NSDictionary * d = [cache objectAtIndex:i];
+            NSString * title = [d objectForKey:@"detectedtitle"];
+            if ([title isEqualToString:detectedtitle]) {
+                NSLog(@"%@ found in cache, remove!", title);
+                [cache removeObject:d];
+                [[NSUserDefaults standardUserDefaults] setObject:cache forKey:@"searchcache"];
+                break;
+            }
+        }
+    }
+}
 /*
  
  Scrobble History Window

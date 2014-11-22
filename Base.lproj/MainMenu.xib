@@ -222,6 +222,12 @@
                                     <action selector="updatestatusmenu:" target="560" id="E6P-7B-Fn7"/>
                                 </connections>
                             </menuItem>
+                            <menuItem title="Correct Title" id="FGG-32-eFq">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="showCorrectionSearchWindow:" target="560" id="c7W-7c-azb"/>
+                                </connections>
+                            </menuItem>
                         </items>
                     </menu>
                 </menuItem>
@@ -255,6 +261,7 @@
                 <outlet property="ScrobblerStatus" destination="793" id="806"/>
                 <outlet property="animeinfo" destination="bGm-dl-hOF" id="3tY-bt-kdf"/>
                 <outlet property="animeinfooutside" destination="Flw-vm-3Ig" id="uCR-4t-RZC"/>
+                <outlet property="correcttoolbaritem" destination="ddD-eA-X8S" id="LON-ej-yAc"/>
                 <outlet property="historytable" destination="595" id="635"/>
                 <outlet property="historywindow" destination="588" id="605"/>
                 <outlet property="img" destination="gfr-73-DLn" id="iLO-3a-xch"/>
@@ -544,7 +551,7 @@ Gw
             <rect key="contentRect" x="584" y="499" width="440" height="253"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1440" height="878"/>
             <value key="minSize" type="size" width="440" height="253"/>
-            <value key="maxSize" type="size" width="410" height="253"/>
+            <value key="maxSize" type="size" width="440" height="253"/>
             <view key="contentView" id="791">
                 <rect key="frame" x="0.0" y="0.0" width="440" height="253"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -673,13 +680,33 @@ Gw
                     </toolbarItem>
                     <toolbarItem implicitItemIdentifier="NSToolbarCustomizeToolbarItem" id="brg-hf-L73"/>
                     <toolbarItem implicitItemIdentifier="NSToolbarSeparatorItem" id="JKl-qD-hH8"/>
-                    <toolbarItem implicitItemIdentifier="NSToolbarFlexibleSpaceItem" id="DUP-IU-qwC"/>
+                    <toolbarItem implicitItemIdentifier="NSToolbarFlexibleSpaceItem" id="DUP-IU-qwC">
+                        <connections>
+                            <action selector="showCorrectionSearchWindow:" target="560" id="JeH-yp-P4O"/>
+                        </connections>
+                    </toolbarItem>
                     <toolbarItem implicitItemIdentifier="NSToolbarSpaceItem" id="Kb3-aH-Wfv"/>
+                    <toolbarItem implicitItemIdentifier="1FA7C460-6CB6-48EB-9ED6-D270F45E7450" label="Correct Title" paletteLabel="Correct Title" toolTip="Correct Title" image="correct" id="ddD-eA-X8S">
+                        <size key="minSize" width="32" height="25"/>
+                        <size key="maxSize" width="32" height="32"/>
+                        <button key="view" verticalHuggingPriority="750" id="uu4-Ct-6q9">
+                            <rect key="frame" x="12" y="14" width="32" height="25"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="correct" imagePosition="overlaps" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="kSD-gp-80T">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                        </button>
+                        <connections>
+                            <action selector="showCorrectionSearchWindow:" target="560" id="aoe-z3-aNQ"/>
+                        </connections>
+                    </toolbarItem>
                 </allowedToolbarItems>
                 <defaultToolbarItems>
                     <toolbarItem reference="wq9-kC-J4D"/>
                     <toolbarItem reference="eo4-15-Ehk"/>
                     <toolbarItem reference="k8g-Fn-fps"/>
+                    <toolbarItem reference="ddD-eA-X8S"/>
                     <toolbarItem reference="PDJ-oY-qAN"/>
                 </defaultToolbarItems>
             </toolbar>
@@ -690,6 +717,7 @@ Gw
     <resources>
         <image name="NSActionTemplate" width="14" height="14"/>
         <image name="NSShareTemplate" width="11" height="16"/>
+        <image name="correct" width="32" height="32"/>
         <image name="history" width="32" height="32"/>
         <image name="update" width="32" height="32"/>
     </resources>

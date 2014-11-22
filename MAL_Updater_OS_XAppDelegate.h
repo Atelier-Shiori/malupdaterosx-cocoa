@@ -11,6 +11,7 @@
 
 @class PreferenceController;
 @class MyAnimeList;
+@class FixSearchDialog;
 @interface MAL_Updater_OS_XAppDelegate : NSObject <NSApplicationDelegate, NSUserNotificationCenterDelegate, NSSharingServiceDelegate, NSSharingServicePickerDelegate> {
 	/* Windows */
     __unsafe_unretained NSWindow *window;
@@ -45,6 +46,7 @@
 	MyAnimeList * MALEngine;
 	/* Update Status Sheet Window IBOutlets */
 	IBOutlet NSToolbarItem * updatetoolbaritem;
+    IBOutlet NSToolbarItem * correcttoolbaritem;
     IBOutlet NSToolbarItem * sharetoolbaritem;
 	IBOutlet NSTextField * showtitle;
 	IBOutlet NSPopUpButton * showstatus;
@@ -58,6 +60,7 @@
 @property (nonatomic, retain, readonly) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 @property (nonatomic, retain, readonly) NSManagedObjectModel *managedObjectModel;
 @property (nonatomic, retain, readonly) NSManagedObjectContext *managedObjectContext;
+@property(strong) FixSearchDialog *fsdialog;
 
 -(void)showPreferences:(id)sender;
 -(void)showhistory:(id)sender;

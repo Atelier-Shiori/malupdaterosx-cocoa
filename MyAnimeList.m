@@ -74,57 +74,69 @@
  */
 
 - (int)startscrobbling {
-    // Set MAL API URL
-    MALApiUrl = [[NSUserDefaults standardUserDefaults] objectForKey:@"MALAPIURL"];
+
     // 0 - nothing playing; 1 - same episode playing; 21 - Add Title Successful; 22 - Update Title Successful;  51 - Can't find Title; 52 - Add Failed; 53 - Update Failed; 54 - Scrobble Failed; 
-    int status, detectstatus;
+    int detectstatus;
 	//Set up Delegate
 	
     detectstatus = [self detectmedia];
 	if (detectstatus == 2) { // Detects Title
-		
-		NSLog(@"Getting AniID");
-        if ([[NSUserDefaults standardUserDefaults] boolForKey:@"useSearchCache"]) {
-            NSArray *cache = [[NSUserDefaults standardUserDefaults] objectForKey:@"searchcache"];
-            if (cache.count > 0) {
-                NSString * theid;
-                for (NSDictionary *d in cache) {
-                    NSString * title = [d objectForKey:@"detectedtitle"];
-                    if ([title isEqualToString:DetectedTitle]) {
-                        NSLog(@"%@ found in cache!", title);
-                        theid = [d objectForKey:@"showid"];
-                        break;
-                    }
-                }
-                if (theid.length == 0) {
-                    AniID = [self searchanime]; // Not in cache, search
-                }
-                else{
-                    AniID = theid; // Set cached show id as AniID
+        return [self scrobble];
+	}
+
+    return detectstatus;
+}
+-(int)scrobbleagain:(NSString *)showtitle Episode:(NSString *)episode{
+    DetectedTitle = showtitle;
+    DetectedEpisode = episode;
+    return [self scrobble];
+}
+-(int)scrobble{
+    // Set MAL API URL
+    MALApiUrl = [[NSUserDefaults standardUserDefaults] objectForKey:@"MALAPIURL"];
+    int status;
+    NSLog(@"Getting AniID");
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"useSearchCache"]) {
+        NSArray *cache = [[NSUserDefaults standardUserDefaults] objectForKey:@"searchcache"];
+        if (cache.count > 0) {
+            NSString * theid;
+            for (NSDictionary *d in cache) {
+                NSString * title = [d objectForKey:@"detectedtitle"];
+                if ([title isEqualToString:DetectedTitle]) {
+                    NSLog(@"%@ found in cache!", title);
+                    theid = [d objectForKey:@"showid"];
+                    break;
                 }
             }
-            else {
-                AniID = [self searchanime];
+            if (theid.length == 0) {
+                AniID = [self searchanime]; // Not in cache, search
+            }
+            else{
+                AniID = theid; // Set cached show id as AniID
             }
         }
         else {
             AniID = [self searchanime];
         }
-		if (AniID.length > 0) {
-            NSLog(@"Found %@", AniID);
-			// Check Status and Update
-			BOOL UpdateBool = [self checkstatus:AniID];
-			if (UpdateBool == 1) {
-			if ([WatchStatus isEqualToString:@"Nothing"]) {
-				//Title is not on list. Add Title
-				Success = [self addtitle:AniID];
+    }
+    else {
+        AniID = [self searchanime];
+    }
+    if (AniID.length > 0) {
+        NSLog(@"Found %@", AniID);
+        // Check Status and Update
+        BOOL UpdateBool = [self checkstatus:AniID];
+        if (UpdateBool == 1) {
+            if ([WatchStatus isEqualToString:@"Nothing"]) {
+                //Title is not on list. Add Title
+                Success = [self addtitle:AniID];
                 if (Success)
                     status = 21;
                 else
                     status = 52;
-			}
-			else {
-				// Update Title as Usual
+            }
+            else {
+                // Update Title as Usual
                 int s = [self updatetitle:AniID];
                 if (s == 1 || s == 22) {
                     Success = true;
@@ -133,27 +145,55 @@
                     Success = false;}
                 status = s;
                 
-			}
-			}
-            else{
+            }
+        }
+        else{
+            if (online) {
                 status = 54;
             }
-		}
-		else {
-			// Not Successful
+            else{
+                //Ofline
+                status = 55;
+            }
+        }
+    }
+    else {
+        if (online) {
+            // Not Successful
             status = 51;
-			
-		}
-		// Empty out Detected Title/Episode to prevent same title detection
-		DetectedTitle = @"";
-		DetectedEpisode = @"";
-		// Release Detected Title/Episode.
-        return status;
-	}
+        }
+        else{
+            //Offline
+            status = 55;
+        }
+        
+    }
+    // Empty out Detected Title/Episode to prevent same title detection
+    DetectedTitle = nil;
+    DetectedEpisode = nil;
+    DetectedCurrentEpisode = nil;
+    // Release Detected Title/Episode.
+    return status;
 
-    return detectstatus;
 }
 -(NSString *)searchanime{
+    NSLog(@"Check Exceptions List");
+    // Check Exceptions
+    NSArray *exceptions = [[NSUserDefaults standardUserDefaults] objectForKey:@"exceptions"];
+    if (exceptions.count > 0) {
+        NSString * theid;
+        for (NSDictionary *d in exceptions) {
+            NSString * title = [d objectForKey:@"detectedtitle"];
+            if ([title isEqualToString:DetectedTitle]) {
+                NSLog(@"%@ found on exceptions list as %@!", title, [d objectForKey:@"correcttitle"]);
+                theid = [d objectForKey:@"showid"];
+                break;
+            }
+        }
+        if (theid.length > 0) {
+            return theid;
+        }
+    }
 	NSLog(@"Searching For Title");
     // Set Season for Search Term if any detected.
     NSString * searchtitle;
@@ -182,6 +222,11 @@
 	// Get Status Code
 	int statusCode = [request responseStatusCode];
 	switch (statusCode) {
+        case 0:
+            online = false;
+            Success = NO;
+            return @"";
+            break;
 		case 200:
 			return [self findaniid:[request responseData]];
 			break;
@@ -222,16 +267,19 @@
         if (string.length > 0)
             break;
     }
+    OGRegularExpression    *regex = [OGRegularExpression regularExpressionWithString:@"^.+(avi|mkv|mp4|ogm)$"];
     if (string.length > 0) {
         //Regex time
         //Get the filename first
-        OGRegularExpression    *regex = [OGRegularExpression regularExpressionWithString:@"^.+(avi|mkv|mp4|ogm)$"];
         NSEnumerator    *enumerator;
         enumerator = [regex matchEnumeratorInString:string];
         OGRegularExpressionMatch    *match;
         while ((match = [enumerator nextObject]) != nil) {
             string = [match matchedString];
         }
+    }
+    //Make sure the file name is valid, even if player is open
+    if ([regex matchInString:string] !=nil) {
         NSDictionary *d = [[Recognition alloc] recognize:string];
         DetectedTitle = [NSString stringWithFormat:@"%@", [d objectForKey:@"title"]];
         DetectedEpisode = [NSString stringWithFormat:@"%@", [d objectForKey:@"episode"]];
@@ -379,6 +427,10 @@ foundtitle:
 		// Makes sure the values don't get released
 		return YES;
 	}
+    else if (statusCode == 0){
+        online = false;
+        return NO;
+    }
 	else {
 		// Some Error. Abort
 		return NO;
@@ -486,6 +538,35 @@ foundtitle:
 			return NO;
 			break;
 	}
+}
+-(bool)removetitle:(NSString *)titleid{
+    NSLog(@"Removing %@", titleid);
+    //Set up Delegate
+    
+    // Update the title
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    //Set library/scrobble API
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/animelist/anime/%@", MALApiUrl, titleid]];
+    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+    //Ignore Cookies
+    [request setUseCookiePersistence:NO];
+    //Set Token
+    [request addRequestHeader:@"Authorization" value:[NSString stringWithFormat:@"Basic %@",[defaults objectForKey:@"Base64Token"]]];
+    //Set method to Delete
+    [request setRequestMethod:@"DELETE"];
+    // Do Update
+    [request startSynchronous];
+    switch ([request responseStatusCode]) {
+        case 200:
+        case 201:
+            return true;
+            break;
+        default:
+            // Update Unsuccessful
+            return false;
+            break;
+    }
+    return false;
 }
 -(BOOL)updatestatus:(NSString *)titleid
 			 score:(int)showscore

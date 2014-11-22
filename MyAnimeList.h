@@ -22,7 +22,7 @@
 	NSString * DetectedTitle;
 	NSString * DetectedEpisode;
 	NSString * DetectedCurrentEpisode;
-    BOOL* DetectedTitleisMovie;
+    BOOL DetectedTitleisMovie;
     int DetectedSeason;
 	NSString * TotalEpisodes;
 	NSString * WatchStatus;
@@ -30,12 +30,16 @@
 	NSString * TitleState;
     NSString * AniID;
 	BOOL Success;
+    BOOL online;
 	int choice;
 }
 - (int)startscrobbling;
+-(int)scrobbleagain:(NSString *)showtitle Episode:(NSString *)episode;
+-(int)scrobble;
 -(BOOL)updatestatus:(NSString *)titleid
               score:(int)showscore
         watchstatus:(NSString*)showwatchstatus;
+-(bool)removetitle:(NSString *)titleid;
 -(NSString *)getLastScrobbledTitle;
 -(NSString *)getLastScrobbledEpisode;
 -(NSString *)getAniID;
