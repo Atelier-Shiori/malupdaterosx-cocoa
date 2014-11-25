@@ -271,9 +271,12 @@
                 <outlet property="showtitle" destination="746" id="788"/>
                 <outlet property="statusMenu" destination="543" id="561"/>
                 <outlet property="togglescrobbler" destination="557" id="657"/>
+                <outlet property="updatedcorrecttitle" destination="FGG-32-eFq" id="3AI-iY-28J"/>
                 <outlet property="updatedepisode" destination="QVe-wc-Os7" id="1d5-DZ-xbX"/>
                 <outlet property="updatedtitle" destination="WVZ-pu-Fp5" id="Cj3-Gn-5gH"/>
                 <outlet property="updatedtitlemenu" destination="Xdd-UP-4fa" id="hD6-WK-5Sv"/>
+                <outlet property="updatedtitlemenus" destination="plV-TY-BVe" id="c5p-Jw-cOi"/>
+                <outlet property="updatedupdatestatus" destination="bnE-RJ-nGF" id="Yhc-Hz-Z1q"/>
                 <outlet property="updatenow" destination="Swq-JZ-crS" id="wbq-Tb-8xl"/>
                 <outlet property="updatepanel" destination="725" id="777"/>
                 <outlet property="updatetoolbaritem" destination="k8g-Fn-fps" id="jAk-kU-cCA"/>

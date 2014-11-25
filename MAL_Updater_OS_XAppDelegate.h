@@ -31,8 +31,11 @@
 	IBOutlet NSMenuItem * togglescrobbler;
     IBOutlet NSMenuItem * updatenow;
     IBOutlet NSMenuItem * updatedtitlemenu;
+    IBOutlet NSMenu * updatedtitlemenus;
     IBOutlet NSMenuItem * updatedtitle;
     IBOutlet NSMenuItem * updatedepisode;
+    IBOutlet NSMenuItem * updatedcorrecttitle;
+    IBOutlet NSMenuItem * updatedupdatestatus;
 	IBOutlet NSTextField * ScrobblerStatus;
 	IBOutlet NSTextField * LastScrobbled;
     IBOutlet NSTextView * animeinfo;
@@ -42,6 +45,9 @@
     BOOL scrobbleractive;
     IBOutlet NSVisualEffectView * windowcontent;
     IBOutlet NSScrollView *animeinfooutside;
+    bool panelactive;
+    NSDate * previousfiredate;
+    NSDate * pausestart;
 	/* MAL Scrobbling/Updating Class */
 	MyAnimeList * MALEngine;
 	/* Update Status Sheet Window IBOutlets */

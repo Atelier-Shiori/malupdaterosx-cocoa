@@ -137,6 +137,7 @@
     [defaultValues setObject:[NSNumber numberWithBool:YES] forKey:@"useSearchCache"];
     [defaultValues setObject:[[NSMutableArray alloc] init] forKey:@"exceptions"];
     [defaultValues setObject:[[NSMutableArray alloc] init] forKey:@"ignoredirectories"];
+    [defaultValues setObject:[[NSMutableArray alloc] init] forKey:@"IgnoreTitleRules"];
     [defaultValues setObject:[NSNumber numberWithBool:YES] forKey:@"UseNewRecognitionEngine"];
     if (floor(NSAppKitVersionNumber) > NSAppKitVersionNumber10_9){
         //Yosemite Specific Advanced Options
@@ -390,8 +391,7 @@
 		[self starttimer];
 		[togglescrobbler setTitle:@"Stop Scrobbling"];
 		[ScrobblerStatus setObjectValue:@"Scrobble Status: Started"];
-        [self showNotication:@"MAL Updater OS X" message:@"Auto Scrobble is now turned on."];
-		//Set Scrobbling State to true
+        //Set Scrobbling State to true
 		scrobbling = TRUE;
 	}
 }
@@ -469,7 +469,9 @@
             [self setStatusMenuTitleEpisode:[MALEngine getLastScrobbledTitle] episode:[MALEngine getLastScrobbledEpisode]];
             //Show Anime Information
             NSDictionary * ainfo = [MALEngine getLastScrobbledInfo];
-            [self showAnimeInfo:ainfo];
+            if (ainfo !=nil) { // Checks if Hachidori already populated info about the just updated title.
+                [self showAnimeInfo:ainfo];
+            }
         
         }
             // Enable Menu Items
@@ -484,22 +486,30 @@
     }
 }
 -(void)starttimer {
-	NSLog(@"Timer Started.");
-	//Create Timer
+    NSLog(@"Timer Started.");
     timer = [NSTimer scheduledTimerWithTimeInterval:300
                                              target:self
                                            selector:@selector(firetimer:)
                                            userInfo:nil
                                             repeats:YES];
-
+    if (previousfiredate != nil) {
+        NSLog(@"Resuming Timer");
+        float pauseTime = -1*[pausestart timeIntervalSinceNow];
+        [timer setFireDate:[previousfiredate initWithTimeInterval:pauseTime sinceDate:previousfiredate]];
+        pausestart = nil;
+        previousfiredate = nil;
+    }
+    
 }
 -(void)stoptimer {
-	NSLog(@"Timer Stopped.");
-	//Stop Timer
-	// Remove Timer
-	[timer invalidate];
-	timer = nil;
+    NSLog(@"Pausing Timer.");
+    //Stop Timer
+    [timer invalidate];
+    //Set Previous Fire and Pause Times
+    pausestart = [NSDate date];
+    previousfiredate = [timer fireDate];
 }
+
 -(IBAction)updatenow:(id)sender{
     if (![self checktoken])
         [self showNotication:@"MAL Updater OS X" message:@"Add a login before you start scrobbling."];
@@ -530,6 +540,8 @@
     //Image
     NSImage * dimg = [[NSImage alloc]initByReferencingURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@", [d objectForKey:@"image_url"]]]]; //Downloads Image
     [img setImage:dimg]; //Get the Image for the title
+    // Clear Anime Info so that MAL Updater OS X won't attempt to retrieve it if the same episode and title is playing
+    [MALEngine clearAnimeInfo];
 }
 -(BOOL)checktoken{
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -553,6 +565,7 @@
            modalForWindow:window modalDelegate:self
            didEndSelector:@selector(correctionDidEnd:returnCode:contextInfo:)
               contextInfo:(void *)nil];
+        [self disableUpdateItems];
     }
     else{
         [NSApp beginSheet:[fsdialog window]
@@ -598,6 +611,7 @@
         NSLog(@"Cancel");
     }
     fsdialog = nil;
+    [self enableUpdateItems];
     //Restart Timer
     if (scrobbling == TRUE) {
         [self starttimer];
@@ -743,6 +757,7 @@ Getters
  */
 -(IBAction)updatestatus:(id)sender {
     [self showUpdateDialog:[self window]];
+    [self disableUpdateItems];
 }
 -(IBAction)updatestatusmenu:(id)sender{
     [self showUpdateDialog:nil];
@@ -775,6 +790,7 @@ Getters
 	if (scrobbling == TRUE) {
 		[self starttimer];
 	}
+    [self enableUpdateItems];
 }
 
 -(IBAction)closeupdatestatus:(id)sender {
@@ -810,5 +826,25 @@ Getters
     // Properly show the about window in a menu item application
     [NSApp activateIgnoringOtherApps:YES];
     [[NSApplication sharedApplication] orderFrontStandardAboutPanel:self];
+}
+-(void)disableUpdateItems{
+    // Disables update options to prevent erorrs
+    panelactive = true;
+    [statusMenu setAutoenablesItems:NO];
+    [updatedtitlemenus setAutoenablesItems:NO];
+    [updatenow setEnabled:NO];
+    [togglescrobbler setEnabled:NO];
+    [updatedcorrecttitle setEnabled:NO];
+    [updatedupdatestatus setEnabled:NO];
+}
+-(void)enableUpdateItems{
+    // Reenables update options
+    panelactive = false;
+    [updatenow setEnabled:YES];
+    [togglescrobbler setEnabled:YES];
+    [updatedcorrecttitle setEnabled:YES];
+    [updatedupdatestatus setEnabled:YES];
+    [updatedtitlemenus setAutoenablesItems:YES];
+    [statusMenu setAutoenablesItems:YES];
 }
 @end

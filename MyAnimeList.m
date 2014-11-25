@@ -280,19 +280,8 @@
             string = [match matchedString];
         }
     }
-    //Check ignore directories. If on ignore directory, set onIgnoreList to true.
-    NSArray * ignoredirectories = [[NSUserDefaults standardUserDefaults] objectForKey:@"ignoreddirectories"];
-    BOOL onIgnoreList = false;
-    if ([ignoredirectories count] > 0) {
-        for (NSDictionary * d in ignoredirectories) {
-            OGRegularExpression    *regex2 = [OGRegularExpression regularExpressionWithString:[[NSString stringWithFormat:@"(%@)", [d objectForKey:@"directory"]] stringByReplacingOccurrencesOfString:@"/" withString:@"\\/"]];
-            if ([regex2 matchInString:string]) {
-                NSLog(@"Video being played is in ignored directory");
-                onIgnoreList = true;
-                break;
-            }
-        }
-    }
+    //Check if thee file name or directory is on any ignore list
+    BOOL onIgnoreList = [self checkifIgnored:string];
     //Make sure the file name is valid, even if player is open. Do not update video files in ignored directories
     if ([regex matchInString:string] !=nil && !onIgnoreList) {
         NSDictionary *d = [[Recognition alloc] recognize:string];
@@ -688,12 +677,15 @@ foundtitle:
     else
         return 0;
 }
+-(void)clearAnimeInfo{
+    LastScrobbledInfo = nil;
+}
 -(NSString *)desensitizeSeason:(NSString *)title {
     // Get rid of season references
-    OGRegularExpression* regex = [OGRegularExpression regularExpressionWithString: @"(Second Season|Third Season|Fourth Season|Fifth Season|Sixth Season|Seventh Season|Eighth Season|Nineth Season)"];
-    title = [regex replaceAllMatchesInString:title withString:@"" options:OgreIgnoreCaseOption];
-    regex = [OGRegularExpression regularExpressionWithString: @"(s|S)\\d"];
-    title = [regex replaceAllMatchesInString:title withString:@"" options:OgreIgnoreCaseOption];
+    OGRegularExpression* regex = [OGRegularExpression regularExpressionWithString: @"(Second Season|Third Season|Fourth Season|Fifth Season|Sixth Season|Seventh Season|Eighth Season|Nineth Season)" options:OgreIgnoreCaseOption];
+    title = [regex replaceAllMatchesInString:title withString:@""];
+    regex = [OGRegularExpression regularExpressionWithString: @"(s)\\d" options:OgreIgnoreCaseOption];
+    title = [regex replaceAllMatchesInString:title withString:@""];
     // Remove any Whitespace
     title = [title stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     return title;
@@ -707,4 +699,34 @@ foundtitle:
     [cache addObject:entry];
     [defaults setObject:cache forKey:@"searchcache"];
 }
+-(bool)checkifIgnored:(NSString *)filename{
+    //Checks if file name or directory is on ignore list
+    filename = [filename stringByReplacingOccurrencesOfString:@"n/" withString:@"/"];
+    //Check ignore directories. If on ignore directory, set onIgnoreList to true.
+    NSArray * ignoredirectories = [[NSUserDefaults standardUserDefaults] objectForKey:@"ignoreddirectories"];
+    if ([ignoredirectories count] > 0) {
+        for (NSDictionary * d in ignoredirectories) {
+            if ([[OGRegularExpression regularExpressionWithString:[[NSString stringWithFormat:@"^(%@/)+", [d objectForKey:@"directory"]] stringByReplacingOccurrencesOfString:@"/" withString:@"\\/"] options:OgreIgnoreCaseOption] matchInString:filename]) {
+                NSLog(@"Video being played is in ignored directory");
+                return true;
+                break;
+            }
+        }
+    }
+    // Get filename only
+    filename = [[OGRegularExpression regularExpressionWithString:@"^.+/"] replaceAllMatchesInString:filename withString:@""];
+    NSArray * ignoredfilenames = [[NSUserDefaults standardUserDefaults] objectForKey:@"IgnoreTitleRules"];
+    if ([ignoredfilenames count] > 0) {
+        for (NSDictionary * d in ignoredfilenames) {
+            NSString * rule = [NSString stringWithFormat:@"%@", [d objectForKey:@"rule"]];
+            if ([[OGRegularExpression regularExpressionWithString:rule options:OgreIgnoreCaseOption] matchInString:filename] && rule.length !=0) { // Blank rules are infinite, thus should not be counted
+                NSLog(@"Video file name is on filename ignore list.");
+                return true;
+                break;
+            }
+        }
+    }
+    return false;
+}
+
 @end

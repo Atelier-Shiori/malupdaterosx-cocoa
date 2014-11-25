@@ -48,4 +48,5 @@
 -(int)getWatchStatus;
 -(BOOL)getSuccess;
 -(NSDictionary *)getLastScrobbledInfo;
+-(void)clearAnimeInfo;
 @end
