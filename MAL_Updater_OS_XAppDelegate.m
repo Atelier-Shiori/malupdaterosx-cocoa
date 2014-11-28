@@ -131,7 +131,7 @@
 	
 	// Defaults
 	[defaultValues setObject:@"" forKey:@"Base64Token"];
-	[defaultValues setObject:@"https://malapi.shioridiary.me" forKey:@"MALAPIURL"];
+	[defaultValues setObject:@"https://malapi.ateliershiori.moe" forKey:@"MALAPIURL"];
 	[defaultValues setObject:[NSNumber numberWithBool:NO] forKey:@"ScrobbleatStartup"];
     [defaultValues setObject:[[NSMutableArray alloc] init] forKey:@"searchcache"];
     [defaultValues setObject:[NSNumber numberWithBool:YES] forKey:@"useSearchCache"];
@@ -236,7 +236,7 @@
     }
 	
 	// Notify User if there is no Account Info
-	if ([[defaults objectForKey:@"Base64Token"] length] == 0) {
+	if (![self checktoken]) {
         // First time prompt
         NSAlert * alert = [[NSAlert alloc] init] ;
         [alert addButtonWithTitle:@"Yes"];
@@ -250,11 +250,17 @@
             [self.preferencesWindowController showWindow:nil];
         }
 	}
+    if ([self checkoldAPI]) {
+        [self showNotication:@"MAL Updater OS X" message:@"The API URL has been automatically updated."];
+        [[NSUserDefaults standardUserDefaults] setObject:@"https://malapi.ateliershiori.moe" forKey:@"MALAPIURL"];
+    }
 	// Autostart Scrobble at Startup
 	if ([defaults boolForKey:@"ScrobbleatStartup"] == 1) {
 		[self autostarttimer];
 	}
-    
+    if ([defaults boolForKey:@"ScrobbleatStartup"] == 1) {
+        [self autostarttimer];
+    }
 }
 /*
  
@@ -462,17 +468,25 @@
             [updatetoolbaritem setEnabled:YES];
             [correcttoolbaritem setEnabled:YES];
             [sharetoolbaritem setEnabled:YES];
-            [updatedtitlemenu setHidden:NO];
+            //Show Last Scrobbled Title and operations */
+            [seperator setHidden:NO];
+            [lastupdateheader setHidden:NO];
+            [updatedtitle setHidden:NO];
+            [updatedepisode setHidden:NO];
+            [seperator2 setHidden:NO];
+            [updatecorrectmenu setHidden:NO];
+            [updatedcorrecttitle setHidden:NO];
+            [shareMenuItem setHidden:NO];
             // Set Titles
             [self setLastScrobbledTitle:[NSString stringWithFormat:@"Last Scrobbled: %@ - Episode %@",[MALEngine getLastScrobbledTitle],[MALEngine getLastScrobbledEpisode]]];
             [self setStatusToolTip:[NSString stringWithFormat:@"MAL Updater OS X - %@ - %@",[MALEngine getLastScrobbledTitle],[MALEngine getLastScrobbledEpisode]]];
             [self setStatusMenuTitleEpisode:[MALEngine getLastScrobbledTitle] episode:[MALEngine getLastScrobbledEpisode]];
             //Show Anime Information
             NSDictionary * ainfo = [MALEngine getLastScrobbledInfo];
-            if (ainfo !=nil) { // Checks if Hachidori already populated info about the just updated title.
+            if (ainfo !=nil) { // Checks if MyAnimeList already populated info about the just updated title.
                 [self showAnimeInfo:ainfo];
+                [self generateShareMenu];
             }
-        
         }
             // Enable Menu Items
             scrobbleractive = false;
@@ -831,7 +845,7 @@ Getters
     // Disables update options to prevent erorrs
     panelactive = true;
     [statusMenu setAutoenablesItems:NO];
-    [updatedtitlemenus setAutoenablesItems:NO];
+    [updatecorrect setAutoenablesItems:NO];
     [updatenow setEnabled:NO];
     [togglescrobbler setEnabled:NO];
     [updatedcorrecttitle setEnabled:NO];
@@ -844,7 +858,42 @@ Getters
     [togglescrobbler setEnabled:YES];
     [updatedcorrecttitle setEnabled:YES];
     [updatedupdatestatus setEnabled:YES];
-    [updatedtitlemenus setAutoenablesItems:YES];
+    [updatecorrect setAutoenablesItems:YES];
     [statusMenu setAutoenablesItems:YES];
+}
+-(BOOL)checkoldAPI{
+    if ([[NSString stringWithFormat:@"%@", [[NSUserDefaults standardUserDefaults] objectForKey:@"MALAPIURL"]] isEqualToString:@"https://malapi.shioridiary.me"]||[[NSString stringWithFormat:@"%@", [[NSUserDefaults standardUserDefaults] objectForKey:@"MALAPIURL"]] isEqualToString:@"http://mal-api.com"]) {
+        return true;
+    }
+    return false;
+}
+/*
+ Share Services
+ */
+-(void)generateShareMenu{
+    //Clear Share Menu
+    [shareMenu removeAllItems];
+    // Workaround for Share Toolbar Item
+    NSMenuItem *shareIcon = [[NSMenuItem alloc] init];
+    [shareIcon setImage:[NSImage imageNamed:NSImageNameShareTemplate]];
+    [shareIcon setHidden:YES];
+    [shareIcon setTitle:@""];
+    [shareMenu addItem:shareIcon];
+    //Generate Items to Share
+    shareItems = [NSArray arrayWithObjects:[NSString stringWithFormat:@"%@ - %@", [MALEngine getLastScrobbledTitle], [MALEngine getLastScrobbledEpisode] ], [NSURL URLWithString:[NSString stringWithFormat:@"http://hummingbird.me/anime/%@", [MALEngine getAniID]]] ,nil];
+    //Get Share Services for Items
+    NSArray *shareServiceforItems = [NSSharingService sharingServicesForItems:shareItems];
+    //Generate Share Items and populate Share Menu
+    for (NSSharingService * cservice in shareServiceforItems){
+        NSMenuItem * item = [[NSMenuItem alloc] initWithTitle:[cservice title] action:@selector(shareFromService:) keyEquivalent:@""];
+        [item setRepresentedObject:cservice];
+        [item setImage:[cservice image]];
+        [item setTarget:self];
+        [shareMenu addItem:item];
+    }
+}
+- (IBAction)shareFromService:(id)sender{
+    // Share Item
+    [[sender representedObject] performWithItems:shareItems];
 }
 @end

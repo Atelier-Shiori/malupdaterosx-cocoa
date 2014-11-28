@@ -30,12 +30,19 @@
 	NSTimer * timer;
 	IBOutlet NSMenuItem * togglescrobbler;
     IBOutlet NSMenuItem * updatenow;
-    IBOutlet NSMenuItem * updatedtitlemenu;
-    IBOutlet NSMenu * updatedtitlemenus;
+    /* Updated Title Display and Operations */
+    IBOutlet NSMenuItem * seperator;
+    IBOutlet NSMenuItem * lastupdateheader;
+    IBOutlet NSMenuItem * updatecorrectmenu;
+    IBOutlet NSMenu * updatecorrect;
     IBOutlet NSMenuItem * updatedtitle;
     IBOutlet NSMenuItem * updatedepisode;
+    IBOutlet NSMenuItem * seperator2;
     IBOutlet NSMenuItem * updatedcorrecttitle;
     IBOutlet NSMenuItem * updatedupdatestatus;
+    IBOutlet NSMenuItem *shareMenuItem;
+    IBOutlet NSMenu * shareMenu;
+    /* Status Window */
 	IBOutlet NSTextField * ScrobblerStatus;
 	IBOutlet NSTextField * LastScrobbled;
     IBOutlet NSTextView * animeinfo;
@@ -50,6 +57,7 @@
     NSDate * pausestart;
 	/* MAL Scrobbling/Updating Class */
 	MyAnimeList * MALEngine;
+        NSArray * shareItems;
 	/* Update Status Sheet Window IBOutlets */
 	IBOutlet NSToolbarItem * updatetoolbaritem;
     IBOutlet NSToolbarItem * correcttoolbaritem;

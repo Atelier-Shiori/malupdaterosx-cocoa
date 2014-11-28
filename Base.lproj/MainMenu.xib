@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6250" systemVersion="14B25" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6250" systemVersion="13F34" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
         <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6250"/>
@@ -190,6 +190,46 @@
                         <action selector="showPreferences:" target="560" id="564"/>
                     </connections>
                 </menuItem>
+                <menuItem isSeparatorItem="YES" hidden="YES" id="egk-cQ-duZ"/>
+                <menuItem title="Last Scrobbled:" hidden="YES" enabled="NO" id="53a-L9-dCg">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                </menuItem>
+                <menuItem title="Show Title" hidden="YES" enabled="NO" indentationLevel="1" id="XZU-Ti-Qvg">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                </menuItem>
+                <menuItem title="Episode" hidden="YES" enabled="NO" indentationLevel="1" id="tL9-L5-eca">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                </menuItem>
+                <menuItem isSeparatorItem="YES" hidden="YES" id="ZEo-hm-rcH">
+                    <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                </menuItem>
+                <menuItem title="Update/Correct" hidden="YES" id="xQ0-Wd-k7I">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <menu key="submenu" title="Update/Correct" id="tvQ-no-ADg">
+                        <items>
+                            <menuItem title="Update Status…" id="jLZ-Sk-Bfm">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="updatestatusmenu:" target="560" id="Zp7-VB-86H"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Correct Title…" id="EZJ-Oa-tIL">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="showCorrectionSearchWindow:" target="560" id="wy2-tu-9ib"/>
+                                </connections>
+                            </menuItem>
+                        </items>
+                    </menu>
+                </menuItem>
+                <menuItem title="Share" hidden="YES" id="4x0-G3-pYv">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <menu key="submenu" title="Share" id="ltR-rE-E7c">
+                        <items>
+                            <menuItem state="on" image="NSShareTemplate" hidden="YES" id="mLn-eT-r6O"/>
+                        </items>
+                    </menu>
+                </menuItem>
                 <menuItem isSeparatorItem="YES" id="555">
                     <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                 </menuItem>
@@ -204,32 +244,6 @@
                     <connections>
                         <action selector="updatenow:" target="560" id="UpZ-c0-qe6"/>
                     </connections>
-                </menuItem>
-                <menuItem title="Last Scrobbled" hidden="YES" id="Xdd-UP-4fa">
-                    <modifierMask key="keyEquivalentModifierMask"/>
-                    <menu key="submenu" title="Last Scrobbled" id="plV-TY-BVe">
-                        <items>
-                            <menuItem title="Show Title" enabled="NO" id="WVZ-pu-Fp5">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                            </menuItem>
-                            <menuItem title="Episode" enabled="NO" id="QVe-wc-Os7">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                            </menuItem>
-                            <menuItem isSeparatorItem="YES" id="vfO-5U-RVy"/>
-                            <menuItem title="Update Status" enabled="NO" id="bnE-RJ-nGF">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <connections>
-                                    <action selector="updatestatusmenu:" target="560" id="E6P-7B-Fn7"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem title="Correct Title" id="FGG-32-eFq">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <connections>
-                                    <action selector="showCorrectionSearchWindow:" target="560" id="c7W-7c-azb"/>
-                                </connections>
-                            </menuItem>
-                        </items>
-                    </menu>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="574"/>
                 <menuItem title="Show/Hide Status Window" id="573">
@@ -265,18 +279,23 @@
                 <outlet property="historytable" destination="595" id="635"/>
                 <outlet property="historywindow" destination="588" id="605"/>
                 <outlet property="img" destination="gfr-73-DLn" id="iLO-3a-xch"/>
-                <outlet property="sharetoolbaritem" destination="PDJ-oY-qAN" id="Xw6-jN-k2Z"/>
+                <outlet property="lastupdateheader" destination="53a-L9-dCg" id="Nsn-Jb-mIY"/>
+                <outlet property="seperator" destination="egk-cQ-duZ" id="JnP-Yt-mVt"/>
+                <outlet property="seperator2" destination="ZEo-hm-rcH" id="g9l-WQ-yu2"/>
+                <outlet property="shareMenu" destination="ltR-rE-E7c" id="k8c-iR-Onz"/>
+                <outlet property="shareMenuItem" destination="4x0-G3-pYv" id="RFZ-gE-DzM"/>
+                <outlet property="sharetoolbaritem" destination="vKI-CB-Acb" id="o8P-m2-Etr"/>
                 <outlet property="showscore" destination="744" id="784"/>
                 <outlet property="showstatus" destination="742" id="785"/>
                 <outlet property="showtitle" destination="746" id="788"/>
                 <outlet property="statusMenu" destination="543" id="561"/>
                 <outlet property="togglescrobbler" destination="557" id="657"/>
-                <outlet property="updatedcorrecttitle" destination="FGG-32-eFq" id="3AI-iY-28J"/>
-                <outlet property="updatedepisode" destination="QVe-wc-Os7" id="1d5-DZ-xbX"/>
-                <outlet property="updatedtitle" destination="WVZ-pu-Fp5" id="Cj3-Gn-5gH"/>
-                <outlet property="updatedtitlemenu" destination="Xdd-UP-4fa" id="hD6-WK-5Sv"/>
-                <outlet property="updatedtitlemenus" destination="plV-TY-BVe" id="c5p-Jw-cOi"/>
-                <outlet property="updatedupdatestatus" destination="bnE-RJ-nGF" id="Yhc-Hz-Z1q"/>
+                <outlet property="updatecorrect" destination="tvQ-no-ADg" id="2as-pe-Cs1"/>
+                <outlet property="updatecorrectmenu" destination="xQ0-Wd-k7I" id="Yaa-0e-3Dm"/>
+                <outlet property="updatedcorrecttitle" destination="EZJ-Oa-tIL" id="gFs-aT-4eq"/>
+                <outlet property="updatedepisode" destination="tL9-L5-eca" id="zOB-p7-2K3"/>
+                <outlet property="updatedtitle" destination="XZU-Ti-Qvg" id="Ie8-By-ILp"/>
+                <outlet property="updatedupdatestatus" destination="jLZ-Sk-Bfm" id="Et8-zg-xjO"/>
                 <outlet property="updatenow" destination="Swq-JZ-crS" id="wbq-Tb-8xl"/>
                 <outlet property="updatepanel" destination="725" id="777"/>
                 <outlet property="updatetoolbaritem" destination="k8g-Fn-fps" id="jAk-kU-cCA"/>
@@ -666,21 +685,6 @@ Gw
                             <action selector="showhistory:" target="560" id="HCI-hT-Yrn"/>
                         </connections>
                     </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="D4D78994-86FE-4D61-81D7-125C5CA16673" label="Share" paletteLabel="Share" toolTip="Share" image="NSShareTemplate" id="PDJ-oY-qAN">
-                        <size key="minSize" width="32" height="25"/>
-                        <size key="maxSize" width="32" height="32"/>
-                        <button key="view" verticalHuggingPriority="750" id="J31-lj-bj2">
-                            <rect key="frame" x="22" y="14" width="32" height="25"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="NSShareTemplate" imagePosition="overlaps" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="jaB-zh-5gn">
-                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                <font key="font" metaFont="system"/>
-                            </buttonCell>
-                        </button>
-                        <connections>
-                            <action selector="share:" target="560" id="v0G-w8-rYF"/>
-                        </connections>
-                    </toolbarItem>
                     <toolbarItem implicitItemIdentifier="NSToolbarCustomizeToolbarItem" id="brg-hf-L73"/>
                     <toolbarItem implicitItemIdentifier="NSToolbarSeparatorItem" id="JKl-qD-hH8"/>
                     <toolbarItem implicitItemIdentifier="NSToolbarFlexibleSpaceItem" id="DUP-IU-qwC">
@@ -704,22 +708,43 @@ Gw
                             <action selector="showCorrectionSearchWindow:" target="560" id="aoe-z3-aNQ"/>
                         </connections>
                     </toolbarItem>
+                    <toolbarItem implicitItemIdentifier="E9C26A12-9952-4DDB-ACEB-5F9DA304DDAD" label="Share" paletteLabel="Share" image="NSShareTemplate" id="vKI-CB-Acb">
+                        <nil key="toolTip"/>
+                        <size key="minSize" width="30" height="25"/>
+                        <size key="maxSize" width="30" height="25"/>
+                        <popUpButton key="view" verticalHuggingPriority="750" id="GVq-Ha-GwO">
+                            <rect key="frame" x="0.0" y="14" width="30" height="25"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <popUpButtonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" pullsDown="YES" arrowPosition="noArrow" selectedItem="Zpr-kY-u33" id="OaT-sk-AsU">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="menu"/>
+                                <menu key="menu" id="GIJ-pH-dPY">
+                                    <items>
+                                        <menuItem state="on" image="NSShareTemplate" hidden="YES" id="Zpr-kY-u33"/>
+                                    </items>
+                                </menu>
+                            </popUpButtonCell>
+                            <connections>
+                                <outlet property="menu" destination="ltR-rE-E7c" id="IvZ-kr-UeR"/>
+                            </connections>
+                        </popUpButton>
+                    </toolbarItem>
                 </allowedToolbarItems>
                 <defaultToolbarItems>
                     <toolbarItem reference="wq9-kC-J4D"/>
                     <toolbarItem reference="eo4-15-Ehk"/>
                     <toolbarItem reference="k8g-Fn-fps"/>
                     <toolbarItem reference="ddD-eA-X8S"/>
-                    <toolbarItem reference="PDJ-oY-qAN"/>
+                    <toolbarItem reference="vKI-CB-Acb"/>
                 </defaultToolbarItems>
             </toolbar>
             <contentBorderThickness minY="22"/>
-            <point key="canvasLocation" x="284" y="0.5"/>
+            <point key="canvasLocation" x="267" y="123.5"/>
         </window>
     </objects>
     <resources>
         <image name="NSActionTemplate" width="14" height="14"/>
-        <image name="NSShareTemplate" width="11" height="16"/>
+        <image name="NSShareTemplate" width="18" height="16"/>
         <image name="correct" width="32" height="32"/>
         <image name="history" width="32" height="32"/>
         <image name="update" width="32" height="32"/>
