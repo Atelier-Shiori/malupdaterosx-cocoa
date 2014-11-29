@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/chikorita157/malupdaterosx-cocoa.svg?branch=master)](https://travis-ci.org/chikorita157/malupdaterosx-cocoa)
 # MAL Updater OS X 2.1 Cocoa
-MAL Updater OS X is an open source Mac OS X application that automatically detects what's playing and updates the user's MyAnimeList.
+MAL Updater OS X is an open source OS X scrobbler that automatically detects what's playing and updates the user's MyAnimeList.
 
 XCode 6.1 or higher is required to build (Deployment Target is OS X 10.8)
 
@@ -14,7 +14,6 @@ Check the [Getting Started Guide](https://github.com/chikorita157/malupdaterosx-
 ## Dependencies
 All the frameworks are included. Just build! Here are the frameworks that are used in this app:
 
-* ASIHTTPRequest.framework (This is a framework version to maintain compatibility when building on later versions of OS X. Source code is in the Framework folder)
 * anitomy-osx.framework (GPLv3 Licensed, source code is included in the Frameworks Folder)
 * Sparkle.framework
 * OgreKit.framework

@@ -8,6 +8,7 @@
 
 #import "MyAnimeList.h"
 #import "Recognition.h"
+#import "EasyNSURLConnection.h"
 
 @interface MyAnimeList ()
 -(int)detectmedia; // 0 - Nothing, 1 - Same, 2 - Update
@@ -212,15 +213,15 @@
 
 	//Set Search API
 	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/anime/search?q=%@",MALApiUrl, searchterm]];
-	ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
+	EasyNSURLConnection *request = [[EasyNSURLConnection alloc] initWithURL:url];
 	//Ignore Cookies
-	[request setUseCookiePersistence:NO];
+	[request setUseCookies:NO];
 	//Perform Search
-	[request startSynchronous];
+	[request startRequest];
 	//Set up Delegate
 	
 	// Get Status Code
-	int statusCode = [request responseStatusCode];
+	int statusCode = [request getStatusCode];
 	switch (statusCode) {
         case 0:
             online = false;
@@ -229,7 +230,7 @@
             break;
 		case 200:
             online = true;
-			return [self findaniid:[request responseData]];
+			return [self findaniid:[request getResponseData]];
 			break;
 			
 		default:
@@ -389,19 +390,19 @@ foundtitle:
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	//Set Search API
 	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/anime/%@?mine=1",MALApiUrl, titleid]];
-	ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
+	EasyNSURLConnection *request = [[EasyNSURLConnection alloc] initWithURL:url];
 	//Ignore Cookies
-	[request setUseCookiePersistence:NO];
+	[request setUseCookies:NO];
 	//Set Token
-	[request addRequestHeader:@"Authorization" value:[NSString stringWithFormat:@"Basic %@",[defaults objectForKey:@"Base64Token"]]];
+	[request addHeader:[NSString stringWithFormat:@"Basic %@",[defaults objectForKey:@"Base64Token"]]  forKey:@"Authorization"];
 	//Perform Search
-	[request startSynchronous];
+	[request startRequest];
 	// Get Status Code
-	int statusCode = [request responseStatusCode];
+	int statusCode = [request getStatusCode];
 	if (statusCode == 200 ) {
         online = true;
         NSError* error;
-		NSDictionary *animeinfo = [NSJSONSerialization JSONObjectWithData:[request responseData] options:kNilOptions error:&error];
+		NSDictionary *animeinfo = [NSJSONSerialization JSONObjectWithData:[request getResponseData] options:kNilOptions error:&error];
 		if ([animeinfo objectForKey:@"episodes"] == [NSNull null]) { // To prevent the scrobbler from failing because there is no episode total.
 			TotalEpisodes = @"0"; // No Episode Total, Set to 0.
 		}
@@ -460,37 +461,37 @@ foundtitle:
 		NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 		//Set library/scrobble API
 		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/animelist/anime/%@", MALApiUrl, titleid]];
-		ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+		EasyNSURLConnection *request = [[EasyNSURLConnection alloc] initWithURL:url];
 		//Ignore Cookies
-		[request setUseCookiePersistence:NO];
+		[request setUseCookies:NO];
 		//Set Token
-		[request addRequestHeader:@"Authorization" value:[NSString stringWithFormat:@"Basic %@",[defaults objectForKey:@"Base64Token"]]];
-	    [request setRequestMethod:@"PUT"];
-	    [request setPostValue:DetectedEpisode forKey:@"episodes"];
+		[request addHeader:[NSString stringWithFormat:@"Basic %@",[defaults objectForKey:@"Base64Token"]]  forKey:@"Authorization"];
+	    [request setPostMethod:@"PUT"];
+	    [request addFormData:DetectedEpisode forKey:@"episodes"];
 		//Set Status
 		if([DetectedEpisode intValue] == [TotalEpisodes intValue]) {
 			//Set Title State for Title (use for Twitter feature)
 			WatchStatus = @"completed";
 			// Since Detected Episode = Total Episode, set the status as "Complete"
-			[request setPostValue:WatchStatus forKey:@"status"];
+			[request addFormData:WatchStatus forKey:@"status"];
 		}
 		else {
 			//Set Title State for Title (use for Twitter feature)
 			WatchStatus = @"watching";
 			// Still Watching
-			[request setPostValue:WatchStatus forKey:@"status"];
+			[request addFormData:WatchStatus forKey:@"status"];
 		}	
 		// Set existing score to prevent the score from being erased.
-		[request setPostValue:TitleScore forKey:@"score"];
+		[request addFormData:TitleScore forKey:@"score"];
 		// Do Update
-		[request startSynchronous];
+		[request startFormRequest];
 		
 		// Store Scrobbled Title and Episode
 		LastScrobbledTitle = DetectedTitle;
 		LastScrobbledEpisode = DetectedEpisode;
-		//NSLog(@"%i", [request responseStatusCode]);
+		//NSLog(@"%i", [request getStatusCode]);
 		//NSLog(@"%@", [request responseString]);
-		switch ([request responseStatusCode]) {
+		switch ([request getStatusCode]) {
 			case 200:
 				// Update Successful
                 return 22;
@@ -512,16 +513,16 @@ foundtitle:
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	//Set library/scrobble API
 	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/animelist/anime", MALApiUrl]];
-	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+	EasyNSURLConnection *request = [[EasyNSURLConnection alloc] initWithURL:url];
 	//Ignore Cookies
-	[request setUseCookiePersistence:NO];
+	[request setUseCookies:NO];
 	//Set Token
-	[request addRequestHeader:@"Authorization" value:[NSString stringWithFormat:@"Basic %@",[defaults objectForKey:@"Base64Token"]]];
-	[request setPostValue:titleid forKey:@"anime_id"];
-	[request setPostValue:DetectedEpisode forKey:@"episodes"];
-	[request setPostValue:@"watching" forKey:@"status"];	
+	[request addHeader:[NSString stringWithFormat:@"Basic %@",[defaults objectForKey:@"Base64Token"]]  forKey:@"Authorization"];
+	[request addFormData:titleid forKey:@"anime_id"];
+	[request addFormData:DetectedEpisode forKey:@"episodes"];
+	[request addFormData:@"watching" forKey:@"status"];	
 	// Do Update
-	[request startSynchronous];
+	[request startFormRequest];
 
 	// Store Scrobbled Title and Episode
 	LastScrobbledTitle = DetectedTitle;
@@ -530,9 +531,9 @@ foundtitle:
 	//Set Title State for Title (use for Twitter feature)
 	TitleState = @"started watching";
 	WatchStatus = @"watching";
-	NSLog(@"%i", [request responseStatusCode]);
+	NSLog(@"%i", [request getStatusCode]);
 	//NSLog(@"%@", [request responseString]);
-	switch ([request responseStatusCode]) {
+	switch ([request getStatusCode]) {
 		case 200:
 		case 201:
 			// Update Successful
@@ -553,16 +554,16 @@ foundtitle:
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     //Set library/scrobble API
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/animelist/anime/%@", MALApiUrl, titleid]];
-    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+    EasyNSURLConnection *request = [[EasyNSURLConnection alloc] initWithURL:url];
     //Ignore Cookies
-    [request setUseCookiePersistence:NO];
+    [request setUseCookies:NO];
     //Set Token
-    [request addRequestHeader:@"Authorization" value:[NSString stringWithFormat:@"Basic %@",[defaults objectForKey:@"Base64Token"]]];
+    [request addHeader:[NSString stringWithFormat:@"Basic %@",[defaults objectForKey:@"Base64Token"]]  forKey:@"Authorization"];
     //Set method to Delete
-    [request setRequestMethod:@"DELETE"];
+    [request setPostMethod:@"DELETE"];
     // Do Update
-    [request startSynchronous];
-    switch ([request responseStatusCode]) {
+    [request startFormRequest];
+    switch ([request getStatusCode]) {
         case 200:
         case 201:
             return true;
@@ -585,23 +586,21 @@ foundtitle:
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	//Set library/scrobble API
 	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/animelist/anime/%@", MALApiUrl, titleid]];
-	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+	EasyNSURLConnection *request = [[EasyNSURLConnection alloc] initWithURL:url];
 	//Ignore Cookies
-	[request setUseCookiePersistence:NO];
+	[request setUseCookies:NO];
 	//Set Token
-	[request addRequestHeader:@"Authorization" value:[NSString stringWithFormat:@"Basic %@",[defaults objectForKey:@"Base64Token"]]];
-	[request setRequestMethod:@"PUT"];
+	[request addHeader:[NSString stringWithFormat:@"Basic %@",[defaults objectForKey:@"Base64Token"]]  forKey:@"Authorization"];
+	[request setPostMethod:@"PUT"];
 	//Set current episode
-	[request setPostValue:LastScrobbledEpisode forKey:@"episodes"];
+	[request addFormData:LastScrobbledEpisode forKey:@"episodes"];
 	//Set new watch status
-	[request setPostValue:showwatchstatus forKey:@"status"];	
+	[request addFormData:showwatchstatus forKey:@"status"];	
 	//Set new score.
-	[request setPostValue:[NSString stringWithFormat:@"%i", showscore] forKey:@"score"];
+	[request addFormData:[NSString stringWithFormat:@"%i", showscore] forKey:@"score"];
 	// Do Update
-	[request startSynchronous];
-	NSLog(@"%i", [request responseStatusCode]);
-	//NSLog(@"%@", [request responseString]);
-	switch ([request responseStatusCode]) {
+	[request startFormRequest];
+	switch ([request getStatusCode]) {
 		case 200:
 			// Update Successful
 			if ([TitleScore intValue] == showscore && [WatchStatus isEqualToString:showwatchstatus])

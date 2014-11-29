@@ -7,6 +7,7 @@
 //
 
 #import "FixSearchDialog.h"
+#import "EasyNSURLConnection.h"
 
 @interface FixSearchDialog ()
 
@@ -71,16 +72,14 @@
                                                                                                   kCFStringEncodingUTF8 ));
         //Set Search API
         NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/anime/search?q=%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"MALAPIURL"], searchterm]];
-        ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
+        EasyNSURLConnection *request = [[EasyNSURLConnection alloc] initWithURL:url];
         //Ignore Cookies
-        [request setUseCookiePersistence:NO];
-        //Set Timeout
-        [request setTimeOutSeconds:15];
+        [request setUseCookies:NO];
         //Perform Search
-        [request startSynchronous];
+        [request startRequest];
         // Get Status Code
-        int statusCode = [request responseStatusCode];
-        NSData *response = [request responseData];
+        int statusCode = [request getStatusCode];
+        NSData *response = [request getResponseData];
         switch (statusCode) {
             case 200:
                 [self populateData:response];

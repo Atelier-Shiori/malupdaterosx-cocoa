@@ -9,9 +9,6 @@
 #import <Cocoa/Cocoa.h>
 #import <OgreKit/OgreKit.h>
 #import "MAL_Updater_OS_XAppDelegate.h"
-#import <ASIHTTPRequest/ASIHTTPRequest.h>
-#import <ASIHTTPRequest/ASIHTTPRequest.h>
-#import <ASIHTTPRequest/ASIFormDataRequest.h>
 
 @interface MyAnimeList : NSObject {
 	NSString * Base64Token;

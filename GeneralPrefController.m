@@ -8,6 +8,7 @@
 
 #import "GeneralPrefController.h"
 #import "Base64Category.h"
+#import "EasyNSURLConnection.h"
 
 
 @implementation GeneralPrefController
@@ -46,13 +47,13 @@
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	//Set URL
 	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/animelist/chikorita157", [defaults objectForKey:@"MALAPIURL"]]];
-	ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
+	EasyNSURLConnection *request = [[EasyNSURLConnection alloc] initWithURL:url];
 	//Ignore Cookies
-	[request setUseCookiePersistence:NO];
+	[request setUseCookies:NO];
 	//Test API
-	[request startSynchronous];
+	[request startRequest];
 	// Get Status Code
-	int statusCode = [request responseStatusCode];
+	int statusCode = [request getStatusCode];
 	switch (statusCode) {
 		case 200:
 			[self showsheetmessage:@"API Test Successful" explaination:[NSString stringWithFormat:@"HTTP Code: %i", statusCode]];
@@ -69,7 +70,7 @@
 -(IBAction)resetapiurl:(id)sender
 {
 	//Reset Unofficial MAL API URL
-	[APIUrl setStringValue:@"https://malapi.shioridiary.me"];
+	[APIUrl setStringValue:@"https://malapi.ateliershiori.moe"];
 	// Generate API Key
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults] ;
 	[defaults setObject:[APIUrl stringValue] forKey:@"MALAPIURL"];
@@ -86,11 +87,10 @@
 	// Set Message type to Warning
 	[alert setAlertStyle:1];
 	// Show as Sheet on Preference Window
-	[alert runModal];
-	/*[alert beginSheetModalForWindow:[self window]
+	[alert beginSheetModalForWindow:[[self view] window]
 					  modalDelegate:self
 					 didEndSelector:nil
-						contextInfo:NULL];*/
+						contextInfo:NULL];
 }
 -(IBAction)clearSearchCache:(id)sender{
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];

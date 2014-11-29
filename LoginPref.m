@@ -9,6 +9,7 @@
 #import "LoginPref.h"
 #import "Base64Category.h"
 #import "MAL_Updater_OS_XAppDelegate.h"
+#import "EasyNSURLConnection.h"
 
 
 @implementation LoginPref
@@ -55,11 +56,10 @@
 	// Set Message type to Warning
 	[alert setAlertStyle:1];
 	// Show as Sheet on Preference Window
-	[alert runModal];
-	/*[alert beginSheetModalForWindow:[self window]
+	[alert beginSheetModalForWindow:[[self view] window]
 					  modalDelegate:self
 					 didEndSelector:nil
-						contextInfo:NULL];*/
+						contextInfo:NULL];
 }
 -(void)loadlogin
 {
@@ -112,17 +112,15 @@
 			else {
 				//Set Login URL
 				NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/account/verify_credentials", [defaults objectForKey:@"MALAPIURL"]]];
-				ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
+                EasyNSURLConnection *request = [[EasyNSURLConnection alloc] initWithURL:url];
 				//Ignore Cookies
-				[request setUseCookiePersistence:NO];
+				[request setUseCookies:NO];
 				//Set Username
-				[request setUsername:[fieldusername stringValue]];
-				[request setPassword:[fieldpassword stringValue]];
+                [request addHeader:[NSString stringWithFormat:@"Basic %@", [[NSString stringWithFormat:@"%@:%@", [fieldusername stringValue], [fieldpassword stringValue]] base64Encoding]] forKey:@"Authorization"];
 				//Vertify Username/Password
-				[request startSynchronous];
-				NSLog(@"%@",[request responseString]);
+				[request startRequest];
+                long statusCode =[request getStatusCode];
 				// Get Status Code
-				int statusCode = [request responseStatusCode];
 				switch (statusCode) {
 					case 200:{
 						//Login successful
@@ -142,7 +140,7 @@
 						break;}
 					default:{
 						//Login Failed, show error message
-						[self showsheetmessage:@"MAL Updater OS X was unable to log you in because of an unknown error." explaination:[NSString stringWithFormat:@"Error %i", statusCode]];
+						[self showsheetmessage:@"MAL Updater OS X was unable to log you in because of an unknown error." explaination:[NSString stringWithFormat:@"Error %li", statusCode]];
 						[savebut setEnabled: YES];
 						[savebut setKeyEquivalent:@"\r"];
 						break;}
