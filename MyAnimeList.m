@@ -368,8 +368,15 @@ update:
         if (idok) { // Good to go, check the title with regular expressions
             if ([regex matchInString:theshowtitle] != nil) {
                 //Return titleid
-                titleid = [NSString stringWithFormat:@"%@",[searchentry objectForKey:@"id"]];
-                goto foundtitle;
+                if ([searchentry objectForKey:@"episodes"] == nil || ([NSNumber numberWithInt:[searchentry objectForKey:@"episodes"]] >= [NSNumber numberWithInt:DetectedEpisode])) {
+                    NSLog(@"Valid Episode Count");
+                    titleid = [NSString stringWithFormat:@"%@",[searchentry objectForKey:@"slug"]];
+                    goto foundtitle;
+                }
+                else{
+                    // Detected episodes exceed total episodes
+                    continue;
+                }
                 
             }
         }
