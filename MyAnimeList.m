@@ -546,8 +546,6 @@ foundtitle:
 	//Set Title State for Title (use for Twitter feature)
 	TitleState = @"started watching";
 	WatchStatus = @"watching";
-	NSLog(@"%i", [request getStatusCode]);
-	//NSLog(@"%@", [request responseString]);
 	switch ([request getStatusCode]) {
 		case 200:
 		case 201:
@@ -556,7 +554,6 @@ foundtitle:
 			break;
 		default:
 			// Update Unsuccessful
-
 			return NO;
 			break;
 	}

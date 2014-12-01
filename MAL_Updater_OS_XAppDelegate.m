@@ -639,7 +639,7 @@
     BOOL exists = false;
     for (NSDictionary * d in exceptions){
         NSString * dt = [d objectForKey:@"detectedtitle"];
-        if (![detectedtitle isEqualToString:dt]) {
+        if ([detectedtitle isEqualToString:dt]) {
             NSLog(@"Title exists on Exceptions List");
             exists = true;
             break;
