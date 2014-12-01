@@ -367,10 +367,18 @@ update:
         }
         if (idok) { // Good to go, check the title with regular expressions
             if ([regex matchInString:theshowtitle] != nil) {
+                int totalepisodes;
+                if ([searchentry objectForKey:@"episodes"] == nil) {
+                    totalepisodes = 0;
+                }
+                else{
+                    totalepisodes = [[NSString stringWithFormat:@"%@",[searchentry objectForKey:@"episodes"]] intValue];
+                }
+                int detectedepisodenum = [NSNumber numberWithInt:DetectedEpisode];
                 //Return titleid
-                if ([searchentry objectForKey:@"episodes"] == nil || ([NSNumber numberWithInt:[searchentry objectForKey:@"episodes"]] >= [NSNumber numberWithInt:DetectedEpisode])) {
+                if ([searchentry objectForKey:@"episodes"] == nil || ( totalepisodes >= detectedepisodenum)) {
                     NSLog(@"Valid Episode Count");
-                    titleid = [NSString stringWithFormat:@"%@",[searchentry objectForKey:@"slug"]];
+                    titleid = [NSString stringWithFormat:@"%@",[searchentry objectForKey:@"id"]];
                     goto foundtitle;
                 }
                 else{
