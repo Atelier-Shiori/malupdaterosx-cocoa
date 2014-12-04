@@ -347,16 +347,6 @@
 		[window makeKeyAndOrderFront:self]; 
 	} 
 }
--(IBAction)share:(id)sender{
-    //Generate Items to Share
-    NSArray *shareItems = [NSArray arrayWithObjects:[NSString stringWithFormat:@"%@ - %@", [MALEngine getLastScrobbledTitle], [MALEngine getLastScrobbledEpisode] ], [NSURL URLWithString:[NSString stringWithFormat:@"http://myanimelist.net/anime/%@", [MALEngine getAniID]]] ,nil];
-    //Get Share Picker
-    NSSharingServicePicker *sharePicker = [[NSSharingServicePicker alloc] initWithItems:shareItems];
-    sharePicker.delegate = self;
-    // Show Share Box
-    [sharePicker showRelativeToRect:[sender bounds] ofView:[sharetoolbaritem view] preferredEdge:NSMinYEdge];
-}
-
 /*
  
  Timer Functions
@@ -880,7 +870,7 @@ Getters
     [shareIcon setTitle:@""];
     [shareMenu addItem:shareIcon];
     //Generate Items to Share
-    shareItems = [NSArray arrayWithObjects:[NSString stringWithFormat:@"%@ - %@", [MALEngine getLastScrobbledTitle], [MALEngine getLastScrobbledEpisode] ], [NSURL URLWithString:[NSString stringWithFormat:@"http://hummingbird.me/anime/%@", [MALEngine getAniID]]] ,nil];
+    shareItems = [NSArray arrayWithObjects:[NSString stringWithFormat:@"%@ - %@", [MALEngine getLastScrobbledTitle], [MALEngine getLastScrobbledEpisode] ], [NSURL URLWithString:[NSString stringWithFormat:@"http://myanimelist.net/anime/%@", [MALEngine getAniID]]] ,nil];
     //Get Share Services for Items
     NSArray *shareServiceforItems = [NSSharingService sharingServicesForItems:shareItems];
     //Generate Share Items and populate Share Menu
