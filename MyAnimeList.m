@@ -374,9 +374,9 @@ update:
                 else{
                     totalepisodes = [[NSString stringWithFormat:@"%@",[searchentry objectForKey:@"episodes"]] intValue];
                 }
-                int detectedepisodenum = [NSNumber numberWithInt:DetectedEpisode];
+                int detectedepisodenum = [DetectedEpisode intValue];
                 //Return titleid
-                if ([searchentry objectForKey:@"episodes"] == nil || ( totalepisodes >= detectedepisodenum)) {
+                if ([searchentry objectForKey:@"episodes"] == [NSNull null]|| ( totalepisodes >= detectedepisodenum)) {
                     NSLog(@"Valid Episode Count");
                     titleid = [NSString stringWithFormat:@"%@",[searchentry objectForKey:@"id"]];
                     goto foundtitle;

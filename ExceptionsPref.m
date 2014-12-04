@@ -1,6 +1,6 @@
 //
 //  ExceptionsPref.m
-//  Hachidori
+//  MAL Updater OS X
 //
 //  Created by 高町なのは on 2014/11/16.
 //  Copyright 2014 Atelier Shiori. All rights reserved. Code licensed under New BSD License
@@ -200,7 +200,7 @@
     [op setCanChooseDirectories:YES];
     [op setCanCreateDirectories:NO];
     [op setCanChooseFiles:NO];
-    [op setMessage:@"Please a directory for Hachidori to ignore."];
+    [op setMessage:@"Please a directory for MAL Updater OS X to ignore."];
     [op beginSheetModalForWindow:[[self view] window] completionHandler:^(NSInteger result){
         if (result == NSFileHandlingPanelCancelButton) {
             return;

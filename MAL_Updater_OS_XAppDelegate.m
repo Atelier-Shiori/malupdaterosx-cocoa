@@ -608,7 +608,7 @@
                 case 21:
                 case 22:{
                     [self setStatusText:@"Scrobble Status: Correction Successful..."];
-                    [self showNotication:@"Hachidori" message:@"Correction was successful"];
+                    [self showNotication:@"MAL Updater OS X" message:@"Correction was successful"];
                     //Show Anime Correct Information
                     NSDictionary * ainfo = [MALEngine getLastScrobbledInfo];
                     [self showAnimeInfo:ainfo];
@@ -616,7 +616,7 @@
                 }
                 default:
                     [self setStatusText:@"Scrobble Status: Correction unsuccessful..."];
-                    [self showNotication:@"Hachidori" message:@"Correction was not successful."];
+                    [self showNotication:@"MAL Updater OS X" message:@"Correction was not successful."];
                     break;
             }
         }
