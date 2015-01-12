@@ -1,6 +1,6 @@
 //
 //  EasyNSURLConnection.m
-//  MAL Updater OS X
+//  Hachidori
 //
 //  Created by Nanoha Takamachi on 2014/11/25.
 //  Copyright (c) 2014年 Atelier Shiori.
@@ -17,7 +17,7 @@
 #pragma constructors
 -(id)init{
     // Set Default User Agent
-    useragent =[NSString stringWithFormat:@"%@ %@ (OS X %@)", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleName"],[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"], [[NSProcessInfo processInfo] operatingSystemVersionString]];
+    useragent =[NSString stringWithFormat:@"%@ %@ (Macintosh; Mac OS X %@; %@)", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleName"],[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"], [[NSDictionary dictionaryWithContentsOfFile:@"/System/Library/CoreServices/SystemVersion.plist"] objectForKey:@"ProductVersion"], [[NSLocale currentLocale] localeIdentifier]];
     return [super init];
 }
 -(id)initWithURL:(NSURL *)address{
@@ -75,7 +75,7 @@
     // Do not use Cookies
     [request setHTTPShouldHandleCookies:usecookies];
     // Set Timeout
-    [request setTimeoutInterval:30];
+    [request setTimeoutInterval:15];
     // Set User Agent
     [request setValue:useragent forHTTPHeaderField:@"User-Agent"];
     // Set Other headers, if any
@@ -89,7 +89,7 @@
     responsedata = [NSURLConnection sendSynchronousRequest:request
                                          returningResponse:&rresponse
                                                      error:&rerror];
-    rerror = error;
+    error = rerror;
     response = rresponse;
     
 }
@@ -120,11 +120,11 @@
             [request setValue:[[d allValues] objectAtIndex:0]forHTTPHeaderField:[[d allKeys] objectAtIndex:0]];
         }
     }
-    NSError * rerror = nil;
+    NSError * rerror;
     responsedata = [NSURLConnection sendSynchronousRequest:request
                                          returningResponse:&rresponse
                                                      error:&rerror];
-    rerror = error;
+    error = rerror;
     response = rresponse;
 }
 
