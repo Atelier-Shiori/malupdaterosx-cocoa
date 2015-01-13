@@ -13,6 +13,7 @@
 
 
 @implementation LoginPref
+@synthesize loginpanel;
 
 - (id)init
 {
@@ -24,6 +25,9 @@
 }
 -(void)loadView{
     [super loadView];
+    // Set Logo
+    [logo setImage:[NSApp applicationIconImage]];
+    // Load Login State
 	[self loadlogin];
 }
 
@@ -56,7 +60,7 @@
 	// Set Message type to Warning
 	[alert setAlertStyle:1];
 	// Show as Sheet on Preference Window
-	[alert beginSheetModalForWindow:[[self view] window]
+    [alert beginSheetModalForWindow:[[self view] window]
 					  modalDelegate:self
 					 didEndSelector:nil
 						contextInfo:NULL];
@@ -70,24 +74,15 @@
 	if (Base64Token.length > 0) {
 		[clearbut setEnabled: YES];
 		[savebut setEnabled: NO];
+        [loggedinview setHidden:NO];
+        [loginview setHidden:YES];
+        [loggedinuser setStringValue:[NSString stringWithFormat:@"%@", [[NSUserDefaults standardUserDefaults] objectForKey:@"Username"]]];
 	}
 	else {
 		//Disable Clearbut
 		[clearbut setEnabled: NO];
 		[savebut setEnabled: YES];
 	}
-	//NSString *TwitterKey = [defaults objectForKey:@"OAUTH_MAL Updater OS X_twitter.com_KEY"];
-	//NSString *TwitterSecret = [defaults objectForKey:@"OAUTH_MAL Updater OS X_twitter.com_SECRET"];
-	/*// Check Twitter Auth
-	if (TwitterKey.length > 0 && TwitterSecret.length > 0) {
-		[self enabletwitteroptions];
-	}
-	else {
-		[self disabletwitteroptions];
-	}
-	//Release Keychain Item
-	[TwitterKey release];
-	[TwitterSecret release];*/
 }
 -(IBAction)startlogin:(id)sender
 {
@@ -96,8 +91,6 @@
 		//Disable Login Button
 		[savebut setEnabled: NO];
 		[savebut displayIfNeeded];
-		//Load API URL
-		NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 		if ( [[fieldusername stringValue] length] == 0) {
 			//No Username Entered! Show error message
 			[self showsheetmessage:@"MAL Updater OS X was unable to log you in since you didn't enter a username" explaination:@"Enter a valid username and try logging in again"];
@@ -110,52 +103,65 @@
 				[savebut setEnabled: YES];
 			}
 			else {
-				//Set Login URL
-				NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/account/verify_credentials", [defaults objectForKey:@"MALAPIURL"]]];
-                EasyNSURLConnection *request = [[EasyNSURLConnection alloc] initWithURL:url];
-				//Ignore Cookies
-				[request setUseCookies:NO];
-				//Set Username
-                [request addHeader:[NSString stringWithFormat:@"Basic %@", [[NSString stringWithFormat:@"%@:%@", [fieldusername stringValue], [fieldpassword stringValue]] base64Encoding]] forKey:@"Authorization"];
-				//Vertify Username/Password
-				[request startRequest];
-                long statusCode =[request getStatusCode];
-				// Get Status Code
-				switch (statusCode) {
-					case 200:{
-						//Login successful
-						[self showsheetmessage:@"Login Successful" explaination: @"Login Token has been created."];
-						// Generate API Key
-						NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-						NSString * Token = [NSString stringWithFormat:@"%@:%@", [fieldusername stringValue], [fieldpassword stringValue]];
-						[defaults setObject:[Token base64Encoding] forKey:@"Base64Token"];
-						[defaults setObject:[fieldusername stringValue] forKey:@"Username"];
-						[clearbut setEnabled: YES];
-						break;}
-					case 401:{
-						//Login Failed, show error message
-						[self showsheetmessage:@"MAL Updater OS X was unable to log you in since you don't have the correct username and/or password." explaination:@"Check your username and password and try logging in again. If you recently changed your password, enter your new password and try again."];
-						[savebut setEnabled: YES];
-						[savebut setKeyEquivalent:@"\r"];
-						break;}
-					default:{
-						//Login Failed, show error message
-						[self showsheetmessage:@"MAL Updater OS X was unable to log you in because of an unknown error." explaination:[NSString stringWithFormat:@"Error %li", statusCode]];
-						[savebut setEnabled: YES];
-						[savebut setKeyEquivalent:@"\r"];
-						break;}
-				}
-				//release
-				request = nil;
-				url = nil;
-			}
+                    [self login:[fieldusername stringValue] password:[fieldpassword stringValue]];
+                }
 		}
 	}
+}
+-(void)login:(NSString *)username password:(NSString *)password{
+    //Set Login URL
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/account/verify_credentials", [defaults objectForKey:@"MALAPIURL"]]];
+    EasyNSURLConnection *request = [[EasyNSURLConnection alloc] initWithURL:url];
+	//Ignore Cookies
+	[request setUseCookies:NO];
+	//Set Username and Password
+    [request addHeader:[NSString stringWithFormat:@"Basic %@", [[NSString stringWithFormat:@"%@:%@", [fieldusername stringValue], [fieldpassword stringValue]] base64Encoding]] forKey:@"Authorization"];
+	//Verify Username/Password
+	[request startRequest];
+    NSLog(@"%@", [request getResponseDataString]);
+	// Check for errors
+    NSError * error = [request getError];
+    if ([request getStatusCode] == 200 && error == nil) {
+        //Login successful
+        [self showsheetmessage:@"Login Successful" explaination: @"Login Token has been recieved."];
+		// Generate API Key
+		NSString * Token = [NSString stringWithFormat:@"%@:%@", [fieldusername stringValue], [fieldpassword stringValue]];
+		[defaults setObject:[Token base64Encoding] forKey:@"Base64Token"];
+		[defaults setObject:[fieldusername stringValue] forKey:@"Username"];
+        [clearbut setEnabled: YES];
+        [loggedinuser setStringValue:username];
+        [loggedinview setHidden:NO];
+        [loginview setHidden:YES];
+    }
+    else{
+        if (error.code == NSURLErrorNotConnectedToInternet) {
+            [self showsheetmessage:@"MAL Updater OS X was unable to log you in since you are not connected to the internet" explaination:@"Check your internet connection and try again."];
+            [savebut setEnabled: YES];
+            [savebut setKeyEquivalent:@"\r"];
+        }
+        else{
+            //Login Failed, show error message
+            [self showsheetmessage:@"MAL Updater OS X was unable to log you in since you don't have the correct username and/or password." explaination:@"Check your username and password and try logging in again. If you recently changed your password, enter your new password and try again."];
+            [savebut setEnabled: YES];
+            [savebut setKeyEquivalent:@"\r"];
+        }
+    }
+
+    //release
+    request = nil;
+    url = nil;
+
 }
 -(IBAction)registermal:(id)sender
 {
 	//Show MAL Registration Page
 	[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://myanimelist.net/register.php"]];
+}
+-(IBAction) showgettingstartedpage:(id)sender
+{
+    //Show Getting Started help page
+    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"https://github.com/chikorita157/malupdaterosx-cocoa/wiki/Getting-Started"]];
 }
 -(IBAction)clearlogin:(id)sender
 {
@@ -164,8 +170,8 @@
         NSAlert * alert = [[NSAlert alloc] init] ;
         [alert addButtonWithTitle:@"Yes"];
         [alert addButtonWithTitle:@"No"];
-        [alert setMessageText:@"Are you sure you want to remove this token?"];
-        [alert setInformativeText:@"Once done, this action cannot be undone."];
+        [alert setMessageText:@"Do you want to log out?"];
+        [alert setInformativeText:@"Once you logged out, you need to log back in before you can use this application."];
         // Set Message type to Warning
         [alert setAlertStyle:NSWarningAlertStyle];
         if ([alert runModal]== NSAlertFirstButtonReturn) {
@@ -176,11 +182,53 @@
             //Disable Clearbut
             [clearbut setEnabled: NO];
             [savebut setEnabled: YES];
+            [loggedinuser setStringValue:@""];
+            [loggedinview setHidden:YES];
+            [loginview setHidden:NO];
         }
     }
     else{
         [self showsheetmessage:@"Cannot Logout" explaination:@"Please turn off automatic scrobbling before logging out."];
     }
 }
-
+/*
+ Reauthorization Panel
+ */
+-(IBAction)reauthorize:(id)sender{
+    if (![appdelegate getisScrobbling] && ![appdelegate getisScrobblingActive]) {
+        [NSApp beginSheet:self.loginpanel
+           modalForWindow:[[self view] window] modalDelegate:self
+           didEndSelector:@selector(reAuthPanelDidEnd:returnCode:contextInfo:)
+              contextInfo:(void *)nil];
+    }
+    else{
+        [self showsheetmessage:@"Cannot Logout" explaination:@"Please turn off automatic scrobbling before reauthorizing."];
+    }
+}
+- (void)reAuthPanelDidEnd:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo {
+    if (returnCode == 1) {
+        [self login:[NSString stringWithFormat:@"%@", [[NSUserDefaults standardUserDefaults] objectForKey:@"Username"]] password:[passwordinput stringValue]];
+    }
+    //Reset and Close
+    [passwordinput setStringValue:@""];
+    [invalidinput setHidden:YES];
+    [self.loginpanel close];
+}
+-(IBAction)cancelreauthorization:(id)sender{
+    [self.loginpanel orderOut:self];
+    [NSApp endSheet:self.loginpanel returnCode:0];
+    
+}
+-(IBAction)performreauthorization:(id)sender{
+    if ([[passwordinput stringValue] length] == 0) {
+        // No password, indicate it
+        NSBeep();
+        [invalidinput setHidden:NO];
+    }
+    else{
+        [invalidinput setHidden:YES];
+        [self.loginpanel orderOut:self];
+        [NSApp endSheet:self.loginpanel returnCode:1];
+    }
+}
 @end
