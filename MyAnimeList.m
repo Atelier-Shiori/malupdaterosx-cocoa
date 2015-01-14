@@ -252,7 +252,7 @@
             break;
 		case 200:
             online = true;
-			return [self findaniid:[request getResponseData] searchterm:searchterm];
+			return [self findaniid:[request getResponseData] searchterm:searchtitle];
 			break;
 			
 		default:
@@ -446,7 +446,7 @@ update:
                 DetectedTitleisMovie = false;
             }
             //Return titleid
-            titleid = [NSString stringWithFormat:@"%@",[searchentry objectForKey:@"slug"]];
+            titleid = [NSString stringWithFormat:@"%@",[searchentry objectForKey:@"id"]];
             goto foundtitle;
         }
     }
@@ -472,7 +472,7 @@ update:
             //Return titleid if episode is valid
             if ([searchentry objectForKey:@"episodes"] == [NSNull null] || ([[NSString stringWithFormat:@"%@",[searchentry objectForKey:@"episodes"]] intValue] >= [DetectedEpisode intValue])) {
                 NSLog(@"Valid Episode Count");
-                titleid = [NSString stringWithFormat:@"%@",[searchentry objectForKey:@"slug"]];
+                titleid = [NSString stringWithFormat:@"%@",[searchentry objectForKey:@"id"]];
                 goto foundtitle;
             }
             else{
@@ -569,9 +569,11 @@ update:
 	if ([DetectedEpisode intValue] <= [DetectedCurrentEpisode intValue] ) { 
 		// Already Watched, no need to scrobble
         // Store Scrobbled Title and Episode
+        confirmed = true;
 		LastScrobbledTitle = DetectedTitle;
 		LastScrobbledEpisode = DetectedEpisode;
-        return 1;
+        LastScrobbledActualTitle = [NSString stringWithFormat:@"%@",[LastScrobbledInfo objectForKey:@"title"]];
+        return 2;
 	}
 	else if (!LastScrobbledTitleNew && [[NSUserDefaults standardUserDefaults] boolForKey:@"ConfirmUpdates"] && !confirmed && !correcting && !confirming) {
         // Confirm before updating title
@@ -614,11 +616,13 @@ update:
 		//NSLog(@"%@", [request responseString]);
 		switch ([request getStatusCode]) {
 			case 200:
-				confirmed = true;
 				// Store Last Scrobbled Title
 		        LastScrobbledTitle = DetectedTitle;
 		        LastScrobbledEpisode = DetectedEpisode;
-		        LastScrobbledActualTitle = [NSString stringWithFormat:@"%@",[LastScrobbledInfo objectForKey:@"title"]];
+                if (confirmed) {
+                    LastScrobbledActualTitle = [NSString stringWithFormat:@"%@",[LastScrobbledInfo objectForKey:@"title"]];
+                }
+                confirmed = true;
 				// Update Successful
                 return 22;
 				break;
@@ -667,8 +671,10 @@ update:
 		//Store last scrobbled information
         LastScrobbledTitle = DetectedTitle;
         LastScrobbledEpisode = DetectedEpisode;
-        LastScrobbledActualTitle = [NSString stringWithFormat:@"%@",[LastScrobbledInfo objectForKey:@"title"]];
-		confirmed = true;
+            if (confirmed) {
+                LastScrobbledActualTitle = [NSString stringWithFormat:@"%@",[LastScrobbledInfo objectForKey:@"title"]];
+            }
+            confirmed = true;
 			return 21;
 			break;
 		default:
