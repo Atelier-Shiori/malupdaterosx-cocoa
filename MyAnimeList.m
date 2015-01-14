@@ -470,7 +470,7 @@ update:
                 }
             }
             //Return titleid if episode is valid
-            if ([searchentry objectForKey:@"episodes"] == [NSNull null] || ([[NSString stringWithFormat:@"%@",[searchentry objectForKey:@"episodes"]] intValue] >= [DetectedEpisode intValue])) {
+            if ( [[NSString stringWithFormat:@"%@", [searchentry objectForKey:@"episodes"]] intValue] == 0 || ([[NSString stringWithFormat:@"%@",[searchentry objectForKey:@"episodes"]] intValue] >= [DetectedEpisode intValue])) {
                 NSLog(@"Valid Episode Count");
                 titleid = [NSString stringWithFormat:@"%@",[searchentry objectForKey:@"id"]];
                 goto foundtitle;
