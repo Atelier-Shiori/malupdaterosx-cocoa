@@ -138,7 +138,8 @@
     [defaultValues setObject:[[NSMutableArray alloc] init] forKey:@"exceptions"];
     [defaultValues setObject:[[NSMutableArray alloc] init] forKey:@"ignoredirectories"];
     [defaultValues setObject:[[NSMutableArray alloc] init] forKey:@"IgnoreTitleRules"];
-    [defaultValues setObject:[NSNumber numberWithBool:YES] forKey:@"UseNewRecognitionEngine"];
+    [defaultValues setObject:[NSNumber numberWithBool:NO] forKey:@"ConfirmNewTitle"];
+    [defaultValues setObject:[NSNumber numberWithBool:NO] forKey:@"ConfirmUpdates"];
     if (floor(NSAppKitVersionNumber) > NSAppKitVersionNumber10_9){
         //Yosemite Specific Advanced Options
         [defaultValues setObject:[NSNumber numberWithBool:NO] forKey:@"DisableYosemiteTitleBar"];
@@ -159,15 +160,12 @@
     
     //Allocates and loads the images into the application which will be used for our NSStatusItem
     statusImage = [[NSImage alloc] initWithContentsOfFile:[bundle pathForResource:@"StatusIcon" ofType:@"tiff"]];
-    statusHighlightImage = [[NSImage alloc] initWithContentsOfFile:[bundle pathForResource:@"StatusIconhilight" ofType:@"tiff"]];
-    
+	
     //Yosemite Dark Menu Support
     [statusImage setTemplate:YES];
-    [statusHighlightImage setTemplate:YES];
     
     //Sets the images in our NSStatusItem
     [statusItem setImage:statusImage];
-    [statusItem setAlternateImage:statusHighlightImage];
     
     //Tells the NSStatusItem what menu to load
     [statusItem setMenu:statusMenu];
@@ -195,12 +193,13 @@
 
     //Set Notification Center Delegate
     [[NSUserNotificationCenter defaultUserNotificationCenter] setDelegate:self];
+	
 	// Disable Update and Share Buttons
 	[updatetoolbaritem setEnabled:NO];
     [sharetoolbaritem setEnabled:NO];
     [correcttoolbaritem setEnabled:NO];
 	// Hide Window
-	[window orderOut:self];
+	[window close];
     
     //Set up Yosemite UI Enhancements
     if (floor(NSAppKitVersionNumber) > NSAppKitVersionNumber10_9)
@@ -258,9 +257,6 @@
 	if ([defaults boolForKey:@"ScrobbleatStartup"] == 1) {
 		[self autostarttimer];
 	}
-    if ([defaults boolForKey:@"ScrobbleatStartup"] == 1) {
-        [self autostarttimer];
-    }
 }
 /*
  
@@ -276,7 +272,7 @@
         NSViewController *loginViewController = [[LoginPref alloc] initwithAppDelegate:self];
 		NSViewController *suViewController = [[SoftwareUpdatesPref alloc] init];
         NSViewController *exceptionsViewController = [[ExceptionsPref alloc] init];
-        NSArray *controllers = [[NSArray alloc] initWithObjects:generalViewController, loginViewController, suViewController, exceptionsViewController, nil];
+        NSArray *controllers = [[NSArray alloc] initWithObjects:generalViewController, loginViewController, exceptionsViewController, suViewController, nil];
         
         // To add a flexible space between General and Advanced preference panes insert [NSNull null]:
         //     NSArray *controllers = [[NSArray alloc] initWithObjects:generalViewController, [NSNull null], advancedViewController, nil];
@@ -340,7 +336,7 @@
 -(IBAction)togglescrobblewindow:(id)sender
 {
 	if ([window isVisible]) {
-		[window orderOut:self]; 
+		[window close];
 	} else { 
 		//Since LSUIElement is set to 1 to hide the dock icon, it causes unattended behavior of having the program windows not show to the front.
 		[NSApp activateIgnoringOtherApps:YES];
@@ -400,6 +396,7 @@
         [statusMenu setAutoenablesItems:NO];
         [updatenow setEnabled:NO];
         [togglescrobbler setEnabled:NO];
+		[confirmupdate setEnabled:NO];
         [updatenow setTitle:@"Updating..."];
     dispatch_queue_t queue = dispatch_get_global_queue(
                                                        DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
@@ -416,75 +413,89 @@
             case 1:
                 [self setStatusText:@"Scrobble Status: Same Episode Playing, Scrobble not needed."];
                 break;
+            case 2:
+                [self setStatusText:@"Scrobble Status: No update needed."];
+                break;
+            case 3:{
+                [self setStatusText:@"Scrobble Status: Please confirm update."];
+                NSDictionary * userinfo = [[NSDictionary alloc] initWithObjectsAndKeys:[MALEngine getLastScrobbledTitle], @"title",  [MALEngine getLastScrobbledEpisode], @"episode", nil];
+                [self showConfirmationNotication:@"Confirm Update" message:[NSString stringWithFormat:@"Click here to confirm update for %@ Episode %@.",[MALEngine getLastScrobbledActualTitle],[MALEngine getLastScrobbledEpisode]] updateData:userinfo];
+                break;
+            }
             case 21:
-                [self setStatusText:@"Scrobble Status: Title Added..."];
-                [self showNotication:@"Adding of Title Successful."message:[NSString stringWithFormat:@"%@ - %@",[MALEngine getLastScrobbledTitle],[MALEngine getLastScrobbledEpisode]]];
-                //Add History Record
-                [self addrecord:[MALEngine getLastScrobbledTitle] Episode:[MALEngine getLastScrobbledEpisode] Date:[NSDate date]];
-                                break;
             case 22:
                 [self setStatusText:@"Scrobble Status: Scrobble Successful..."];
-                [self showNotication:@"Scrobble Successful."message:[NSString stringWithFormat:@"%@ - %@",[MALEngine getLastScrobbledTitle],[MALEngine getLastScrobbledEpisode]]];
-                [self setStatusMenuTitleEpisode:[MALEngine getLastScrobbledTitle] episode:[MALEngine getLastScrobbledEpisode]];
+                [self showNotication:@"Scrobble Successful."message:[NSString stringWithFormat:@"%@ - %@",[MALEngine getLastScrobbledActualTitle],[MALEngine getLastScrobbledEpisode]]];
                 //Add History Record
-                [self addrecord:[MALEngine getLastScrobbledTitle] Episode:[MALEngine getLastScrobbledEpisode] Date:[NSDate date]];
-
+                [self addrecord:[MALEngine getLastScrobbledActualTitle] Episode:[MALEngine getLastScrobbledEpisode] Date:[NSDate date]];
                 break;
             case 51:
                 [self setStatusText:@"Scrobble Status: Can't find title. Retrying in 5 mins..."];
-                [self showNotication:@"Scrobble Unsuccessful." message:@"Can't find title. Retrying in 5 mins..."];
+                [self showNotication:@"Scrobble Unsuccessful." message:@"Can't find title."];
                 break;
             case 52:
-                [self setStatusText:@"Scrobble Status: Adding of Title Failed. Retrying in 5 mins..."];
-                [self showNotication:@"Adding of Title Unsuccessful." message:@"Retrying in 5 mins..."];
-                break;
             case 53:
                 [self showNotication:@"Scrobble Unsuccessful." message:@"Retrying in 5 mins..."];
                 [self setStatusText:@"Scrobble Status: Scrobble Failed. Retrying in 5 mins..."];
                 break;
             case 54:
-                [self showNotication:@"Scrobble Unsuccessful." message:@"Retrying in 5 mins..."];
-                [self setStatusText:@"Scrobble Status: Scrobble Failed. Retrying in 5 mins..."];
+                [self showNotication:@"Scrobble Unsuccessful." message:@"Check user credentials in Preferences. You may need to login again."];
+                [self setStatusText:@"Scrobble Status: Scrobble Failed. User credentials might have expired."];
                 break;
             case 55:
-                [self setStatusText:@"Scrobble Status: Scrobble Failed. Computer is offline."];
+                [self setStatusText:@"Scrobble Status: No internet connection."];
                 break;
             default:
-                NSLog(@"fail");
                 break;
         }
         dispatch_async(dispatch_get_main_queue(), ^{
-        if ([MALEngine getSuccess] == 1) {
-            [updatetoolbaritem setEnabled:YES];
-            [correcttoolbaritem setEnabled:YES];
-            [sharetoolbaritem setEnabled:YES];
-            //Show Last Scrobbled Title and operations */
-            [seperator setHidden:NO];
-            [lastupdateheader setHidden:NO];
-            [updatedtitle setHidden:NO];
-            [updatedepisode setHidden:NO];
-            [seperator2 setHidden:NO];
-            [updatecorrectmenu setHidden:NO];
-            [updatedcorrecttitle setHidden:NO];
-            [shareMenuItem setHidden:NO];
-            // Set Titles
-            [self setLastScrobbledTitle:[NSString stringWithFormat:@"Last Scrobbled: %@ - Episode %@",[MALEngine getLastScrobbledTitle],[MALEngine getLastScrobbledEpisode]]];
-            [self setStatusToolTip:[NSString stringWithFormat:@"MAL Updater OS X - %@ - %@",[MALEngine getLastScrobbledTitle],[MALEngine getLastScrobbledEpisode]]];
-            [self setStatusMenuTitleEpisode:[MALEngine getLastScrobbledTitle] episode:[MALEngine getLastScrobbledEpisode]];
-            //Show Anime Information
-            NSDictionary * ainfo = [MALEngine getLastScrobbledInfo];
-            if (ainfo !=nil) { // Checks if MyAnimeList already populated info about the just updated title.
-                [self showAnimeInfo:ainfo];
-                [self generateShareMenu];
+            if ([MALEngine getSuccess] == 1) {
+
+                [self setStatusMenuTitleEpisode:[MALEngine getLastScrobbledActualTitle] episode:[MALEngine getLastScrobbledEpisode]];
+                if (status != 3 && [MALEngine getConfirmed]){
+                    // Show normal info
+                    [self updateLastScrobbledTitleStatus:false];
+                    //Enable Update Status functions
+                    [updatetoolbaritem setEnabled:YES];
+                    [updatedupdatestatus setEnabled:YES];
+                    [confirmupdate setHidden:YES];
+                }
+                else{
+                    // Show that user needs to confirm update
+                    [self updateLastScrobbledTitleStatus:true];
+                        [confirmupdate setHidden:NO];
+                    if ([MALEngine getisNewTitle]) {
+                        // Disable Update Status functions for new and unconfirmed titles.
+                        [updatecorrect setAutoenablesItems:NO];
+                        [updatetoolbaritem setEnabled:NO];
+                        [updatedupdatestatus setEnabled:NO];
+                    }
+                }
+                [sharetoolbaritem setEnabled:YES];
+                [correcttoolbaritem setEnabled:YES];
+                //Show Last Scrobbled Title and operations */
+                [seperator setHidden:NO];
+                [lastupdateheader setHidden:NO];
+                [updatedtitle setHidden:NO];
+                [updatedepisode setHidden:NO];
+                [seperator2 setHidden:NO];
+                [updatecorrectmenu setHidden:NO];
+                [updatedcorrecttitle setHidden:NO];
+                [shareMenuItem setHidden:NO];
+                NSDictionary * ainfo = [MALEngine getLastScrobbledInfo];
+                if (ainfo !=nil) { // Checks if MAL Updater OS X already populated info about the just updated title.
+                    [self showAnimeInfo:ainfo];
+                    [self generateShareMenu];
+                }
             }
-        }
             // Enable Menu Items
             scrobbleractive = false;
             [updatenow setEnabled:YES];
             [togglescrobbler setEnabled:YES];
-            [updatenow setTitle:@"Update Now"];
             [statusMenu setAutoenablesItems:YES];
-        });
+            [confirmupdate setEnabled:YES];
+            [updatenow setTitle:@"Update Now"];
+	});
     });
     
     }
@@ -562,7 +573,11 @@
         [self stoptimer];
     }
     fsdialog = [FixSearchDialog new];
-    [fsdialog setCorrection:YES];
+    // Check if Confirm is on for new title. If so, then disable ability to delete title.
+    if (!confirmupdate.hidden && [MALEngine getisNewTitle])
+        [fsdialog setCorrection:NO];
+    else
+        [fsdialog setCorrection:YES];
     [fsdialog setSearchField:[MALEngine getLastScrobbledTitle]];
     if (isVisible) {
         [NSApp beginSheet:[fsdialog window]
@@ -599,9 +614,12 @@
                 case 22:{
                     [self setStatusText:@"Scrobble Status: Correction Successful..."];
                     [self showNotication:@"MAL Updater OS X" message:@"Correction was successful"];
+                    [self setStatusMenuTitleEpisode:[MALEngine getLastScrobbledActualTitle] episode:[MALEngine getLastScrobbledEpisode]];
+                    [self updateLastScrobbledTitleStatus:false];
                     //Show Anime Correct Information
                     NSDictionary * ainfo = [MALEngine getLastScrobbledInfo];
                     [self showAnimeInfo:ainfo];
+					[confirmupdate setHidden:true];
                     break;
                 }
                 default:
@@ -633,6 +651,9 @@
             NSLog(@"Title exists on Exceptions List");
             exists = true;
             break;
+        }
+        else{
+            exists = false;
         }
     }
     if (!exists) {
@@ -743,6 +764,21 @@
     [updatedtitle setTitle:title];
     [updatedepisode setTitle:[NSString stringWithFormat:@"Episode %@", episode]];
 }
+-(void)updateLastScrobbledTitleStatus:(BOOL)pending{
+    if (pending) {
+        [updatecorrect setAutoenablesItems:NO];
+        [lastupdateheader setTitle:@"Pending:"];
+        [self setLastScrobbledTitle:[NSString stringWithFormat:@"Pending: %@ - Episode %@",[MALEngine getLastScrobbledTitle],[MALEngine getLastScrobbledEpisode]]];
+        [self setStatusToolTip:[NSString stringWithFormat:@"MAL Updater OS X - %@ - %@ (Pending)",[MALEngine getLastScrobbledActualTitle],[MALEngine getLastScrobbledEpisode]]];
+    }
+    else{
+        [updatecorrect setAutoenablesItems:YES];
+        [lastupdateheader setTitle:@"Last Scrobbled:"];
+        [self setLastScrobbledTitle:[NSString stringWithFormat:@"Last Scrobbled: %@ - Episode %@",[MALEngine getLastScrobbledTitle],[MALEngine getLastScrobbledEpisode]]];
+        [self setStatusToolTip:[NSString stringWithFormat:@"MAL Updater OS X - %@ - %@",[MALEngine getLastScrobbledActualTitle],[MALEngine getLastScrobbledEpisode]]];
+    }
+}
+
 /*
  
 Getters
@@ -823,8 +859,54 @@ Getters
     
     [[NSUserNotificationCenter defaultUserNotificationCenter] deliverNotification:notification];
 }
+-(void)showConfirmationNotication:(NSString *)title message:(NSString *) message updateData:(NSDictionary *)d{
+    NSUserNotification *notification = [[NSUserNotification alloc] init];
+    notification.title = title;
+    notification.informativeText = message;
+    notification.soundName = NSUserNotificationDefaultSoundName;
+    notification.userInfo = d;
+    
+    [[NSUserNotificationCenter defaultUserNotificationCenter] deliverNotification:notification];
+}
 - (BOOL)userNotificationCenter:(NSUserNotificationCenter *)center shouldPresentNotification:(NSUserNotification *)notification{
     return YES;
+}
+- (void) userNotificationCenter:(NSUserNotificationCenter *)center didActivateNotification:(NSUserNotification *)notification
+{
+    if ([notification.title isEqualToString:@"Confirm Update"] && !confirmupdate.hidden) {
+        NSString * title = [notification.userInfo objectForKey:@"title"];
+        NSString * episode = [notification.userInfo objectForKey:@"episode"];
+        // Only confirm update if the title and episode is the same with the last scrobbled.
+        if ([[MALEngine getLastScrobbledTitle] isEqualToString:title] && [episode intValue] == [[MALEngine getLastScrobbledEpisode] intValue]) {
+            //Confirm Update
+            [self confirmupdate];
+        }
+        else{
+            return;
+        }
+    }
+}
+-(IBAction)confirmupdate:(id)sender{
+    [self confirmupdate];
+}
+-(void)confirmupdate{
+    BOOL success = [MALEngine confirmupdate];
+    if (success) {
+        [self updateLastScrobbledTitleStatus:false];
+        [self addrecord:[MALEngine getLastScrobbledActualTitle] Episode:[MALEngine getLastScrobbledEpisode] Date:[NSDate date]];
+        [confirmupdate setHidden:YES];
+        [self setStatusText:@"Scrobble Status: Update was successful."];
+        [self showNotication:@"MAL Updater OS X" message:[NSString stringWithFormat:@"%@ Episode %@ has been updated.",[MALEngine getLastScrobbledActualTitle],[MALEngine getLastScrobbledEpisode]]];
+        if ([MALEngine getisNewTitle]) {
+            // Enable Update Status functions for new and unconfirmed titles.
+            [confirmupdate setHidden:YES];
+            [updatedupdatestatus setEnabled:YES];
+        }
+    }
+    else{
+        [self showNotication:@"MAL Updater OS X" message:@"Failed to confirm update. Please try again later."];
+        [self setStatusText:@"Unable to confirm update."];
+    }
 }
 -(IBAction)showAboutWindow:(id)sender{
     // Properly show the about window in a menu item application
@@ -840,6 +922,7 @@ Getters
     [togglescrobbler setEnabled:NO];
     [updatedcorrecttitle setEnabled:NO];
     [updatedupdatestatus setEnabled:NO];
+    [confirmupdate setEnabled:NO];
 }
 -(void)enableUpdateItems{
     // Reenables update options
@@ -847,9 +930,12 @@ Getters
     [updatenow setEnabled:YES];
     [togglescrobbler setEnabled:YES];
     [updatedcorrecttitle setEnabled:YES];
-    [updatedupdatestatus setEnabled:YES];
+    if (confirmupdate.hidden) {
+        [updatedupdatestatus setEnabled:YES];
+    }
     [updatecorrect setAutoenablesItems:YES];
     [statusMenu setAutoenablesItems:YES];
+    [confirmupdate setEnabled:YES];
 }
 -(BOOL)checkoldAPI{
     if ([[NSString stringWithFormat:@"%@", [[NSUserDefaults standardUserDefaults] objectForKey:@"MALAPIURL"]] isEqualToString:@"https://malapi.shioridiary.me"]||[[NSString stringWithFormat:@"%@", [[NSUserDefaults standardUserDefaults] objectForKey:@"MALAPIURL"]] isEqualToString:@"http://mal-api.com"]) {

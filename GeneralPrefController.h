@@ -15,6 +15,7 @@
 	IBOutlet NSTextField * APIUrl;
     IBOutlet NSButton * disablenewtitlebar;
     IBOutlet NSButton * disablevibarency;
+    IBOutlet NSButton * startatlogin;
 }
 -(IBAction)testapi:(id)sender;
 -(IBAction)resetapiurl:(id)sender;

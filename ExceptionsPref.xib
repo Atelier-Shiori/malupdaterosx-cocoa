@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6250" systemVersion="13F34" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6254" systemVersion="13F34" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6250"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6254"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="ExceptionsPref">
@@ -26,13 +26,13 @@
                     <font key="font" metaFont="system"/>
                     <tabViewItems>
                         <tabViewItem label="Anime Title Exceptions" identifier="1" id="dDU-b1-Ua0">
-                            <view key="view" ambiguous="YES" id="mi1-sZ-x1p">
+                            <view key="view" id="mi1-sZ-x1p">
                                 <rect key="frame" x="10" y="33" width="474" height="221"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
                                     <scrollView focusRingType="none" fixedFrame="YES" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="orw-aQ-yjO">
                                         <rect key="frame" x="10" y="58" width="447" height="154"/>
-                                        <clipView key="contentView" focusRingType="none" ambiguous="YES" misplaced="YES" id="fLT-H6-Adh">
+                                        <clipView key="contentView" focusRingType="none" misplaced="YES" id="fLT-H6-Adh">
                                             <rect key="frame" x="1" y="0.0" width="238" height="134"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
@@ -43,7 +43,7 @@
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                                     <tableColumns>
-                                                        <tableColumn width="146" minWidth="40" maxWidth="1000" id="8fi-uM-Lr1">
+                                                        <tableColumn width="218" minWidth="40" maxWidth="1000" id="8fi-uM-Lr1">
                                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Detected Title">
                                                                 <font key="font" metaFont="smallSystem"/>
                                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -59,7 +59,7 @@
                                                                 <binding destination="WNZ-Fa-W8F" name="value" keyPath="arrangedObjects.detectedtitle" id="jCV-ml-XtR"/>
                                                             </connections>
                                                         </tableColumn>
-                                                        <tableColumn editable="NO" width="154" minWidth="40" maxWidth="1000" id="AjX-Bc-piW">
+                                                        <tableColumn editable="NO" width="218" minWidth="40" maxWidth="1000" id="AjX-Bc-piW">
                                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Correct Title">
                                                                 <font key="font" metaFont="smallSystem"/>
                                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -73,22 +73,6 @@
                                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                             <connections>
                                                                 <binding destination="WNZ-Fa-W8F" name="value" keyPath="arrangedObjects.correcttitle" id="swR-uA-1Bi"/>
-                                                            </connections>
-                                                        </tableColumn>
-                                                        <tableColumn editable="NO" width="136" minWidth="10" maxWidth="3.4028234663852886e+38" id="cVg-Fu-V2N">
-                                                            <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="ID">
-                                                                <font key="font" metaFont="smallSystem"/>
-                                                                <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
-                                                                <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
-                                                            </tableHeaderCell>
-                                                            <textFieldCell key="dataCell" lineBreakMode="truncatingTail" alignment="left" title="Text Cell" id="LLg-Li-Gpk">
-                                                                <font key="font" metaFont="system"/>
-                                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                                <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                            </textFieldCell>
-                                                            <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
-                                                            <connections>
-                                                                <binding destination="WNZ-Fa-W8F" name="value" keyPath="arrangedObjects.showid" id="wwN-aq-uG4"/>
                                                             </connections>
                                                         </tableColumn>
                                                     </tableColumns>
@@ -160,7 +144,7 @@
                                 <subviews>
                                     <scrollView focusRingType="none" fixedFrame="YES" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MiJ-Bo-TEj">
                                         <rect key="frame" x="11" y="47" width="446" height="162"/>
-                                        <clipView key="contentView" focusRingType="none" ambiguous="YES" misplaced="YES" id="tOB-JE-5PV">
+                                        <clipView key="contentView" focusRingType="none" misplaced="YES" id="tOB-JE-5PV">
                                             <rect key="frame" x="1" y="0.0" width="238" height="134"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
@@ -259,7 +243,7 @@
                                 <subviews>
                                     <scrollView focusRingType="none" fixedFrame="YES" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eCa-6N-gLN">
                                         <rect key="frame" x="11" y="83" width="446" height="127"/>
-                                        <clipView key="contentView" focusRingType="none" ambiguous="YES" misplaced="YES" id="uQX-ol-vKO">
+                                        <clipView key="contentView" focusRingType="none" misplaced="YES" id="uQX-ol-vKO">
                                             <rect key="frame" x="1" y="0.0" width="238" height="134"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
