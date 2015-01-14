@@ -14,7 +14,13 @@
 #import "SoftwareUpdatesPref.h"
 #import "NSString_stripHtml.h"
 #import "ExceptionsPref.h"
+#import "HotkeysPrefs.h"
 #import "FixSearchDialog.h"
+#import "MASShortcut.h"
+#import "MASShortcutView+UserDefaults.h"
+#import "MASShortcut+UserDefaults.h"
+#import "MASShortcut+Monitoring.h"
+#import "HotKeyConstants.h"
 
 @implementation MAL_Updater_OS_XAppDelegate
 
@@ -198,6 +204,8 @@
 	[updatetoolbaritem setEnabled:NO];
     [sharetoolbaritem setEnabled:NO];
     [correcttoolbaritem setEnabled:NO];
+    //Register Global Hotkey
+    [self registerHotkey];
 	// Hide Window
 	[window close];
     
@@ -272,7 +280,8 @@
         NSViewController *loginViewController = [[LoginPref alloc] initwithAppDelegate:self];
 		NSViewController *suViewController = [[SoftwareUpdatesPref alloc] init];
         NSViewController *exceptionsViewController = [[ExceptionsPref alloc] init];
-        NSArray *controllers = [[NSArray alloc] initWithObjects:generalViewController, loginViewController, exceptionsViewController, suViewController, nil];
+        NSViewController *hotkeyViewController = [[HotkeysPrefs alloc] init];
+        NSArray *controllers = [[NSArray alloc] initWithObjects:generalViewController, loginViewController, hotkeyViewController, exceptionsViewController, suViewController, nil];
         
         // To add a flexible space between General and Advanced preference panes insert [NSNull null]:
         //     NSArray *controllers = [[NSArray alloc] initWithObjects:generalViewController, [NSNull null], advancedViewController, nil];
@@ -937,6 +946,29 @@ Getters
     [statusMenu setAutoenablesItems:YES];
     [confirmupdate setEnabled:YES];
 }
+-(void)registerHotkey{
+    [MASShortcut registerGlobalShortcutWithUserDefaultsKey:kPreferenceScrobbleNowShortcut handler:^{
+        // Scrobble Now Global Hotkey
+        if ([self checktoken] && !panelactive) {
+            [self firetimer:nil];
+        }
+    }];
+    [MASShortcut registerGlobalShortcutWithUserDefaultsKey:kPreferenceShowStatusMenuShortcut handler:^{
+        // Status Window Toggle Global Hotkey
+        [self togglescrobblewindow:nil];
+    }];
+    [MASShortcut registerGlobalShortcutWithUserDefaultsKey:kPreferenceToggleScrobblingShortcut handler:^{
+        // Auto Scrobble Toggle Global Hotkey
+        [self toggletimer:nil];
+    }];
+    [MASShortcut registerGlobalShortcutWithUserDefaultsKey:kPreferenceConfirmUpdateShortcut handler:^{
+        // Confirm Update Hotkey
+        if (!confirmupdate.hidden) {
+            [self confirmupdate];
+        }
+    }];
+}
+
 -(BOOL)checkoldAPI{
     if ([[NSString stringWithFormat:@"%@", [[NSUserDefaults standardUserDefaults] objectForKey:@"MALAPIURL"]] isEqualToString:@"https://malapi.shioridiary.me"]||[[NSString stringWithFormat:@"%@", [[NSUserDefaults standardUserDefaults] objectForKey:@"MALAPIURL"]] isEqualToString:@"http://mal-api.com"]) {
         return true;
