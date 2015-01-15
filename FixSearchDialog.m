@@ -64,6 +64,9 @@
 }
 -(IBAction)search:(id)sender{
     if ([[search stringValue] length]> 0) {
+        dispatch_queue_t queue = dispatch_get_global_queue(
+                                                           DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+        dispatch_async(queue, ^{
         NSString * searchterm = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(
                                                                                                   NULL,
                                                                                                   (CFStringRef)[search stringValue],
@@ -80,6 +83,7 @@
         // Get Status Code
         int statusCode = [request getStatusCode];
         NSData *response = [request getResponseData];
+        dispatch_async(dispatch_get_main_queue(), ^{
         switch (statusCode) {
             case 200:
                 [self populateData:response];
@@ -87,6 +91,8 @@
             default:
                 break;
         }
+        });
+        });
     }
     else{
         //Remove all existing Data

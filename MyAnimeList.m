@@ -3,7 +3,7 @@
 //  MAL Updater OS X
 //
 //  Created by James M. on 8/7/10.
-//  Copyright 2009-2014 Atelier Shiori. All rights reserved. Code licensed under New BSD License
+//  Copyright 2009-2015 Atelier Shiori. All rights reserved. Code licensed under New BSD License
 //
 
 #import "MyAnimeList.h"
@@ -268,50 +268,52 @@
 
     NSArray * player = [NSArray arrayWithObjects:@"mplayer", @"mpv", @"mplayer-mt", @"VLC", @"QuickTime Playe", @"QTKitServer", @"Kodi", nil];
     NSString *string;
-	
+	OGRegularExpression    *regex;
     for(int i = 0; i <[player count]; i++){
-    NSTask *task;
-    task = [[NSTask alloc] init];
-    [task setLaunchPath: @"/usr/sbin/lsof"];
-    [task setArguments: [NSArray arrayWithObjects:@"-c", [NSString stringWithFormat:@"%@", [player objectAtIndex:i]], @"-F", @"n", nil]]; 		//lsof -c '<player name>' -Fn
-	NSPipe *pipe;
-	pipe = [NSPipe pipe];
-	[task setStandardOutput: pipe];
+        NSTask *task;
+        task = [[NSTask alloc] init];
+        [task setLaunchPath: @"/usr/sbin/lsof"];
+        [task setArguments: [NSArray arrayWithObjects:@"-c", [NSString stringWithFormat:@"%@", [player objectAtIndex:i]], @"-F", @"n", nil]]; 		//lsof -c '<player name>' -Fn
+        NSPipe *pipe;
+        pipe = [NSPipe pipe];
+        [task setStandardOutput: pipe];
 	
-	NSFileHandle *file;
-	file = [pipe fileHandleForReading];
+        NSFileHandle *file;
+        file = [pipe fileHandleForReading];
 	
-	[task launch];
+        [task launch];
 	
-	NSData *data;
-	data = [file readDataToEndOfFile];
-
-    string = [[NSString alloc] initWithData: data encoding: NSUTF8StringEncoding];
-    if (string.length > 0)
-        break;
+        NSData *data;
+        data = [file readDataToEndOfFile];
+        
+        string = [[NSString alloc] initWithData: data encoding: NSUTF8StringEncoding];
+            if (string.length > 0){
+                regex = [OGRegularExpression regularExpressionWithString:@"^.+(avi|mkv|mp4|ogm|rm|rmvb|wmv|divx|mov|flv|mpg|3gp)$" options:OgreIgnoreCaseOption];
+                //Regex time
+                //Get the filename first
+                NSEnumerator    *enumerator;
+                enumerator = [regex matchEnumeratorInString:string];
+                OGRegularExpressionMatch    *match;
+                while ((match = [enumerator nextObject]) != nil) {
+                    string = [match matchedString];
+                }
+                //Check if thee file name or directory is on any ignore list
+                BOOL onIgnoreList = [self checkifIgnored:string];
+                //Make sure the file name is valid, even if player is open. Do not update video files in ignored directories
+                if ([regex matchInString:string] !=nil && !onIgnoreList) {
+                    NSDictionary *d = [[Recognition alloc] recognize:string];
+                    DetectedTitle = [NSString stringWithFormat:@"%@", [d objectForKey:@"title"]];
+                    DetectedEpisode = [NSString stringWithFormat:@"%@", [d objectForKey:@"episode"]];
+                    DetectedSeason = [[d objectForKey:@"season"] intValue];
+                    break;
+                }
+            }
     }
-    OGRegularExpression    *regex = [OGRegularExpression regularExpressionWithString:@"^.+(avi|mkv|mp4|ogm|rm|rmvb|wmv|divx|mov|flv|mpg|3gp)$" options:OgreIgnoreCaseOption];
-    if (string.length > 0) {
-        //Regex time
-        //Get the filename first
-        NSEnumerator    *enumerator;
-        enumerator = [regex matchEnumeratorInString:string];
-        OGRegularExpressionMatch    *match;
-        while ((match = [enumerator nextObject]) != nil) {
-            string = [match matchedString];
-        }
-    }
-    //Check if thee file name or directory is on any ignore list
-    BOOL onIgnoreList = [self checkifIgnored:string];
-    //Make sure the file name is valid, even if player is open. Do not update video files in ignored directories
-    if ([regex matchInString:string] !=nil && !onIgnoreList) {
-        NSDictionary *d = [[Recognition alloc] recognize:string];
-        DetectedTitle = [NSString stringWithFormat:@"%@", [d objectForKey:@"title"]];
-        DetectedEpisode = [NSString stringWithFormat:@"%@", [d objectForKey:@"episode"]];
-        DetectedSeason = [[d objectForKey:@"season"] intValue];
-        goto update;
+    if (DetectedTitle.length > 0) {
+         goto update;
     }
 	else {
+        // Check for Legal Streaming Sites
         NSLog(@"Checking Stream...");
         NSDictionary * detected = [self detectStream];
         
@@ -506,6 +508,7 @@ update:
 	[request startRequest];
 	// Get Status Code
 	int statusCode = [request getStatusCode];
+    NSError * error = [request getError]; // Error Detection
 	if (statusCode == 200 ) {
         online = true;
         NSError* error;
@@ -551,9 +554,15 @@ update:
 		// Makes sure the values don't get released
 		return YES;
 	}
-    else if (statusCode == 0){
-        online = false;
-        return NO;
+    else if (error !=nil){
+        if (error.code == NSURLErrorNotConnectedToInternet) {
+            online = false;
+            return NO;
+        }
+        else {
+            online = true;
+            return NO;
+        }
     }
 	else {
         online = true;

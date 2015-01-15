@@ -1,6 +1,6 @@
 //
 //  HotkeysPrefs.h
-//  Hachidori
+//  MAL Updater OS X
 //
 //  Created by Nanoha Takamachi on 2014/12/21.
 //

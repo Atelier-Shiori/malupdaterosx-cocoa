@@ -1,6 +1,6 @@
 //
 //  EasyNSURLConnection.h
-//  Hachidori
+//  MAL Updater OS X
 //
 //  Created by Nanoha Takamachi on 2014/11/25.
 //  Copyright (c) 2014年 Atelier Shiori.
