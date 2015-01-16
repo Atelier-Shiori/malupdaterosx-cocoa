@@ -116,7 +116,7 @@
 	//Ignore Cookies
 	[request setUseCookies:NO];
 	//Set Username and Password
-    [request addHeader:[NSString stringWithFormat:@"Basic %@", [[NSString stringWithFormat:@"%@:%@", [fieldusername stringValue], [fieldpassword stringValue]] base64Encoding]] forKey:@"Authorization"];
+    [request addHeader:[NSString stringWithFormat:@"Basic %@", [[NSString stringWithFormat:@"%@:%@", username, password] base64Encoding]] forKey:@"Authorization"];
 	//Verify Username/Password
 	[request startRequest];
     NSLog(@"%@", [request getResponseDataString]);
@@ -128,7 +128,7 @@
 		// Generate API Key
 		NSString * Token = [NSString stringWithFormat:@"%@:%@", [fieldusername stringValue], [fieldpassword stringValue]];
 		[defaults setObject:[Token base64Encoding] forKey:@"Base64Token"];
-		[defaults setObject:[fieldusername stringValue] forKey:@"Username"];
+        [defaults setObject:username forKey:@"Username"];
         [clearbut setEnabled: YES];
         [loggedinuser setStringValue:username];
         [loggedinview setHidden:NO];

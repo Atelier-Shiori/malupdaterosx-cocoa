@@ -14,7 +14,6 @@
 		3A2DCCBE1210B3D900C920F1 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A2DCCBD1210B3D900C920F1 /* Security.framework */; };
 		3A4C61D4120DF3ED0032F63A /* OgreKit.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3A4C61D3120DF3ED0032F63A /* OgreKit.framework */; };
 		3A6AB37F120F313E00D51D2C /* Base64Category.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A6AB37E120F313E00D51D2C /* Base64Category.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		3A6AB38C120F327C00D51D2C /* base64.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A6AB38B120F327C00D51D2C /* base64.c */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		3A6AB40E120F350400D51D2C /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A6AB40D120F350400D51D2C /* Sparkle.framework */; };
 		3A6AB415120F351B00D51D2C /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3A6AB40D120F350400D51D2C /* Sparkle.framework */; };
 		3A6AB587120F402A00D51D2C /* OgreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A4C61D3120DF3ED0032F63A /* OgreKit.framework */; };
@@ -95,8 +94,6 @@
 		3A4C61D3120DF3ED0032F63A /* OgreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OgreKit.framework; path = Frameworks/OgreKit.framework; sourceTree = "<group>"; };
 		3A6AB37D120F313E00D51D2C /* Base64Category.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Base64Category.h; sourceTree = "<group>"; };
 		3A6AB37E120F313E00D51D2C /* Base64Category.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Base64Category.m; sourceTree = "<group>"; };
-		3A6AB38A120F327C00D51D2C /* base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = base64.h; sourceTree = "<group>"; };
-		3A6AB38B120F327C00D51D2C /* base64.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = base64.c; sourceTree = "<group>"; };
 		3A6AB40D120F350400D51D2C /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sparkle.framework; path = Frameworks/Sparkle.framework; sourceTree = "<group>"; };
 		3A851D221210AE0300B55720 /* StatusIcon.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = StatusIcon.tiff; sourceTree = "<group>"; };
 		3AFEF127120DF8CE0098B59D /* MyAnimeList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyAnimeList.h; sourceTree = "<group>"; };
@@ -295,8 +292,6 @@
 				3A2DCCB51210B3BF00C920F1 /* PFMoveApplication.m */,
 				3A6AB37D120F313E00D51D2C /* Base64Category.h */,
 				3A6AB37E120F313E00D51D2C /* Base64Category.m */,
-				3A6AB38A120F327C00D51D2C /* base64.h */,
-				3A6AB38B120F327C00D51D2C /* base64.c */,
 				5C881EF919F462B400E20425 /* NSString_stripHtml.h */,
 				5C881EFA19F462B400E20425 /* NSString_stripHtml.m */,
 				6F28DC171A67087300AF063F /* HotKeyConstants.h */,
@@ -466,7 +461,6 @@
 				6F28DC141A67085800AF063F /* MASShortcut+UserDefaults.m in Sources */,
 				6F28DC161A67085800AF063F /* MASShortcutView+UserDefaults.m in Sources */,
 				822AEB8D1A202A7B003DD682 /* ExceptionsPref.m in Sources */,
-				3A6AB38C120F327C00D51D2C /* base64.c in Sources */,
 				6F28DC151A67085800AF063F /* MASShortcutView.m in Sources */,
 				3A2DCCB61210B3BF00C920F1 /* PFMoveApplication.m in Sources */,
 				5C2B9DC41221E9E5006DEF0D /* MAL_Updater_OS_X_DataModel.xcdatamodel in Sources */,
