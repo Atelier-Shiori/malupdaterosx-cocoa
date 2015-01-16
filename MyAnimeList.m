@@ -750,7 +750,7 @@ update:
 	switch ([request getStatusCode]) {
 		case 200:
 			// Update Successful
-			if ([TitleScore intValue] == showscore && [WatchStatus isEqualToString:showwatchstatus])
+			if ([TitleScore intValue] == showscore && [WatchStatus isEqualToString:showwatchstatus] && [episode intValue] == [DetectedCurrentEpisode intValue])
 			{
 				//Nothing changed, do nothing.
 			}
