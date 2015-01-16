@@ -628,6 +628,7 @@ update:
 				// Store Last Scrobbled Title
 		        LastScrobbledTitle = DetectedTitle;
 		        LastScrobbledEpisode = DetectedEpisode;
+                DetectedCurrentEpisode = DetectedEpisode;
                 if (confirmed) {
                     LastScrobbledActualTitle = [NSString stringWithFormat:@"%@",[LastScrobbledInfo objectForKey:@"title"]];
                 }
@@ -680,6 +681,7 @@ update:
 		//Store last scrobbled information
         LastScrobbledTitle = DetectedTitle;
         LastScrobbledEpisode = DetectedEpisode;
+        DetectedCurrentEpisode = DetectedEpisode;
             if (confirmed) {
                 LastScrobbledActualTitle = [NSString stringWithFormat:@"%@",[LastScrobbledInfo objectForKey:@"title"]];
             }
