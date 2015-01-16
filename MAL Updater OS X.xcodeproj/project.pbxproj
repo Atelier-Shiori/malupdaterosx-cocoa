@@ -34,6 +34,7 @@
 		5CBE9FEF19F2F9E500CA3E5D /* GeneralPreferenceView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5CBE9FEE19F2F9E500CA3E5D /* GeneralPreferenceView.xib */; };
 		5CD36B9A19F2EA9B007BB6B6 /* MASPreferencesWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CD36B9819F2EA9B007BB6B6 /* MASPreferencesWindowController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		5CD36BBA19F2ED88007BB6B6 /* GeneralPrefController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CD36BB919F2ED88007BB6B6 /* GeneralPrefController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		6F27071E1A69905D0020913A /* FixSearchDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6F2707201A69905D0020913A /* FixSearchDialog.xib */; };
 		6F27CE941A6869E8004E51F8 /* ExceptionsPref.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6F27CE961A6869E8004E51F8 /* ExceptionsPref.xib */; };
 		6F27CE971A6869ED004E51F8 /* HotkeysPrefs.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6F27CE991A6869ED004E51F8 /* HotkeysPrefs.xib */; };
 		6F27CE9A1A686A04004E51F8 /* MASPreferencesWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6F27CE9C1A686A04004E51F8 /* MASPreferencesWindow.xib */; };
@@ -49,7 +50,6 @@
 		8227C1171A1D8D34005F3301 /* anitomy-osx.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8227C1161A1D8D34005F3301 /* anitomy-osx.framework */; };
 		8227C1181A1D8D47005F3301 /* anitomy-osx.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8227C1161A1D8D34005F3301 /* anitomy-osx.framework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		822AEB891A202931003DD682 /* FixSearchDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 822AEB871A202931003DD682 /* FixSearchDialog.m */; };
-		822AEB8A1A202931003DD682 /* FixSearchDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 822AEB881A202931003DD682 /* FixSearchDialog.xib */; };
 		822AEB8D1A202A7B003DD682 /* ExceptionsPref.m in Sources */ = {isa = PBXBuildFile; fileRef = 822AEB8C1A202A7B003DD682 /* ExceptionsPref.m */; };
 		822AEB911A202B98003DD682 /* rules.tif in Resources */ = {isa = PBXBuildFile; fileRef = 822AEB901A202B98003DD682 /* rules.tif */; };
 		823D4D211A1AB46600392ACB /* Recognition.m in Sources */ = {isa = PBXBuildFile; fileRef = 823D4D201A1AB46600392ACB /* Recognition.m */; };
@@ -119,6 +119,7 @@
 		5CD36BB819F2ED88007BB6B6 /* GeneralPrefController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeneralPrefController.h; sourceTree = "<group>"; };
 		5CD36BB919F2ED88007BB6B6 /* GeneralPrefController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeneralPrefController.m; sourceTree = "<group>"; };
 		5CFC037419F3396E006B4DAD /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		6F27071F1A69905D0020913A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/FixSearchDialog.xib; sourceTree = "<group>"; };
 		6F27CE951A6869E8004E51F8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/ExceptionsPref.xib; sourceTree = "<group>"; };
 		6F27CE981A6869ED004E51F8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/HotkeysPrefs.xib; sourceTree = "<group>"; };
 		6F27CE9B1A686A04004E51F8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MASPreferencesWindow.xib; sourceTree = "<group>"; };
@@ -141,7 +142,6 @@
 		8227C1161A1D8D34005F3301 /* anitomy-osx.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "anitomy-osx.framework"; path = "Frameworks/anitomy-osx.framework"; sourceTree = "<group>"; };
 		822AEB861A202931003DD682 /* FixSearchDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FixSearchDialog.h; sourceTree = "<group>"; };
 		822AEB871A202931003DD682 /* FixSearchDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FixSearchDialog.m; sourceTree = "<group>"; };
-		822AEB881A202931003DD682 /* FixSearchDialog.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FixSearchDialog.xib; sourceTree = "<group>"; };
 		822AEB8B1A202A7B003DD682 /* ExceptionsPref.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExceptionsPref.h; sourceTree = "<group>"; };
 		822AEB8C1A202A7B003DD682 /* ExceptionsPref.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExceptionsPref.m; sourceTree = "<group>"; };
 		822AEB901A202B98003DD682 /* rules.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = rules.tif; sourceTree = "<group>"; };
@@ -354,7 +354,7 @@
 			children = (
 				822AEB861A202931003DD682 /* FixSearchDialog.h */,
 				822AEB871A202931003DD682 /* FixSearchDialog.m */,
-				822AEB881A202931003DD682 /* FixSearchDialog.xib */,
+				6F2707201A69905D0020913A /* FixSearchDialog.xib */,
 			);
 			name = Exception/Correction;
 			sourceTree = "<group>";
@@ -426,7 +426,7 @@
 				8294C45E19F99B2F009DE98B /* Images.xcassets in Resources */,
 				6F27CE971A6869ED004E51F8 /* HotkeysPrefs.xib in Resources */,
 				1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */,
-				822AEB8A1A202931003DD682 /* FixSearchDialog.xib in Resources */,
+				6F27071E1A69905D0020913A /* FixSearchDialog.xib in Resources */,
 				822AEB911A202B98003DD682 /* rules.tif in Resources */,
 				3A851D231210AE0300B55720 /* StatusIcon.tiff in Resources */,
 				3A20383212122B2B003813B2 /* dsa_pub.pem in Resources */,
@@ -515,6 +515,14 @@
 				829FB41E19F739700026EAC2 /* Base */,
 			);
 			name = GeneralPreferenceView.xib;
+			sourceTree = "<group>";
+		};
+		6F2707201A69905D0020913A /* FixSearchDialog.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				6F27071F1A69905D0020913A /* Base */,
+			);
+			name = FixSearchDialog.xib;
 			sourceTree = "<group>";
 		};
 		6F27CE961A6869E8004E51F8 /* ExceptionsPref.xib */ = {

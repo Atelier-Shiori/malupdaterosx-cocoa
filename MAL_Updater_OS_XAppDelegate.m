@@ -850,7 +850,7 @@ Getters
             // Update the tooltip, menu and last scrobbled title
             [self setStatusMenuTitleEpisode:[MALEngine getLastScrobbledActualTitle] episode:[MALEngine getLastScrobbledEpisode]];
             [self updateLastScrobbledTitleStatus:false];
-            [confirmupdate setHidden:false];
+            [confirmupdate setHidden:true];
         }
         else
             [self setStatusText:@"Scrobble Status: Unable to update Watch Status/Score."];
