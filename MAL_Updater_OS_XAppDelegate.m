@@ -821,6 +821,10 @@ Getters
 	[showtitle setObjectValue:[MALEngine getLastScrobbledTitle]];
 	[showscore selectItemWithTag:[MALEngine getScore]];
 	[showstatus selectItemAtIndex:[MALEngine getWatchStatus]];
+    [episodefield setStringValue:[NSString stringWithFormat:@"%i", [MALEngine getCurrentEpisode]]];
+    if ([[MALEngine getTotalEpisodes] intValue] !=0) {
+        [epiformatter setMaximum:[NSNumber numberWithInt:[[MALEngine getTotalEpisodes] intValue]]];
+    }
 	// Stop Timer temporarily if scrobbling is turned on
 	if (scrobbling == TRUE) {
 		[self stoptimer];
@@ -828,10 +832,26 @@ Getters
 	
 }
 - (void)myPanelDidEnd:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo {
+    // Check if Episode field is empty. If so, set it to last scrobbled episode
+    NSString * tmpepisode = [episodefield stringValue];
+    bool episodechanged = false;
+    if (tmpepisode.length == 0) {
+        tmpepisode = [NSString stringWithFormat:@"%i", [MALEngine getCurrentEpisode]];
+    }
+    if ([tmpepisode intValue] != [MALEngine getCurrentEpisode]) {
+        episodechanged = true; // Used to update the status window
+    }
+
     if (returnCode == 1) {
-        BOOL result = [MALEngine updatestatus:[MALEngine getAniID] score:[showscore selectedTag] watchstatus:[showstatus titleOfSelectedItem]];
+        BOOL result = [MALEngine updatestatus:[MALEngine getAniID] score:[showscore selectedTag] watchstatus:[showstatus titleOfSelectedItem] episode:tmpepisode];
         if (result)
             [self setStatusText:@"Scrobble Status: Updating of Watch Status/Score Successful."];
+        if (episodechanged) {
+            // Update the tooltip, menu and last scrobbled title
+            //[self setStatusMenuTitleEpisode:[MALEngine getLastScrobbledActualTitle] episode:[MALEngine getLastScrobbledEpisode]];
+            [self updateLastScrobbledTitleStatus:false];
+            [confirmupdate setHidden:false];
+        }
         else
             [self setStatusText:@"Scrobble Status: Unable to update Watch Status/Score."];
     }

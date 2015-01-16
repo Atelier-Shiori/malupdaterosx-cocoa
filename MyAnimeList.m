@@ -724,6 +724,7 @@ update:
 -(BOOL)updatestatus:(NSString *)titleid
 			 score:(int)showscore
 	   watchstatus:(NSString*)showwatchstatus
+            episode:(NSString*)episode
 {
 	NSLog(@"Updating Status for %@", titleid);
 	//Set up Delegate
@@ -739,7 +740,7 @@ update:
 	[request addHeader:[NSString stringWithFormat:@"Basic %@",[defaults objectForKey:@"Base64Token"]]  forKey:@"Authorization"];
 	[request setPostMethod:@"PUT"];
 	//Set current episode
-	[request addFormData:LastScrobbledEpisode forKey:@"episodes"];
+	[request addFormData:episode forKey:@"episodes"];
 	//Set new watch status
 	[request addFormData:showwatchstatus forKey:@"status"];	
 	//Set new score.
@@ -754,9 +755,12 @@ update:
 				//Nothing changed, do nothing.
 			}
 			else {
-			//Set New Values
-			TitleScore = [NSString stringWithFormat:@"%i", showscore];
-			WatchStatus = showwatchstatus;
+                //Set New Values
+                TitleScore = [NSString stringWithFormat:@"%i", showscore];
+                WatchStatus = showwatchstatus;
+                LastScrobbledEpisode = episode;
+                DetectedCurrentEpisode = episode;
+                confirmed = true;
                 return true;
 			break;
 		default:

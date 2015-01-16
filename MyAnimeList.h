@@ -40,7 +40,8 @@
 -(BOOL)confirmupdate;
 -(BOOL)updatestatus:(NSString *)titleid
               score:(int)showscore
-        watchstatus:(NSString*)showwatchstatus;
+        watchstatus:(NSString*)showwatchstatus
+            episode:(NSString*)episode;
 -(bool)removetitle:(NSString *)titleid;
 -(NSString *)getLastScrobbledTitle;
 -(NSString *)getLastScrobbledEpisode;
