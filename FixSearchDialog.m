@@ -16,7 +16,8 @@
 @implementation FixSearchDialog
 
 -(id)init{
-     if(![super initWithWindowNibName:@"FixSearchDialog"])
+    self = [super initWithWindowNibName:@"FixSearchDialog"];
+     if(!self)
        return nil;
     return self;
 }

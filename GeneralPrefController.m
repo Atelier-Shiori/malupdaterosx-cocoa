@@ -129,7 +129,6 @@
 	}
 	//release
     [request release];
-    [url release];
 	
 }
 -(IBAction)resetapiurl:(id)sender
@@ -158,7 +157,6 @@
 						contextInfo:NULL];
 }
 -(IBAction)clearSearchCache:(id)sender{
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setObject:[[NSMutableArray alloc] init] forKey:@"searchcache"];
+    [[NSUserDefaults standardUserDefaults] setObject:[[[NSMutableArray alloc] init] autorelease] forKey:@"searchcache"];
 }
 @end
