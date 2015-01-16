@@ -848,7 +848,7 @@ Getters
             [self setStatusText:@"Scrobble Status: Updating of Watch Status/Score Successful."];
         if (episodechanged) {
             // Update the tooltip, menu and last scrobbled title
-            //[self setStatusMenuTitleEpisode:[MALEngine getLastScrobbledActualTitle] episode:[MALEngine getLastScrobbledEpisode]];
+            [self setStatusMenuTitleEpisode:[MALEngine getLastScrobbledActualTitle] episode:[MALEngine getLastScrobbledEpisode]];
             [self updateLastScrobbledTitleStatus:false];
             [confirmupdate setHidden:false];
         }

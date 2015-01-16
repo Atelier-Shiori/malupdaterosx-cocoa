@@ -750,11 +750,6 @@ update:
 	switch ([request getStatusCode]) {
 		case 200:
 			// Update Successful
-			if ([TitleScore intValue] == showscore && [WatchStatus isEqualToString:showwatchstatus] && [episode intValue] == [DetectedCurrentEpisode intValue])
-			{
-				//Nothing changed, do nothing.
-			}
-			else {
                 //Set New Values
                 TitleScore = [NSString stringWithFormat:@"%i", showscore];
                 WatchStatus = showwatchstatus;
@@ -768,9 +763,6 @@ update:
                 return false;
 			break;
 	}
-	
-}
-    return false;
 }
 -(NSDictionary *)getLastScrobbledInfo{
 	return LastScrobbledInfo;
