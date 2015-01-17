@@ -16,9 +16,11 @@
 	NSString * LastScrobbledTitle;
 	NSString * LastScrobbledEpisode;
 	NSString * LastScrobbledActualTitle;
+    NSString * LastScrobbledSource;
 	NSDictionary * LastScrobbledInfo;
 	NSString * DetectedTitle;
 	NSString * DetectedEpisode;
+    NSString * DetectedSource;
     BOOL DetectedTitleisMovie;
     int DetectedSeason;
 	NSString * DetectedCurrentEpisode;
@@ -46,6 +48,7 @@
 -(NSString *)getLastScrobbledTitle;
 -(NSString *)getLastScrobbledEpisode;
 -(NSString *)getLastScrobbledActualTitle;
+-(NSString *)getLastScrobbledSource;
 -(NSString *)getAniID;
 -(NSString *)getTotalEpisodes;
 -(int)getCurrentEpisode;

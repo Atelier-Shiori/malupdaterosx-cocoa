@@ -777,13 +777,13 @@
     if (pending) {
         [updatecorrect setAutoenablesItems:NO];
         [lastupdateheader setTitle:@"Pending:"];
-        [self setLastScrobbledTitle:[NSString stringWithFormat:@"Pending: %@ - Episode %@",[MALEngine getLastScrobbledTitle],[MALEngine getLastScrobbledEpisode]]];
+        [self setLastScrobbledTitle:[NSString stringWithFormat:@"Pending: %@ - Episode %@ playing from %@",[MALEngine getLastScrobbledTitle],[MALEngine getLastScrobbledEpisode], [MALEngine getLastScrobbledSource]]];
         [self setStatusToolTip:[NSString stringWithFormat:@"MAL Updater OS X - %@ - %@ (Pending)",[MALEngine getLastScrobbledActualTitle],[MALEngine getLastScrobbledEpisode]]];
     }
     else{
         [updatecorrect setAutoenablesItems:YES];
         [lastupdateheader setTitle:@"Last Scrobbled:"];
-        [self setLastScrobbledTitle:[NSString stringWithFormat:@"Last Scrobbled: %@ - Episode %@",[MALEngine getLastScrobbledTitle],[MALEngine getLastScrobbledEpisode]]];
+        [self setLastScrobbledTitle:[NSString stringWithFormat:@"Last Scrobbled: %@ - Episode %@ playing from %@",[MALEngine getLastScrobbledTitle],[MALEngine getLastScrobbledEpisode], [MALEngine getLastScrobbledSource]]];
         [self setStatusToolTip:[NSString stringWithFormat:@"MAL Updater OS X - %@ - %@",[MALEngine getLastScrobbledActualTitle],[MALEngine getLastScrobbledEpisode]]];
     }
 }
