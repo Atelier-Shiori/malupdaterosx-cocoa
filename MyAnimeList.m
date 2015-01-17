@@ -278,7 +278,7 @@
         NSTask *task;
         task = [[NSTask alloc] init];
         [task setLaunchPath: @"/usr/sbin/lsof"];
-        [task setArguments: [NSArray arrayWithObjects:@"-c", [NSString stringWithFormat:@"%@", [player objectAtIndex:i]], @"-F", @"n", nil]]; 		//lsof -c '<player name>' -Fn
+        [task setArguments: [NSArray arrayWithObjects:@"-c", (NSString *)[player objectAtIndex:i], @"-F", @"n", nil]]; 		//lsof -c '<player name>' -Fn
         NSPipe *pipe;
         pipe = [NSPipe pipe];
         [task setStandardOutput: pipe];
@@ -307,8 +307,8 @@
                 //Make sure the file name is valid, even if player is open. Do not update video files in ignored directories
                 if ([regex matchInString:string] !=nil && !onIgnoreList) {
                     NSDictionary *d = [[Recognition alloc] recognize:string];
-                    DetectedTitle = [NSString stringWithFormat:@"%@", [d objectForKey:@"title"]];
-                    DetectedEpisode = [NSString stringWithFormat:@"%@", [d objectForKey:@"episode"]];
+                    DetectedTitle = (NSString *)[d objectForKey:@"title"];
+                    DetectedEpisode = (NSString *)[d objectForKey:@"episode"];
                     DetectedSeason = [[d objectForKey:@"season"] intValue];
                     // Source Detection
                     switch (i) {
@@ -316,7 +316,7 @@
                         case 1:
                         case 3:
                         case 6:
-                            DetectedSource = [NSString stringWithFormat:@"%@", [player objectAtIndex:i]];
+                            DetectedSource = (NSString *)[player objectAtIndex:i];
                             break;
                         case 2:
                             DetectedSource = @"SMPlayerX";
@@ -346,9 +346,9 @@
         else{
             NSArray * c = [detected objectForKey:@"result"];
             NSDictionary * d = [c objectAtIndex:0];
-            DetectedTitle = [NSString stringWithFormat:@"%@",[d objectForKey:@"title"]];
-            DetectedEpisode = [NSString stringWithFormat:@"%@",[d objectForKey:@"episode"]];
-            DetectedSource = [NSString stringWithFormat:@"%@ in %@", [[NSString stringWithFormat:@"%@", [d objectForKey:@"site"]] capitalizedString], [d objectForKey:@"browser"]];
+            DetectedTitle = (NSString *)[d objectForKey:@"title"];
+            DetectedEpisode = (NSString *)[d objectForKey:@"episode"];
+            DetectedSource = [NSString stringWithFormat:@"%@ in %@", (NSString *)[[d objectForKey:@"site"] capitalizedString], [d objectForKey:@"browser"]];
             goto update;
         }
 		// Nothing detected
@@ -424,7 +424,7 @@ update:
     NSMutableArray * other = [[NSMutableArray alloc] init];
     // Organize Them
     for (NSDictionary *entry in searchdata) {
-        theshowtype = [NSString stringWithFormat:@"%@", [entry objectForKey:@"type"]];
+        theshowtype = (NSString *)[entry objectForKey:@"type"];
         if ([theshowtype isEqualToString:@"Movie"])
             [movie addObject:entry];
         else if ([theshowtype isEqualToString:@"TV"])
@@ -466,7 +466,7 @@ update:
     if (DetectedTitleisMovie) {
         //Check movies and Specials First
         for (NSDictionary *searchentry in sortedArray) {
-        theshowtitle = [NSString stringWithFormat:@"%@",[searchentry objectForKey:@"title"]];
+        theshowtitle = (NSString *)[searchentry objectForKey:@"title"];
         if ([regex matchInString:theshowtitle] != nil) {
         }
             DetectedEpisode = @"1"; // Usually, there is one episode in a movie.
@@ -474,13 +474,13 @@ update:
                 DetectedTitleisMovie = false;
             }
             //Return titleid
-            titleid = [NSString stringWithFormat:@"%@",[searchentry objectForKey:@"id"]];
+            titleid = (NSString *)[searchentry objectForKey:@"id"];
             goto foundtitle;
         }
     }
     // Check TV, ONA, Special, OVA, Other
     for (NSDictionary *searchentry in sortedArray) {
-        theshowtitle = [NSString stringWithFormat:@"%@",[searchentry objectForKey:@"title"]];
+        theshowtitle = (NSString *)[searchentry objectForKey:@"title"];
         if ([regex matchInString:theshowtitle] != nil) {
             if ([[NSString stringWithFormat:@"%@", [searchentry objectForKey:@"type"]] isEqualToString:@"TV"]) { // Check Seasons if the title is a TV show type
                 // Used for Season Checking
@@ -500,7 +500,7 @@ update:
             //Return titleid if episode is valid
             if ( [[NSString stringWithFormat:@"%@", [searchentry objectForKey:@"episodes"]] intValue] == 0 || ([[NSString stringWithFormat:@"%@",[searchentry objectForKey:@"episodes"]] intValue] >= [DetectedEpisode intValue])) {
                 NSLog(@"Valid Episode Count");
-                titleid = [NSString stringWithFormat:@"%@",[searchentry objectForKey:@"id"]];
+                titleid = (NSString *)[searchentry objectForKey:@"id"];
                 goto foundtitle;
             }
             else{
@@ -607,7 +607,7 @@ update:
         confirmed = true;
 		LastScrobbledTitle = DetectedTitle;
 		LastScrobbledEpisode = DetectedEpisode;
-        LastScrobbledActualTitle = [NSString stringWithFormat:@"%@",[LastScrobbledInfo objectForKey:@"title"]];
+        LastScrobbledActualTitle = (NSString *)[LastScrobbledInfo objectForKey:@"title"];
         LastScrobbledSource = DetectedSource;
         return 2;
 	}
@@ -615,7 +615,7 @@ update:
         // Confirm before updating title
         LastScrobbledTitle = DetectedTitle;
         LastScrobbledEpisode = DetectedEpisode;
-        LastScrobbledActualTitle = [NSString stringWithFormat:@"%@",[LastScrobbledInfo objectForKey:@"title"]];
+        LastScrobbledActualTitle = (NSString *)[LastScrobbledInfo objectForKey:@"title"];
         LastScrobbledSource = DetectedSource;
         return 3;
     }
@@ -658,7 +658,7 @@ update:
 		        LastScrobbledEpisode = DetectedEpisode;
                 DetectedCurrentEpisode = DetectedEpisode;
                 if (confirmed) {
-                    LastScrobbledActualTitle = [NSString stringWithFormat:@"%@",[LastScrobbledInfo objectForKey:@"title"]];
+                    LastScrobbledActualTitle = (NSString *)[LastScrobbledInfo objectForKey:@"title"];
                 }
                 confirmed = true;
 				// Update Successful
@@ -679,7 +679,7 @@ update:
         // Confirm before updating title
         LastScrobbledTitle = DetectedTitle;
         LastScrobbledEpisode = DetectedEpisode;
-        LastScrobbledActualTitle = [NSString stringWithFormat:@"%@",[LastScrobbledInfo objectForKey:@"title"]];
+        LastScrobbledActualTitle = (NSString *)[LastScrobbledInfo objectForKey:@"title"];
         LastScrobbledSource = DetectedSource;
         return 3;
     }
@@ -712,7 +712,7 @@ update:
         LastScrobbledEpisode = DetectedEpisode;
         DetectedCurrentEpisode = DetectedEpisode;
             if (confirmed) {
-                LastScrobbledActualTitle = [NSString stringWithFormat:@"%@",[LastScrobbledInfo objectForKey:@"title"]];
+                LastScrobbledActualTitle = (NSString *)[LastScrobbledInfo objectForKey:@"title"];
             }
             confirmed = true;
 			return 21;
@@ -870,7 +870,7 @@ update:
     NSArray * ignoredfilenames = [[NSUserDefaults standardUserDefaults] objectForKey:@"IgnoreTitleRules"];
     if ([ignoredfilenames count] > 0) {
         for (NSDictionary * d in ignoredfilenames) {
-            NSString * rule = [NSString stringWithFormat:@"%@", [d objectForKey:@"rule"]];
+            NSString * rule = (NSString *)[d objectForKey:@"rule"];
             if ([[OGRegularExpression regularExpressionWithString:rule options:OgreIgnoreCaseOption] matchInString:filename] && rule.length !=0) { // Blank rules are infinite, thus should not be counted
                 NSLog(@"Video file name is on filename ignore list.");
                 return true;

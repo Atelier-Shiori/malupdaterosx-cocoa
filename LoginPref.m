@@ -76,7 +76,7 @@
 		[savebut setEnabled: NO];
         [loggedinview setHidden:NO];
         [loginview setHidden:YES];
-        [loggedinuser setStringValue:[NSString stringWithFormat:@"%@", [[NSUserDefaults standardUserDefaults] objectForKey:@"Username"]]];
+        [loggedinuser setStringValue:(NSString *)[[NSUserDefaults standardUserDefaults] objectForKey:@"Username"]];
 	}
 	else {
 		//Disable Clearbut
@@ -207,7 +207,7 @@
 }
 - (void)reAuthPanelDidEnd:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo {
     if (returnCode == 1) {
-        [self login:[NSString stringWithFormat:@"%@", [[NSUserDefaults standardUserDefaults] objectForKey:@"Username"]] password:[passwordinput stringValue]];
+        [self login: (NSString *)[[NSUserDefaults standardUserDefaults] objectForKey:@"Username"] password:[passwordinput stringValue]];
     }
     //Reset and Close
     [passwordinput setStringValue:@""];

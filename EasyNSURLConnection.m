@@ -56,7 +56,7 @@
     [formdata addObject:[NSDictionary dictionaryWithObjectsAndKeys:object,key, nil]];
 }
 -(void)setUserAgent:(NSString *)string{
-    useragent = [NSString stringWithFormat:@"%@",string];
+    useragent = string;
 }
 -(void)setUseCookies:(BOOL)choice{
     usecookies = choice;
