@@ -742,11 +742,11 @@ Gw
                     <toolbarItem implicitItemIdentifier="E9C26A12-9952-4DDB-ACEB-5F9DA304DDAD" label="Share" paletteLabel="Share" image="NSShareTemplate" id="vKI-CB-Acb">
                         <nil key="toolTip"/>
                         <size key="minSize" width="30" height="25"/>
-                        <size key="maxSize" width="30" height="25"/>
+                        <size key="maxSize" width="42" height="25"/>
                         <popUpButton key="view" verticalHuggingPriority="750" id="GVq-Ha-GwO">
                             <rect key="frame" x="0.0" y="14" width="30" height="25"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <popUpButtonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" pullsDown="YES" arrowPosition="noArrow" selectedItem="Zpr-kY-u33" id="OaT-sk-AsU">
+                            <popUpButtonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" pullsDown="YES" selectedItem="Zpr-kY-u33" id="OaT-sk-AsU">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="menu"/>
                                 <menu key="menu" id="GIJ-pH-dPY">
