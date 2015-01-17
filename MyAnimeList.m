@@ -319,7 +319,7 @@
                             DetectedSource = [NSString stringWithFormat:@"%@", [player objectAtIndex:i]];
                             break;
                         case 2:
-                            DetectedSource = @"SMPlayer X";
+                            DetectedSource = @"SMPlayerX";
                             break;
                         case 4:
                         case 5:
@@ -348,7 +348,7 @@
             NSDictionary * d = [c objectAtIndex:0];
             DetectedTitle = [NSString stringWithFormat:@"%@",[d objectForKey:@"title"]];
             DetectedEpisode = [NSString stringWithFormat:@"%@",[d objectForKey:@"episode"]];
-            DetectedSource = [NSString stringWithFormat:@"%@ in %@", [d objectForKey:@"site"], [d objectForKey:@"browser"]];
+            DetectedSource = [NSString stringWithFormat:@"%@ in %@", [[NSString stringWithFormat:@"%@", [d objectForKey:@"site"]] capitalizedString], [d objectForKey:@"browser"]];
             goto update;
         }
 		// Nothing detected
