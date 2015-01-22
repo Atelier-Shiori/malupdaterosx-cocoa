@@ -127,7 +127,8 @@
         NSManagedObjectContext *moc = managedObjectContext;
         NSFetchRequest * allCaches = [[NSFetchRequest alloc] init];
         [allCaches setEntity:[NSEntityDescription entityForName:@"Cache" inManagedObjectContext:moc]];
-        
+        NSPredicate *predicate = [NSPredicate predicateWithFormat: @"detectedTitle == %@", DetectedTitle];
+        [allCaches setPredicate:predicate];
         NSError * error = nil;
         NSArray * cache = [moc executeFetchRequest:allCaches error:&error];
         if (cache.count > 0) {
@@ -214,14 +215,19 @@
 	NSString * searchtitle;
     NSLog(@"Check Exceptions List");
     // Check Exceptions
-    NSArray *exceptions = [[NSUserDefaults standardUserDefaults] objectForKey:@"exceptions"];
+    NSManagedObjectContext * moc = self.managedObjectContext;
+    NSFetchRequest * allExceptions = [[NSFetchRequest alloc] init];
+    NSError * error = nil;
+    [allExceptions setEntity:[NSEntityDescription entityForName:@"Exceptions" inManagedObjectContext:moc]];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat: @"detectedTitle == %@", DetectedTitle];
+    [allExceptions setPredicate:predicate];
+    NSArray * exceptions = [moc executeFetchRequest:allExceptions error:&error];
     if (exceptions.count > 0) {
         NSString * correcttitle;
-        for (NSDictionary *d in exceptions) {
-            NSString * title = [d objectForKey:@"detectedtitle"];
-            if ([title isEqualToString:DetectedTitle]) {
-                NSLog(@"%@ found on exceptions list as %@!", title, [d objectForKey:@"correcttitle"]);
-                correcttitle = [d objectForKey:@"correcttitle"];
+        for (NSManagedObject * entry in exceptions) {
+            if ([DetectedTitle isEqualToString:(NSString *)[entry valueForKey:@"detectedTitle"]]) {
+                correcttitle = (NSString *)[entry valueForKey:@"correctTitle"];
+                NSLog(@"%@ found on exceptions list as %@!", DetectedTitle, correcttitle);
                 break;
             }
         }
