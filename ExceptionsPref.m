@@ -74,22 +74,38 @@
 }
 -(void)correctionDidEnd:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo {
     if (returnCode == 1){
-        // Add to Array Controller
-        NSDictionary * entry = [[NSDictionary alloc] initWithObjectsAndKeys:detectedtitle, @"detectedtitle", [fsdialog getSelectedTitle] ,@"correcttitle", [fsdialog getSelectedAniID], @"showid", nil];
-        [arraycontroller addObject:entry];
-        //Check if the title exists in the cache. If so, remove it
-        NSMutableArray *cache = [NSMutableArray arrayWithArray:[[NSUserDefaults standardUserDefaults] objectForKey:@"searchcache"]];
-        if (cache.count > 0) {
-            for (int i=0; i<[cache count]; i++) {
-                NSDictionary * d = [cache objectAtIndex:i];
-                NSString * title = [d objectForKey:@"detectedtitle"];
-                if ([title isEqualToString:detectedtitle]) {
-                    NSLog(@"%@ found in cache, remove!", title);
-                    [cache removeObject:d];
-                    [[NSUserDefaults standardUserDefaults] setObject:cache forKey:@"searchcache"];
+        NSManagedObjectContext * moc = self.managedObjectContext;
+        NSError * error = nil;
+        BOOL exists = [self checkifexists:detectedtitle];
+        if (!exists) {
+            // Add to Cache in Core Data
+            NSManagedObject *obj = [NSEntityDescription
+                                    insertNewObjectForEntityForName:@"Exceptions"
+                                    inManagedObjectContext: moc];
+            // Set values in the new record
+            [obj setValue:detectedtitle forKey:@"detectedTitle"];
+            [obj setValue:[fsdialog getSelectedTitle] forKey:@"correctTitle"];
+            [obj setValue:[fsdialog getSelectedAniID] forKey:@"id"];
+            [obj setValue:[NSNumber numberWithInt:0] forKey:@"episodeOffset"]; // Not Implemented Yet
+        }
+        //Save
+        [moc save:&error];
+        // Load present cache data
+        NSFetchRequest * allCache = [[NSFetchRequest alloc] init];
+        [allCache setEntity:[NSEntityDescription entityForName:@"Cache" inManagedObjectContext:moc]];
+        
+        error = nil;
+        NSArray * caches = [moc executeFetchRequest:allCache error:&error];
+        if (caches.count > 0) {
+            //Check Cache to remove conflicts
+            for (NSManagedObject * cacheentry in caches) {
+                if ([detectedtitle isEqualToString:(NSString *)[cacheentry valueForKey:@"detectedTitle"]]) {
+                    [moc deleteObject:cacheentry];
                     break;
                 }
             }
+            //Save
+            [moc save:&error];
         }
     }
     else{
@@ -121,6 +137,7 @@
         
         NSError *error = nil;
         NSArray * a = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:&error];
+        NSManagedObjectContext * moc = self.managedObjectContext;
         for (NSDictionary *d in a) {
             NSString * detectedtitlea = [d objectForKey:@"detectedtitle"];
             BOOL exists = [self checkifexists:detectedtitlea];
@@ -130,23 +147,41 @@
                 continue;
             }
             else{
-                //Import Object
-                [arraycontroller addObject:d];
-                //Check if the title exists in the cache. If so, remove it
-                NSMutableArray *cache = [NSMutableArray arrayWithArray:[[NSUserDefaults standardUserDefaults] objectForKey:@"searchcache"]];
-                if (cache.count > 0) {
-                    for (int i=0; i<[cache count]; i++) {
-                        NSDictionary * d = [cache objectAtIndex:i];
-                        NSString * title = [d objectForKey:@"detectedtitle"];
-                        if ([title isEqualToString:detectedtitlea]) {
-                            NSLog(@"%@ found in cache, remove!", title);
-                            [cache removeObject:d];
-                            [[NSUserDefaults standardUserDefaults] setObject:cache forKey:@"searchcache"];
+                NSError * error = nil;
+                // Add to Cache in Core Data
+                NSManagedObject *obj = [NSEntityDescription
+                                            insertNewObjectForEntityForName:@"Exceptions"
+                                            inManagedObjectContext: moc];
+                // Set values in the new record
+                [obj setValue:[d objectForKey:@"detectedtitle"] forKey:@"detectedTitle"];
+                [obj setValue:[d objectForKey:@"correcttitle"] forKey:@"correctTitle"];
+                [obj setValue:[d objectForKey:@"showid"] forKey:@"id"];
+                if ([d objectForKey:@"offset"] != nil) {
+                    [obj setValue:[d objectForKey:@"offset"] forKey:@"episodeOffset"];
+                }
+                else{
+                    [obj setValue:[NSNumber numberWithInt:0] forKey:@"episodeOffset"];
+                }
+                //Save
+                [moc save:&error];
+                // Load present cache data
+                NSFetchRequest * allCache = [[NSFetchRequest alloc] init];
+                [allCache setEntity:[NSEntityDescription entityForName:@"Cache" inManagedObjectContext:moc]];
+                
+                error = nil;
+                NSArray * caches = [moc executeFetchRequest:allCache error:&error];
+                if (caches.count > 0) {
+                    //Check Cache to remove conflicts
+                    NSString * dtitle = (NSString *)[d objectForKey:@"detectedtitle"];
+                    for (NSManagedObject * cacheentry in caches) {
+                        if ([dtitle isEqualToString:(NSString *)[cacheentry valueForKey:@"detectedTitle"]]) {
+                            [moc deleteObject:cacheentry];
                             break;
                         }
                     }
+                    //Save
+                    [moc save:&error];
                 }
-                
             }
         }
     }];
@@ -166,7 +201,12 @@
         NSURL *url = [sp URL];
         //Create JSON string from array controller
         NSError *error;
-        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:[arraycontroller arrangedObjects]
+        NSMutableArray * jsonOutput = [[NSMutableArray alloc] init];
+        for (NSManagedObject * o in arraycontroller.arrangedObjects) {
+            NSDictionary * d = [[NSDictionary alloc] initWithObjectsAndKeys:[o valueForKey:@"detectedTitle"], @"detectedtitle", [o valueForKey:@"correctTitle"], @"correcttitle", [o valueForKey:@"id"], @"showid", [o valueForKey:@"episodeOffset"], @"offset", nil];
+            [jsonOutput addObject:d];
+        }
+        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:jsonOutput
                                                            options:0
                                                              error:&error];
         if (!jsonData) {
@@ -193,9 +233,8 @@
 -(BOOL)checkifexists:(NSString *) title{
     // Checks if a title is already on the exception list
     NSArray * a = [arraycontroller arrangedObjects];
-    for (NSDictionary * d in a){
-        NSString * dt = [d objectForKey:@"detectedtitle"];
-        if ([title isEqualToString:dt]) {
+    for (NSManagedObject * entry in a) {
+        if ([title isEqualToString:(NSString *)[entry valueForKey:@"detectedTitle"]]) {
             return true;
         }
     }
