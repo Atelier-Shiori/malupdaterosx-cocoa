@@ -9,6 +9,7 @@
 #import "MyAnimeList.h"
 #import "Recognition.h"
 #import "EasyNSURLConnection.h"
+#import "MAL_Updater_OS_XAppDelegate.h"
 
 @interface MyAnimeList ()
 -(int)detectmedia; // 0 - Nothing, 1 - Same, 2 - Update
@@ -24,9 +25,13 @@
 @end
 
 @implementation MyAnimeList
+@synthesize managedObjectContext;
 -(id)init{
     confirmed = true;
     return [super init];
+}
+-(void)setManagedObjectContext:(NSManagedObjectContext *)context{
+    managedObjectContext = context;
 }
 /* 
  
@@ -119,14 +124,20 @@
     int status;
     NSLog(@"Getting AniID");
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"useSearchCache"]) {
-        NSArray *cache = [[NSUserDefaults standardUserDefaults] objectForKey:@"searchcache"];
+        //NSArray *cache = [[NSUserDefaults standardUserDefaults] objectForKey:@"searchcache"];
+        NSManagedObjectContext *moc = managedObjectContext;
+        NSFetchRequest * allCaches = [[NSFetchRequest alloc] init];
+        [allCaches setEntity:[NSEntityDescription entityForName:@"Cache" inManagedObjectContext:moc]];
+        
+        NSError * error = nil;
+        NSArray * cache = [moc executeFetchRequest:allCaches error:&error];
         if (cache.count > 0) {
             NSString * theid;
-            for (NSDictionary *d in cache) {
-                NSString * title = [d objectForKey:@"detectedtitle"];
+            for (NSManagedObject * cacheentry in cache) {
+                NSString * title = [cacheentry valueForKey:@"detectedTitle"];
                 if ([title isEqualToString:DetectedTitle]) {
                     NSLog(@"%@ found in cache!", title);
-                    theid = [d objectForKey:@"showid"];
+                    theid = [cacheentry valueForKey:@"id"];
                     break;
                 }
             }
@@ -845,11 +856,23 @@ update:
 
 -(void)addtoCache:(NSString *)title showid:(NSString *)showid{
     //Adds ID to cache
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSMutableArray *cache = [NSMutableArray arrayWithArray:[[NSUserDefaults standardUserDefaults] objectForKey:@"searchcache"]];
-    NSDictionary * entry = [[NSDictionary alloc] initWithObjectsAndKeys:title, @"detectedtitle", showid, @"showid", nil];
-    [cache addObject:entry];
-    [defaults setObject:cache forKey:@"searchcache"];
+   // NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    //NSMutableArray *cache = [NSMutableArray arrayWithArray:[[NSUserDefaults standardUserDefaults] objectForKey:@"searchcache"]];
+    //NSDictionary * entry = [[NSDictionary alloc] initWithObjectsAndKeys:title, @"detectedtitle", showid, @"showid", nil];
+    //[cache addObject:entry];
+    //[defaults setObject:cache forKey:@"searchcache"];
+    NSManagedObjectContext *moc = managedObjectContext;
+    // Add to Cache in Core Data
+    NSManagedObject *obj = [NSEntityDescription
+                            insertNewObjectForEntityForName :@"Cache"
+                            inManagedObjectContext: moc];
+    // Set values in the new record
+    [obj setValue:title forKey:@"detectedTitle"];
+    [obj setValue:showid forKey:@"id"];
+    NSError * error = nil;
+    // Save
+    [moc save:&error];
+
 }
 -(bool)checkifIgnored:(NSString *)filename{
     //Checks if file name or directory is on ignore list

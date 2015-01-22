@@ -9,6 +9,7 @@
 #import "GeneralPrefController.h"
 #import "Base64Category.h"
 #import "EasyNSURLConnection.h"
+#import "MAL_Updater_OS_XAppDelegate.h"
 
 
 @implementation GeneralPrefController
@@ -157,6 +158,21 @@
 						contextInfo:NULL];
 }
 -(IBAction)clearSearchCache:(id)sender{
-    [[NSUserDefaults standardUserDefaults] setObject:[[[NSMutableArray alloc] init] autorelease] forKey:@"searchcache"];
+    //[[NSUserDefaults standardUserDefaults] setObject:[[[NSMutableArray alloc] init] autorelease] forKey:@"searchcache"];
+    // Remove All cache data from Core Data Entity
+    MAL_Updater_OS_XAppDelegate * delegate = (MAL_Updater_OS_XAppDelegate *)[[NSApplication sharedApplication] delegate];
+    NSManagedObjectContext *moc = [delegate getObjectContext];
+    NSFetchRequest * allCaches = [[NSFetchRequest alloc] init];
+    [allCaches setEntity:[NSEntityDescription entityForName:@"Cache" inManagedObjectContext:moc]];
+    
+    NSError * error = nil;
+    NSArray * caches = [moc executeFetchRequest:allCaches error:&error];
+    //error handling goes here
+    for (NSManagedObject * cachentry in caches) {
+        [moc deleteObject:cachentry];
+    }
+    error = nil;
+    [moc save:&error];
+    [allCaches release];
 }
 @end

@@ -94,10 +94,14 @@
     
     NSURL *url = [NSURL fileURLWithPath: [applicationSupportDirectory stringByAppendingPathComponent: @"Update History.sqlite"]];
     persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel: mom];
+    NSDictionary *options = @{
+                              NSMigratePersistentStoresAutomaticallyOption : @YES,
+                              NSInferMappingModelAutomaticallyOption : @YES
+                              };
     if (![persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType 
 												  configuration:nil 
 															URL:url 
-														options:nil 
+														options:options
 														  error:&error]){
         [[NSApplication sharedApplication] presentError:error];
          persistentStoreCoordinator = nil;
@@ -188,6 +192,7 @@
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
 	// Initialize MALEngine
 	MALEngine = [[MyAnimeList alloc] init];
+    [MALEngine setManagedObjectContext:managedObjectContext];
 	// Insert code here to initialize your application
 	//Check if Application is in the /Applications Folder
 	PFMoveToApplicationsFolderIfNecessary();
@@ -265,6 +270,8 @@
 	if ([defaults boolForKey:@"ScrobbleatStartup"] == 1) {
 		[self autostarttimer];
 	}
+    [self importToCoreData];
+    
 }
 /*
  
@@ -799,6 +806,12 @@ Getters
 -(bool)getisScrobblingActive{
     return scrobbleractive;
 }
+-(NSManagedObjectModel *)getObjectModel{
+    return managedObjectModel;
+}
+-(NSManagedObjectContext *)getObjectContext{
+    return managedObjectContext;
+}
 /*
  
  Update Status Sheet Window Functions
@@ -995,6 +1008,41 @@ Getters
         return true;
     }
     return false;
+}
+-(void)importToCoreData{
+    NSArray *cache = [[NSUserDefaults standardUserDefaults] objectForKey:@"searchcache"];
+    if (cache.count > 0) {
+        NSLog(@"Importing Cache Data");
+        NSManagedObjectContext *moc = [self managedObjectContext];
+        for (NSDictionary *d in cache) {
+            NSString * title = (NSString *)[d objectForKey:@"detectedtitle"];
+            NSFetchRequest * allCache = [[NSFetchRequest alloc] init];
+            [allCache setEntity:[NSEntityDescription entityForName:@"Cache" inManagedObjectContext:moc]];
+            
+            NSError * error = nil;
+            NSArray * caches = [moc executeFetchRequest:allCache error:&error];
+            BOOL exists = false;
+            for (NSManagedObject * cacheentry in caches) {
+                if ([title isEqualToString:(NSString *)[cacheentry valueForKey:@"detectedTitle"]]) {
+                    exists = true;
+                    break;
+                }
+            }
+            if (!exists) {
+                NSString * showid = (NSString *)[d objectForKey:@"showid"];
+                // Add to Cache in Core Data
+                NSManagedObject *obj = [NSEntityDescription
+                                        insertNewObjectForEntityForName :@"Cache"
+                                        inManagedObjectContext: moc];
+                // Set values in the new record
+                [obj setValue:title forKey:@"detectedTitle"];
+                [obj setValue:showid forKey:@"id"];
+            }
+            //Save
+            [moc save:&error];
+            [[NSUserDefaults standardUserDefaults] setObject:[[NSMutableArray alloc] init] forKey:@"searchcache"];
+        }
+    }
 }
 /*
  Share Services

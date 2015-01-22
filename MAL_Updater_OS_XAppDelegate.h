@@ -112,4 +112,6 @@
 -(IBAction)showAboutWindow:(id)sender;
 -(bool)getisScrobbling;
 -(bool)getisScrobblingActive;
+-(NSManagedObjectModel *)getObjectModel;
+-(NSManagedObjectContext *)getObjectContext;
 @end

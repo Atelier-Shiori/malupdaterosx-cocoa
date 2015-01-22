@@ -35,7 +35,10 @@
     BOOL online;
 	BOOL correcting;
 	int choice;
+    NSManagedObjectContext *managedObjectContext;
 }
+@property (nonatomic, readonly) NSManagedObjectContext *managedObjectContext;
+-(void)setManagedObjectContext:(NSManagedObjectContext *)context;
 - (int)startscrobbling;
 -(int)scrobbleagain:(NSString *)showtitle Episode:(NSString *)episode;
 -(int)scrobble;
