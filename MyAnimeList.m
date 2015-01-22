@@ -9,7 +9,6 @@
 #import "MyAnimeList.h"
 #import "Recognition.h"
 #import "EasyNSURLConnection.h"
-#import "MAL_Updater_OS_XAppDelegate.h"
 
 @interface MyAnimeList ()
 -(int)detectmedia; // 0 - Nothing, 1 - Same, 2 - Update

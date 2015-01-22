@@ -28,6 +28,7 @@
 @synthesize historywindow;
 @synthesize updatepanel;
 @synthesize fsdialog;
+@synthesize managedObjectContext;
 /*
  
  Initalization
@@ -1011,16 +1012,17 @@ Getters
 }
 -(void)importToCoreData{
     NSArray *cache = [[NSUserDefaults standardUserDefaults] objectForKey:@"searchcache"];
+    NSManagedObjectContext *moc = [self managedObjectContext];
     if (cache.count > 0) {
         NSLog(@"Importing Cache Data");
-        NSManagedObjectContext *moc = [self managedObjectContext];
+        // Load present cache data
+        NSFetchRequest * allCache = [[NSFetchRequest alloc] init];
+        [allCache setEntity:[NSEntityDescription entityForName:@"Cache" inManagedObjectContext:moc]];
+        
+        NSError * error = nil;
+        NSArray * caches = [moc executeFetchRequest:allCache error:&error];
         for (NSDictionary *d in cache) {
             NSString * title = (NSString *)[d objectForKey:@"detectedtitle"];
-            NSFetchRequest * allCache = [[NSFetchRequest alloc] init];
-            [allCache setEntity:[NSEntityDescription entityForName:@"Cache" inManagedObjectContext:moc]];
-            
-            NSError * error = nil;
-            NSArray * caches = [moc executeFetchRequest:allCache error:&error];
             BOOL exists = false;
             for (NSManagedObject * cacheentry in caches) {
                 if ([title isEqualToString:(NSString *)[cacheentry valueForKey:@"detectedTitle"]]) {
@@ -1038,11 +1040,45 @@ Getters
                 [obj setValue:title forKey:@"detectedTitle"];
                 [obj setValue:showid forKey:@"id"];
             }
-            //Save
-            [moc save:&error];
-            [[NSUserDefaults standardUserDefaults] setObject:[[NSMutableArray alloc] init] forKey:@"searchcache"];
         }
+        //Save
+        [moc save:&error];
+        [[NSUserDefaults standardUserDefaults] setObject:[[NSMutableArray alloc] init] forKey:@"searchcache"];
     }
+    // Check Exceptions
+    NSArray *oexceptions = [[NSUserDefaults standardUserDefaults] objectForKey:@"exceptions"];
+    if (oexceptions.count > 0) {
+        NSLog(@"Importing Exception List");
+        NSFetchRequest * allExceptions = [[NSFetchRequest alloc] init];
+        [allExceptions setEntity:[NSEntityDescription entityForName:@"Exceptions" inManagedObjectContext:moc]];
+        NSError * error = nil;
+        NSArray * exceptions = [moc executeFetchRequest:allExceptions error:&error];
+        for (NSDictionary *d in oexceptions) {
+            NSString * title = [d objectForKey:@"detectedtitle"];
+            BOOL exists = false;
+            for (NSManagedObject * entry in exceptions) {
+                if ([title isEqualToString:(NSString *)[entry valueForKey:@"detectedTitle"]]) {
+                    exists = true;
+                    break;
+                }
+            }
+            if (!exists) {
+                NSString * correcttitle = (NSString *)[d objectForKey:@"correcttitle"];
+                NSString * showid = (NSString *)[d objectForKey:@"showid"];
+                // Add to Cache in Core Data
+                NSManagedObject *obj = [NSEntityDescription
+                                        insertNewObjectForEntityForName:@"Exceptions"
+                                        inManagedObjectContext: moc];
+                // Set values in the new record
+                [obj setValue:title forKey:@"detectedTitle"];
+                [obj setValue:correcttitle forKey:@"correctTitle"];
+                [obj setValue:showid forKey:@"id"];
+                [obj setValue:[NSNumber numberWithInt:0] forKey:@"episodeOffset"];
+            }
+            }
+        //Save
+        [moc save:&error];
+        }
 }
 /*
  Share Services

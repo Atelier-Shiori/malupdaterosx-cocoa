@@ -15,9 +15,19 @@
 
 @implementation ExceptionsPref
 @synthesize fsdialog;
+@dynamic managedObjectContext;
+
+- (NSManagedObjectContext *)managedObjectContext {
+   MAL_Updater_OS_XAppDelegate *appDelegate = (MAL_Updater_OS_XAppDelegate *)[NSApplication sharedApplication].delegate;
+    return appDelegate.managedObjectContext;
+}
 - (id)init
 {
     return [super initWithNibName:@"ExceptionsPref" bundle:nil];
+}
+-(void)awakeFromNib{
+    [arraycontroller setManagedObjectContext:self.managedObjectContext];
+    [arraycontroller prepareContent];
 }
 #pragma mark -
 #pragma mark MASPreferencesViewController

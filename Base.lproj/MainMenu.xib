@@ -418,6 +418,7 @@
                 </subviews>
             </view>
             <contentBorderThickness minY="32"/>
+            <point key="canvasLocation" x="278" y="122.5"/>
         </window>
         <menu title="Status" id="724">
             <items>

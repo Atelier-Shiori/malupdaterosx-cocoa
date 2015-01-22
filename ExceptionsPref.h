@@ -9,6 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #import "MASPreferencesViewController.h"
 #import "FixSearchDialog.h"
+#import "MAL_Updater_OS_XAppDelegate.h"
 @class FixSearchDialog;
 @interface ExceptionsPref : NSViewController <MASPreferencesViewController>{
     IBOutlet NSArrayController * arraycontroller;
@@ -19,6 +20,8 @@
     FixSearchDialog *fsdialog;
     NSWindow *prefw;
     NSString *detectedtitle;
+    NSManagedObjectContext *managedObjectContext;
 }
 @property(strong) FixSearchDialog *fsdialog;
+@property (nonatomic, readonly) NSManagedObjectContext *managedObjectContext;
 @end
