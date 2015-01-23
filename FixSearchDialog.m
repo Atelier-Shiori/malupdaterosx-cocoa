@@ -59,6 +59,7 @@
     finish:
     selectedtitle = [d objectForKey:@"title"];
     selectedaniid = [[d objectForKey:@"id"] stringValue];
+    selectedtotalepisodes = [d objectForKey:@"episodes"];
     NSLog(@"%@", selectedaniid);
     [self.window orderOut:self];
     [NSApp endSheet:self.window returnCode:1];
@@ -132,6 +133,9 @@
 }
 -(NSString *)getSelectedAniID{
     return selectedaniid;
+}
+-(NSString *)getSelectedTotalEpisodes{
+    return selectedtotalepisodes;
 }
 -(bool)getdeleteTitleonCorrection{
     return [deleteoncorrection state];

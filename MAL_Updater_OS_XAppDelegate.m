@@ -617,7 +617,7 @@
             NSLog(@"ID matches, correction not needed.");
         }
         else{
-            [self addtoExceptions:[MALEngine getLastScrobbledTitle] newtitle:[fsdialog getSelectedTitle] showid:[fsdialog getSelectedAniID]];
+            [self addtoExceptions:[MALEngine getLastScrobbledTitle] newtitle:[fsdialog getSelectedTitle] showid:[fsdialog getSelectedAniID] threshold:[[fsdialog getSelectedTotalEpisodes] intValue]];
             if([fsdialog getdeleteTitleonCorrection]){
                 if([MALEngine removetitle:[MALEngine getAniID]]){
                     NSLog(@"Removal Successful");
@@ -656,7 +656,7 @@
         [self starttimer];
     }
 }
--(void)addtoExceptions:(NSString *)detectedtitle newtitle:(NSString *)title showid:(NSString *)showid{
+-(void)addtoExceptions:(NSString *)detectedtitle newtitle:(NSString *)title showid:(NSString *)showid threshold:(int)threshold{
     NSManagedObjectContext * moc = managedObjectContext;
     NSFetchRequest * allExceptions = [[NSFetchRequest alloc] init];
     [allExceptions setEntity:[NSEntityDescription entityForName:@"Exceptions" inManagedObjectContext:moc]];
@@ -664,7 +664,8 @@
     NSArray * exceptions = [moc executeFetchRequest:allExceptions error:&error];
         BOOL exists = false;
         for (NSManagedObject * entry in exceptions) {
-            if ([detectedtitle isEqualToString:(NSString *)[entry valueForKey:@"detectedTitle"]]) {
+            int offset = [(NSNumber *)[entry valueForKey:@"episodeOffset"] intValue];
+            if ([detectedtitle isEqualToString:(NSString *)[entry valueForKey:@"detectedTitle"]] && offset == 0) {
                 exists = true;
                 break;
             }
@@ -678,6 +679,7 @@
         [obj setValue:detectedtitle forKey:@"detectedTitle"];
         [obj setValue:title forKey:@"correctTitle"];
         [obj setValue:showid forKey:@"id"];
+        [obj setValue:[NSNumber numberWithInt:threshold] forKey:@"episodethreshold"];
         [obj setValue:[NSNumber numberWithInt:0] forKey:@"episodeOffset"]; // Set afterwards
     }
     //Save
@@ -1018,39 +1020,11 @@ Getters
     return false;
 }
 -(void)importToCoreData{
+
     NSArray *cache = [[NSUserDefaults standardUserDefaults] objectForKey:@"searchcache"];
     NSManagedObjectContext *moc = [self managedObjectContext];
     if (cache.count > 0) {
-        NSLog(@"Importing Cache Data");
-        // Load present cache data
-        NSFetchRequest * allCache = [[NSFetchRequest alloc] init];
-        [allCache setEntity:[NSEntityDescription entityForName:@"Cache" inManagedObjectContext:moc]];
-        
-        NSError * error = nil;
-        NSArray * caches = [moc executeFetchRequest:allCache error:&error];
-        for (NSDictionary *d in cache) {
-            NSString * title = (NSString *)[d objectForKey:@"detectedtitle"];
-            BOOL exists = false;
-            for (NSManagedObject * cacheentry in caches) {
-                if ([title isEqualToString:(NSString *)[cacheentry valueForKey:@"detectedTitle"]]) {
-                    exists = true;
-                    break;
-                }
-            }
-            if (!exists) {
-                NSString * showid = (NSString *)[d objectForKey:@"showid"];
-                // Add to Cache in Core Data
-                NSManagedObject *obj = [NSEntityDescription
-                                        insertNewObjectForEntityForName :@"Cache"
-                                        inManagedObjectContext: moc];
-                // Set values in the new record
-                [obj setValue:title forKey:@"detectedTitle"];
-                [obj setValue:showid forKey:@"id"];
-            }
-        }
-        //Save
-        [moc save:&error];
-        [[NSUserDefaults standardUserDefaults] setObject:[[NSMutableArray alloc] init] forKey:@"searchcache"];
+            [[NSUserDefaults standardUserDefaults] setObject:[[NSMutableArray alloc] init] forKey:@"searchcache"];
     }
     // Check Exceptions
     NSArray *oexceptions = [[NSUserDefaults standardUserDefaults] objectForKey:@"exceptions"];
@@ -1081,6 +1055,7 @@ Getters
                 [obj setValue:correcttitle forKey:@"correctTitle"];
                 [obj setValue:showid forKey:@"id"];
                 [obj setValue:[NSNumber numberWithInt:0] forKey:@"episodeOffset"];
+                [obj setValue:[NSNumber numberWithInt:0] forKey:@"episodethreshold"];
             }
             }
         //Save

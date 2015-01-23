@@ -15,6 +15,7 @@
     IBOutlet NSTableView *tb;
     NSString * selectedtitle;
     NSString * selectedaniid;
+    NSString * selectedtotalepisodes;
     NSString * searchquery;
     bool correction;
 }
@@ -22,6 +23,7 @@
 -(void)setCorrection:(BOOL)correct;
 -(NSString *)getSelectedTitle;
 -(NSString *)getSelectedAniID;
+-(NSString *)getSelectedTotalEpisodes;
 -(bool)getdeleteTitleonCorrection;
 -(void)setSearchField:(NSString *)term;
 @end

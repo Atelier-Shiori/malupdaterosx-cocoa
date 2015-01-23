@@ -59,7 +59,7 @@
         [op orderOut:nil];
         NSDictionary * d = [[Recognition alloc] recognize:[[op URL] path]];
         detectedtitle = [d objectForKey:@"title"];
-        if ([self checkifexists:detectedtitle]) {
+        if ([self checkifexists:detectedtitle offset:0]) {
             // Exists, don't do anything
             return;
         }
@@ -76,18 +76,16 @@
     if (returnCode == 1){
         NSManagedObjectContext * moc = self.managedObjectContext;
         NSError * error = nil;
-        BOOL exists = [self checkifexists:detectedtitle];
-        if (!exists) {
-            // Add to Cache in Core Data
-            NSManagedObject *obj = [NSEntityDescription
+        // Add to Cache in Core Data
+        NSManagedObject *obj = [NSEntityDescription
                                     insertNewObjectForEntityForName:@"Exceptions"
                                     inManagedObjectContext: moc];
-            // Set values in the new record
-            [obj setValue:detectedtitle forKey:@"detectedTitle"];
-            [obj setValue:[fsdialog getSelectedTitle] forKey:@"correctTitle"];
-            [obj setValue:[fsdialog getSelectedAniID] forKey:@"id"];
-            [obj setValue:[NSNumber numberWithInt:0] forKey:@"episodeOffset"]; // Not Implemented Yet
-        }
+        // Set values in the new record
+        [obj setValue:detectedtitle forKey:@"detectedTitle"];
+        [obj setValue:[fsdialog getSelectedTitle] forKey:@"correctTitle"];
+        [obj setValue:[fsdialog getSelectedAniID] forKey:@"id"];
+        [obj setValue:[NSNumber numberWithInt:0] forKey:@"episodeOffset"];
+        [obj setValue:[NSNumber numberWithInt:[[fsdialog getSelectedTotalEpisodes] intValue]] forKey:@"episodethreshold"];
         //Save
         [moc save:&error];
         // Load present cache data
@@ -140,7 +138,14 @@
         NSManagedObjectContext * moc = self.managedObjectContext;
         for (NSDictionary *d in a) {
             NSString * detectedtitlea = [d objectForKey:@"detectedtitle"];
-            BOOL exists = [self checkifexists:detectedtitlea];
+            int doffset;
+            if ([d objectForKey:@"offset"] != nil) {
+                doffset = [(NSNumber *)[d objectForKey:@"offset"] intValue];
+            }
+            else{
+                doffset = 0;
+            }
+            BOOL exists = [self checkifexists:detectedtitlea offset:doffset];
             // Check to see if it exists on the list already
             if (exists) {
                 //Check next title
@@ -156,11 +161,12 @@
                 [obj setValue:[d objectForKey:@"detectedtitle"] forKey:@"detectedTitle"];
                 [obj setValue:[d objectForKey:@"correcttitle"] forKey:@"correctTitle"];
                 [obj setValue:[d objectForKey:@"showid"] forKey:@"id"];
-                if ([d objectForKey:@"offset"] != nil) {
-                    [obj setValue:[d objectForKey:@"offset"] forKey:@"episodeOffset"];
+                [obj setValue:[NSNumber numberWithInt:doffset] forKey:@"episodeOffset"];
+                if ([d objectForKey:@"threshold"] != nil) {
+                    [obj setValue:[d objectForKey:@"threshold"] forKey:@"episodethreshold"];
                 }
                 else{
-                    [obj setValue:[NSNumber numberWithInt:0] forKey:@"episodeOffset"];
+                    [obj setValue:[NSNumber numberWithInt:0] forKey:@"episodethreshold"];
                 }
                 //Save
                 [moc save:&error];
@@ -203,7 +209,7 @@
         NSError *error;
         NSMutableArray * jsonOutput = [[NSMutableArray alloc] init];
         for (NSManagedObject * o in arraycontroller.arrangedObjects) {
-            NSDictionary * d = [[NSDictionary alloc] initWithObjectsAndKeys:[o valueForKey:@"detectedTitle"], @"detectedtitle", [o valueForKey:@"correctTitle"], @"correcttitle", [o valueForKey:@"id"], @"showid", [o valueForKey:@"episodeOffset"], @"offset", nil];
+            NSDictionary * d = [[NSDictionary alloc] initWithObjectsAndKeys:[o valueForKey:@"detectedTitle"], @"detectedtitle", [o valueForKey:@"correctTitle"], @"correcttitle", [o valueForKey:@"id"], @"showid", [o valueForKey:@"episodeOffset"], @"offset", [o valueForKey:@"episodethreshold"], @"threshold", nil];
             [jsonOutput addObject:d];
         }
         NSData *jsonData = [NSJSONSerialization dataWithJSONObject:jsonOutput
@@ -230,11 +236,12 @@
     //Show Help
     [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"https://github.com/chikorita157/malupdaterosx-cocoa/wiki/Correction-Exception-Help"]];
 }
--(BOOL)checkifexists:(NSString *) title{
+-(BOOL)checkifexists:(NSString *) title offset:(int)offset{
     // Checks if a title is already on the exception list
     NSArray * a = [arraycontroller arrangedObjects];
     for (NSManagedObject * entry in a) {
-        if ([title isEqualToString:(NSString *)[entry valueForKey:@"detectedTitle"]]) {
+        int eoffset = [(NSNumber *)[entry valueForKey:@"episodeOffset"] intValue];
+        if ([detectedtitle isEqualToString:(NSString *)[entry valueForKey:@"detectedTitle"]] && eoffset == offset) {
             return true;
         }
     }

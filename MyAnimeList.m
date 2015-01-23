@@ -19,7 +19,7 @@
 -(int)addtitle:(NSString *)titleid confirming:(bool) confirming;
 -(NSString *)desensitizeSeason:(NSString *)title;
 -(NSDictionary *)detectStream;
--(void)addtoCache:(NSString *)title showid:(NSString *)showid;
+-(void)addtoCache:(NSString *)title showid:(NSString *)showid actualtitle:(NSString *) atitle totalepisodes:(int)totalepisodes;
 -(bool)checkifIgnored:(NSString *)filename;
 @end
 
@@ -137,8 +137,12 @@
                 NSString * title = [cacheentry valueForKey:@"detectedTitle"];
                 if ([title isEqualToString:DetectedTitle]) {
                     NSLog(@"%@ found in cache!", title);
-                    theid = [cacheentry valueForKey:@"id"];
-                    break;
+                    // Total Episode check
+                    NSNumber * totalepisodes = [cacheentry valueForKey:@"totalEpisodes"];
+                    if ( [DetectedEpisode intValue] <= totalepisodes.intValue || totalepisodes.intValue == 0 ) {
+                        theid = [cacheentry valueForKey:@"id"];
+                        break;
+                    }
                 }
             }
             if (theid.length == 0) {
@@ -212,35 +216,7 @@
 
 }
 -(NSString *)searchanime{
-	NSString * searchtitle;
-    NSLog(@"Check Exceptions List");
-    // Check Exceptions
-    NSManagedObjectContext * moc = self.managedObjectContext;
-    NSFetchRequest * allExceptions = [[NSFetchRequest alloc] init];
-    NSError * error = nil;
-    [allExceptions setEntity:[NSEntityDescription entityForName:@"Exceptions" inManagedObjectContext:moc]];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat: @"detectedTitle == %@", DetectedTitle];
-    [allExceptions setPredicate:predicate];
-    NSArray * exceptions = [moc executeFetchRequest:allExceptions error:&error];
-    if (exceptions.count > 0) {
-        NSString * correcttitle;
-        for (NSManagedObject * entry in exceptions) {
-            if ([DetectedTitle isEqualToString:(NSString *)[entry valueForKey:@"detectedTitle"]]) {
-                correcttitle = (NSString *)[entry valueForKey:@"correctTitle"];
-                NSLog(@"%@ found on exceptions list as %@!", DetectedTitle, correcttitle);
-                break;
-            }
-        }
-        if (correcttitle.length > 0) {
-            searchtitle = correcttitle;
-            // Remove Season to avoid conflicts
-            DetectedSeason = 0;
-        }
-    }
-    if (searchtitle.length == 0) {
-        // Use detected title for search
-        searchtitle = DetectedTitle;
-    }
+    NSString * searchtitle = DetectedTitle;
 	NSLog(@"Searching For Title");
     // Set Season for Search Term if any detected.
     if (DetectedSeason > 1) {
@@ -363,7 +339,7 @@
             NSArray * c = [detected objectForKey:@"result"];
             NSDictionary * d = [c objectAtIndex:0];
             DetectedTitle = (NSString *)[d objectForKey:@"title"];
-            DetectedEpisode = (NSString *)[d objectForKey:@"episode"];
+            DetectedEpisode = [NSString stringWithFormat:@"%@",[d objectForKey:@"episode"]];
             DetectedSource = [NSString stringWithFormat:@"%@ in %@", (NSString *)[[d objectForKey:@"site"] capitalizedString], [d objectForKey:@"browser"]];
             goto update;
         }
@@ -371,6 +347,9 @@
 	}
 update:
     // Check if the title was previously scrobbled
+    if (DetectedTitle.length > 0) {
+        [self checkExceptions];
+    }
     if ([DetectedTitle isEqualToString:LastScrobbledTitle] && [DetectedEpisode isEqualToString: LastScrobbledEpisode] && Success == 1) {
         // Do Nothing
         return 1;
@@ -431,6 +410,7 @@ update:
         NSLog(@"Title is not a movie.");
         DetectedTitleisMovie = false;
     }
+    NSDictionary * found;
     // Initalize Arrays for each Media Type
     NSMutableArray * movie = [[NSMutableArray alloc] init];
     NSMutableArray * tv = [[NSMutableArray alloc] init];
@@ -463,9 +443,11 @@ update:
     else{
         sortedArray = [NSMutableArray arrayWithArray:tv];
         [sortedArray addObjectsFromArray:ona];
-        [sortedArray addObjectsFromArray:special];
-        [sortedArray addObjectsFromArray:ova];
-        [sortedArray addObjectsFromArray:other];
+        if (DetectedSeason == 0 || DetectedSeason == 1) {
+            [sortedArray addObjectsFromArray:special];
+            [sortedArray addObjectsFromArray:ova];
+            [sortedArray addObjectsFromArray:other];
+        }
     }
     // Search
     for (int i = 0; i < 2; i++) {
@@ -490,7 +472,8 @@ update:
                 DetectedTitleisMovie = false;
             }
             //Return titleid
-            titleid = (NSString *)[searchentry objectForKey:@"id"];
+            titleid = [NSString stringWithFormat:@"%@", [searchentry objectForKey:@"id"]];
+            found = searchentry;
             goto foundtitle;
         }
     }
@@ -516,7 +499,8 @@ update:
             //Return titleid if episode is valid
             if ( [[NSString stringWithFormat:@"%@", [searchentry objectForKey:@"episodes"]] intValue] == 0 || ([[NSString stringWithFormat:@"%@",[searchentry objectForKey:@"episodes"]] intValue] >= [DetectedEpisode intValue])) {
                 NSLog(@"Valid Episode Count");
-                titleid = (NSString *)[searchentry objectForKey:@"id"];
+                found = searchentry;
+                titleid = [NSString stringWithFormat:@"%@", [searchentry objectForKey:@"id"]];
                 goto foundtitle;
             }
             else{
@@ -531,7 +515,7 @@ update:
     //Check to see if Seach Cache is enabled. If so, add it to the cache.
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"useSearchCache"] && titleid.length > 0) {
         //Save AniID
-        [self addtoCache:DetectedTitle showid:titleid];
+        [self addtoCache:DetectedTitle showid:titleid actualtitle:(NSString *)[found objectForKey:@"title"] totalepisodes:(int)[found objectForKey:@"episodes"]];
     }
 	//Return the AniID
 	return titleid;
@@ -859,13 +843,8 @@ update:
     return title;
 }
 
--(void)addtoCache:(NSString *)title showid:(NSString *)showid{
+-(void)addtoCache:(NSString *)title showid:(NSString *)showid actualtitle:(NSString *) atitle totalepisodes:(int)totalepisodes {
     //Adds ID to cache
-   // NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    //NSMutableArray *cache = [NSMutableArray arrayWithArray:[[NSUserDefaults standardUserDefaults] objectForKey:@"searchcache"]];
-    //NSDictionary * entry = [[NSDictionary alloc] initWithObjectsAndKeys:title, @"detectedtitle", showid, @"showid", nil];
-    //[cache addObject:entry];
-    //[defaults setObject:cache forKey:@"searchcache"];
     NSManagedObjectContext *moc = managedObjectContext;
     // Add to Cache in Core Data
     NSManagedObject *obj = [NSEntityDescription
@@ -874,6 +853,8 @@ update:
     // Set values in the new record
     [obj setValue:title forKey:@"detectedTitle"];
     [obj setValue:showid forKey:@"id"];
+    [obj setValue:atitle forKey:@"actualTitle"];
+    [obj setValue:[NSNumber numberWithInt:totalepisodes] forKey:@"totalEpisodes"];
     NSError * error = nil;
     // Save
     [moc save:&error];
@@ -907,6 +888,41 @@ update:
         }
     }
     return false;
+}
+-(void)checkExceptions{
+    NSLog(@"Check Exceptions List");
+    // Check Exceptions
+    NSManagedObjectContext * moc = self.managedObjectContext;
+    NSFetchRequest * allExceptions = [[NSFetchRequest alloc] init];
+    NSError * error = nil;
+    [allExceptions setEntity:[NSEntityDescription entityForName:@"Exceptions" inManagedObjectContext:moc]];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat: @"detectedTitle == %@", DetectedTitle];
+    [allExceptions setPredicate:predicate];
+    NSArray * exceptions = [moc executeFetchRequest:allExceptions error:&error];
+    if (exceptions.count > 0) {
+        NSString * correcttitle;
+        for (NSManagedObject * entry in exceptions) {
+            if ([DetectedTitle isEqualToString:(NSString *)[entry valueForKey:@"detectedTitle"]]) {
+                correcttitle = (NSString *)[entry valueForKey:@"correctTitle"];
+                // Set Correct Title and Episode offset (if any)
+                int threshold = [(NSNumber *)[entry valueForKey:@"episodethreshold"] intValue];
+                int offset = [(NSNumber *)[entry valueForKey:@"episodeOffset"] intValue];
+                if ((DetectedEpisode.intValue - offset) > threshold && threshold != 0) {
+                    continue;
+                }
+                else {
+                    NSLog(@"%@ found on exceptions list as %@!", DetectedTitle, correcttitle);
+                    DetectedTitle = correcttitle;
+                    int tmpepisode = [DetectedEpisode intValue] - offset;
+                    if (tmpepisode > 0) {
+                         DetectedEpisode = [NSString stringWithFormat:@"%i", tmpepisode];
+                    }
+                    DetectedSeason = 0;
+                    break;
+                }
+            }
+        }
+    }
 }
 
 @end
