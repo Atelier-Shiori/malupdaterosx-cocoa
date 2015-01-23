@@ -13,6 +13,7 @@
 @interface MyAnimeList ()
 -(int)detectmedia; // 0 - Nothing, 1 - Same, 2 - Update
 -(NSString *)searchanime;
+-(NSString *)performSearch:(NSString *)searchtitle;
 -(NSString *)findaniid:(NSData *)ResponseData searchterm:(NSString *) term;
 -(BOOL)checkstatus:(NSString *)titleid;
 -(int)updatetitle:(NSString *)titleid confirming:(bool) confirming;
@@ -216,12 +217,33 @@
 
 }
 -(NSString *)searchanime{
+    // Searches for ID of associated title
     NSString * searchtitle = DetectedTitle;
-	NSLog(@"Searching For Title");
-    // Set Season for Search Term if any detected.
     if (DetectedSeason > 1) {
-        searchtitle = [NSString stringWithFormat:@"%@ %i season", [self desensitizeSeason:searchtitle], DetectedSeason];
+        // Specifically search for season
+        for (int i = 0; i < 2; i++) {
+            NSString * tmpid;
+            switch (i) {
+                case 0:
+                    tmpid = [self performSearch:[NSString stringWithFormat:@"%@ %i", [self desensitizeSeason:searchtitle], DetectedSeason]];
+                    break;
+                case 1:
+                    tmpid = [self performSearch:[NSString stringWithFormat:@"%@ %i season", [self desensitizeSeason:searchtitle], DetectedSeason]];
+                default:
+                    break;
+            }
+            if (tmpid.length > 0) {
+                return tmpid;
+            }
+        }
     }
+    else{
+        return [self performSearch:searchtitle]; //Perform Regular Search
+    }
+    return [self performSearch:searchtitle];
+}
+-(NSString *)performSearch:(NSString *)searchtitle{
+	NSLog(@"Searching For Title");
     //Escape Search Term
     NSString * searchterm = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(
                                                                                                   NULL,
@@ -485,13 +507,16 @@ update:
                 // Used for Season Checking
                 OGRegularExpression    *regex2 = [OGRegularExpression regularExpressionWithString:[NSString stringWithFormat:@"(%i(st|nd|rd|th) season|\\W%i)", DetectedSeason, DetectedSeason] options:OgreIgnoreCaseOption];
                 OGRegularExpressionMatch * smatch = [regex2 matchInString:theshowtitle];
+                // Description check
+               regex2 =  [OGRegularExpression regularExpressionWithString:[NSString stringWithFormat:@"(%@)", [self seasonInWords:DetectedSeason]] options:OgreIgnoreCaseOption];
+                OGRegularExpressionMatch * smatch2 = [regex2 matchInString:(NSString *)[searchentry objectForKey:@"synopsis"]];
                 if (DetectedSeason >= 2) { // Season detected, check to see if there is a matcch. If not, continue.
-                    if (smatch == nil) {
+                    if (smatch == nil && smatch2 == nil) {
                         continue;
                     }
                 }
                 else{
-                    if (smatch != nil) { // No Season, check to see if there is a season or not. If so, continue.
+                    if (smatch != nil && smatch2 != nil && DetectedSeason >= 2) { // No Season, check to see if there is a season or not. If so, continue.
                         continue;
                     }
                 }
@@ -834,7 +859,7 @@ update:
 }
 -(NSString *)desensitizeSeason:(NSString *)title {
     // Get rid of season references
-    OGRegularExpression* regex = [OGRegularExpression regularExpressionWithString: @"(Second Season|Third Season|Fourth Season|Fifth Season|Sixth Season|Seventh Season|Eighth Season|Nineth Season)" options:OgreIgnoreCaseOption];
+    OGRegularExpression* regex = [OGRegularExpression regularExpressionWithString: @"(Second Season|Third Season|Fourth Season|Fifth Season|Sixth Season|Seventh Season|Eighth Season|Nineth Season|(st|nd|rd|th) Season)" options:OgreIgnoreCaseOption];
     title = [regex replaceAllMatchesInString:title withString:@""];
     regex = [OGRegularExpression regularExpressionWithString: @"(s)\\d" options:OgreIgnoreCaseOption];
     title = [regex replaceAllMatchesInString:title withString:@""];
@@ -842,7 +867,41 @@ update:
     title = [title stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     return title;
 }
-
+-(NSString *)seasonInWords:(int)season{
+    // Translate integer season to word (use for Regex)
+    switch (season) {
+        case 1:
+            return @"first season";
+            break;
+        case 2:
+            return @"second season";
+            break;
+        case 3:
+            return @"third season";
+            break;
+        case 4:
+            return @"fourth season";
+            break;
+        case 5:
+            return @"fifth season";
+            break;
+        case 6:
+            return @"sixth season";
+            break;
+        case 7:
+            return @"seventh season";
+            break;
+        case 8:
+            return @"eighth season";
+            break;
+        case 9:
+            return @"ninth season";
+            break;
+        default:
+            return @"";
+            break;
+    }
+}
 -(void)addtoCache:(NSString *)title showid:(NSString *)showid actualtitle:(NSString *) atitle totalepisodes:(int)totalepisodes {
     //Adds ID to cache
     NSManagedObjectContext *moc = managedObjectContext;
