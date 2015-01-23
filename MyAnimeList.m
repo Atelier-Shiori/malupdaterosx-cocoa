@@ -211,7 +211,7 @@
     DetectedTitle = nil;
     DetectedEpisode = nil;
     DetectedSource = nil;
-	
+    DetectedSeason = 0;
     // Release Detected Title/Episode.
     return status;
 
