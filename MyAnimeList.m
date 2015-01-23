@@ -907,13 +907,13 @@ update:
                 // Set Correct Title and Episode offset (if any)
                 int threshold = [(NSNumber *)[entry valueForKey:@"episodethreshold"] intValue];
                 int offset = [(NSNumber *)[entry valueForKey:@"episodeOffset"] intValue];
-                if ((DetectedEpisode.intValue - offset) > threshold && threshold != 0) {
+                int tmpepisode = [DetectedEpisode intValue] - offset;
+                if ((tmpepisode > threshold && threshold != 0) || tmpepisode <= 0) {
                     continue;
                 }
                 else {
                     NSLog(@"%@ found on exceptions list as %@!", DetectedTitle, correcttitle);
                     DetectedTitle = correcttitle;
-                    int tmpepisode = [DetectedEpisode intValue] - offset;
                     if (tmpepisode > 0) {
                          DetectedEpisode = [NSString stringWithFormat:@"%i", tmpepisode];
                     }
