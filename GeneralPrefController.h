@@ -16,6 +16,7 @@
     IBOutlet NSButton * disablenewtitlebar;
     IBOutlet NSButton * disablevibarency;
     IBOutlet NSButton * startatlogin;
+    IBOutlet NSProgressIndicator * indicator;
 }
 -(IBAction)testapi:(id)sender;
 -(IBAction)resetapiurl:(id)sender;

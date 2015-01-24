@@ -21,6 +21,7 @@
 #import "MASShortcut+UserDefaults.h"
 #import "MASShortcut+Monitoring.h"
 #import "HotKeyConstants.h"
+#import "EasyNSURLConnection.h"
 
 @implementation MAL_Updater_OS_XAppDelegate
 
@@ -419,6 +420,15 @@
                                                        DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     
     dispatch_async(queue, ^{
+        if ([[NSUserDefaults standardUserDefaults] boolForKey:@"UseAutoExceptions"]) {
+            // Check for latest list of Auto Exceptions automatically each week
+            if (![[[NSUserDefaults standardUserDefaults] objectForKey:@"ExceptionsLastUpdated"] isEqualTo:nil]) {
+                if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"ExceptionsLastUpdated"] timeIntervalSinceNow] < -604800) {
+                    // Has been 1 Week, update Auto Exceptions
+                    [self updateAutoExceptions];
+                }
+            }
+        }
         [self setStatusText:@"Scrobble Status: Scrobbling..."];
         int status;
         status = [MALEngine startscrobbling];
@@ -1063,6 +1073,72 @@ Getters
         [[NSUserDefaults standardUserDefaults] setObject:[[NSMutableArray alloc] init] forKey:@"exceptions"];
         }
 }
+-(void)updateAutoExceptions{
+    // This method retrieves the auto exceptions JSON and import new entries
+    NSURL *url = [NSURL URLWithString:@"https://malapi.ateliershiori.moe/autoexceptions.json"];
+    EasyNSURLConnection *request = [[EasyNSURLConnection alloc] initWithURL:url];
+    //Ignore Cookies
+    [request setUseCookies:NO];
+    //Test API
+    [request startRequest];
+    // Get Status Code
+    int statusCode = [request getStatusCode];
+    switch (statusCode) {
+        case 200:{
+            NSLog(@"Updating Auto Exceptions!");
+            //Parse and Import
+            NSData *jsonData = [request getResponseData];
+            NSError *error = nil;
+            NSArray * a = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:&error];
+            NSManagedObjectContext *moc = self.managedObjectContext;
+            for (NSDictionary *d in a) {
+                NSString * detectedtitlea = [d objectForKey:@"detectedtitle"];
+                BOOL exists = false;
+                NSFetchRequest * allExceptions = [[NSFetchRequest alloc] init];
+                [allExceptions setEntity:[NSEntityDescription entityForName:@"AutoExceptions" inManagedObjectContext:moc]];
+                NSPredicate *predicate = [NSPredicate predicateWithFormat: @"detectedTitle == %@", detectedtitlea];
+                [allExceptions setPredicate:predicate];
+                NSError * error = nil;
+                NSArray * aExceptions = [moc executeFetchRequest:allExceptions error:&error];
+                if (aExceptions.count > 0) {
+                    for (NSManagedObject * entry in aExceptions) {
+                        NSString * title = [entry valueForKey:@"detectedTitle"];
+                        if ([title isEqualToString:detectedtitlea]) {
+                            exists = true;
+                        }
+                    }
+                }
+                // Check to see if it exists on the list already
+                if (exists) {
+                    //Check next title
+                    continue;
+                }
+                else{
+                    NSError * error = nil;
+                    // Add Entry to Auto Exceptions
+                    NSManagedObject *obj = [NSEntityDescription
+                                            insertNewObjectForEntityForName:@"AutoExceptions"
+                                            inManagedObjectContext: moc];
+                    // Set values in the new record
+                    [obj setValue:[d objectForKey:@"detectedtitle"] forKey:@"detectedTitle"];
+                    [obj setValue:[d objectForKey:@"correcttitle"] forKey:@"correctTitle"];
+                    [obj setValue:[d objectForKey:@"offset"] forKey:@"episodeOffset"];
+                    [obj setValue:[d objectForKey:@"threshold"] forKey:@"episodethreshold"];
+                    [obj setValue:[d objectForKey:@"group"] forKey:@"group"];
+                    //Save
+                    [moc save:&error];
+                }
+            }
+            // Set the last updated date
+            [[NSUserDefaults standardUserDefaults] setValue:[NSDate date] forKey:@"ExceptionsLastUpdated"];
+            break;
+        }
+        default:
+            NSLog(@"Auto Exceptions List Update Failed!");
+            break;
+    }
+}
+
 /*
  Share Services
  */

@@ -21,6 +21,7 @@
 	NSString * DetectedTitle;
 	NSString * DetectedEpisode;
     NSString * DetectedSource;
+    NSString * DetectedGroup;
     BOOL DetectedTitleisMovie;
     int DetectedSeason;
 	NSString * DetectedCurrentEpisode;
