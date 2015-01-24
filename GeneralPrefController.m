@@ -156,9 +156,9 @@
 					  modalDelegate:self
 					 didEndSelector:nil
 						contextInfo:NULL];
+    [alert release];
 }
 -(IBAction)clearSearchCache:(id)sender{
-    //[[NSUserDefaults standardUserDefaults] setObject:[[[NSMutableArray alloc] init] autorelease] forKey:@"searchcache"];
     // Remove All cache data from Core Data Entity
     MAL_Updater_OS_XAppDelegate * delegate = (MAL_Updater_OS_XAppDelegate *)[[NSApplication sharedApplication] delegate];
     NSManagedObjectContext *moc = [delegate getObjectContext];
@@ -183,17 +183,19 @@
     
     dispatch_async(queue, ^{
         // In a queue, download latest Auto Exceptions JSON, disable button until done and show progress wheel
-        NSButton * button = (NSButton *)sender;
-        [button setEnabled:NO];
+        [updateexceptionsbtn setEnabled:NO];
+        [updateexceptionschk setEnabled:NO];
         [indicator startAnimation:self];
         [delegate updateAutoExceptions];
         [indicator stopAnimation:self];
-        [button setEnabled:YES];
+        [updateexceptionsbtn setEnabled:YES];
+        [updateexceptionschk setEnabled:YES];
+        dispatch_release(queue);
     });
+    
 }
 -(IBAction)disableAutoExceptions:(id)sender{
-    NSButton * checkbox = (NSButton *)sender;
-    if ([checkbox state]) {
+    if ([updateexceptionschk state]) {
         [self updateAutoExceptions:sender];
     }
     else{

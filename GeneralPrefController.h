@@ -17,6 +17,8 @@
     IBOutlet NSButton * disablevibarency;
     IBOutlet NSButton * startatlogin;
     IBOutlet NSProgressIndicator * indicator;
+    IBOutlet NSButton * updateexceptionsbtn;
+    IBOutlet NSButton * updateexceptionschk;
 }
 -(IBAction)testapi:(id)sender;
 -(IBAction)resetapiurl:(id)sender;

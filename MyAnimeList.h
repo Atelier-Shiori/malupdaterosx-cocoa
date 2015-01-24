@@ -28,7 +28,6 @@
 	NSString * TotalEpisodes;
 	NSString * WatchStatus;
 	NSString * TitleScore;
-	NSString * TitleState;
     NSString * AniID;
 	BOOL LastScrobbledTitleNew;
 	BOOL confirmed;

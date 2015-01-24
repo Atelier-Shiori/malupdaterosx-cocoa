@@ -47,7 +47,7 @@
             DetectedSeason = [tmpseason intValue];
         }
         else{
-            regex = [OGRegularExpression regularExpressionWithString: @"(second season|third season|fourth season|fifth season|sixth season|seventh season|eighth season|nineth season)" options:OgreIgnoreCaseOption];
+            regex = [OGRegularExpression regularExpressionWithString: @"((second|third|fourth|fifth|sixth|seventh|eighth|nineth) season)" options:OgreIgnoreCaseOption];
             smatch = [regex matchInString:DetectedTitle];
             if (smatch !=nil) {
                 tmpseason = [smatch matchedString];

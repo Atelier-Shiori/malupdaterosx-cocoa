@@ -507,10 +507,9 @@ update:
         if ([regex matchInString:theshowtitle] != nil) {
             if ([[NSString stringWithFormat:@"%@", [searchentry objectForKey:@"type"]] isEqualToString:@"TV"]) { // Check Seasons if the title is a TV show type
                 // Used for Season Checking
-                OGRegularExpression    *regex2 = [OGRegularExpression regularExpressionWithString:[NSString stringWithFormat:@"(%i(st|nd|rd|th) season|\\W%i)", DetectedSeason, DetectedSeason] options:OgreIgnoreCaseOption];
+                OGRegularExpression    *regex2 = [OGRegularExpression regularExpressionWithString:[NSString stringWithFormat:@"((%i(st|nd|rd|th)|%@) season|\\W%i)", DetectedSeason, [self seasonInWords:DetectedSeason],DetectedSeason] options:OgreIgnoreCaseOption];
                 OGRegularExpressionMatch * smatch = [regex2 matchInString:theshowtitle];
                 // Description check
-               regex2 =  [OGRegularExpression regularExpressionWithString:[NSString stringWithFormat:@"(%@)", [self seasonInWords:DetectedSeason]] options:OgreIgnoreCaseOption];
                 OGRegularExpressionMatch * smatch2 = [regex2 matchInString:(NSString *)[searchentry objectForKey:@"synopsis"]];
                 if (DetectedSeason >= 2) { // Season detected, check to see if there is a matcch. If not, continue.
                     if (smatch == nil && smatch2 == nil) {
@@ -731,7 +730,6 @@ update:
 
 	
 	//Set Title State for Title (use for Twitter feature)
-	TitleState = @"started watching";
 	WatchStatus = @"watching";
 	switch ([request getStatusCode]) {
 		case 200:
@@ -865,7 +863,7 @@ update:
 }
 -(NSString *)desensitizeSeason:(NSString *)title {
     // Get rid of season references
-    OGRegularExpression* regex = [OGRegularExpression regularExpressionWithString: @"(Second Season|Third Season|Fourth Season|Fifth Season|Sixth Season|Seventh Season|Eighth Season|Nineth Season|(st|nd|rd|th) Season)" options:OgreIgnoreCaseOption];
+    OGRegularExpression* regex = [OGRegularExpression regularExpressionWithString: @"((first|second|third|fourth|fifth|sixth|seventh|eighth|nineth|(st|nd|rd|th)) season)" options:OgreIgnoreCaseOption];
     title = [regex replaceAllMatchesInString:title withString:@""];
     regex = [OGRegularExpression regularExpressionWithString: @"(s)\\d" options:OgreIgnoreCaseOption];
     title = [regex replaceAllMatchesInString:title withString:@""];
@@ -877,31 +875,31 @@ update:
     // Translate integer season to word (use for Regex)
     switch (season) {
         case 1:
-            return @"first season";
+            return @"first";
             break;
         case 2:
-            return @"second season";
+            return @"second";
             break;
         case 3:
-            return @"third season";
+            return @"third";
             break;
         case 4:
-            return @"fourth season";
+            return @"fourth";
             break;
         case 5:
-            return @"fifth season";
+            return @"fifth";
             break;
         case 6:
-            return @"sixth season";
+            return @"sixth";
             break;
         case 7:
-            return @"seventh season";
+            return @"seventh";
             break;
         case 8:
-            return @"eighth season";
+            return @"eighth";
             break;
         case 9:
-            return @"ninth season";
+            return @"ninth";
             break;
         default:
             return @"";
