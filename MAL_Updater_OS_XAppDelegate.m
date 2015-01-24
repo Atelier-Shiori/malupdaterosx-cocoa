@@ -757,7 +757,7 @@
 }
 -(void)updateAutoExceptions{
     // This method retrieves the auto exceptions JSON and import new entries
-    NSURL *url = [NSURL URLWithString:@"https://malapi.ateliershiori.moe/autoexceptions.json"];
+    NSURL *url = [NSURL URLWithString:@"https://gist.githubusercontent.com/chikorita157/c0bd93d061bb4c5fb081/raw/autoexceptions.json"];
     EasyNSURLConnection *request = [[EasyNSURLConnection alloc] initWithURL:url];
     //Ignore Cookies
     [request setUseCookies:NO];
