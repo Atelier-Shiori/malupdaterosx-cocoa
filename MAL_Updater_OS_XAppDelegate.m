@@ -775,17 +775,21 @@
             NSManagedObjectContext *moc = self.managedObjectContext;
             for (NSDictionary *d in a) {
                 NSString * detectedtitlea = [d objectForKey:@"detectedtitle"];
+                NSString * groupa = [d objectForKey:@"group"];
+                NSString * correcttitlea = [d objectForKey:@"correcttitle"];
                 BOOL exists = false;
                 NSFetchRequest * allExceptions = [[NSFetchRequest alloc] init];
                 [allExceptions setEntity:[NSEntityDescription entityForName:@"AutoExceptions" inManagedObjectContext:moc]];
-                NSPredicate *predicate = [NSPredicate predicateWithFormat: @"detectedTitle == %@", detectedtitlea];
+                NSPredicate *predicate = [NSPredicate predicateWithFormat: @"(detectedTitle == %@) AND (group == %@) AND (correctTitle == %@)", detectedtitlea, groupa, correcttitlea];
                 [allExceptions setPredicate:predicate];
                 NSError * error = nil;
                 NSArray * aExceptions = [moc executeFetchRequest:allExceptions error:&error];
                 if (aExceptions.count > 0) {
                     for (NSManagedObject * entry in aExceptions) {
                         NSString * title = [entry valueForKey:@"detectedTitle"];
-                        if ([title isEqualToString:detectedtitlea]) {
+                        NSString * group = [entry valueForKey:@"group"];
+                        NSString * correcttitle = [entry valueForKey:@"correctTitle"];
+                        if ([title isEqualToString:detectedtitlea]&& [group isEqualToString:groupa] && [correcttitle isEqualToString:correcttitlea]) {
                             exists = true;
                         }
                     }

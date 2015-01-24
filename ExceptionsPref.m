@@ -59,7 +59,7 @@
         [op orderOut:nil];
         NSDictionary * d = [[Recognition alloc] recognize:[[op URL] path]];
         detectedtitle = [d objectForKey:@"title"];
-        if ([self checkifexists:detectedtitle offset:0]) {
+        if ([self checkifexists:detectedtitle offset:0 correcttitle:nil]) {
             // Exists, don't do anything
             return;
         }
@@ -74,6 +74,11 @@
 }
 -(void)correctionDidEnd:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo {
     if (returnCode == 1){
+        // Check if correct title exists
+        if ([self checkifexists:detectedtitle offset:0 correcttitle:[fsdialog getSelectedTitle]]) {
+            // Exists, don't do anything
+            return;
+        }
         NSManagedObjectContext * moc = self.managedObjectContext;
         NSError * error = nil;
         // Add to Cache in Core Data
@@ -145,7 +150,7 @@
             else{
                 doffset = 0;
             }
-            BOOL exists = [self checkifexists:detectedtitlea offset:doffset];
+            BOOL exists = [self checkifexists:detectedtitlea offset:doffset correcttitle:(NSString *)[d objectForKey:@"correcttitle"]];
             // Check to see if it exists on the list already
             if (exists) {
                 //Check next title
@@ -236,13 +241,18 @@
     //Show Help
     [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"https://github.com/chikorita157/malupdaterosx-cocoa/wiki/Correction-Exception-Help"]];
 }
--(BOOL)checkifexists:(NSString *) title offset:(int)offset{
+-(BOOL)checkifexists:(NSString *) title offset:(int)offset correcttitle:(NSString *)ctitle{
     // Checks if a title is already on the exception list
     NSArray * a = [arraycontroller arrangedObjects];
     for (NSManagedObject * entry in a) {
         int eoffset = [(NSNumber *)[entry valueForKey:@"episodeOffset"] intValue];
         if ([detectedtitle isEqualToString:(NSString *)[entry valueForKey:@"detectedTitle"]] && eoffset == offset) {
-            return true;
+            if (ctitle == nil) {
+                return true;
+            }
+            else if(ctitle != nil && [ctitle isEqualToString:(NSString *)[entry valueForKey:@"correctTitle"]]){
+               return true;
+            }
         }
     }
     return false;
