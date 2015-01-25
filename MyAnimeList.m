@@ -211,6 +211,7 @@
     DetectedTitle = nil;
     DetectedEpisode = nil;
     DetectedSource = nil;
+    DetectedGroup = nil;
     DetectedSeason = 0;
     // Release Detected Title/Episode.
     return status;
@@ -459,11 +460,15 @@ update:
         else if (![theshowtype isEqualToString:@"Music"])
             [other addObject:entry];
     }
-    // Concatinate Arrays
+    // Concatinate Arrays and get rid of unneeded search data array
     NSMutableArray * sortedArray;
     if (DetectedTitleisMovie) {
         sortedArray = [NSMutableArray arrayWithArray:movie];
         [sortedArray addObjectsFromArray:special];
+        [sortedArray addObject:ova];
+        tv = nil;
+        ona = nil;
+        other = nil;
     }
     else{
         sortedArray = [NSMutableArray arrayWithArray:tv];
@@ -473,7 +478,14 @@ update:
             [sortedArray addObjectsFromArray:ova];
             [sortedArray addObjectsFromArray:other];
         }
+        else{
+            //special, ova and other is not applicable
+            special = nil;
+            ova = nil;
+            other = nil;
+        }
     }
+    searchdata = nil;
     // Search
     for (int i = 0; i < 2; i++) {
         switch (i) {
@@ -487,13 +499,13 @@ update:
                 break;
         }
     if (DetectedTitleisMovie) {
-        //Check movies and Specials First
+        //Check movies, specials and OVA
         for (NSDictionary *searchentry in sortedArray) {
         theshowtitle = (NSString *)[searchentry objectForKey:@"title"];
         if ([regex matchInString:theshowtitle] != nil) {
         }
             DetectedEpisode = @"1"; // Usually, there is one episode in a movie.
-            if ([[NSString stringWithFormat:@"%@", [searchentry objectForKey:@"type"]] isEqualToString:@"Special"]) {
+            if ([[NSString stringWithFormat:@"%@", [searchentry objectForKey:@"type"]] isEqualToString:@"Special"]||[[NSString stringWithFormat:@"%@", [searchentry objectForKey:@"type"]] isEqualToString:@"OVA"]) {
                 DetectedTitleisMovie = false;
             }
             //Return titleid
@@ -943,12 +955,14 @@ update:
     NSArray * ignoredfilenames = [[NSUserDefaults standardUserDefaults] objectForKey:@"IgnoreTitleRules"];
     if ([ignoredfilenames count] > 0) {
         for (NSDictionary * d in ignoredfilenames) {
+            @autoreleasepool {
             NSString * rule = (NSString *)[d objectForKey:@"rule"];
             if ([[OGRegularExpression regularExpressionWithString:rule options:OgreIgnoreCaseOption] matchInString:filename] && rule.length !=0) { // Blank rules are infinite, thus should not be counted
                 NSLog(@"Video file name is on filename ignore list.");
                 return true;
                 break;
             }
+                            }
         }
     }
     return false;

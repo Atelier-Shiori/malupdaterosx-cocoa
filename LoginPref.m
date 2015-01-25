@@ -48,7 +48,7 @@
 {
     return NSLocalizedString(@"Login", @"Toolbar item name for the Login preference pane");
 }
-
+#pragma mark Login Preferences Functions
 -(void)showsheetmessage:(NSString *)message
 		   explaination:(NSString *)explaination
 {

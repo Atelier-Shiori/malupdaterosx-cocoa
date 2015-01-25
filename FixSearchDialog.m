@@ -60,7 +60,6 @@
     selectedtitle = [d objectForKey:@"title"];
     selectedaniid = [[d objectForKey:@"id"] stringValue];
     selectedtotalepisodes = [d objectForKey:@"episodes"];
-    NSLog(@"%@", selectedaniid);
     [self.window orderOut:self];
     [NSApp endSheet:self.window returnCode:1];
 }

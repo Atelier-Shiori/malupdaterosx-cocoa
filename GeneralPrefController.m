@@ -17,6 +17,7 @@
 {
 	return [super initWithNibName:@"GeneralPreferenceView" bundle:nil];
 }
+#pragma mark Launch at Startup
 // Launch at Startup Functions - http://bdunagan.com/2010/09/25/cocoa-tip-enabling-launch-on-startup/ - MIT License
 - (BOOL)isLaunchAtStartup {
     // See if the app is currently in LoginItems.
@@ -107,6 +108,7 @@
 {
     return NSLocalizedString(@"General", @"Toolbar item name for the General preference pane");
 }
+#pragma mark General Preferences Functions
 -(IBAction)testapi:(id)sender
 {
 	//Load API URL

@@ -11,17 +11,16 @@
 #import "MAL_Updater_OS_XAppDelegate.h"
 
 @interface MyAnimeList : NSObject {
-	NSString * Base64Token;
 	NSString * MALApiUrl;
-	NSString * LastScrobbledTitle;
+    NSString * LastScrobbledTitle;
 	NSString * LastScrobbledEpisode;
 	NSString * LastScrobbledActualTitle;
     NSString * LastScrobbledSource;
-	NSDictionary * LastScrobbledInfo;
-	NSString * DetectedTitle;
-	NSString * DetectedEpisode;
-    NSString * DetectedSource;
-    NSString * DetectedGroup;
+    NSDictionary * LastScrobbledInfo;
+	__weak NSString * DetectedTitle;
+	__weak NSString * DetectedEpisode;
+    __weak NSString * DetectedSource;
+    __weak NSString * DetectedGroup;
     BOOL DetectedTitleisMovie;
     int DetectedSeason;
 	NSString * DetectedCurrentEpisode;

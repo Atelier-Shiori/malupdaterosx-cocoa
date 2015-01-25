@@ -132,10 +132,12 @@
 - (NSData*)encodeArraywithDictionaries:(NSArray*)array {
     NSMutableArray *parts = [[NSMutableArray alloc] init];
     for (NSDictionary * d in array) {
+        @autoreleasepool {
         NSString *encodedValue = [[d objectForKey:[[d allKeys] objectAtIndex:0]] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
         NSString *encodedKey = [[[d allKeys] objectAtIndex:0] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
         NSString *part = [NSString stringWithFormat: @"%@=%@", encodedKey, encodedValue];
         [parts addObject:part];
+        }
     }
     NSString *encodedDictionary = [parts componentsJoinedByString:@"&"];
     return [encodedDictionary dataUsingEncoding:NSUTF8StringEncoding];

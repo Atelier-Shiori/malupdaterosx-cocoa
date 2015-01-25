@@ -46,6 +46,7 @@
 {
     return NSLocalizedString(@"Exceptions", @"Toolbar item name for the Exceptions spreference pane");
 }
+#pragma mark Anime Exceptions List Functions
 -(IBAction)addTitle:(id)sender{
     //Obtain Detected Title from Media File
     NSOpenPanel * op = [NSOpenPanel openPanel];
@@ -214,8 +215,10 @@
         NSError *error;
         NSMutableArray * jsonOutput = [[NSMutableArray alloc] init];
         for (NSManagedObject * o in arraycontroller.arrangedObjects) {
+            @autoreleasepool {
             NSDictionary * d = [[NSDictionary alloc] initWithObjectsAndKeys:[o valueForKey:@"detectedTitle"], @"detectedtitle", [o valueForKey:@"correctTitle"], @"correcttitle", [o valueForKey:@"id"], @"showid", [o valueForKey:@"episodeOffset"], @"offset", [o valueForKey:@"episodethreshold"], @"threshold", nil];
             [jsonOutput addObject:d];
+            }
         }
         NSData *jsonData = [NSJSONSerialization dataWithJSONObject:jsonOutput
                                                            options:0
@@ -237,6 +240,7 @@
         }
     }];
 }
+#pragma mark Misc Functions
 -(IBAction)getHelp:(id)sender{
     //Show Help
     [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"https://github.com/chikorita157/malupdaterosx-cocoa/wiki/Correction-Exception-Help"]];
@@ -257,9 +261,7 @@
     }
     return false;
 }
-/*
- Ignore List
- */
+#pragma mark Ignore List
 -(IBAction)addDirectory:(id)sender{
     //Selects directory to ignore
     NSOpenPanel * op = [NSOpenPanel openPanel];
@@ -279,9 +281,7 @@
     //Remove Selected Object
     [ignorearraycontroller removeObject:[[ignorearraycontroller selectedObjects] objectAtIndex:0]];
 }
-/*
- Title Ignore List
- */
+#pragma mark Title Ignore
 -(IBAction)addFifleNameIgnoreRule:(id)sender{
     NSDictionary * entry = [[NSDictionary alloc] initWithObjectsAndKeys: @"", @"rule", nil];
     [ignorefilenamearraycontroller addObject:entry];

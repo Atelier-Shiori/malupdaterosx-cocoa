@@ -32,6 +32,7 @@
 {
     return NSLocalizedString(@"Software Updates", @"Toolbar item name for the Software Updatespreference pane");
 }
+#pragma mark Software Update Preferences Functions
 -(IBAction)checkupdates:(id)sender
 {
 	//Initalize Update

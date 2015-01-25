@@ -30,11 +30,8 @@
 @synthesize updatepanel;
 @synthesize fsdialog;
 @synthesize managedObjectContext;
-/*
- 
- Initalization
- 
- */
+#pragma mark -
+#pragma mark Initalization
 /**
  Returns the support directory for the application, used to store the Core Data
  store file.  This code uses a directory named "MAL Updater OS X" for
@@ -275,11 +272,7 @@
     [self importToCoreData];
     
 }
-/*
- 
- General UI Functions
- 
- */
+#pragma mark General UI Functions
 - (NSWindowController *)preferencesWindowController
 {
     if (_preferencesWindowController == nil)
@@ -361,11 +354,41 @@
 		[window makeKeyAndOrderFront:self]; 
 	} 
 }
-/*
- 
- Timer Functions
- 
- */
+-(IBAction)getHelp:(id)sender{
+    //Show Help
+    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"https://github.com/chikorita157/malupdaterosx-cocoa/wiki/Getting-Started"]];
+}
+-(IBAction)showAboutWindow:(id)sender{
+    // Properly show the about window in a menu item application
+    [NSApp activateIgnoringOtherApps:YES];
+    [[NSApplication sharedApplication] orderFrontStandardAboutPanel:self];
+}
+-(void)disableUpdateItems{
+    // Disables update options to prevent erorrs
+    panelactive = true;
+    [statusMenu setAutoenablesItems:NO];
+    [updatecorrect setAutoenablesItems:NO];
+    [updatenow setEnabled:NO];
+    [togglescrobbler setEnabled:NO];
+    [updatedcorrecttitle setEnabled:NO];
+    [updatedupdatestatus setEnabled:NO];
+    [confirmupdate setEnabled:NO];
+}
+-(void)enableUpdateItems{
+    // Reenables update options
+    panelactive = false;
+    [updatenow setEnabled:YES];
+    [togglescrobbler setEnabled:YES];
+    [updatedcorrecttitle setEnabled:YES];
+    if (confirmupdate.hidden) {
+        [updatedupdatestatus setEnabled:YES];
+    }
+    [updatecorrect setAutoenablesItems:YES];
+    [statusMenu setAutoenablesItems:YES];
+    [confirmupdate setEnabled:YES];
+}
+
+#pragma mark Timer Functions
 
 - (IBAction)toggletimer:(id)sender {
 	//Check to see if there is an API Key stored
@@ -558,36 +581,8 @@
     else
         [self firetimer:nil];
 }
--(IBAction)getHelp:(id)sender{
-    //Show Help
- 	[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"https://github.com/chikorita157/malupdaterosx-cocoa/wiki/Getting-Started"]];
-}
--(void)showAnimeInfo:(NSDictionary *)d{
-    //Empty
-    [animeinfo setString:@""];
-    // Show Actual Title
-    [self appendToAnimeInfo:[MALEngine getLastScrobbledActualTitle]];
-    [self appendToAnimeInfo:@""];
-    //Description
-    NSString * anidescription = [d objectForKey:@"synopsis"];
-    anidescription = [anidescription stripHtml]; //Removes HTML tags
-    [self appendToAnimeInfo:@"Description"];
-    [self appendToAnimeInfo:anidescription];
-    //Meta Information
-    [self appendToAnimeInfo:@""];
-    [self appendToAnimeInfo:@"Other Information"];
-    [self appendToAnimeInfo:[NSString stringWithFormat:@"Classification: %@", [d objectForKey:@"classification"]]];
-    [self appendToAnimeInfo:[NSString stringWithFormat:@"Start Date: %@", [d objectForKey:@"start_date"]]];
-    [self appendToAnimeInfo:[NSString stringWithFormat:@"Airing Status: %@", [d objectForKey:@"status"]]];
-    [self appendToAnimeInfo:[NSString stringWithFormat:@"Episodes: %@", [d objectForKey:@"episodes"]]];
-    [self appendToAnimeInfo:[NSString stringWithFormat:@"Popularity: %@", [d objectForKey:@"popularity_rank"]]];
-    [self appendToAnimeInfo:[NSString stringWithFormat:@"Favorited: %@", [d objectForKey:@"favorited_count"]]];
-    //Image
-    NSImage * dimg = [[NSImage alloc]initByReferencingURL:[NSURL URLWithString: (NSString *)[d objectForKey:@"image_url"]]]; //Downloads Image
-    [img setImage:dimg]; //Get the Image for the title
-    // Clear Anime Info so that MAL Updater OS X won't attempt to retrieve it if the same episode and title is playing
-    [MALEngine clearAnimeInfo];
-}
+
+#pragma mark Credentials check
 -(BOOL)checktoken{
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     if ([[defaults objectForKey:@"Base64Token"] length] == 0) {
@@ -596,6 +591,7 @@
     else
         return true;
 }
+#pragma mark Correction
 -(IBAction)showCorrectionSearchWindow:(id)sender{
     bool isVisible = [window isVisible];
     // Stop Timer temporarily if scrobbling is turned on
@@ -715,6 +711,7 @@
     [moc save:&error];
     }
 }
+#pragma mark Importing Exceptions and Auto Exceptions
 -(void)importToCoreData{
     NSManagedObjectContext *moc = [self managedObjectContext];
     // Check Exceptions
@@ -786,11 +783,13 @@
                 NSArray * aExceptions = [moc executeFetchRequest:allExceptions error:&error];
                 if (aExceptions.count > 0) {
                     for (NSManagedObject * entry in aExceptions) {
-                        NSString * title = [entry valueForKey:@"detectedTitle"];
-                        NSString * group = [entry valueForKey:@"group"];
-                        NSString * correcttitle = [entry valueForKey:@"correctTitle"];
-                        if ([title isEqualToString:detectedtitlea]&& [group isEqualToString:groupa] && [correcttitle isEqualToString:correcttitlea]) {
-                            exists = true;
+                        @autoreleasepool {
+                            NSString * title = [entry valueForKey:@"detectedTitle"];
+                            NSString * group = [entry valueForKey:@"group"];
+                            NSString * correcttitle = [entry valueForKey:@"correctTitle"];
+                            if ([title isEqualToString:detectedtitlea]&& [group isEqualToString:groupa] && [correcttitle isEqualToString:correcttitlea]) {
+                                exists = true;
+                            }
                         }
                     }
                 }
@@ -825,11 +824,7 @@
     }
 }
 
-/*
- 
- Scrobble History Window
- 
- */
+#pragma mark History Window functions
 
 -(IBAction)showhistory:(id)sender
 {
@@ -889,12 +884,7 @@
 	}
 	
 }	
-
-/*
- 
- StatusIconTooltip, Status Text, Last Scrobbled Title Setters
- 
- */
+#pragma mark StatusIconTooltip, Status Text, Last Scrobbled Title Setters
 
 -(void)setStatusToolTip:(NSString*)toolTip
 {
@@ -928,11 +918,7 @@
     }
 }
 
-/*
- 
-Getters
- 
- */
+#pragma mark Getters
 -(bool)getisScrobbling{
     return scrobbling;
 }
@@ -945,11 +931,7 @@ Getters
 -(NSManagedObjectContext *)getObjectContext{
     return managedObjectContext;
 }
-/*
- 
- Update Status Sheet Window Functions
- 
- */
+#pragma mark Update Status functions
 -(IBAction)updatestatus:(id)sender {
     [self showUpdateDialog:[self window]];
     [self disableUpdateItems];
@@ -961,7 +943,7 @@ Getters
 	// Show Sheet
 	[NSApp beginSheet:updatepanel
 	   modalForWindow:w modalDelegate:self
-	   didEndSelector:@selector(myPanelDidEnd:returnCode:contextInfo:)
+	   didEndSelector:@selector(updateDidEnd:returnCode:contextInfo:)
 		  contextInfo:(void *)[NSNumber numberWithFloat:choice]];
 	// Set up UI
 	[showtitle setObjectValue:[MALEngine getLastScrobbledTitle]];
@@ -977,7 +959,7 @@ Getters
 	}
 	
 }
-- (void)myPanelDidEnd:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo {
+- (void)updateDidEnd:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo {
     // Check if Episode field is empty. If so, set it to last scrobbled episode
     NSString * tmpepisode = [episodefield stringValue];
     bool episodechanged = false;
@@ -1017,15 +999,8 @@ Getters
 	[NSApp endSheet:updatepanel returnCode:1];
 }
 
-//Misc Methods
-- (void)appendToAnimeInfo:(NSString*)text
-{
-    dispatch_async(dispatch_get_main_queue(), ^{
-        NSAttributedString* attr = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ \n", text]];
-        
-        [[animeinfo textStorage] appendAttributedString:attr];
-    });
-}
+#pragma mark Notification Center and Title/Update Confirmation
+
 -(void)showNotication:(NSString *)title message:(NSString *) message{
     NSUserNotification *notification = [[NSUserNotification alloc] init];
     notification.title = title;
@@ -1084,35 +1059,7 @@ Getters
         [self setStatusText:@"Unable to confirm update."];
     }
 }
--(IBAction)showAboutWindow:(id)sender{
-    // Properly show the about window in a menu item application
-    [NSApp activateIgnoringOtherApps:YES];
-    [[NSApplication sharedApplication] orderFrontStandardAboutPanel:self];
-}
--(void)disableUpdateItems{
-    // Disables update options to prevent erorrs
-    panelactive = true;
-    [statusMenu setAutoenablesItems:NO];
-    [updatecorrect setAutoenablesItems:NO];
-    [updatenow setEnabled:NO];
-    [togglescrobbler setEnabled:NO];
-    [updatedcorrecttitle setEnabled:NO];
-    [updatedupdatestatus setEnabled:NO];
-    [confirmupdate setEnabled:NO];
-}
--(void)enableUpdateItems{
-    // Reenables update options
-    panelactive = false;
-    [updatenow setEnabled:YES];
-    [togglescrobbler setEnabled:YES];
-    [updatedcorrecttitle setEnabled:YES];
-    if (confirmupdate.hidden) {
-        [updatedupdatestatus setEnabled:YES];
-    }
-    [updatecorrect setAutoenablesItems:YES];
-    [statusMenu setAutoenablesItems:YES];
-    [confirmupdate setEnabled:YES];
-}
+#pragma mark Hotkeys
 -(void)registerHotkey{
     [MASShortcut registerGlobalShortcutWithUserDefaultsKey:kPreferenceScrobbleNowShortcut handler:^{
         // Scrobble Now Global Hotkey
@@ -1135,17 +1082,49 @@ Getters
         }
     }];
 }
+#pragma mark Misc
 
+-(void)showAnimeInfo:(NSDictionary *)d{
+    //Empty
+    [animeinfo setString:@""];
+    // Show Actual Title
+    [self appendToAnimeInfo:[MALEngine getLastScrobbledActualTitle]];
+    [self appendToAnimeInfo:@""];
+    //Description
+    NSString * anidescription = [d objectForKey:@"synopsis"];
+    anidescription = [anidescription stripHtml]; //Removes HTML tags
+    [self appendToAnimeInfo:@"Description"];
+    [self appendToAnimeInfo:anidescription];
+    //Meta Information
+    [self appendToAnimeInfo:@""];
+    [self appendToAnimeInfo:@"Other Information"];
+    [self appendToAnimeInfo:[NSString stringWithFormat:@"Classification: %@", [d objectForKey:@"classification"]]];
+    [self appendToAnimeInfo:[NSString stringWithFormat:@"Start Date: %@", [d objectForKey:@"start_date"]]];
+    [self appendToAnimeInfo:[NSString stringWithFormat:@"Airing Status: %@", [d objectForKey:@"status"]]];
+    [self appendToAnimeInfo:[NSString stringWithFormat:@"Episodes: %@", [d objectForKey:@"episodes"]]];
+    [self appendToAnimeInfo:[NSString stringWithFormat:@"Popularity: %@", [d objectForKey:@"popularity_rank"]]];
+    [self appendToAnimeInfo:[NSString stringWithFormat:@"Favorited: %@", [d objectForKey:@"favorited_count"]]];
+    //Image
+    NSImage * dimg = [[NSImage alloc]initByReferencingURL:[NSURL URLWithString: (NSString *)[d objectForKey:@"image_url"]]]; //Downloads Image
+    [img setImage:dimg]; //Get the Image for the title
+    // Clear Anime Info so that MAL Updater OS X won't attempt to retrieve it if the same episode and title is playing
+    [MALEngine clearAnimeInfo];
+}
 -(BOOL)checkoldAPI{
     if ([[NSString stringWithFormat:@"%@", [[NSUserDefaults standardUserDefaults] objectForKey:@"MALAPIURL"]] isEqualToString:@"https://malapi.shioridiary.me"]||[[NSString stringWithFormat:@"%@", [[NSUserDefaults standardUserDefaults] objectForKey:@"MALAPIURL"]] isEqualToString:@"http://mal-api.com"]) {
         return true;
     }
     return false;
 }
-
-/*
- Share Services
- */
+- (void)appendToAnimeInfo:(NSString*)text
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        NSAttributedString* attr = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ \n", text]];
+        
+        [[animeinfo textStorage] appendAttributedString:attr];
+    });
+}
+#pragma mark Share Services
 -(void)generateShareMenu{
     //Clear Share Menu
     [shareMenu removeAllItems];
