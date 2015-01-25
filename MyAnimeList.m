@@ -285,7 +285,7 @@
 -(int)detectmedia {
 	// LSOF mplayer to get the media title and segment
 
-    NSArray * player = [NSArray arrayWithObjects:@"mplayer", @"mpv", @"mplayer-mt", @"VLC", @"QuickTime Playe", @"QTKitServer", @"Kodi", nil];
+    NSArray * player = [NSArray arrayWithObjects:@"mplayer", @"mpv", @"mplayer-mt", @"VLC", @"QuickTime Playe", @"QTKitServer", @"Kodi", @"Movist", nil];
     NSString *string;
 	OGRegularExpression    *regex;
     for(int i = 0; i <[player count]; i++){
@@ -331,6 +331,7 @@
                         case 1:
                         case 3:
                         case 6:
+						case 7:
                             DetectedSource = (NSString *)[player objectAtIndex:i];
                             break;
                         case 2:
