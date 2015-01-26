@@ -655,9 +655,6 @@
             }
         }
     }
-    else{
-        NSLog(@"Cancel");
-    }
     fsdialog = nil;
     [self enableUpdateItems];
     //Restart Timer

@@ -119,6 +119,8 @@
     return [self scrobble];
 }
 -(int)scrobble{
+    NSLog(@"=============");
+    NSLog(@"Scrobbling...");
     // Set MAL API URL
     MALApiUrl = [[NSUserDefaults standardUserDefaults] objectForKey:@"MALAPIURL"];
     int status;
@@ -188,9 +190,11 @@
         }
         else{
             if (online) {
+                NSLog(@"Error: Invalid Credentials.");
                 status = 54;
             }
             else{
+                NSLog(@"Error: User is offline.");
                 //Ofline
                 status = 55;
             }
@@ -199,6 +203,7 @@
     else {
         if (online) {
             // Not Successful
+            NSLog(@"Error: Can't find title %@. Please add an Anime Exception rule.", DetectedTitle);
             status = 51;
         }
         else{
@@ -213,6 +218,8 @@
     DetectedSource = nil;
     DetectedGroup = nil;
     DetectedSeason = 0;
+    NSLog(@"Scrobble Complete with Status Code: %i", status);
+    NSLog(@"===========");
     // Release Detected Title/Episode.
     return status;
 
@@ -389,6 +396,8 @@ update:
     DetectedTitle = LastScrobbledTitle;
     DetectedEpisode = LastScrobbledEpisode;
     DetectedSource  = LastScrobbledSource;
+    NSLog(@"=============");
+    NSLog(@"Confirming: %@ - %@",LastScrobbledActualTitle, LastScrobbledEpisode);
     int status;
 	if(LastScrobbledTitleNew)
 	{
@@ -397,6 +406,7 @@ update:
 	else{
 		status = [self updatetitle:AniID confirming:true];
 	}
+    NSLog(@"Confirming process complete with status code: %i", status);
     switch (status) {
         case 21:
         case 22:
