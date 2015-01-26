@@ -420,6 +420,7 @@ update:
 	//Initalize NSString to dump the title temporarily
 	NSString *theshowtitle = @"";
     NSString *theshowtype = @"";
+    NSString *alttitle = @"";
 	//Set Regular Expressions to omit any preceding words
 	NSString *findpre = [NSString stringWithFormat:@"(%@)",term];
     NSString *findinit = [NSString stringWithFormat:@"(%@)",term];
@@ -501,8 +502,19 @@ update:
     if (DetectedTitleisMovie) {
         //Check movies, specials and OVA
         for (NSDictionary *searchentry in sortedArray) {
-        theshowtitle = (NSString *)[searchentry objectForKey:@"title"];
-        if ([regex matchInString:theshowtitle] != nil) {
+            theshowtitle = (NSString *)[searchentry objectForKey:@"title"];
+            //Populate Synonyms if any.
+            if ([(NSDictionary *)[searchentry objectForKey:@"other_titles"] count] > 0) {
+                if ([(NSDictionary *)[searchentry objectForKey:@"other_titles"] objectForKey:@"synonyms"] != nil) {
+                    NSArray * a = [(NSDictionary *)[searchentry objectForKey:@"other_titles"] objectForKey:@"synonyms"];
+                    for (NSString * synonym in a ) {
+                        alttitle = [NSString stringWithFormat:@"- %@  %@", synonym, alttitle];
+                    }
+                }
+            }
+            else{alttitle = @"";}
+
+        if ([self checkMatch:theshowtitle alttitle:alttitle regex:regex option:i]) {
         }
             DetectedEpisode = @"1"; // Usually, there is one episode in a movie.
             if ([[NSString stringWithFormat:@"%@", [searchentry objectForKey:@"type"]] isEqualToString:@"Special"]||[[NSString stringWithFormat:@"%@", [searchentry objectForKey:@"type"]] isEqualToString:@"OVA"]) {
@@ -517,15 +529,25 @@ update:
     // Check TV, ONA, Special, OVA, Other
     for (NSDictionary *searchentry in sortedArray) {
         theshowtitle = (NSString *)[searchentry objectForKey:@"title"];
-        if ([regex matchInString:theshowtitle] != nil) {
+        //Populate Synonyms if any.
+        if ([(NSDictionary *)[searchentry objectForKey:@"other_titles"] count] > 0) {
+            if ([(NSDictionary *)[searchentry objectForKey:@"other_titles"] objectForKey:@"synonyms"] != nil) {
+                NSArray * a = [(NSDictionary *)[searchentry objectForKey:@"other_titles"] objectForKey:@"synonyms"];
+                for (NSString * synonym in a ) {
+                    alttitle = [NSString stringWithFormat:@"- %@  %@", synonym, alttitle];
+                }
+            }
+        }
+        else{alttitle = @"";}
+        if ([self checkMatch:theshowtitle alttitle:alttitle regex:regex option:i]) {
             if ([[NSString stringWithFormat:@"%@", [searchentry objectForKey:@"type"]] isEqualToString:@"TV"]) { // Check Seasons if the title is a TV show type
                 // Used for Season Checking
                 OGRegularExpression    *regex2 = [OGRegularExpression regularExpressionWithString:[NSString stringWithFormat:@"((%i(st|nd|rd|th)|%@) season|\\W%i)", DetectedSeason, [self seasonInWords:DetectedSeason],DetectedSeason] options:OgreIgnoreCaseOption];
-                OGRegularExpressionMatch * smatch = [regex2 matchInString:theshowtitle];
+                OGRegularExpressionMatch * smatch = [regex2 matchInString:[NSString stringWithFormat:@"%@ - %@",theshowtitle, alttitle]];
                 // Description check
                 OGRegularExpressionMatch * smatch2 = [regex2 matchInString:(NSString *)[searchentry objectForKey:@"synopsis"]];
-                if (DetectedSeason >= 2) { // Season detected, check to see if there is a matcch. If not, continue.
-                    if (smatch == nil && smatch2 == nil) {
+                if (DetectedSeason >= 2) { // Season detected, check to see if there is a match. If not, continue.
+                    if (smatch == nil && smatch2 == nil && tv.count > 1) { // If there is a second season match, in most cases, it would be the only entry
                         continue;
                     }
                 }
@@ -964,6 +986,16 @@ update:
             }
                             }
         }
+    }
+    return false;
+}
+-(bool)checkMatch:(NSString *)title
+         alttitle:(NSString *)atitle
+            regex:(OGRegularExpression *)regex
+           option:(int)i{
+    //Checks for matches
+    if ([regex matchInString:title] != nil || ([regex matchInString:atitle] != nil && [atitle length] >0 && i==0)) {
+        return true;
     }
     return false;
 }
