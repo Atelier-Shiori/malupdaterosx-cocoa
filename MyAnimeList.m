@@ -52,6 +52,12 @@
 -(NSString *)getLastScrobbledSource{
     return LastScrobbledSource;
 }
+-(NSString *)getFailedTitle{
+    return FailedTitle;
+}
+-(NSString *)getFailedEpisode{
+    return FailedEpisode;
+}
 -(NSString *)getAniID
 {
     return AniID;
@@ -115,7 +121,15 @@
 	correcting = true;
     DetectedTitle = showtitle;
     DetectedEpisode = episode;
-    DetectedSource = LastScrobbledSource;
+    if (FailedSource == nil) {
+        DetectedSource = LastScrobbledSource;
+    }
+    else{
+        DetectedSource = FailedSource;
+    }
+    // Check Exceptions
+    [self checkExceptions];
+    // Scrobble and return status code
     return [self scrobble];
 }
 -(int)scrobble{
@@ -163,6 +177,10 @@
     }
     if (AniID.length > 0) {
         NSLog(@"Found %@", AniID);
+        // Nil out Failed Title and Episode
+        FailedTitle = nil;
+        FailedEpisode = nil;
+        FailedSource = nil;
         // Check Status and Update
         BOOL UpdateBool = [self checkstatus:AniID];
         if (UpdateBool == 1) {
@@ -203,6 +221,10 @@
         if (online) {
             // Not Successful
             NSLog(@"Error: Couldn't find title %@. Please add an Anime Exception rule.", DetectedTitle);
+            // Used for Exception Adding
+            FailedTitle = DetectedTitle;
+            FailedEpisode = DetectedEpisode;
+            FailedSource = DetectedSource;
             status = 51;
         }
         else{
@@ -217,6 +239,8 @@
     DetectedSource = nil;
     DetectedGroup = nil;
     DetectedSeason = 0;
+    // Reset correcting Value
+    correcting = false;
     NSLog(@"Scrobble Complete with Status Code: %i", status);
     NSLog(@"===========");
     // Release Detected Title/Episode.
@@ -642,7 +666,7 @@ update:
 			//Retain Title Score
 		}
         // New Update Confirmation
-        if (([[NSUserDefaults standardUserDefaults] boolForKey:@"ConfirmNewTitle"] && LastScrobbledTitleNew)|| ([[NSUserDefaults standardUserDefaults] boolForKey:@"ConfirmUpdates"] && !LastScrobbledTitleNew)) {
+        if (([[NSUserDefaults standardUserDefaults] boolForKey:@"ConfirmNewTitle"] && LastScrobbledTitleNew && !correcting)|| ([[NSUserDefaults standardUserDefaults] boolForKey:@"ConfirmUpdates"] && !LastScrobbledTitleNew && !correcting)) {
             // Manually confirm updates
             confirmed = false;
         }

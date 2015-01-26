@@ -373,6 +373,7 @@
     [updatedcorrecttitle setEnabled:NO];
     [updatedupdatestatus setEnabled:NO];
     [confirmupdate setEnabled:NO];
+    [findtitle setEnabled:NO];
 }
 -(void)enableUpdateItems{
     // Reenables update options
@@ -386,6 +387,18 @@
     [updatecorrect setAutoenablesItems:YES];
     [statusMenu setAutoenablesItems:YES];
     [confirmupdate setEnabled:YES];
+    [findtitle setEnabled:YES];
+}
+-(void)unhideMenus{
+    //Show Last Scrobbled Title and operations */
+    [seperator setHidden:NO];
+    [lastupdateheader setHidden:NO];
+    [updatedtitle setHidden:NO];
+    [updatedepisode setHidden:NO];
+    [seperator2 setHidden:NO];
+    [updatecorrectmenu setHidden:NO];
+    [updatedcorrecttitle setHidden:NO];
+    [shareMenuItem setHidden:NO];
 }
 
 #pragma mark Timer Functions
@@ -438,6 +451,7 @@
         [updatenow setEnabled:NO];
         [togglescrobbler setEnabled:NO];
 		[confirmupdate setEnabled:NO];
+        [findtitle setEnabled:NO];
         [updatenow setTitle:@"Updating..."];
     dispatch_queue_t queue = dispatch_get_global_queue(
                                                        DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
@@ -480,8 +494,8 @@
                 [self addrecord:[MALEngine getLastScrobbledActualTitle] Episode:[MALEngine getLastScrobbledEpisode] Date:[NSDate date]];
                 break;
             case 51:
-                [self setStatusText:@"Scrobble Status: Can't find title. Retrying in 5 mins..."];
-                [self showNotication:@"Scrobble Unsuccessful." message:@"Can't find title."];
+                [self setStatusText:@"Scrobble Status: Couldn't find title."];
+                [self showNotication:@"Scrobble Unsuccessful." message:[NSString stringWithFormat:@"Couldn't find %@.", [MALEngine getFailedTitle]]];
                 break;
             case 52:
             case 53:
@@ -500,7 +514,7 @@
         }
         dispatch_async(dispatch_get_main_queue(), ^{
             if ([MALEngine getSuccess] == 1) {
-
+                 [findtitle setHidden:true];
                 [self setStatusMenuTitleEpisode:[MALEngine getLastScrobbledActualTitle] episode:[MALEngine getLastScrobbledEpisode]];
                 if (status != 3 && [MALEngine getConfirmed]){
                     // Show normal info
@@ -523,20 +537,17 @@
                 }
                 [sharetoolbaritem setEnabled:YES];
                 [correcttoolbaritem setEnabled:YES];
-                //Show Last Scrobbled Title and operations */
-                [seperator setHidden:NO];
-                [lastupdateheader setHidden:NO];
-                [updatedtitle setHidden:NO];
-                [updatedepisode setHidden:NO];
-                [seperator2 setHidden:NO];
-                [updatecorrectmenu setHidden:NO];
-                [updatedcorrecttitle setHidden:NO];
-                [shareMenuItem setHidden:NO];
+                // Show hidden menus
+                [self unhideMenus];
                 NSDictionary * ainfo = [MALEngine getLastScrobbledInfo];
                 if (ainfo !=nil) { // Checks if MAL Updater OS X already populated info about the just updated title.
                     [self showAnimeInfo:ainfo];
                     [self generateShareMenu];
                 }
+            }
+            if (status == 51) {
+                //Show option to find title
+                [findtitle setHidden:false];
             }
             // Enable Menu Items
             scrobbleractive = false;
@@ -544,6 +555,7 @@
             [togglescrobbler setEnabled:YES];
             [statusMenu setAutoenablesItems:YES];
             [confirmupdate setEnabled:YES];
+            [findtitle setEnabled:YES];
             [updatenow setTitle:@"Update Now"];
 	});
     });
@@ -600,11 +612,19 @@
     }
     fsdialog = [FixSearchDialog new];
     // Check if Confirm is on for new title. If so, then disable ability to delete title.
-    if (!confirmupdate.hidden && [MALEngine getisNewTitle])
+    if ((!confirmupdate.hidden && [MALEngine getisNewTitle]) || !findtitle.hidden)
         [fsdialog setCorrection:NO];
     else
         [fsdialog setCorrection:YES];
-    [fsdialog setSearchField:[MALEngine getLastScrobbledTitle]];
+    if (!findtitle.hidden) {
+        //Use failed title
+         [fsdialog setSearchField:[MALEngine getFailedTitle]];
+    }
+    else{
+        //Get last scrobbled title
+        [fsdialog setSearchField:[MALEngine getLastScrobbledTitle]];
+    }
+   
     if (isVisible) {
         [NSApp beginSheet:[fsdialog window]
            modalForWindow:window modalDelegate:self
@@ -626,26 +646,45 @@
             NSLog(@"ID matches, correction not needed.");
         }
         else{
+            if (!findtitle.hidden) {
+                [self addtoExceptions:[MALEngine getFailedTitle] newtitle:[fsdialog getSelectedTitle] showid:[fsdialog getSelectedAniID] threshold:[[fsdialog getSelectedTotalEpisodes] intValue]];
+            }
+            else{
             [self addtoExceptions:[MALEngine getLastScrobbledTitle] newtitle:[fsdialog getSelectedTitle] showid:[fsdialog getSelectedAniID] threshold:[[fsdialog getSelectedTotalEpisodes] intValue]];
+            }
             if([fsdialog getdeleteTitleonCorrection]){
                 if([MALEngine removetitle:[MALEngine getAniID]]){
                     NSLog(@"Removal Successful");
                 }
             }
             NSLog(@"Updating corrected title...");
-            int status = [MALEngine scrobbleagain:[MALEngine getLastScrobbledTitle] Episode:[MALEngine getLastScrobbledEpisode]];
+            int status;
+            if (!findtitle.hidden) {
+                status = [MALEngine scrobbleagain:[MALEngine getFailedTitle] Episode:[MALEngine getFailedEpisode]];
+            }
+            else{
+                status = [MALEngine scrobbleagain:[MALEngine getLastScrobbledTitle] Episode:[MALEngine getLastScrobbledEpisode]];
+            }
             switch (status) {
                 case 1:
+                case 2:
                 case 21:
                 case 22:{
                     [self setStatusText:@"Scrobble Status: Correction Successful..."];
                     [self showNotication:@"MAL Updater OS X" message:@"Correction was successful"];
                     [self setStatusMenuTitleEpisode:[MALEngine getLastScrobbledActualTitle] episode:[MALEngine getLastScrobbledEpisode]];
                     [self updateLastScrobbledTitleStatus:false];
+                    if (!findtitle.hidden) {
+                        //Unhide menus and enable functions on the toolbar
+                        [self unhideMenus];
+                        [sharetoolbaritem setEnabled:YES];
+                        [correcttoolbaritem setEnabled:YES];
+                    }
                     //Show Anime Correct Information
                     NSDictionary * ainfo = [MALEngine getLastScrobbledInfo];
                     [self showAnimeInfo:ainfo];
 					[confirmupdate setHidden:true];
+                    [findtitle setHidden:true];
                     break;
                 }
                 default:

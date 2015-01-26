@@ -21,6 +21,9 @@
 	__weak NSString * DetectedEpisode;
     __weak NSString * DetectedSource;
     __weak NSString * DetectedGroup;
+    NSString * FailedTitle;
+    NSString * FailedEpisode;
+    NSString * FailedSource;
     BOOL DetectedTitleisMovie;
     int DetectedSeason;
 	NSString * DetectedCurrentEpisode;
@@ -53,6 +56,8 @@
 -(NSString *)getLastScrobbledSource;
 -(NSString *)getAniID;
 -(NSString *)getTotalEpisodes;
+-(NSString *)getFailedTitle;
+-(NSString *)getFailedEpisode;
 -(int)getCurrentEpisode;
 -(BOOL)getConfirmed;
 -(int)getScore;

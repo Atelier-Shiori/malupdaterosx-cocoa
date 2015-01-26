@@ -25,6 +25,9 @@
     if (correction) {
         [deleteoncorrection setHidden:NO];
     }
+    else{
+        [deleteoncorrection setState:0];
+    }
     [super windowDidLoad];
     if ([searchquery length]>0) {
         [search setStringValue:searchquery];

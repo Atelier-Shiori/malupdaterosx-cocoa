@@ -31,6 +31,7 @@
 	IBOutlet NSMenuItem * togglescrobbler;
     IBOutlet NSMenuItem * updatenow;
 	IBOutlet NSMenuItem * confirmupdate;
+    IBOutlet NSMenuItem * findtitle;
     /* Updated Title Display and Operations */
     IBOutlet NSMenuItem * seperator;
     IBOutlet NSMenuItem * lastupdateheader;

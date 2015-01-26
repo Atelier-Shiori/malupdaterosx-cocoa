@@ -251,6 +251,12 @@
                         <action selector="confirmupdate:" target="560" id="JS9-bI-8Dl"/>
                     </connections>
                 </menuItem>
+                <menuItem title="Find Unrecognized Title…" hidden="YES" id="hzK-en-4jo">
+                    <modifierMask key="keyEquivalentModifierMask" control="YES"/>
+                    <connections>
+                        <action selector="showCorrectionSearchWindow:" target="560" id="yRv-pC-wod"/>
+                    </connections>
+                </menuItem>
                 <menuItem isSeparatorItem="YES" id="574"/>
                 <menuItem title="Show/Hide Status Window" id="573">
                     <modifierMask key="keyEquivalentModifierMask"/>
@@ -285,6 +291,7 @@
                 <outlet property="correcttoolbaritem" destination="ddD-eA-X8S" id="LON-ej-yAc"/>
                 <outlet property="epiformatter" destination="bN5-qb-o9D" id="sIy-7r-T4h"/>
                 <outlet property="episodefield" destination="mF9-Hc-zUU" id="NBp-ap-0BD"/>
+                <outlet property="findtitle" destination="hzK-en-4jo" id="jb6-mJ-i9t"/>
                 <outlet property="historytable" destination="595" id="635"/>
                 <outlet property="historywindow" destination="588" id="605"/>
                 <outlet property="img" destination="gfr-73-DLn" id="iLO-3a-xch"/>
@@ -771,7 +778,7 @@ Gw
                 </defaultToolbarItems>
             </toolbar>
             <contentBorderThickness minY="22"/>
-            <point key="canvasLocation" x="86.5" y="122.5"/>
+            <point key="canvasLocation" x="440" y="168.5"/>
         </window>
     </objects>
     <resources>
