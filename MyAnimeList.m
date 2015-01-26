@@ -124,9 +124,8 @@
     // Set MAL API URL
     MALApiUrl = [[NSUserDefaults standardUserDefaults] objectForKey:@"MALAPIURL"];
     int status;
-    NSLog(@"Getting AniID");
+    NSLog(@"Finding AniID");
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"useSearchCache"]) {
-        //NSArray *cache = [[NSUserDefaults standardUserDefaults] objectForKey:@"searchcache"];
         NSManagedObjectContext *moc = managedObjectContext;
         NSFetchRequest * allCaches = [[NSFetchRequest alloc] init];
         [allCaches setEntity:[NSEntityDescription entityForName:@"Cache" inManagedObjectContext:moc]];
@@ -203,7 +202,7 @@
     else {
         if (online) {
             // Not Successful
-            NSLog(@"Error: Can't find title %@. Please add an Anime Exception rule.", DetectedTitle);
+            NSLog(@"Error: Couldn't find title %@. Please add an Anime Exception rule.", DetectedTitle);
             status = 51;
         }
         else{
@@ -723,9 +722,7 @@ update:
 		[request addFormData:TitleScore forKey:@"score"];
 		// Do Update
 		[request startFormRequest];
-		
-		//NSLog(@"%i", [request getStatusCode]);
-		//NSLog(@"%@", [request responseString]);
+        
 		switch ([request getStatusCode]) {
 			case 200:
 				// Store Last Scrobbled Title
@@ -774,7 +771,7 @@ update:
 	[request startFormRequest];
 
 	
-	//Set Title State for Title (use for Twitter feature)
+	//Set Title State for Title
 	WatchStatus = @"watching";
 	switch ([request getStatusCode]) {
 		case 200:
