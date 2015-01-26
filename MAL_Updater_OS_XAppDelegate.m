@@ -146,7 +146,7 @@
     [defaultValues setObject:[[NSMutableArray alloc] init] forKey:@"exceptions"];
     [defaultValues setObject:[[NSMutableArray alloc] init] forKey:@"ignoredirectories"];
     [defaultValues setObject:[[NSMutableArray alloc] init] forKey:@"IgnoreTitleRules"];
-    [defaultValues setObject:[NSNumber numberWithBool:NO] forKey:@"ConfirmNewTitle"];
+    [defaultValues setObject:[NSNumber numberWithBool:YES] forKey:@"ConfirmNewTitle"];
     [defaultValues setObject:[NSNumber numberWithBool:NO] forKey:@"ConfirmUpdates"];
     if (floor(NSAppKitVersionNumber) > NSAppKitVersionNumber10_9){
         //Yosemite Specific Advanced Options
