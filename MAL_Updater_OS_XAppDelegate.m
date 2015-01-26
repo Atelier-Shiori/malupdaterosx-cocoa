@@ -685,6 +685,8 @@
                     [self showAnimeInfo:ainfo];
 					[confirmupdate setHidden:true];
                     [findtitle setHidden:true];
+					//Regenerate Share Items
+					[self generateShareMenu];
                     break;
                 }
                 default:

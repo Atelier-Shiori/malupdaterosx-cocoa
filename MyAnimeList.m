@@ -1033,6 +1033,7 @@ update:
 -(void)checkExceptions{
     // Check Exceptions
     NSManagedObjectContext * moc = self.managedObjectContext;
+	bool found = false;
     for (int i = 0; i < 2; i++) {
         NSFetchRequest * allExceptions = [[NSFetchRequest alloc] init];
         NSError * error = nil;
@@ -1076,10 +1077,15 @@ update:
                             DetectedEpisode = [NSString stringWithFormat:@"%i", tmpepisode];
                         }
                         DetectedSeason = 0;
-                        break;
+                        found = true;
+						break;
                     }
                 }
             }
+			if (found){
+				//Break from exceptions check loop
+				break;
+			}
         }
 
     }
