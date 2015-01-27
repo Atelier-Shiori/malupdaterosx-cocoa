@@ -8,6 +8,7 @@
 
 #import "FixSearchDialog.h"
 #import "EasyNSURLConnection.h"
+#import "NSString_stripHtml.h"
 
 @interface FixSearchDialog ()
 
@@ -54,6 +55,9 @@
         [alert setAlertStyle:NSWarningAlertStyle];
         if ([alert runModal]== NSAlertFirstButtonReturn) {
             goto finish;
+        }
+        else{
+            return;
         }
     }
     else{
@@ -123,6 +127,17 @@
     [tb reloadData];
     //Deselect Selection
     [tb deselectAll:self];
+}
+-(void)tableViewSelectionDidChange:(NSNotification *)notification{
+    if ([[notification object] selectedRow] != -1) {
+        // Show synopsis
+        NSDictionary * d = [[arraycontroller selectedObjects] objectAtIndex:0];
+        [selectedsynopsis setString:[[NSString stringWithFormat:@"%@", [d objectForKey:@"synopsis"]] stripHtml]];
+    }
+    else{
+        [selectedsynopsis setString:@""];
+    }
+
 }
 -(void)setCorrection:(BOOL)correct{
     correction = correct;

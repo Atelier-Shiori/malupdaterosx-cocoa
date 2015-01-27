@@ -10,6 +10,7 @@
                 <outlet property="arraycontroller" destination="VfW-m1-nhU" id="bu2-zA-rfY"/>
                 <outlet property="deleteoncorrection" destination="Gtx-jO-BkX" id="rb3-F0-TiF"/>
                 <outlet property="search" destination="zqr-YP-nbl" id="KPf-Hu-cOG"/>
+                <outlet property="selectedsynopsis" destination="iBE-bg-nWF" id="pgs-0n-jmn"/>
                 <outlet property="tb" destination="LDc-lb-sJX" id="5Th-HC-8is"/>
                 <outlet property="window" destination="DbO-Pz-y0h" id="FhV-nS-VTd"/>
             </connections>
@@ -117,16 +118,6 @@ IA
                                     <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                     <size key="minSize" width="398" height="73"/>
                                     <size key="maxSize" width="463" height="10000000"/>
-                                    <connections>
-                                        <binding destination="VfW-m1-nhU" name="value" keyPath="selection.synopsis" id="L8N-GZ-GjK">
-                                            <dictionary key="options">
-                                                <bool key="NSConditionallySetsEditable" value="NO"/>
-                                                <string key="NSNoSelectionPlaceholder" base64-UTF8="YES">
-IA
-</string>
-                                            </dictionary>
-                                        </binding>
-                                    </connections>
                                 </textView>
                             </subviews>
                         </clipView>
@@ -209,6 +200,9 @@ IA
                                             </connections>
                                         </tableColumn>
                                     </tableColumns>
+                                    <connections>
+                                        <outlet property="delegate" destination="-2" id="kiH-MJ-hRA"/>
+                                    </connections>
                                 </tableView>
                             </subviews>
                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>

@@ -384,7 +384,10 @@
     if (confirmupdate.hidden) {
         [updatedupdatestatus setEnabled:YES];
     }
-    [updatecorrect setAutoenablesItems:YES];
+    if (!confirmupdate.hidden && ![MALEngine getisNewTitle]){
+        [updatedupdatestatus setEnabled:YES];
+        [updatecorrect setAutoenablesItems:YES];
+    }
     [statusMenu setAutoenablesItems:YES];
     [confirmupdate setEnabled:YES];
     [findtitle setEnabled:YES];
