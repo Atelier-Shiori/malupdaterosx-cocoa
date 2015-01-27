@@ -232,10 +232,10 @@
             //write JSON to file
             BOOL wresult = [JSONString writeToURL:url
                                        atomically:YES
-                                         encoding:NSASCIIStringEncoding
-                                            error:NULL];
+                                         encoding:NSUTF8StringEncoding
+                                            error:&error];
             if (! wresult) {
-                NSLog(@"Export Failed");
+                NSLog(@"Export Failed: %@", error);
             }
         }
     }];
