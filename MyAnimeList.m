@@ -452,7 +452,6 @@ update:
     NSString *titleid = @"";
 	//Initalize NSString to dump the title temporarily
 	NSString *theshowtitle = @"";
-    NSString *theshowtype = @"";
     NSString *alttitle = @"";
 	//Set Regular Expressions to omit any preceding words
 	NSString *findpre = [NSString stringWithFormat:@"(%@)",term];
@@ -471,52 +470,18 @@ update:
         DetectedTitleisMovie = false;
     }
     NSDictionary * found;
-    // Initalize Arrays for each Media Type
-    NSMutableArray * movie = [[NSMutableArray alloc] init];
-    NSMutableArray * tv = [[NSMutableArray alloc] init];
-    NSMutableArray * ona = [[NSMutableArray alloc] init];
-    NSMutableArray * ova = [[NSMutableArray alloc] init];
-    NSMutableArray * special = [[NSMutableArray alloc] init];
-    NSMutableArray * other = [[NSMutableArray alloc] init];
-    // Organize Them
-    for (NSDictionary *entry in searchdata) {
-        theshowtype = (NSString *)[entry objectForKey:@"type"];
-        if ([theshowtype isEqualToString:@"Movie"])
-            [movie addObject:entry];
-        else if ([theshowtype isEqualToString:@"TV"])
-            [tv addObject:entry];
-        else if ([theshowtype isEqualToString:@"ONA"])
-            [ona addObject:entry];
-        else if ([theshowtype isEqualToString:@"OVA"])
-            [ova addObject:entry];
-        else if ([theshowtype isEqualToString:@"Special"])
-            [special addObject:entry];
-        else if (![theshowtype isEqualToString:@"Music"])
-            [other addObject:entry];
-    }
-    // Concatinate Arrays and get rid of unneeded search data array
+    // Create a filtered Arrays
     NSMutableArray * sortedArray;
     if (DetectedTitleisMovie) {
-        sortedArray = [NSMutableArray arrayWithArray:movie];
-        [sortedArray addObjectsFromArray:special];
-        [sortedArray addObject:ova];
-        tv = nil;
-        ona = nil;
-        other = nil;
+        sortedArray = [NSMutableArray arrayWithArray:[searchdata filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"(show_type == %@)" , @"Movie"]]];
+        [sortedArray addObjectsFromArray:[searchdata filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"(show_type == %@)", @"Special"]]];
     }
     else{
-        sortedArray = [NSMutableArray arrayWithArray:tv];
-        [sortedArray addObjectsFromArray:ona];
-        if (DetectedSeason == 0 || DetectedSeason == 1) {
-            [sortedArray addObjectsFromArray:special];
-            [sortedArray addObjectsFromArray:ova];
-            [sortedArray addObjectsFromArray:other];
-        }
-        else{
-            //special, ova and other is not applicable
-            special = nil;
-            ova = nil;
-            other = nil;
+        sortedArray = [NSMutableArray arrayWithArray:[searchdata filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"(show_type == %@)", @"TV"]]];
+        [sortedArray addObjectsFromArray:[searchdata filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"(show_type == %@)", @"ONA"]]];
+        if (DetectedSeason == 1 | DetectedSeason == 0) {
+            [sortedArray addObjectsFromArray:[searchdata filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"(show_type == %@)", @"Special"]]];
+            [sortedArray addObjectsFromArray:[searchdata filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"(show_type == %@)", @"OVA"]]];
         }
     }
     searchdata = nil;
@@ -580,7 +545,7 @@ update:
                 // Description check
                 OGRegularExpressionMatch * smatch2 = [regex2 matchInString:(NSString *)[searchentry objectForKey:@"synopsis"]];
                 if (DetectedSeason >= 2) { // Season detected, check to see if there is a match. If not, continue.
-                    if (smatch == nil && smatch2 == nil && tv.count > 1) { // If there is a second season match, in most cases, it would be the only entry
+                    if (smatch == nil && smatch2 == nil && [[sortedArray filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"(show_type == %@)", @"TV"]] count] > 1) { // If there is a second season match, in most cases, it would be the only entry
                         continue;
                     }
                 }
@@ -753,6 +718,7 @@ update:
 		        LastScrobbledTitle = DetectedTitle;
 		        LastScrobbledEpisode = DetectedEpisode;
                 DetectedCurrentEpisode = DetectedEpisode;
+                LastScrobbledSource = DetectedSource;
                 if (confirmed) {
                     LastScrobbledActualTitle = (NSString *)[LastScrobbledInfo objectForKey:@"title"];
                 }
@@ -806,6 +772,7 @@ update:
         LastScrobbledTitle = DetectedTitle;
         LastScrobbledEpisode = DetectedEpisode;
         DetectedCurrentEpisode = DetectedEpisode;
+		LastScrobbledSource = DetectedSource;
             if (confirmed) {
                 LastScrobbledActualTitle = (NSString *)[LastScrobbledInfo objectForKey:@"title"];
             }
