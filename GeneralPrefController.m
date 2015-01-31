@@ -10,6 +10,7 @@
 #import "Base64Category.h"
 #import "EasyNSURLConnection.h"
 #import "MAL_Updater_OS_XAppDelegate.h"
+#import "AutoExceptions.h"
 
 
 @implementation GeneralPrefController
@@ -188,7 +189,7 @@
         [updateexceptionsbtn setEnabled:NO];
         [updateexceptionschk setEnabled:NO];
         [indicator startAnimation:self];
-        [delegate updateAutoExceptions];
+        [AutoExceptions updateAutoExceptions];
         [indicator stopAnimation:self];
         [updateexceptionsbtn setEnabled:YES];
         [updateexceptionschk setEnabled:YES];
