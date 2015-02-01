@@ -11,6 +11,7 @@
 #import "EasyNSURLConnection.h"
 #import "MAL_Updater_OS_XAppDelegate.h"
 #import "AutoExceptions.h"
+#import "Utility.h"
 
 
 @implementation GeneralPrefController
@@ -125,10 +126,10 @@
 	int statusCode = [request getStatusCode];
 	switch (statusCode) {
 		case 200:
-			[self showsheetmessage:@"API Test Successful" explaination:[NSString stringWithFormat:@"HTTP Code: %i", statusCode]];
+            [Utility showsheetmessage:@"API Test Successful" explaination:[NSString stringWithFormat:@"HTTP Code: %i", statusCode] window: [[self view] window]];
 			break;
 		default:
-			[self showsheetmessage:@"API Test Unsuccessful" explaination:[NSString stringWithFormat:@"HTTP Code: %i", statusCode]];
+			[Utility showsheetmessage:@"API Test Unsuccessful" explaination:[NSString stringWithFormat:@"HTTP Code: %i", statusCode] window:[[self view] window]];
 			break;
 	}
 	//release
@@ -143,23 +144,6 @@
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults] ;
 	[defaults setObject:[APIUrl stringValue] forKey:@"MALAPIURL"];
 	
-}
--(void)showsheetmessage:(NSString *)message
-		   explaination:(NSString *)explaination
-{
-	// Set Up Prompt Message Window
-	NSAlert * alert = [[NSAlert alloc] init];
-	[alert addButtonWithTitle:@"OK"];
-	[alert setMessageText:message];
-	[alert setInformativeText:explaination];
-	// Set Message type to Warning
-	[alert setAlertStyle:1];
-	// Show as Sheet on Preference Window
-	[alert beginSheetModalForWindow:[[self view] window]
-					  modalDelegate:self
-					 didEndSelector:nil
-						contextInfo:NULL];
-    [alert release];
 }
 -(IBAction)clearSearchCache:(id)sender{
     // Remove All cache data from Core Data Entity
@@ -180,7 +164,6 @@
 }
 -(IBAction)updateAutoExceptions:(id)sender{
     // Updates Auto Exceptions List
-       MAL_Updater_OS_XAppDelegate * delegate = (MAL_Updater_OS_XAppDelegate *)[[NSApplication sharedApplication] delegate];
     dispatch_queue_t queue = dispatch_get_global_queue(
                                                        DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     

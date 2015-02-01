@@ -10,6 +10,7 @@
 #import "Base64Category.h"
 #import "MAL_Updater_OS_XAppDelegate.h"
 #import "EasyNSURLConnection.h"
+#import "Utility.h"
 
 
 @implementation LoginPref
@@ -49,22 +50,6 @@
     return NSLocalizedString(@"Login", @"Toolbar item name for the Login preference pane");
 }
 #pragma mark Login Preferences Functions
--(void)showsheetmessage:(NSString *)message
-		   explaination:(NSString *)explaination
-{
-	// Set Up Prompt Message Window
-	NSAlert * alert = [[NSAlert alloc] init];
-	[alert addButtonWithTitle:@"OK"];
-	[alert setMessageText:message];
-	[alert setInformativeText:explaination];
-	// Set Message type to Warning
-	[alert setAlertStyle:1];
-	// Show as Sheet on Preference Window
-    [alert beginSheetModalForWindow:[[self view] window]
-					  modalDelegate:self
-					 didEndSelector:nil
-						contextInfo:NULL];
-}
 -(void)loadlogin
 {
 	// Load Username
@@ -93,13 +78,13 @@
 		[savebut displayIfNeeded];
 		if ( [[fieldusername stringValue] length] == 0) {
 			//No Username Entered! Show error message
-			[self showsheetmessage:@"MAL Updater OS X was unable to log you in since you didn't enter a username" explaination:@"Enter a valid username and try logging in again"];
+			[Utility showsheetmessage:@"MAL Updater OS X was unable to log you in since you didn't enter a username" explaination:@"Enter a valid username and try logging in again" window:[[self view] window]];
 			[savebut setEnabled: YES];
 		}
 		else {
 			if ( [[fieldpassword stringValue] length] == 0 ) {
 				//No Password Entered! Show error message.
-				[self showsheetmessage:@"MAL Updater OS X was unable to log you in since you didn't enter a password" explaination:@"Enter a valid password and try logging in again."];
+				[Utility showsheetmessage:@"MAL Updater OS X was unable to log you in since you didn't enter a password" explaination:@"Enter a valid password and try logging in again." window:[[self view] window]];
 				[savebut setEnabled: YES];
 			}
 			else {
@@ -124,7 +109,7 @@
     NSError * error = [request getError];
     if ([request getStatusCode] == 200 && error == nil) {
         //Login successful
-        [self showsheetmessage:@"Login Successful" explaination: @"Login Token has been recieved."];
+        [Utility showsheetmessage:@"Login Successful" explaination: @"Login Token has been recieved." window:[[self view] window]];
 		// Generate API Key
 		NSString * Token = [NSString stringWithFormat:@"%@:%@", [fieldusername stringValue], [fieldpassword stringValue]];
 		[defaults setObject:[Token base64Encoding] forKey:@"Base64Token"];
@@ -136,13 +121,13 @@
     }
     else{
         if (error.code == NSURLErrorNotConnectedToInternet) {
-            [self showsheetmessage:@"MAL Updater OS X was unable to log you in since you are not connected to the internet" explaination:@"Check your internet connection and try again."];
+            [Utility showsheetmessage:@"MAL Updater OS X was unable to log you in since you are not connected to the internet" explaination:@"Check your internet connection and try again." window:[[self view] window]];
             [savebut setEnabled: YES];
             [savebut setKeyEquivalent:@"\r"];
         }
         else{
             //Login Failed, show error message
-            [self showsheetmessage:@"MAL Updater OS X was unable to log you in since you don't have the correct username and/or password." explaination:@"Check your username and password and try logging in again. If you recently changed your password, enter your new password and try again."];
+            [Utility showsheetmessage:@"MAL Updater OS X was unable to log you in since you don't have the correct username and/or password." explaination:@"Check your username and password and try logging in again. If you recently changed your password, enter your new password and try again." window:[[self view] window]];
             [savebut setEnabled: YES];
             [savebut setKeyEquivalent:@"\r"];
         }
@@ -188,7 +173,7 @@
         }
     }
     else{
-        [self showsheetmessage:@"Cannot Logout" explaination:@"Please turn off automatic scrobbling before logging out."];
+        [Utility showsheetmessage:@"Cannot Logout" explaination:@"Please turn off automatic scrobbling before logging out." window:[[self view] window]];
     }
 }
 /*
@@ -202,7 +187,7 @@
               contextInfo:(void *)nil];
     }
     else{
-        [self showsheetmessage:@"Cannot Logout" explaination:@"Please turn off automatic scrobbling before reauthorizing."];
+        [Utility showsheetmessage:@"Cannot Logout" explaination:@"Please turn off automatic scrobbling before reauthorizing." window:[[self view] window]];
     }
 }
 - (void)reAuthPanelDidEnd:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo {

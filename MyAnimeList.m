@@ -10,6 +10,7 @@
 #import "Recognition.h"
 #import "EasyNSURLConnection.h"
 #import "Detection.h"
+#import "Utility.h"
 
 @interface MyAnimeList ()
 -(int)detectmedia; // 0 - Nothing, 1 - Same, 2 - Update
@@ -19,7 +20,6 @@
 -(BOOL)checkstatus:(NSString *)titleid;
 -(int)updatetitle:(NSString *)titleid confirming:(bool) confirming;
 -(int)addtitle:(NSString *)titleid confirming:(bool) confirming;
--(NSString *)desensitizeSeason:(NSString *)title;
 -(void)addtoCache:(NSString *)title showid:(NSString *)showid actualtitle:(NSString *) atitle totalepisodes:(int)totalepisodes;
 @end
 
@@ -255,10 +255,10 @@
             NSString * tmpid;
             switch (i) {
                 case 0:
-                    tmpid = [self performSearch:[NSString stringWithFormat:@"%@ %i", [self desensitizeSeason:searchtitle], DetectedSeason]];
+                    tmpid = [self performSearch:[NSString stringWithFormat:@"%@ %i", [Utility desensitizeSeason:searchtitle], DetectedSeason]];
                     break;
                 case 1:
-                    tmpid = [self performSearch:[NSString stringWithFormat:@"%@ %i season", [self desensitizeSeason:searchtitle], DetectedSeason]];
+                    tmpid = [self performSearch:[NSString stringWithFormat:@"%@ %i season", [Utility desensitizeSeason:searchtitle], DetectedSeason]];
                 default:
                     break;
             }
@@ -441,7 +441,7 @@
             }
             else{alttitle = @"";}
 
-        if ([self checkMatch:theshowtitle alttitle:alttitle regex:regex option:i]) {
+        if ([Utility checkMatch:theshowtitle alttitle:alttitle regex:regex option:i]) {
         }
             DetectedEpisode = @"1"; // Usually, there is one episode in a movie.
             if ([[NSString stringWithFormat:@"%@", [searchentry objectForKey:@"type"]] isEqualToString:@"Special"]||[[NSString stringWithFormat:@"%@", [searchentry objectForKey:@"type"]] isEqualToString:@"OVA"]) {
@@ -466,10 +466,10 @@
             }
         }
         else{alttitle = @"";}
-        if ([self checkMatch:theshowtitle alttitle:alttitle regex:regex option:i]) {
+        if ([Utility checkMatch:theshowtitle alttitle:alttitle regex:regex option:i]) {
             if ([[NSString stringWithFormat:@"%@", [searchentry objectForKey:@"type"]] isEqualToString:@"TV"]) { // Check Seasons if the title is a TV show type
                 // Used for Season Checking
-                OGRegularExpression    *regex2 = [OGRegularExpression regularExpressionWithString:[NSString stringWithFormat:@"((%i(st|nd|rd|th)|%@) season|\\W%i)", DetectedSeason, [self seasonInWords:DetectedSeason],DetectedSeason] options:OgreIgnoreCaseOption];
+                OGRegularExpression    *regex2 = [OGRegularExpression regularExpressionWithString:[NSString stringWithFormat:@"((%i(st|nd|rd|th)|%@) season|\\W%i)", DetectedSeason, [Utility seasonInWords:DetectedSeason],DetectedSeason] options:OgreIgnoreCaseOption];
                 OGRegularExpressionMatch * smatch = [regex2 matchInString:[NSString stringWithFormat:@"%@ - %@",theshowtitle, alttitle]];
                 // Description check
                 OGRegularExpressionMatch * smatch2 = [regex2 matchInString:(NSString *)[searchentry objectForKey:@"synopsis"]];
@@ -792,51 +792,6 @@
 -(void)clearAnimeInfo{
     LastScrobbledInfo = nil;
 }
--(NSString *)desensitizeSeason:(NSString *)title {
-    // Get rid of season references
-    OGRegularExpression* regex = [OGRegularExpression regularExpressionWithString: @"((first|second|third|fourth|fifth|sixth|seventh|eighth|nineth|(st|nd|rd|th)) season)" options:OgreIgnoreCaseOption];
-    title = [regex replaceAllMatchesInString:title withString:@""];
-    regex = [OGRegularExpression regularExpressionWithString: @"(s)\\d" options:OgreIgnoreCaseOption];
-    title = [regex replaceAllMatchesInString:title withString:@""];
-    // Remove any Whitespace
-    title = [title stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-    return title;
-}
--(NSString *)seasonInWords:(int)season{
-    // Translate integer season to word (use for Regex)
-    switch (season) {
-        case 1:
-            return @"first";
-            break;
-        case 2:
-            return @"second";
-            break;
-        case 3:
-            return @"third";
-            break;
-        case 4:
-            return @"fourth";
-            break;
-        case 5:
-            return @"fifth";
-            break;
-        case 6:
-            return @"sixth";
-            break;
-        case 7:
-            return @"seventh";
-            break;
-        case 8:
-            return @"eighth";
-            break;
-        case 9:
-            return @"ninth";
-            break;
-        default:
-            return @"";
-            break;
-    }
-}
 -(void)addtoCache:(NSString *)title showid:(NSString *)showid actualtitle:(NSString *) atitle totalepisodes:(int)totalepisodes {
     //Adds ID to cache
     NSManagedObjectContext *moc = managedObjectContext;
@@ -853,16 +808,6 @@
     // Save
     [moc save:&error];
 
-}
--(bool)checkMatch:(NSString *)title
-         alttitle:(NSString *)atitle
-            regex:(OGRegularExpression *)regex
-           option:(int)i{
-    //Checks for matches
-    if ([regex matchInString:title] != nil || ([regex matchInString:atitle] != nil && [atitle length] >0 && i==0)) {
-        return true;
-    }
-    return false;
 }
 -(void)checkExceptions{
     // Check Exceptions

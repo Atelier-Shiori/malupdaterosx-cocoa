@@ -22,7 +22,5 @@
 }
 -(IBAction)testapi:(id)sender;
 -(IBAction)resetapiurl:(id)sender;
--(void)showsheetmessage:(NSString *)message
-		   explaination:(NSString *)explaination;
 -(IBAction)clearSearchCache:(id)sender;
 @end

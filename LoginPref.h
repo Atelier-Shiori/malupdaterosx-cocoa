@@ -30,8 +30,6 @@
 - (id)initwithAppDelegate:(MAL_Updater_OS_XAppDelegate *)adelegate;
 -(IBAction)startlogin:(id)sender;
 -(IBAction)clearlogin:(id)sender;
--(void)showsheetmessage:(NSString *)message
-		   explaination:(NSString *)explaination;
 -(IBAction)registermal:(id)sender;
 -(void)login:(NSString *)username password:(NSString *)password;
 -(void)loadlogin;

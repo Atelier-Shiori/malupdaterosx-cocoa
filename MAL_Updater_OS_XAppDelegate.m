@@ -22,6 +22,7 @@
 #import "MASShortcut+Monitoring.h"
 #import "HotKeyConstants.h"
 #import "AutoExceptions.h"
+#import "Utility.h"
 
 @implementation MAL_Updater_OS_XAppDelegate
 
@@ -246,7 +247,7 @@
     }
 	
 	// Notify User if there is no Account Info
-	if (![self checktoken]) {
+	if (![Utility checktoken]) {
         // First time prompt
         NSAlert * alert = [[NSAlert alloc] init] ;
         [alert addButtonWithTitle:@"Yes"];
@@ -260,7 +261,7 @@
             [self.preferencesWindowController showWindow:nil];
         }
 	}
-    if ([self checkoldAPI]) {
+    if ([Utility checkoldAPI]) {
         [self showNotication:@"MAL Updater OS X" message:@"The API URL has been automatically updated."];
         [[NSUserDefaults standardUserDefaults] setObject:@"https://malapi.ateliershiori.moe" forKey:@"MALAPIURL"];
     }
@@ -408,7 +409,7 @@
 
 - (IBAction)toggletimer:(id)sender {
 	//Check to see if there is an API Key stored
-	if (![self checktoken]) {
+	if (![Utility checktoken]) {
         [self showNotication:@"MAL Updater OS X" message:@"Add a login before you start scrobbling."];
 	}
 	else {
@@ -433,7 +434,7 @@
 }
 -(void)autostarttimer {
 	//Check to see if there is an API Key stored
-	if (![self checktoken]) {
+	if (![Utility checktoken]) {
          [self showNotication:@"MAL Updater OS X" message:@"Add a login before you start scrobbling."];
 	}
 	else {
@@ -591,20 +592,10 @@
 }
 
 -(IBAction)updatenow:(id)sender{
-    if (![self checktoken])
+    if (![Utility checktoken])
         [self showNotication:@"MAL Updater OS X" message:@"Add a login before you start scrobbling."];
     else
         [self firetimer:nil];
-}
-
-#pragma mark Credentials check
--(BOOL)checktoken{
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    if ([[defaults objectForKey:@"Base64Token"] length] == 0) {
-        return false;
-    }
-    else
-        return true;
 }
 #pragma mark Correction
 -(IBAction)showCorrectionSearchWindow:(id)sender{
@@ -991,7 +982,7 @@
 -(void)registerHotkey{
     [MASShortcut registerGlobalShortcutWithUserDefaultsKey:kPreferenceScrobbleNowShortcut handler:^{
         // Scrobble Now Global Hotkey
-        if ([self checktoken] && !panelactive) {
+        if ([Utility checktoken] && !panelactive) {
             [self firetimer:nil];
         }
     }];
@@ -1037,12 +1028,6 @@
     [img setImage:dimg]; //Get the Image for the title
     // Clear Anime Info so that MAL Updater OS X won't attempt to retrieve it if the same episode and title is playing
     [MALEngine clearAnimeInfo];
-}
--(BOOL)checkoldAPI{
-    if ([[NSString stringWithFormat:@"%@", [[NSUserDefaults standardUserDefaults] objectForKey:@"MALAPIURL"]] isEqualToString:@"https://malapi.shioridiary.me"]||[[NSString stringWithFormat:@"%@", [[NSUserDefaults standardUserDefaults] objectForKey:@"MALAPIURL"]] isEqualToString:@"http://mal-api.com"]) {
-        return true;
-    }
-    return false;
 }
 - (void)appendToAnimeInfo:(NSString*)text
 {

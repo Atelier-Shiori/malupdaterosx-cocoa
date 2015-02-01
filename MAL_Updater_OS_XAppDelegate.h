@@ -99,7 +99,6 @@
 -(void)setStatusText:(NSString*)messagetext;
 -(void)setLastScrobbledTitle:(NSString*)messagetext;
 -(void)setStatusMenuTitleEpisode:(NSString *)title episode:(NSString *) episode;
--(BOOL)checktoken;
 -(IBAction)updatestatus:(id)sender;
 -(IBAction)updatestatusmenu:(id)sender;
 -(void)showUpdateDialog:(NSWindow *) w;
