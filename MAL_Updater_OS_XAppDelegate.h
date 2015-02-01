@@ -12,7 +12,7 @@
 @class PreferenceController;
 @class MyAnimeList;
 @class FixSearchDialog;
-@interface MAL_Updater_OS_XAppDelegate : NSObject <NSApplicationDelegate, NSUserNotificationCenterDelegate, NSSharingServiceDelegate, NSSharingServicePickerDelegate> {
+@interface MAL_Updater_OS_XAppDelegate : NSObject <NSApplicationDelegate, NSUserNotificationCenterDelegate, NSSharingServiceDelegate> {
 	/* Windows */
     __unsafe_unretained NSWindow *window;
 	__unsafe_unretained NSWindow *historywindow;

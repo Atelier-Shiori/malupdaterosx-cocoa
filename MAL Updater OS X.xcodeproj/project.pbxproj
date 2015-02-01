@@ -151,6 +151,8 @@
 		6F5F6C6F1A71696D006D4607 /* MAL_Updater_OS_X_DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MAL_Updater_OS_X_DataModel.xcdatamodel; sourceTree = "<group>"; };
 		6FAA0C1D1A7E938400416079 /* ExceptionsCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExceptionsCache.h; sourceTree = "<group>"; };
 		6FAA0C1E1A7E938400416079 /* ExceptionsCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExceptionsCache.m; sourceTree = "<group>"; };
+		6FAA877D1A7EB22100EFFAC1 /* Preferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Preferences.h; sourceTree = "<group>"; };
+		6FAA87801A7EB5C500EFFAC1 /* Hotkeys.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Hotkeys.h; sourceTree = "<group>"; };
 		6FF0332F1A73F2C70096FC69 /* rules.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rules.png; sourceTree = "<group>"; };
 		6FF033311A73F3260096FC69 /* StatusIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = StatusIcon.png; sourceTree = "<group>"; };
 		8227C1161A1D8D34005F3301 /* anitomy-osx.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "anitomy-osx.framework"; path = "Frameworks/anitomy-osx.framework"; sourceTree = "<group>"; };
@@ -193,23 +195,14 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				6FAA87811A7EB68D00EFFAC1 /* Support Classes */,
 				8285DED41A1D529200D6A53F /* Exception/Correction */,
 				5C8ACEB619F409C60001A101 /* Other Classes */,
 				5CD36B9419F2EA91007BB6B6 /* Preferences */,
 				256AC3D80F4B6AC300CF3369 /* MAL_Updater_OS_XAppDelegate.h */,
 				256AC3D90F4B6AC300CF3369 /* MAL_Updater_OS_XAppDelegate.m */,
-				6F1290991A7D833100B8C3E6 /* AutoExceptions.h */,
-				6F12909A1A7D833100B8C3E6 /* AutoExceptions.m */,
-				6FAA0C1D1A7E938400416079 /* ExceptionsCache.h */,
-				6FAA0C1E1A7E938400416079 /* ExceptionsCache.m */,
 				3AFEF127120DF8CE0098B59D /* MyAnimeList.h */,
 				3AFEF128120DF8CE0098B59D /* MyAnimeList.m */,
-				823D4D1F1A1AB46600392ACB /* Recognition.h */,
-				823D4D201A1AB46600392ACB /* Recognition.m */,
-				6F1865911A7D79CB00C74A47 /* Detection.h */,
-				6F1865921A7D79CB00C74A47 /* Detection.m */,
-				6F0CF36D1A7DBADD00261A43 /* Utility.h */,
-				6F0CF36E1A7DBADD00261A43 /* Utility.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -315,8 +308,6 @@
 				3A6AB37E120F313E00D51D2C /* Base64Category.m */,
 				5C881EF919F462B400E20425 /* NSString_stripHtml.h */,
 				5C881EFA19F462B400E20425 /* NSString_stripHtml.m */,
-				6F28DC171A67087300AF063F /* HotKeyConstants.h */,
-				6F28DC181A67087300AF063F /* HotKeyConstants.m */,
 			);
 			name = "Other Classes";
 			sourceTree = "<group>";
@@ -335,6 +326,7 @@
 		5CD36B9419F2EA91007BB6B6 /* Preferences */ = {
 			isa = PBXGroup;
 			children = (
+				6FAA877D1A7EB22100EFFAC1 /* Preferences.h */,
 				6F28DC021A67082400AF063F /* HotkeysPrefs.h */,
 				6F28DC031A67082400AF063F /* HotkeysPrefs.m */,
 				822AEB8B1A202A7B003DD682 /* ExceptionsPref.h */,
@@ -356,6 +348,7 @@
 		6F28DC071A67084B00AF063F /* Hotkey */ = {
 			isa = PBXGroup;
 			children = (
+				6FAA87801A7EB5C500EFFAC1 /* Hotkeys.h */,
 				6F28DC081A67085800AF063F /* MASShortcut.h */,
 				6F28DC091A67085800AF063F /* MASShortcut.m */,
 				6F28DC0A1A67085800AF063F /* MASShortcut+Monitoring.h */,
@@ -366,8 +359,27 @@
 				6F28DC0F1A67085800AF063F /* MASShortcutView.m */,
 				6F28DC101A67085800AF063F /* MASShortcutView+UserDefaults.h */,
 				6F28DC111A67085800AF063F /* MASShortcutView+UserDefaults.m */,
+				6F28DC171A67087300AF063F /* HotKeyConstants.h */,
+				6F28DC181A67087300AF063F /* HotKeyConstants.m */,
 			);
 			name = Hotkey;
+			sourceTree = "<group>";
+		};
+		6FAA87811A7EB68D00EFFAC1 /* Support Classes */ = {
+			isa = PBXGroup;
+			children = (
+				6F1290991A7D833100B8C3E6 /* AutoExceptions.h */,
+				6F12909A1A7D833100B8C3E6 /* AutoExceptions.m */,
+				6FAA0C1D1A7E938400416079 /* ExceptionsCache.h */,
+				6FAA0C1E1A7E938400416079 /* ExceptionsCache.m */,
+				823D4D1F1A1AB46600392ACB /* Recognition.h */,
+				823D4D201A1AB46600392ACB /* Recognition.m */,
+				6F1865911A7D79CB00C74A47 /* Detection.h */,
+				6F1865921A7D79CB00C74A47 /* Detection.m */,
+				6F0CF36D1A7DBADD00261A43 /* Utility.h */,
+				6F0CF36E1A7DBADD00261A43 /* Utility.m */,
+			);
+			name = "Support Classes";
 			sourceTree = "<group>";
 		};
 		8285DED41A1D529200D6A53F /* Exception/Correction */ = {

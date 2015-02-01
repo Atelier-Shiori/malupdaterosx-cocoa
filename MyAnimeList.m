@@ -7,7 +7,6 @@
 //
 
 #import "MyAnimeList.h"
-#import "Recognition.h"
 #import "EasyNSURLConnection.h"
 #import "Detection.h"
 #import "Utility.h"
@@ -21,6 +20,8 @@
 -(NSArray *)filterArray:(NSArray *)searchdata;
 -(NSString *)foundtitle:(NSString *)titleid info:(NSDictionary *)found;
 -(BOOL)checkstatus:(NSString *)titleid;
+-(void)checkExceptions;
+
 -(int)updatetitle:(NSString *)titleid confirming:(bool) confirming;
 -(int)addtitle:(NSString *)titleid confirming:(bool) confirming;
 @end
@@ -141,37 +142,12 @@
     int status;
     NSLog(@"Finding AniID");
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"useSearchCache"]) {
-        NSManagedObjectContext *moc = managedObjectContext;
-        NSFetchRequest * allCaches = [[NSFetchRequest alloc] init];
-        [allCaches setEntity:[NSEntityDescription entityForName:@"Cache" inManagedObjectContext:moc]];
-        NSPredicate *predicate = [NSPredicate predicateWithFormat: @"detectedTitle == %@", DetectedTitle];
-        [allCaches setPredicate:predicate];
-        NSError * error = nil;
-        NSArray * cache = [moc executeFetchRequest:allCaches error:&error];
-        if (cache.count > 0) {
-            NSString * theid;
-            for (NSManagedObject * cacheentry in cache) {
-                NSString * title = [cacheentry valueForKey:@"detectedTitle"];
-                if ([title isEqualToString:DetectedTitle]) {
-                    NSLog(@"%@ found in cache!", title);
-                    // Total Episode check
-                    NSNumber * totalepisodes = [cacheentry valueForKey:@"totalEpisodes"];
-                    if ( [DetectedEpisode intValue] <= totalepisodes.intValue || totalepisodes.intValue == 0 ) {
-                        theid = [cacheentry valueForKey:@"id"];
-                        break;
-                    }
-                }
-            }
-            if (theid.length == 0) {
-                AniID = [self searchanime]; // Not in cache, search
-            }
-            else{
-                AniID = theid; // Set cached show id as AniID
-            }
-        }
-        else {
-            AniID = [self searchanime]; // Cache empty, search
-        }
+        // Check Cache
+        NSString *theid = [self checkCache];
+        if (theid.length == 0)
+            AniID = [self searchanime]; // Not in cache, search
+        else
+            AniID = theid; // Set cached show id as AniID
     }
     else {
         AniID = [self searchanime]; // Search Cache Disabled
@@ -784,6 +760,29 @@
 -(void)clearAnimeInfo{
     LastScrobbledInfo = nil;
 }
+-(NSString *)checkCache{
+    NSManagedObjectContext *moc = managedObjectContext;
+    NSFetchRequest * allCaches = [[NSFetchRequest alloc] init];
+    [allCaches setEntity:[NSEntityDescription entityForName:@"Cache" inManagedObjectContext:moc]];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat: @"detectedTitle == %@", DetectedTitle];
+    [allCaches setPredicate:predicate];
+    NSError * error = nil;
+    NSArray * cache = [moc executeFetchRequest:allCaches error:&error];
+    if (cache.count > 0) {
+        for (NSManagedObject * cacheentry in cache) {
+            NSString * title = [cacheentry valueForKey:@"detectedTitle"];
+            if ([title isEqualToString:DetectedTitle]) {
+                NSLog(@"%@ found in cache!", title);
+                // Total Episode check
+                NSNumber * totalepisodes = [cacheentry valueForKey:@"totalEpisodes"];
+                if ( [DetectedEpisode intValue] <= totalepisodes.intValue || totalepisodes.intValue == 0 ) {
+                    return [cacheentry valueForKey:@"id"];
+                }
+            }
+        }
+    }
+    return @"";
+}
 -(void)checkExceptions{
     // Check Exceptions
     NSManagedObjectContext * moc = self.managedObjectContext;
@@ -834,5 +833,4 @@
         }
     }
 }
-
 @end
