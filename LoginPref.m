@@ -104,7 +104,6 @@
     [request addHeader:[NSString stringWithFormat:@"Basic %@", [[NSString stringWithFormat:@"%@:%@", username, password] base64Encoding]] forKey:@"Authorization"];
 	//Verify Username/Password
 	[request startRequest];
-    NSLog(@"%@", [request getResponseDataString]);
 	// Check for errors
     NSError * error = [request getError];
     if ([request getStatusCode] == 200 && error == nil) {

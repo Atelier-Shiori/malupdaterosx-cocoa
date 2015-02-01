@@ -80,7 +80,6 @@
 @property (nonatomic, retain, readonly) NSManagedObjectContext *managedObjectContext;
 @property(strong) FixSearchDialog *fsdialog;
 
--(void)showPreferences:(id)sender;
 -(void)showhistory:(id)sender;
 -(IBAction)togglescrobblewindow:(id)sender;
 -(void)addrecord:(NSString *)title

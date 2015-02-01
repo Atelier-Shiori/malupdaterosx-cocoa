@@ -219,7 +219,7 @@
     // Reset correcting Value
     correcting = false;
     NSLog(@"Scrobble Complete with Status Code: %i", status);
-    NSLog(@"===========");
+    NSLog(@"=============");
     // Release Detected Title/Episode.
     return status;
 
@@ -772,7 +772,7 @@
         for (NSManagedObject * cacheentry in cache) {
             NSString * title = [cacheentry valueForKey:@"detectedTitle"];
             if ([title isEqualToString:DetectedTitle]) {
-                NSLog(@"%@ found in cache!", title);
+                NSLog(@"%@ is found in cache.", title);
                 // Total Episode check
                 NSNumber * totalepisodes = [cacheentry valueForKey:@"totalEpisodes"];
                 if ( [DetectedEpisode intValue] <= totalepisodes.intValue || totalepisodes.intValue == 0 ) {
@@ -818,7 +818,7 @@
                         continue;
                     }
                     else {
-                        NSLog(@"%@ found on exceptions list as %@!", DetectedTitle, correcttitle);
+                        NSLog(@"%@ is found on exceptions list as %@.", DetectedTitle, correcttitle);
                         DetectedTitle = correcttitle;
                         if (tmpepisode > 0) {
                             DetectedEpisode = [NSString stringWithFormat:@"%i", tmpepisode];

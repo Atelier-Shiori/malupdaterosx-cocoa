@@ -248,8 +248,10 @@
         // Set Message type to Warning
         [alert setAlertStyle:NSInformationalAlertStyle];
         if ([alert runModal]== NSAlertFirstButtonReturn) {
+            // Show Preference Window and go to Login Preference Pane
             [NSApp activateIgnoringOtherApps:YES];
             [self.preferencesWindowController showWindow:nil];
+            [(MASPreferencesWindowController *)self.preferencesWindowController selectControllerAtIndex:1];
         }
 	}
     if ([Utility checkoldAPI]) {
@@ -269,24 +271,18 @@
 {
     if (_preferencesWindowController == nil)
     {
-		NSLog(@"Load Pref");
         NSViewController *generalViewController = [[GeneralPrefController alloc] init];
         NSViewController *loginViewController = [[LoginPref alloc] initwithAppDelegate:self];
 		NSViewController *suViewController = [[SoftwareUpdatesPref alloc] init];
         NSViewController *exceptionsViewController = [[ExceptionsPref alloc] init];
         NSViewController *hotkeyViewController = [[HotkeysPrefs alloc] init];
         NSArray *controllers = [[NSArray alloc] initWithObjects:generalViewController, loginViewController, hotkeyViewController, exceptionsViewController, suViewController, nil];
-        
-        // To add a flexible space between General and Advanced preference panes insert [NSNull null]:
-        //     NSArray *controllers = [[NSArray alloc] initWithObjects:generalViewController, [NSNull null], advancedViewController, nil];
-        
             _preferencesWindowController = [[MASPreferencesWindowController alloc] initWithViewControllers:controllers];
     }
     return _preferencesWindowController;
 }
 
--(void)showPreferences:(id)sender
-{
+-(IBAction)showPreferences:(id)sender {
 	//Since LSUIElement is set to 1 to hide the dock icon, it causes unattended behavior of having the program windows not show to the front.
 	[NSApp activateIgnoringOtherApps:YES];
 	[self.preferencesWindowController showWindow:nil];
