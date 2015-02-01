@@ -49,6 +49,7 @@
 		6F28DC1B1A67092F00AF063F /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F28DC1A1A67092F00AF063F /* Carbon.framework */; };
 		6F28DC1D1A6709A300AF063F /* hotkey.png in Resources */ = {isa = PBXBuildFile; fileRef = 6F28DC1C1A6709A300AF063F /* hotkey.png */; };
 		6F5F6C701A71696D006D4607 /* MAL_Updater_OS_X_DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6F5F6C6D1A71696D006D4607 /* MAL_Updater_OS_X_DataModel.xcdatamodeld */; };
+		6FAA0C1F1A7E938400416079 /* ExceptionsCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FAA0C1E1A7E938400416079 /* ExceptionsCache.m */; };
 		6FF033301A73F2C70096FC69 /* rules.png in Resources */ = {isa = PBXBuildFile; fileRef = 6FF0332F1A73F2C70096FC69 /* rules.png */; };
 		6FF033321A73F3260096FC69 /* StatusIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 6FF033311A73F3260096FC69 /* StatusIcon.png */; };
 		8227C1171A1D8D34005F3301 /* anitomy-osx.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8227C1161A1D8D34005F3301 /* anitomy-osx.framework */; };
@@ -148,6 +149,8 @@
 		6F28DC1C1A6709A300AF063F /* hotkey.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hotkey.png; sourceTree = "<group>"; };
 		6F5F6C6E1A71696D006D4607 /* MAL_Updater_OS_X_DataModel 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "MAL_Updater_OS_X_DataModel 2.xcdatamodel"; sourceTree = "<group>"; };
 		6F5F6C6F1A71696D006D4607 /* MAL_Updater_OS_X_DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MAL_Updater_OS_X_DataModel.xcdatamodel; sourceTree = "<group>"; };
+		6FAA0C1D1A7E938400416079 /* ExceptionsCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExceptionsCache.h; sourceTree = "<group>"; };
+		6FAA0C1E1A7E938400416079 /* ExceptionsCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExceptionsCache.m; sourceTree = "<group>"; };
 		6FF0332F1A73F2C70096FC69 /* rules.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rules.png; sourceTree = "<group>"; };
 		6FF033311A73F3260096FC69 /* StatusIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = StatusIcon.png; sourceTree = "<group>"; };
 		8227C1161A1D8D34005F3301 /* anitomy-osx.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "anitomy-osx.framework"; path = "Frameworks/anitomy-osx.framework"; sourceTree = "<group>"; };
@@ -197,6 +200,8 @@
 				256AC3D90F4B6AC300CF3369 /* MAL_Updater_OS_XAppDelegate.m */,
 				6F1290991A7D833100B8C3E6 /* AutoExceptions.h */,
 				6F12909A1A7D833100B8C3E6 /* AutoExceptions.m */,
+				6FAA0C1D1A7E938400416079 /* ExceptionsCache.h */,
+				6FAA0C1E1A7E938400416079 /* ExceptionsCache.m */,
 				3AFEF127120DF8CE0098B59D /* MyAnimeList.h */,
 				3AFEF128120DF8CE0098B59D /* MyAnimeList.m */,
 				823D4D1F1A1AB46600392ACB /* Recognition.h */,
@@ -487,6 +492,7 @@
 				5CD36B9A19F2EA9B007BB6B6 /* MASPreferencesWindowController.m in Sources */,
 				5CD36BBA19F2ED88007BB6B6 /* GeneralPrefController.m in Sources */,
 				6F28DC131A67085800AF063F /* MASShortcut+Monitoring.m in Sources */,
+				6FAA0C1F1A7E938400416079 /* ExceptionsCache.m in Sources */,
 				5CBE9EC319F2F0E300CA3E5D /* LoginPref.m in Sources */,
 				6F28DC041A67082400AF063F /* HotkeysPrefs.m in Sources */,
 				5C000E4419F30EA50026F350 /* SoftwareUpdatesPref.m in Sources */,

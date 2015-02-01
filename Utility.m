@@ -94,5 +94,13 @@
                      didEndSelector:nil
                         contextInfo:NULL];
 }
++(NSString *)urlEncodeString:(NSString *)string{
+	return (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(
+                                                                                                  NULL,
+                                                                                                  (CFStringRef)string,
+                                                                                                  NULL,
+                                                                                                  (CFStringRef)@"!*'();:@&=+$,/?%#[]",
+                                                                                                  kCFStringEncodingUTF8 ));
+}
 
 @end

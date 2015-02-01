@@ -9,6 +9,7 @@
 #import "FixSearchDialog.h"
 #import "EasyNSURLConnection.h"
 #import "NSString_stripHtml.h"
+#import "Utility.h"
 
 @interface FixSearchDialog ()
 
@@ -54,16 +55,17 @@
         // Set Message type to Warning
         [alert setAlertStyle:NSWarningAlertStyle];
         if ([alert runModal]== NSAlertFirstButtonReturn) {
-            goto finish;
+            [self finish:d];
         }
         else{
             return;
         }
     }
     else{
-        goto finish;
-    }
-    finish:
+        [self finish:d];
+    }   
+}
+-(void)finish:(NSDictionary *)d{
     selectedtitle = [d objectForKey:@"title"];
     selectedaniid = [[d objectForKey:@"id"] stringValue];
     selectedtotalepisodes = [d objectForKey:@"episodes"];
@@ -75,12 +77,7 @@
         dispatch_queue_t queue = dispatch_get_global_queue(
                                                            DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
         dispatch_async(queue, ^{
-        NSString * searchterm = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(
-                                                                                                  NULL,
-                                                                                                  (CFStringRef)[search stringValue],
-                                                                                                  NULL,
-                                                                                                  (CFStringRef)@"!*'();:@&=+$,/?%#[]",
-                                                                                                  kCFStringEncodingUTF8 ));
+        NSString * searchterm = [Utility urlEncodeString:[search stringValue]];
         //Set Search API
         NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/anime/search?q=%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"MALAPIURL"], searchterm]];
         EasyNSURLConnection *request = [[EasyNSURLConnection alloc] initWithURL:url];

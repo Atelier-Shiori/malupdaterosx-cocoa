@@ -11,16 +11,18 @@
 #import "EasyNSURLConnection.h"
 #import "Detection.h"
 #import "Utility.h"
+#import "ExceptionsCache.h"
 
 @interface MyAnimeList ()
 -(int)detectmedia; // 0 - Nothing, 1 - Same, 2 - Update
 -(NSString *)searchanime;
 -(NSString *)performSearch:(NSString *)searchtitle;
 -(NSString *)findaniid:(NSData *)ResponseData searchterm:(NSString *) term;
+-(NSArray *)filterArray:(NSArray *)searchdata;
+-(NSString *)foundtitle:(NSString *)titleid info:(NSDictionary *)found;
 -(BOOL)checkstatus:(NSString *)titleid;
 -(int)updatetitle:(NSString *)titleid confirming:(bool) confirming;
 -(int)addtitle:(NSString *)titleid confirming:(bool) confirming;
--(void)addtoCache:(NSString *)title showid:(NSString *)showid actualtitle:(NSString *) atitle totalepisodes:(int)totalepisodes;
 @end
 
 @implementation MyAnimeList
@@ -275,12 +277,7 @@
 -(NSString *)performSearch:(NSString *)searchtitle{
 	NSLog(@"Searching For Title");
     //Escape Search Term
-    NSString * searchterm = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(
-                                                                                                  NULL,
-                                                                                                  (CFStringRef)searchtitle,
-                                                                                                  NULL,
-                                                                                                  (CFStringRef)@"!*'();:@&=+$,/?%#[]",
-                                                                                                  kCFStringEncodingUTF8 ));
+    NSString * searchterm = [Utility urlEncodeString:searchtitle];
 
 	//Set Search API
 	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/anime/search?q=%@",MALApiUrl, searchterm]];
@@ -289,7 +286,6 @@
 	[request setUseCookies:NO];
 	//Perform Search
 	[request startRequest];
-	//Set up Delegate
 	
 	// Get Status Code
 	int statusCode = [request getStatusCode];
@@ -319,8 +315,8 @@
         DetectedTitle = [result objectForKey:@"detectedtitle"];
         DetectedEpisode = [result objectForKey:@"detectedepisode"];
         DetectedSeason = [(NSNumber *)[result objectForKey:@"detectedseason"] intValue];
-        DetectedGroup = [result objectForKey:@"detectedgroup"];
-        DetectedSource = [result objectForKey:@"source"];
+        DetectedGroup = [result objectForKey:@"group"];
+        DetectedSource = [result objectForKey:@"detectedsource"];
         // Check if the title was previously scrobbled
         [self checkExceptions];
         
@@ -368,17 +364,13 @@
     }
 }
 -(NSString *)findaniid:(NSData *)ResponseData searchterm:(NSString *)term{
-	// Initalize JSON parser
+	// Initalize JSON parser and parse data
     NSError* error;
     NSArray *searchdata = [NSJSONSerialization JSONObjectWithData:ResponseData options:kNilOptions error:&error];
-    NSString *titleid = @"";
 	//Initalize NSString to dump the title temporarily
 	NSString *theshowtitle = @"";
     NSString *alttitle = @"";
-	//Set Regular Expressions to omit any preceding words
-	NSString *findpre = [NSString stringWithFormat:@"(%@)",term];
-    NSString *findinit = [NSString stringWithFormat:@"(%@)",term];
-	findpre = [findpre stringByReplacingOccurrencesOfString:@" " withString:@"|"];
+	//Create Regular Expressions
     OGRegularExpression    *regex;
     // For Sanity (TV shows and OVAs usually have more than one episode)
     if(DetectedEpisode.length == 0){
@@ -391,37 +383,17 @@
         NSLog(@"Title is not a movie.");
         DetectedTitleisMovie = false;
     }
-    NSDictionary * found;
     // Create a filtered Arrays
-    NSMutableArray * sortedArray;
-    if (DetectedTitleisMovie) {
-        sortedArray = [NSMutableArray arrayWithArray:[searchdata filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"(type == %@)" , @"Movie"]]];
-        [sortedArray addObjectsFromArray:[searchdata filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"(type == %@)", @"Special"]]];
-    }
-    else{
-        // Check if there is any type keywords. If so, only focus on that show type
-        OGRegularExpression * check = [OGRegularExpression regularExpressionWithString:@"(Special|OVA|ONA)" options:OgreIgnoreCaseOption];
-        if ([check matchInString:DetectedTitle]) {
-            sortedArray = [NSMutableArray arrayWithArray:[searchdata filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"(type LIKE %@)", [[check matchInString:DetectedTitle] matchedString]]]];
-        }
-        else{
-            sortedArray = [NSMutableArray arrayWithArray:[searchdata filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"(type == %@)", @"TV"]]];
-            [sortedArray addObjectsFromArray:[searchdata filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"(type == %@)", @"ONA"]]];
-            if (DetectedSeason == 1 | DetectedSeason == 0) {
-                [sortedArray addObjectsFromArray:[searchdata filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"(type == %@)", @"Special"]]];
-                [sortedArray addObjectsFromArray:[searchdata filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"(type == %@)", @"OVA"]]];
-            }
-        }
-    }
+    NSArray * sortedArray = [self filterArray:searchdata];
     searchdata = nil;
     // Search
     for (int i = 0; i < 2; i++) {
         switch (i) {
             case 0:
-                regex = [OGRegularExpression regularExpressionWithString:findinit options:OgreIgnoreCaseOption];
+                regex = [OGRegularExpression regularExpressionWithString:[NSString stringWithFormat:@"(%@)",term] options:OgreIgnoreCaseOption];
                 break;
             case 1:
-                regex = [OGRegularExpression regularExpressionWithString:findpre options:OgreIgnoreCaseOption];
+                regex = [OGRegularExpression regularExpressionWithString:[[NSString stringWithFormat:@"(%@)",term] stringByReplacingOccurrencesOfString:@" " withString:@"|"] options:OgreIgnoreCaseOption];
                 break;
             default:
                 break;
@@ -448,9 +420,7 @@
                 DetectedTitleisMovie = false;
             }
             //Return titleid
-            titleid = [NSString stringWithFormat:@"%@", [searchentry objectForKey:@"id"]];
-            found = searchentry;
-            goto foundtitle;
+            return [self foundtitle:[NSString stringWithFormat:@"%@",[searchentry objectForKey:@"id"]] info:searchentry];
         }
     }
     // Check TV, ONA, Special, OVA, Other
@@ -487,9 +457,7 @@
             //Return titleid if episode is valid
             if ( [[NSString stringWithFormat:@"%@", [searchentry objectForKey:@"episodes"]] intValue] == 0 || ([[NSString stringWithFormat:@"%@",[searchentry objectForKey:@"episodes"]] intValue] >= [DetectedEpisode intValue])) {
                 NSLog(@"Valid Episode Count");
-                found = searchentry;
-                titleid = [NSString stringWithFormat:@"%@", [searchentry objectForKey:@"id"]];
-                goto foundtitle;
+                return [self foundtitle:[NSString stringWithFormat:@"%@",[searchentry objectForKey:@"id"]] info:searchentry];
             }
             else{
                 // Detected episodes exceed total episodes
@@ -499,11 +467,37 @@
         }
     }
     }
-    foundtitle:
+	// Nothing found, return empty string
+    return @"";
+}
+-(NSArray *)filterArray:(NSArray *)searchdata{
+    NSMutableArray * sortedArray;
+    if (DetectedTitleisMovie) {
+        sortedArray = [NSMutableArray arrayWithArray:[searchdata filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"(type == %@)" , @"Movie"]]];
+        [sortedArray addObjectsFromArray:[searchdata filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"(type == %@)", @"Special"]]];
+    }
+    else{
+        // Check if there is any type keywords. If so, only focus on that show type
+        OGRegularExpression * check = [OGRegularExpression regularExpressionWithString:@"(Special|OVA|ONA)" options:OgreIgnoreCaseOption];
+        if ([check matchInString:DetectedTitle]) {
+            sortedArray = [NSMutableArray arrayWithArray:[searchdata filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"(type LIKE %@)", [[check matchInString:DetectedTitle] matchedString]]]];
+        }
+        else{
+            sortedArray = [NSMutableArray arrayWithArray:[searchdata filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"(type == %@)", @"TV"]]];
+            [sortedArray addObjectsFromArray:[searchdata filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"(type == %@)", @"ONA"]]];
+            if (DetectedSeason == 1 | DetectedSeason == 0) {
+                [sortedArray addObjectsFromArray:[searchdata filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"(type == %@)", @"Special"]]];
+                [sortedArray addObjectsFromArray:[searchdata filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"(type == %@)", @"OVA"]]];
+            }
+        }
+    }
+    return sortedArray;
+}
+-(NSString *)foundtitle:(NSString *)titleid info:(NSDictionary *)found{
     //Check to see if Seach Cache is enabled. If so, add it to the cache.
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"useSearchCache"] && titleid.length > 0) {
         //Save AniID
-        [self addtoCache:DetectedTitle showid:titleid actualtitle:(NSString *)[found objectForKey:@"title"] totalepisodes:[(NSNumber *)[found objectForKey:@"episodes"] intValue] ];
+        [ExceptionsCache addtoCache:DetectedTitle showid:titleid actualtitle:(NSString *)[found objectForKey:@"title"] totalepisodes:[(NSNumber *)[found objectForKey:@"episodes"] intValue] ];
     }
 	//Return the AniID
 	return titleid;
@@ -749,8 +743,6 @@
             episode:(NSString*)episode
 {
 	NSLog(@"Updating Status for %@", titleid);
-	//Set up Delegate
-	
 	// Update the title
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	//Set library/scrobble API
@@ -792,49 +784,26 @@
 -(void)clearAnimeInfo{
     LastScrobbledInfo = nil;
 }
--(void)addtoCache:(NSString *)title showid:(NSString *)showid actualtitle:(NSString *) atitle totalepisodes:(int)totalepisodes {
-    //Adds ID to cache
-    NSManagedObjectContext *moc = managedObjectContext;
-    // Add to Cache in Core Data
-    NSManagedObject *obj = [NSEntityDescription
-                            insertNewObjectForEntityForName :@"Cache"
-                            inManagedObjectContext: moc];
-    // Set values in the new record
-    [obj setValue:title forKey:@"detectedTitle"];
-    [obj setValue:showid forKey:@"id"];
-    [obj setValue:atitle forKey:@"actualTitle"];
-    [obj setValue:[NSNumber numberWithInt:totalepisodes] forKey:@"totalEpisodes"];
-    NSError * error = nil;
-    // Save
-    [moc save:&error];
-
-}
 -(void)checkExceptions{
     // Check Exceptions
     NSManagedObjectContext * moc = self.managedObjectContext;
 	bool found = false;
+	NSPredicate *predicate;
     for (int i = 0; i < 2; i++) {
         NSFetchRequest * allExceptions = [[NSFetchRequest alloc] init];
         NSError * error = nil;
         if (i == 0) {
             NSLog(@"Check Exceptions List");
             [allExceptions setEntity:[NSEntityDescription entityForName:@"Exceptions" inManagedObjectContext:moc]];
+			predicate = [NSPredicate predicateWithFormat: @"detectedTitle == %@", DetectedTitle];
         }
         else if (i== 1 && [[NSUserDefaults standardUserDefaults] boolForKey:@"UseAutoExceptions"]){
                 NSLog(@"Checking Auto Exceptions");
                 [allExceptions setEntity:[NSEntityDescription entityForName:@"AutoExceptions" inManagedObjectContext:moc]];
+				predicate = [NSPredicate predicateWithFormat: @"(detectedTitle == %@) AND (group == %@)", DetectedTitle, DetectedGroup];
         }
         else{break;}
-        NSPredicate *predicate;
-        switch (i) {
-            case 0:
-                predicate = [NSPredicate predicateWithFormat: @"detectedTitle == %@", DetectedTitle];
-                break;
-            case 1:
-                predicate = [NSPredicate predicateWithFormat: @"(detectedTitle == %@) AND (group == %@)", DetectedTitle, DetectedGroup];
-            default:
-                break;
-        }
+		// Set Predicate and filter exceiptions array
         [allExceptions setPredicate:predicate];
         NSArray * exceptions = [moc executeFetchRequest:allExceptions error:&error];
         if (exceptions.count > 0) {
@@ -861,12 +830,8 @@
                     }
                 }
             }
-			if (found){
-				//Break from exceptions check loop
-				break;
-			}
+            if (found){break;} //Break from exceptions check loop
         }
-
     }
 }
 

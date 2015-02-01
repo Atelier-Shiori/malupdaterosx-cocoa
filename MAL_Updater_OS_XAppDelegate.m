@@ -23,6 +23,7 @@
 #import "HotKeyConstants.h"
 #import "AutoExceptions.h"
 #import "Utility.h"
+#import "ExceptionsCache.h"
 
 @implementation MAL_Updater_OS_XAppDelegate
 
@@ -703,45 +704,21 @@
     [allExceptions setEntity:[NSEntityDescription entityForName:@"Exceptions" inManagedObjectContext:moc]];
     NSError * error = nil;
     NSArray * exceptions = [moc executeFetchRequest:allExceptions error:&error];
-        BOOL exists = false;
-        for (NSManagedObject * entry in exceptions) {
-            int offset = [(NSNumber *)[entry valueForKey:@"episodeOffset"] intValue];
-            if ([detectedtitle isEqualToString:(NSString *)[entry valueForKey:@"detectedTitle"]] && offset == 0) {
-                exists = true;
-                break;
-            }
+    BOOL exists = false;
+    for (NSManagedObject * entry in exceptions) {
+        int offset = [(NSNumber *)[entry valueForKey:@"episodeOffset"] intValue];
+        if ([detectedtitle isEqualToString:(NSString *)[entry valueForKey:@"detectedTitle"]] && offset == 0) {
+            exists = true;
+            break;
         }
+    }
     if (!exists) {
-        // Add to Cache in Core Data
-        NSManagedObject *obj = [NSEntityDescription
-                                        insertNewObjectForEntityForName:@"Exceptions"
-                                        inManagedObjectContext: moc];
-        // Set values in the new record
-        [obj setValue:detectedtitle forKey:@"detectedTitle"];
-        [obj setValue:title forKey:@"correctTitle"];
-        [obj setValue:showid forKey:@"id"];
-        [obj setValue:[NSNumber numberWithInt:threshold] forKey:@"episodethreshold"];
-        [obj setValue:[NSNumber numberWithInt:0] forKey:@"episodeOffset"]; // Set afterwards
+        // Add exceptions to Exceptions Entity
+        [ExceptionsCache addtoExceptions:detectedtitle correcttitle:title aniid:showid threshold:threshold offset:0];
     }
-    //Save
-    [moc save:&error];
-    // Load present cache data
-    NSFetchRequest * allCache = [[NSFetchRequest alloc] init];
-    [allCache setEntity:[NSEntityDescription entityForName:@"Cache" inManagedObjectContext:moc]];
+    //Check if title exists in cache and then remove it
+    [ExceptionsCache checkandRemovefromCache:detectedtitle];
     
-    error = nil;
-    NSArray * caches = [moc executeFetchRequest:allCache error:&error];
-    if (caches.count > 0) {
-        //Check Cache to remove conflicts
-        for (NSManagedObject * cacheentry in caches) {
-            if ([detectedtitle isEqualToString:(NSString *)[cacheentry valueForKey:@"detectedTitle"]]) {
-                [moc deleteObject:cacheentry];
-                break;
-            }
-        }
-    //Save
-    [moc save:&error];
-    }
 }
 #pragma mark History Window functions
 
