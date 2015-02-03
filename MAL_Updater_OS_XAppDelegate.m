@@ -14,13 +14,14 @@
 #import "AutoExceptions.h"
 #import "Utility.h"
 #import "ExceptionsCache.h"
+#import "HistoryWindow.h"
 
 @implementation MAL_Updater_OS_XAppDelegate
 
 @synthesize window;
-@synthesize historywindow;
 @synthesize updatepanel;
 @synthesize fsdialog;
+@synthesize historywindowcontroller;
 @synthesize managedObjectContext;
 #pragma mark -
 #pragma mark Initalization
@@ -173,11 +174,6 @@
     [statusItem setToolTip:@"MAL Updater OS X"];
     //Enables highlighting
     [statusItem setHighlightMode:YES];
-
-	//Sort Date Column by default
-	NSSortDescriptor* sortDescriptor = [[NSSortDescriptor alloc]
-										 initWithKey: @"Date" ascending: NO];
-	[historytable setSortDescriptors:[NSArray arrayWithObject:sortDescriptor]];
 }
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
 	// Initialize MALEngine
@@ -482,7 +478,7 @@
                 [self setStatusText:@"Scrobble Status: Scrobble Successful..."];
                 [self showNotication:@"Scrobble Successful."message:[NSString stringWithFormat:@"%@ - %@",[MALEngine getLastScrobbledActualTitle],[MALEngine getLastScrobbledEpisode]]];
                 //Add History Record
-                [self addrecord:[MALEngine getLastScrobbledActualTitle] Episode:[MALEngine getLastScrobbledEpisode] Date:[NSDate date]];
+                [HistoryWindow addrecord:[MALEngine getLastScrobbledActualTitle] Episode:[MALEngine getLastScrobbledEpisode] Date:[NSDate date]];
                 break;
             case 51:
                 [self setStatusText:@"Scrobble Status: Couldn't find title."];
@@ -712,60 +708,12 @@
 {
 		//Since LSUIElement is set to 1 to hide the dock icon, it causes unattended behavior of having the program windows not show to the front.
 		[NSApp activateIgnoringOtherApps:YES];
-		[historywindow makeKeyAndOrderFront:nil];
+    if (!historywindowcontroller) {
+        historywindowcontroller = [[HistoryWindow alloc] init];
+    }
+		[[historywindowcontroller window] makeKeyAndOrderFront:nil];
 
 }
--(void)addrecord:(NSString *)title
-		 Episode:(NSString *)episode
-			Date:(NSDate *)date;
-{
-// Add scrobble history record to the SQLite Database via Core Data
-	NSManagedObjectContext *moc = [self managedObjectContext];
-	NSManagedObject *obj = [NSEntityDescription 
-							insertNewObjectForEntityForName :@"History" 
-							inManagedObjectContext: moc];
-	// Set values in the new record
-	[obj setValue:title forKey:@"Title"];
-	[obj setValue:episode forKey:@"Episode"];
-	[obj setValue:date forKey:@"Date"];
-
-}
--(IBAction)clearhistory:(id)sender
-{
-	// Set Up Prompt Message Window
-	NSAlert * alert = [[NSAlert alloc] init];
-	[alert addButtonWithTitle:@"Yes"];
-	[alert addButtonWithTitle:@"No"];
-	[alert setMessageText:@"Are you sure you want to clear the Scrobble History?"];
-	[alert setInformativeText:@"Once done, this action cannot be undone."];
-	// Set Message type to Warning
-	[alert setAlertStyle:NSWarningAlertStyle];
-	// Show as Sheet on historywindow
-	[alert beginSheetModalForWindow:historywindow 
-					  modalDelegate:self
-					 didEndSelector:@selector(clearhistoryended:code:conext:)
-						contextInfo:NULL];
-
-}
--(void)clearhistoryended:(NSAlert *)alert
-					code:(int)echoice
-				  conext:(void *)v
-{
-	if (echoice == 1000) {
-		// Remove All Data
-		NSManagedObjectContext *moc = [self managedObjectContext];
-		NSFetchRequest * allHistory = [[NSFetchRequest alloc] init];
-		[allHistory setEntity:[NSEntityDescription entityForName:@"History" inManagedObjectContext:moc]];
-		
-		NSError * error = nil;
-		NSArray * histories = [moc executeFetchRequest:allHistory error:&error];
-		//error handling goes here
-		for (NSManagedObject * history in histories) {
-			[moc deleteObject:history];
-		}
-	}
-	
-}	
 #pragma mark StatusIconTooltip, Status Text, Last Scrobbled Title Setters
 
 -(void)setStatusToolTip:(NSString*)toolTip
@@ -925,7 +873,7 @@
     BOOL success = [MALEngine confirmupdate];
     if (success) {
         [self updateLastScrobbledTitleStatus:false];
-        [self addrecord:[MALEngine getLastScrobbledActualTitle] Episode:[MALEngine getLastScrobbledEpisode] Date:[NSDate date]];
+        [HistoryWindow addrecord:[MALEngine getLastScrobbledActualTitle] Episode:[MALEngine getLastScrobbledEpisode] Date:[NSDate date]];
         [confirmupdate setHidden:YES];
         [self setStatusText:@"Scrobble Status: Update was successful."];
         [self showNotication:@"MAL Updater OS X" message:[NSString stringWithFormat:@"%@ Episode %@ has been updated.",[MALEngine getLastScrobbledActualTitle],[MALEngine getLastScrobbledEpisode]]];
