@@ -54,8 +54,6 @@
 	BOOL scrobbling;
     BOOL scrobbleractive;
     bool panelactive;
-    NSDate * previousfiredate;
-    NSDate * pausestart;
 	NSArray * shareItems;
 	/* MAL Scrobbling/Updating Class */
 	MyAnimeList * MALEngine;

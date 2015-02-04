@@ -550,28 +550,17 @@
     }
 }
 -(void)starttimer {
-    NSLog(@"Timer Started.");
+    NSLog(@"Starting Auto Scrobble.");
     timer = [NSTimer scheduledTimerWithTimeInterval:300
                                              target:self
                                            selector:@selector(firetimer:)
                                            userInfo:nil
                                             repeats:YES];
-    if (previousfiredate != nil) {
-        NSLog(@"Resuming Timer");
-        float pauseTime = -1*[pausestart timeIntervalSinceNow];
-        [timer setFireDate:[previousfiredate initWithTimeInterval:pauseTime sinceDate:previousfiredate]];
-        pausestart = nil;
-        previousfiredate = nil;
-    }
-    
 }
 -(void)stoptimer {
-    NSLog(@"Pausing Timer.");
+    NSLog(@"Stopping Auto Scrobble.");
     //Stop Timer
     [timer invalidate];
-    //Set Previous Fire and Pause Times
-    pausestart = [NSDate date];
-    previousfiredate = [timer fireDate];
 }
 
 -(IBAction)updatenow:(id)sender{
