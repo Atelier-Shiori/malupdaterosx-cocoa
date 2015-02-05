@@ -17,7 +17,7 @@ Check the [Getting Started Guide](https://github.com/chikorita157/malupdaterosx-
 ## Dependencies
 All the frameworks are included. Just build! Here are the frameworks that are used in this app:
 
-* anitomy-osx.framework (GPLv3 Licensed, source code is included in the Frameworks Folder)
+* anitomy-osx.framework (GPLv3 Licensed, included as a submodule)
 * Sparkle.framework
 * OgreKit.framework
 
