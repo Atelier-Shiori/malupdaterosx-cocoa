@@ -157,22 +157,21 @@
     //Create the NSStatusBar and set its length
     statusItem = [[NSStatusBar systemStatusBar] statusItemWithLength:NSSquareStatusItemLength];
     
-    //Used to detect where our files are
-    NSBundle *bundle = [NSBundle mainBundle];
-    
     //Allocates and loads the images into the application which will be used for our NSStatusItem
-    statusImage = [[NSImage alloc] initWithContentsOfFile:[bundle pathForResource:@"StatusIcon" ofType:@"png"]];
+    statusImage = [NSImage imageNamed:@"StatusIcon"];
 	
     //Yosemite Dark Menu Support
     [statusImage setTemplate:YES];
     
     //Sets the images in our NSStatusItem
     [statusItem setImage:statusImage];
-    
+
     //Tells the NSStatusItem what menu to load
     [statusItem setMenu:statusMenu];
+    
     //Sets the tooptip for our item
     [statusItem setToolTip:@"MAL Updater OS X"];
+    
     //Enables highlighting
     [statusItem setHighlightMode:YES];
 }

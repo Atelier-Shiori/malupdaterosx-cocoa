@@ -25,7 +25,6 @@
 		5C2B9DFC1221EB25006DEF0D /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C2B9DFB1221EB25006DEF0D /* CoreData.framework */; };
 		5C2D50601329810000B31C08 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C2D505F1329810000B31C08 /* libxml2.dylib */; };
 		5C2D50621329810700B31C08 /* libxml2.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C2D50611329810700B31C08 /* libxml2.2.dylib */; };
-		5C30BC07139A9DD1000B83C5 /* PreferencesSoftwareUpdateIcon.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 5C30BC06139A9DD1000B83C5 /* PreferencesSoftwareUpdateIcon.tiff */; };
 		5C881EFB19F462B400E20425 /* NSString_stripHtml.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C881EFA19F462B400E20425 /* NSString_stripHtml.m */; };
 		5C950B5A1A295683001BFBDD /* EasyNSURLConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C950B591A295683001BFBDD /* EasyNSURLConnection.m */; };
 		5C97491D19F3117D000EC02E /* SoftwareUpdateView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5C97491C19F3117D000EC02E /* SoftwareUpdateView.xib */; };
@@ -49,11 +48,9 @@
 		6F28DC161A67085800AF063F /* MASShortcutView+UserDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F28DC111A67085800AF063F /* MASShortcutView+UserDefaults.m */; };
 		6F28DC191A67087300AF063F /* HotKeyConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F28DC181A67087300AF063F /* HotKeyConstants.m */; };
 		6F28DC1B1A67092F00AF063F /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F28DC1A1A67092F00AF063F /* Carbon.framework */; };
-		6F28DC1D1A6709A300AF063F /* hotkey.png in Resources */ = {isa = PBXBuildFile; fileRef = 6F28DC1C1A6709A300AF063F /* hotkey.png */; };
 		6F5F6C701A71696D006D4607 /* MAL_Updater_OS_X_DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6F5F6C6D1A71696D006D4607 /* MAL_Updater_OS_X_DataModel.xcdatamodeld */; };
 		6FAA0C1F1A7E938400416079 /* ExceptionsCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FAA0C1E1A7E938400416079 /* ExceptionsCache.m */; };
 		6FF033301A73F2C70096FC69 /* rules.png in Resources */ = {isa = PBXBuildFile; fileRef = 6FF0332F1A73F2C70096FC69 /* rules.png */; };
-		6FF033321A73F3260096FC69 /* StatusIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 6FF033311A73F3260096FC69 /* StatusIcon.png */; };
 		8227C1171A1D8D34005F3301 /* anitomy-osx.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8227C1161A1D8D34005F3301 /* anitomy-osx.framework */; };
 		8227C1181A1D8D47005F3301 /* anitomy-osx.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8227C1161A1D8D34005F3301 /* anitomy-osx.framework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		822AEB891A202931003DD682 /* FixSearchDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 822AEB871A202931003DD682 /* FixSearchDialog.m */; };
@@ -113,7 +110,6 @@
 		5C2B9DFB1221EB25006DEF0D /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		5C2D505F1329810000B31C08 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		5C2D50611329810700B31C08 /* libxml2.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.2.dylib; path = usr/lib/libxml2.2.dylib; sourceTree = SDKROOT; };
-		5C30BC06139A9DD1000B83C5 /* PreferencesSoftwareUpdateIcon.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = PreferencesSoftwareUpdateIcon.tiff; sourceTree = "<group>"; };
 		5C881EF919F462B400E20425 /* NSString_stripHtml.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSString_stripHtml.h; sourceTree = "<group>"; };
 		5C881EFA19F462B400E20425 /* NSString_stripHtml.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSString_stripHtml.m; sourceTree = "<group>"; };
 		5C950B581A295683001BFBDD /* EasyNSURLConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EasyNSURLConnection.h; sourceTree = "<group>"; };
@@ -151,7 +147,6 @@
 		6F28DC171A67087300AF063F /* HotKeyConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HotKeyConstants.h; sourceTree = "<group>"; };
 		6F28DC181A67087300AF063F /* HotKeyConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HotKeyConstants.m; sourceTree = "<group>"; };
 		6F28DC1A1A67092F00AF063F /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
-		6F28DC1C1A6709A300AF063F /* hotkey.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hotkey.png; sourceTree = "<group>"; };
 		6F5F6C6E1A71696D006D4607 /* MAL_Updater_OS_X_DataModel 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "MAL_Updater_OS_X_DataModel 2.xcdatamodel"; sourceTree = "<group>"; };
 		6F5F6C6F1A71696D006D4607 /* MAL_Updater_OS_X_DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MAL_Updater_OS_X_DataModel.xcdatamodel; sourceTree = "<group>"; };
 		6FAA0C1D1A7E938400416079 /* ExceptionsCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExceptionsCache.h; sourceTree = "<group>"; };
@@ -159,7 +154,6 @@
 		6FAA877D1A7EB22100EFFAC1 /* Preferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Preferences.h; sourceTree = "<group>"; };
 		6FAA87801A7EB5C500EFFAC1 /* Hotkeys.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Hotkeys.h; sourceTree = "<group>"; };
 		6FF0332F1A73F2C70096FC69 /* rules.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rules.png; sourceTree = "<group>"; };
-		6FF033311A73F3260096FC69 /* StatusIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = StatusIcon.png; sourceTree = "<group>"; };
 		8227C1161A1D8D34005F3301 /* anitomy-osx.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "anitomy-osx.framework"; path = "Frameworks/anitomy-osx.framework"; sourceTree = "<group>"; };
 		822AEB861A202931003DD682 /* FixSearchDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FixSearchDialog.h; sourceTree = "<group>"; };
 		822AEB871A202931003DD682 /* FixSearchDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FixSearchDialog.m; sourceTree = "<group>"; };
@@ -339,9 +333,6 @@
 		5C8ACEB919F409F90001A101 /* Images */ = {
 			isa = PBXGroup;
 			children = (
-				6FF033311A73F3260096FC69 /* StatusIcon.png */,
-				6F28DC1C1A6709A300AF063F /* hotkey.png */,
-				5C30BC06139A9DD1000B83C5 /* PreferencesSoftwareUpdateIcon.tiff */,
 				6FF0332F1A73F2C70096FC69 /* rules.png */,
 			);
 			name = Images;
@@ -489,9 +480,6 @@
 				3A20383212122B2B003813B2 /* dsa_pub.pem in Resources */,
 				5C0A2C4B122C7F960096908D /* Credits.rtf in Resources */,
 				6F27CE941A6869E8004E51F8 /* ExceptionsPref.xib in Resources */,
-				6FF033321A73F3260096FC69 /* StatusIcon.png in Resources */,
-				6F28DC1D1A6709A300AF063F /* hotkey.png in Resources */,
-				5C30BC07139A9DD1000B83C5 /* PreferencesSoftwareUpdateIcon.tiff in Resources */,
 				6F27CE9A1A686A04004E51F8 /* MASPreferencesWindow.xib in Resources */,
 				5CBE9FEF19F2F9E500CA3E5D /* GeneralPreferenceView.xib in Resources */,
 				5CBE9FEC19F2F9CA00CA3E5D /* LoginView.xib in Resources */,
