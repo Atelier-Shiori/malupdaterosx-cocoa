@@ -42,7 +42,7 @@
 @property (nonatomic, readonly) NSManagedObjectContext *managedObjectContext;
 -(void)setManagedObjectContext:(NSManagedObjectContext *)context;
 - (int)startscrobbling;
--(int)scrobbleagain:(NSString *)showtitle Episode:(NSString *)episode;
+-(int)scrobbleagain:(NSString *)showtitle Episode:(NSString *)episode correctonce:(BOOL)correctonce;
 -(int)scrobble;
 -(BOOL)confirmupdate;
 -(BOOL)updatestatus:(NSString *)titleid

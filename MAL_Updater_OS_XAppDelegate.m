@@ -583,10 +583,13 @@
     }
     fsdialog = [FixSearchDialog new];
     // Check if Confirm is on for new title. If so, then disable ability to delete title.
-    if ((!confirmupdate.hidden && [MALEngine getisNewTitle]) || !findtitle.hidden)
-        [fsdialog setCorrection:NO];
-    else
+    if ((!confirmupdate.hidden && [MALEngine getisNewTitle]) || !findtitle.hidden){
         [fsdialog setCorrection:YES];
+        [fsdialog setAllowDelete:NO];
+    }
+    else{
+        [fsdialog setCorrection:YES];
+    }
     if (!findtitle.hidden) {
         //Use failed title
          [fsdialog setSearchField:[MALEngine getFailedTitle]];
@@ -617,11 +620,17 @@
             NSLog(@"ID matches, correction not needed.");
         }
         else{
+            BOOL correctonce = [fsdialog getcorrectonce];
             if (!findtitle.hidden) {
                 [self addtoExceptions:[MALEngine getFailedTitle] newtitle:[fsdialog getSelectedTitle] showid:[fsdialog getSelectedAniID] threshold:[[fsdialog getSelectedTotalEpisodes] intValue]];
             }
-            else{
-            [self addtoExceptions:[MALEngine getLastScrobbledTitle] newtitle:[fsdialog getSelectedTitle] showid:[fsdialog getSelectedAniID] threshold:[[fsdialog getSelectedTotalEpisodes] intValue]];
+            else if ([[MALEngine getLastScrobbledEpisode] intValue] == [[fsdialog getSelectedTotalEpisodes] intValue]){
+                // Detected episode equals the total episodes, do not add a rule and only do a correction just once.
+                correctonce = true;
+            }
+            else if (!correctonce){
+                //Add to Exceptions
+                [self addtoExceptions:[MALEngine getLastScrobbledTitle] newtitle:[fsdialog getSelectedTitle] showid:[fsdialog getSelectedAniID] threshold:[[fsdialog getSelectedTotalEpisodes] intValue]];
             }
             if([fsdialog getdeleteTitleonCorrection]){
                 if([MALEngine removetitle:[MALEngine getAniID]]){
@@ -631,10 +640,13 @@
             NSLog(@"Updating corrected title...");
             int status;
             if (!findtitle.hidden) {
-                status = [MALEngine scrobbleagain:[MALEngine getFailedTitle] Episode:[MALEngine getFailedEpisode]];
+                status = [MALEngine scrobbleagain:[MALEngine getFailedTitle] Episode:[MALEngine getFailedEpisode] correctonce:false];
+            }
+            else if (correctonce){
+                status = [MALEngine scrobbleagain:[fsdialog getSelectedTitle] Episode:[MALEngine getLastScrobbledEpisode] correctonce:true];
             }
             else{
-                status = [MALEngine scrobbleagain:[MALEngine getLastScrobbledTitle] Episode:[MALEngine getLastScrobbledEpisode]];
+                status = [MALEngine scrobbleagain:[MALEngine getLastScrobbledTitle] Episode:[MALEngine getLastScrobbledEpisode] correctonce:false];
             }
             switch (status) {
                 case 1:
