@@ -9,6 +9,7 @@
 #import "MyAnimeList.h"
 
 @interface MyAnimeList (Update)
+-(BOOL)checkstatus:(NSString *)titleid;
 -(BOOL)updatestatus:(NSString *)titleid
               score:(int)showscore
         watchstatus:(NSString*)showwatchstatus

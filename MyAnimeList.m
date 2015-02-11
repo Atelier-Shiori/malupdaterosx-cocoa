@@ -14,7 +14,6 @@
 
 @interface MyAnimeList ()
 -(int)detectmedia; // 0 - Nothing, 1 - Same, 2 - Update
--(BOOL)checkstatus:(NSString *)titleid;
 -(void)checkExceptions;
 @end
 
@@ -278,88 +277,6 @@
             return false;
             break;
     }
-}
--(BOOL)checkstatus:(NSString *)titleid {
-	NSLog(@"Checking Status");
-	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	//Set Search API
-	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/anime/%@?mine=1",MALApiUrl, titleid]];
-	EasyNSURLConnection *request = [[EasyNSURLConnection alloc] initWithURL:url];
-	//Ignore Cookies
-	[request setUseCookies:NO];
-	//Set Token
-	[request addHeader:[NSString stringWithFormat:@"Basic %@",[defaults objectForKey:@"Base64Token"]]  forKey:@"Authorization"];
-	//Perform Search
-	[request startRequest];
-	// Get Status Code
-	int statusCode = [request getStatusCode];
-    NSError * error = [request getError]; // Error Detection
-	if (statusCode == 200 ) {
-        online = true;
-        if (DetectedEpisode.length == 0) { // Check if there is a DetectedEpisode (needed for checking
-            // Set detected episode to 1
-            DetectedEpisode = @"1";
-        }
-        NSError* error;
-		NSDictionary *animeinfo = [NSJSONSerialization JSONObjectWithData:[request getResponseData] options:kNilOptions error:&error];
-		if ([animeinfo objectForKey:@"episodes"] == [NSNull null]) { // To prevent the scrobbler from failing because there is no episode total.
-			TotalEpisodes = @"0"; // No Episode Total, Set to 0.
-		}
-		else { // Episode Total Exists
-			TotalEpisodes = [animeinfo objectForKey:@"episodes"];
-		}
-		// Watch Status
-		if ([animeinfo objectForKey:@"watched_status"] == [NSNull null]) {
-			NSLog(@"Not on List");
-			LastScrobbledTitleNew = true;
-			DetectedCurrentEpisode = @"0";
-			TitleScore = @"0"; 
-		}
-		else {
-			NSLog(@"Title on List");
-			LastScrobbledTitleNew = false;
-			WatchStatus = [animeinfo objectForKey:@"watched_status"];
-			DetectedCurrentEpisode = [animeinfo objectForKey:@"watched_episodes"];
-			if ([animeinfo objectForKey:@"score"] == [NSNull null]){
-				// Score is null, set to 0
-				TitleScore = @"0";
-			}
-			else {
-				TitleScore = [animeinfo objectForKey:@"score"]; 
-			}
-			NSLog(@"Title Score %@", TitleScore);
-			//Retain Title Score
-		}
-        // New Update Confirmation
-        if (([[NSUserDefaults standardUserDefaults] boolForKey:@"ConfirmNewTitle"] && LastScrobbledTitleNew && !correcting)|| ([[NSUserDefaults standardUserDefaults] boolForKey:@"ConfirmUpdates"] && !LastScrobbledTitleNew && !correcting)) {
-            // Manually confirm updates
-            confirmed = false;
-        }
-        else{
-            // Automatically confirm updates
-            confirmed = true;
-        }
-        LastScrobbledInfo = animeinfo;
-		// Makes sure the values don't get released
-		return YES;
-	}
-    else if (error !=nil){
-        if (error.code == NSURLErrorNotConnectedToInternet) {
-            online = false;
-            return NO;
-        }
-        else {
-            online = true;
-            return NO;
-        }
-    }
-	else {
-        online = true;
-		// Some Error. Abort
-		return NO;
-	}
-	//Should never happen, but...
-	return NO;
 }
 -(NSDictionary *)getLastScrobbledInfo{
 	return LastScrobbledInfo;
