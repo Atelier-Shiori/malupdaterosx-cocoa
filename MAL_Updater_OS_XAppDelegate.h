@@ -7,7 +7,6 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "MyAnimeList.h"
 
 @class PreferenceController;
 @class MyAnimeList;

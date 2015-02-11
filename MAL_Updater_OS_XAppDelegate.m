@@ -7,6 +7,8 @@
 //
 
 #import "MAL_Updater_OS_XAppDelegate.h"
+#import "MyAnimeList.h"
+#import "MyAnimeList+Update.h"
 #import "PFMoveApplication.h"
 #import "Preferences.h"
 #import "FixSearchDialog.h"
