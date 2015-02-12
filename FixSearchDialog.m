@@ -48,13 +48,13 @@
     [NSApp endSheet:self.window returnCode:0];
 }
 -(IBAction)updatesearch:(id)sender {
-    NSDictionary * d = [[arraycontroller selectedObjects] objectAtIndex:0];
+    NSDictionary * d = [arraycontroller selectedObjects][0];
     if (correction) {
         // Set Up Prompt Message Window
         NSAlert * alert = [[NSAlert alloc] init] ;
         [alert addButtonWithTitle:@"Yes"];
         [alert addButtonWithTitle:@"No"];
-        [alert setMessageText:[NSString stringWithFormat:@"Do you want to correct this title as %@?",[d objectForKey:@"title"]]];
+        [alert setMessageText:[NSString stringWithFormat:@"Do you want to correct this title as %@?",d[@"title"]]];
         [alert setInformativeText:@"Once done, you cannot undo this action."];
         // Set Message type to Warning
         [alert setAlertStyle:NSWarningAlertStyle];
@@ -70,9 +70,9 @@
     }   
 }
 -(void)finish:(NSDictionary *)d{
-    selectedtitle = [d objectForKey:@"title"];
-    selectedaniid = [[d objectForKey:@"id"] stringValue];
-    selectedtotalepisodes = [d objectForKey:@"episodes"];
+    selectedtitle = d[@"title"];
+    selectedaniid = [d[@"id"] stringValue];
+    selectedtotalepisodes = d[@"episodes"];
     [self.window orderOut:self];
     [NSApp endSheet:self.window returnCode:1];
 }
@@ -132,8 +132,8 @@
 -(void)tableViewSelectionDidChange:(NSNotification *)notification{
     if ([[notification object] selectedRow] != -1) {
         // Show synopsis
-        NSDictionary * d = [[arraycontroller selectedObjects] objectAtIndex:0];
-        [selectedsynopsis setString:[[NSString stringWithFormat:@"%@", [d objectForKey:@"synopsis"]] stripHtml]];
+        NSDictionary * d = [arraycontroller selectedObjects][0];
+        [selectedsynopsis setString:[[NSString stringWithFormat:@"%@", d[@"synopsis"]] stripHtml]];
     }
     else{
         [selectedsynopsis setString:@""];

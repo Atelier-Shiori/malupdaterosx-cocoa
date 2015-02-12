@@ -33,14 +33,14 @@
         }
         NSError* jerror;
         NSDictionary *animeinfo = [NSJSONSerialization JSONObjectWithData:[request getResponseData] options:nil error:&jerror];
-        if ([animeinfo objectForKey:@"episodes"] == [NSNull null]) { // To prevent the scrobbler from failing because there is no episode total.
+        if (animeinfo[@"episodes"] == [NSNull null]) { // To prevent the scrobbler from failing because there is no episode total.
             TotalEpisodes = @"0"; // No Episode Total, Set to 0.
         }
         else { // Episode Total Exists
-            TotalEpisodes = [animeinfo objectForKey:@"episodes"];
+            TotalEpisodes = animeinfo[@"episodes"];
         }
         // Watch Status
-        if ([animeinfo objectForKey:@"watched_status"] == [NSNull null]) {
+        if (animeinfo[@"watched_status"] == [NSNull null]) {
             NSLog(@"Not on List");
             LastScrobbledTitleNew = true;
             DetectedCurrentEpisode = @"0";
@@ -49,14 +49,14 @@
         else {
             NSLog(@"Title on List");
             LastScrobbledTitleNew = false;
-            WatchStatus = [animeinfo objectForKey:@"watched_status"];
-            DetectedCurrentEpisode = [animeinfo objectForKey:@"watched_episodes"];
-            if ([animeinfo objectForKey:@"score"] == [NSNull null]){
+            WatchStatus = animeinfo[@"watched_status"];
+            DetectedCurrentEpisode = animeinfo[@"watched_episodes"];
+            if (animeinfo[@"score"] == [NSNull null]){
                 // Score is null, set to 0
                 TitleScore = @"0";
             }
             else {
-                TitleScore = [animeinfo objectForKey:@"score"];
+                TitleScore = animeinfo[@"score"];
             }
             NSLog(@"Title Score %@", TitleScore);
             //Retain Title Score
@@ -102,7 +102,7 @@
         confirmed = true;
         LastScrobbledTitle = DetectedTitle;
         LastScrobbledEpisode = DetectedEpisode;
-        LastScrobbledActualTitle = (NSString *)[LastScrobbledInfo objectForKey:@"title"];
+        LastScrobbledActualTitle = (NSString *)LastScrobbledInfo[@"title"];
         LastScrobbledSource = DetectedSource;
         return 2;
     }
@@ -110,7 +110,7 @@
         // Confirm before updating title
         LastScrobbledTitle = DetectedTitle;
         LastScrobbledEpisode = DetectedEpisode;
-        LastScrobbledActualTitle = (NSString *)[LastScrobbledInfo objectForKey:@"title"];
+        LastScrobbledActualTitle = (NSString *)LastScrobbledInfo[@"title"];
         LastScrobbledSource = DetectedSource;
         return 3;
     }
@@ -152,7 +152,7 @@
                 DetectedCurrentEpisode = DetectedEpisode;
                 LastScrobbledSource = DetectedSource;
                 if (confirmed) {
-                    LastScrobbledActualTitle = (NSString *)[LastScrobbledInfo objectForKey:@"title"];
+                    LastScrobbledActualTitle = (NSString *)LastScrobbledInfo[@"title"];
                 }
                 confirmed = true;
                 // Update Successful
@@ -171,7 +171,7 @@
         // Confirm before updating title
         LastScrobbledTitle = DetectedTitle;
         LastScrobbledEpisode = DetectedEpisode;
-        LastScrobbledActualTitle = (NSString *)[LastScrobbledInfo objectForKey:@"title"];
+        LastScrobbledActualTitle = (NSString *)LastScrobbledInfo[@"title"];
         LastScrobbledSource = DetectedSource;
         return 3;
     }
@@ -204,7 +204,7 @@
             DetectedCurrentEpisode = DetectedEpisode;
             LastScrobbledSource = DetectedSource;
             if (confirmed) {
-                LastScrobbledActualTitle = (NSString *)[LastScrobbledInfo objectForKey:@"title"];
+                LastScrobbledActualTitle = (NSString *)LastScrobbledInfo[@"title"];
             }
             confirmed = true;
             return 21;

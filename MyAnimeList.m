@@ -226,11 +226,11 @@
     NSDictionary * result = [Detection detectmedia];
     if (result !=nil) {
         //Populate Data
-        DetectedTitle = [result objectForKey:@"detectedtitle"];
-        DetectedEpisode = [result objectForKey:@"detectedepisode"];
-        DetectedSeason = [(NSNumber *)[result objectForKey:@"detectedseason"] intValue];
-        DetectedGroup = [result objectForKey:@"group"];
-        DetectedSource = [result objectForKey:@"detectedsource"];
+        DetectedTitle = result[@"detectedtitle"];
+        DetectedEpisode = result[@"detectedepisode"];
+        DetectedSeason = [(NSNumber *)result[@"detectedseason"] intValue];
+        DetectedGroup = result[@"group"];
+        DetectedSource = result[@"detectedsource"];
         // Check if the title was previously scrobbled
         [self checkExceptions];
         

@@ -65,7 +65,7 @@
     NSArray *loginItems = (NSArray *)LSSharedFileListCopySnapshot(loginItemsRef, nil);
     for (int currentIndex = 0; currentIndex < [loginItems count]; currentIndex++) {
         // Get the current LoginItem and resolve its URL.
-        LSSharedFileListItemRef currentItemRef = (LSSharedFileListItemRef) [loginItems objectAtIndex:(NSUInteger) currentIndex];
+        LSSharedFileListItemRef currentItemRef = (LSSharedFileListItemRef) loginItems[(NSUInteger) currentIndex];
         if (LSSharedFileListItemResolve(currentItemRef, 0, (CFURLRef *) &itemUrl, NULL) == noErr) {
             // Compare the URLs for the current LoginItem and the app.
             if ([itemUrl isEqual:appUrl]) {
@@ -125,10 +125,10 @@
 	long statusCode = [request getStatusCode];
 	switch (statusCode) {
 		case 200:
-            [Utility showsheetmessage:@"API Test Successful" explaination:[NSString stringWithFormat:@"HTTP Code: %i", statusCode] window: [[self view] window]];
+            [Utility showsheetmessage:@"API Test Successful" explaination:[NSString stringWithFormat:@"HTTP Code: %li", statusCode] window: [[self view] window]];
 			break;
 		default:
-			[Utility showsheetmessage:@"API Test Unsuccessful" explaination:[NSString stringWithFormat:@"HTTP Code: %i", statusCode] window:[[self view] window]];
+			[Utility showsheetmessage:@"API Test Unsuccessful" explaination:[NSString stringWithFormat:@"HTTP Code: %li", statusCode] window:[[self view] window]];
 			break;
 	}
 	//release

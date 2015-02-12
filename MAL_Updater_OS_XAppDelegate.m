@@ -37,7 +37,7 @@
 - (NSString *)applicationSupportDirectory {
 	
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES);
-    NSString *basePath = ([paths count] > 0) ? [paths objectAtIndex:0] : NSTemporaryDirectory();
+    NSString *basePath = ([paths count] > 0) ? paths[0] : NSTemporaryDirectory();
     return [basePath stringByAppendingPathComponent:@"MAL Updater OS X"];
 }
 
@@ -134,20 +134,20 @@
 	NSMutableDictionary * defaultValues = [NSMutableDictionary dictionary];
 	
 	// Defaults
-	[defaultValues setObject:@"" forKey:@"Base64Token"];
-	[defaultValues setObject:@"https://malapi.ateliershiori.moe" forKey:@"MALAPIURL"];
-	[defaultValues setObject:[NSNumber numberWithBool:NO] forKey:@"ScrobbleatStartup"];
-    [defaultValues setObject:[NSNumber numberWithBool:YES] forKey:@"useSearchCache"];
-    [defaultValues setObject:[[NSMutableArray alloc] init] forKey:@"exceptions"];
-    [defaultValues setObject:[[NSMutableArray alloc] init] forKey:@"ignoredirectories"];
-    [defaultValues setObject:[[NSMutableArray alloc] init] forKey:@"IgnoreTitleRules"];
-    [defaultValues setObject:[NSNumber numberWithBool:YES] forKey:@"ConfirmNewTitle"];
-    [defaultValues setObject:[NSNumber numberWithBool:NO] forKey:@"ConfirmUpdates"];
-	[defaultValues setObject:[NSNumber numberWithBool:YES] forKey:@"UseAutoExceptions"];
+	defaultValues[@"Base64Token"] = @"";
+	defaultValues[@"MALAPIURL"] = @"https://malapi.ateliershiori.moe";
+	defaultValues[@"ScrobbleatStartup"] = @NO;
+    defaultValues[@"useSearchCache"] = @YES;
+    defaultValues[@"exceptions"] = [[NSMutableArray alloc] init];
+    defaultValues[@"ignoredirectories"] = [[NSMutableArray alloc] init];
+    defaultValues[@"IgnoreTitleRules"] = [[NSMutableArray alloc] init];
+    defaultValues[@"ConfirmNewTitle"] = @YES;
+    defaultValues[@"ConfirmUpdates"] = @NO;
+	defaultValues[@"UseAutoExceptions"] = @YES;
     if (floor(NSAppKitVersionNumber) > NSAppKitVersionNumber10_9){
         //Yosemite Specific Advanced Options
-        [defaultValues setObject:[NSNumber numberWithBool:NO] forKey:@"DisableYosemiteTitleBar"];
-        [defaultValues setObject:[NSNumber numberWithBool:NO] forKey:@"DisableYosemiteVibrance"];
+        defaultValues[@"DisableYosemiteTitleBar"] = @NO;
+        defaultValues[@"DisableYosemiteVibrance"] = @NO;
     }
 	//Register Dictionary
 	[[NSUserDefaults standardUserDefaults]
@@ -233,7 +233,7 @@
     }
     // Fix template images
     // There is a bug where template images are not made even if they are set in XCAssets
-    NSArray *images = [NSArray arrayWithObjects:@"update", @"history", @"correct", nil];
+    NSArray *images = @[@"update", @"history", @"correct"];
     NSImage * image;
     for (NSString *imagename in images){
         image = [NSImage imageNamed:imagename];
@@ -279,7 +279,7 @@
 		NSViewController *suViewController = [[SoftwareUpdatesPref alloc] init];
         NSViewController *exceptionsViewController = [[ExceptionsPref alloc] init];
         NSViewController *hotkeyViewController = [[HotkeysPrefs alloc] init];
-        NSArray *controllers = [[NSArray alloc] initWithObjects:generalViewController, loginViewController, hotkeyViewController, exceptionsViewController, suViewController, nil];
+        NSArray *controllers = @[generalViewController, loginViewController, hotkeyViewController, exceptionsViewController, suViewController];
             _preferencesWindowController = [[MASPreferencesWindowController alloc] initWithViewControllers:controllers];
     }
     return _preferencesWindowController;
@@ -488,7 +488,7 @@
                 break;
             case 3:{
                 [self setStatusText:@"Scrobble Status: Please confirm update."];
-                NSDictionary * userinfo = [[NSDictionary alloc] initWithObjectsAndKeys:[MALEngine getLastScrobbledTitle], @"title",  [MALEngine getLastScrobbledEpisode], @"episode", nil];
+                NSDictionary * userinfo = @{@"title": [MALEngine getLastScrobbledTitle],  @"episode": [MALEngine getLastScrobbledEpisode]};
                 [self showConfirmationNotication:@"Confirm Update" message:[NSString stringWithFormat:@"Click here to confirm update for %@ Episode %@.",[MALEngine getLastScrobbledActualTitle],[MALEngine getLastScrobbledEpisode]] updateData:userinfo];
                 break;
             }
@@ -784,14 +784,14 @@
 	[NSApp beginSheet:updatepanel
 	   modalForWindow:w modalDelegate:self
 	   didEndSelector:@selector(updateDidEnd:returnCode:contextInfo:)
-		  contextInfo:(__bridge void *)[NSNumber numberWithFloat:choice]];
+		   contextInfo:(void *)nil];
 	// Set up UI
 	[showtitle setObjectValue:[MALEngine getLastScrobbledTitle]];
 	[showscore selectItemWithTag:[MALEngine getScore]];
 	[showstatus selectItemAtIndex:[MALEngine getWatchStatus]];
     [episodefield setStringValue:[NSString stringWithFormat:@"%i", [MALEngine getCurrentEpisode]]];
     if ([[MALEngine getTotalEpisodes] intValue] !=0) {
-        [epiformatter setMaximum:[NSNumber numberWithInt:[[MALEngine getTotalEpisodes] intValue]]];
+        [epiformatter setMaximum:@([[MALEngine getTotalEpisodes] intValue])];
     }
 	// Stop Timer temporarily if scrobbling is turned on
 	if (scrobbling == TRUE) {
@@ -864,8 +864,8 @@
 - (void) userNotificationCenter:(NSUserNotificationCenter *)center didActivateNotification:(NSUserNotification *)notification
 {
     if ([notification.title isEqualToString:@"Confirm Update"] && !confirmupdate.hidden) {
-        NSString * title = [notification.userInfo objectForKey:@"title"];
-        NSString * episode = [notification.userInfo objectForKey:@"episode"];
+        NSString * title = (notification.userInfo)[@"title"];
+        NSString * episode = (notification.userInfo)[@"episode"];
         // Only confirm update if the title and episode is the same with the last scrobbled.
         if ([[MALEngine getLastScrobbledTitle] isEqualToString:title] && [episode intValue] == [[MALEngine getLastScrobbledEpisode] intValue]) {
             //Confirm Update
@@ -931,21 +931,21 @@
     [self appendToAnimeInfo:[MALEngine getLastScrobbledActualTitle]];
     [self appendToAnimeInfo:@""];
     //Description
-    NSString * anidescription = [d objectForKey:@"synopsis"];
+    NSString * anidescription = d[@"synopsis"];
     anidescription = [anidescription stripHtml]; //Removes HTML tags
     [self appendToAnimeInfo:@"Description"];
     [self appendToAnimeInfo:anidescription];
     //Meta Information
     [self appendToAnimeInfo:@""];
     [self appendToAnimeInfo:@"Other Information"];
-    [self appendToAnimeInfo:[NSString stringWithFormat:@"Classification: %@", [d objectForKey:@"classification"]]];
-    [self appendToAnimeInfo:[NSString stringWithFormat:@"Start Date: %@", [d objectForKey:@"start_date"]]];
-    [self appendToAnimeInfo:[NSString stringWithFormat:@"Airing Status: %@", [d objectForKey:@"status"]]];
-    [self appendToAnimeInfo:[NSString stringWithFormat:@"Episodes: %@", [d objectForKey:@"episodes"]]];
-    [self appendToAnimeInfo:[NSString stringWithFormat:@"Popularity: %@", [d objectForKey:@"popularity_rank"]]];
-    [self appendToAnimeInfo:[NSString stringWithFormat:@"Favorited: %@", [d objectForKey:@"favorited_count"]]];
+    [self appendToAnimeInfo:[NSString stringWithFormat:@"Classification: %@", d[@"classification"]]];
+    [self appendToAnimeInfo:[NSString stringWithFormat:@"Start Date: %@", d[@"start_date"]]];
+    [self appendToAnimeInfo:[NSString stringWithFormat:@"Airing Status: %@", d[@"status"]]];
+    [self appendToAnimeInfo:[NSString stringWithFormat:@"Episodes: %@", d[@"episodes"]]];
+    [self appendToAnimeInfo:[NSString stringWithFormat:@"Popularity: %@", d[@"popularity_rank"]]];
+    [self appendToAnimeInfo:[NSString stringWithFormat:@"Favorited: %@", d[@"favorited_count"]]];
     //Image
-    NSImage * dimg = [[NSImage alloc]initByReferencingURL:[NSURL URLWithString: (NSString *)[d objectForKey:@"image_url"]]]; //Downloads Image
+    NSImage * dimg = [[NSImage alloc]initByReferencingURL:[NSURL URLWithString: (NSString *)d[@"image_url"]]]; //Downloads Image
     [img setImage:dimg]; //Get the Image for the title
     // Clear Anime Info so that MAL Updater OS X won't attempt to retrieve it if the same episode and title is playing
     [MALEngine clearAnimeInfo];
@@ -967,7 +967,7 @@
     [shareIcon setTitle:@""];
     [shareMenu addItem:shareIcon];
     //Generate Items to Share
-    shareItems = [NSArray arrayWithObjects:[NSString stringWithFormat:@"%@ - %@", [MALEngine getLastScrobbledTitle], [MALEngine getLastScrobbledEpisode] ], [NSURL URLWithString:[NSString stringWithFormat:@"http://myanimelist.net/anime/%@", [MALEngine getAniID]]] ,nil];
+    shareItems = @[[NSString stringWithFormat:@"%@ - %@", [MALEngine getLastScrobbledTitle], [MALEngine getLastScrobbledEpisode] ], [NSURL URLWithString:[NSString stringWithFormat:@"http://myanimelist.net/anime/%@", [MALEngine getAniID]]]];
     //Get Share Services for Items
     NSArray *shareServiceforItems = [NSSharingService sharingServicesForItems:shareItems];
     //Generate Share Items and populate Share Menu
