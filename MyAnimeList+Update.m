@@ -34,32 +34,30 @@
         NSError* jerror;
         NSDictionary *animeinfo = [NSJSONSerialization JSONObjectWithData:[request getResponseData] options:nil error:&jerror];
         if (animeinfo[@"episodes"] == [NSNull null]) { // To prevent the scrobbler from failing because there is no episode total.
-            TotalEpisodes = @"0"; // No Episode Total, Set to 0.
+            TotalEpisodes = 0; // No Episode Total, Set to 0.
         }
         else { // Episode Total Exists
-            TotalEpisodes = animeinfo[@"episodes"];
+            TotalEpisodes = [(NSNumber *)animeinfo[@"episodes"] intValue];
         }
         // Watch Status
         if (animeinfo[@"watched_status"] == [NSNull null]) {
             NSLog(@"Not on List");
             LastScrobbledTitleNew = true;
-            DetectedCurrentEpisode = @"0";
-            TitleScore = @"0";
+            DetectedCurrentEpisode = 0;
+            TitleScore = 0;
         }
         else {
             NSLog(@"Title on List");
             LastScrobbledTitleNew = false;
             WatchStatus = animeinfo[@"watched_status"];
-            DetectedCurrentEpisode = animeinfo[@"watched_episodes"];
+            DetectedCurrentEpisode = [(NSNumber *)animeinfo[@"watched_episodes"] intValue];
             if (animeinfo[@"score"] == [NSNull null]){
                 // Score is null, set to 0
-                TitleScore = @"0";
+                TitleScore = 0;
             }
             else {
-                TitleScore = animeinfo[@"score"];
+                TitleScore = [(NSNumber *)animeinfo[@"score"] intValue];
             }
-            NSLog(@"Title Score %@", TitleScore);
-            //Retain Title Score
         }
         // New Update Confirmation
         if (([[NSUserDefaults standardUserDefaults] boolForKey:@"ConfirmNewTitle"] && LastScrobbledTitleNew && !correcting)|| ([[NSUserDefaults standardUserDefaults] boolForKey:@"ConfirmUpdates"] && !LastScrobbledTitleNew && !correcting)) {
@@ -96,7 +94,7 @@
 -(int)updatetitle:(NSString *)titleid confirming:(bool)confirming{
     NSLog(@"Updating Title");
     
-    if ([DetectedEpisode intValue] <= [DetectedCurrentEpisode intValue] ) {
+    if ([DetectedEpisode intValue] <= DetectedCurrentEpisode ) {
         // Already Watched, no need to scrobble
         // Store Scrobbled Title and Episode
         confirmed = true;
@@ -127,7 +125,7 @@
         [request setPostMethod:@"PUT"];
         [request addFormData:DetectedEpisode forKey:@"episodes"];
         //Set Status
-        if([DetectedEpisode intValue] == [TotalEpisodes intValue]) {
+        if([DetectedEpisode intValue] == TotalEpisodes) {
             //Set Title State for Title (use for Twitter feature)
             WatchStatus = @"completed";
             // Since Detected Episode = Total Episode, set the status as "Complete"
@@ -140,7 +138,7 @@
             [request addFormData:WatchStatus forKey:@"status"];
         }
         // Set existing score to prevent the score from being erased.
-        [request addFormData:TitleScore forKey:@"score"];
+        [request addFormData:[NSNumber numberWithInt:TitleScore] forKey:@"score"];
         // Do Update
         [request startFormRequest];
         
@@ -149,7 +147,7 @@
                 // Store Last Scrobbled Title
                 LastScrobbledTitle = DetectedTitle;
                 LastScrobbledEpisode = DetectedEpisode;
-                DetectedCurrentEpisode = DetectedEpisode;
+                DetectedCurrentEpisode = [DetectedEpisode intValue];
                 LastScrobbledSource = DetectedSource;
                 if (confirmed) {
                     LastScrobbledActualTitle = (NSString *)LastScrobbledInfo[@"title"];
@@ -201,7 +199,7 @@
             //Store last scrobbled information
             LastScrobbledTitle = DetectedTitle;
             LastScrobbledEpisode = DetectedEpisode;
-            DetectedCurrentEpisode = DetectedEpisode;
+            DetectedCurrentEpisode = [DetectedEpisode intValue];
             LastScrobbledSource = DetectedSource;
             if (confirmed) {
                 LastScrobbledActualTitle = (NSString *)LastScrobbledInfo[@"title"];
@@ -268,10 +266,10 @@
         case 200:
             // Update Successful
             //Set New Values
-            TitleScore = [NSString stringWithFormat:@"%i", showscore];
+            TitleScore = showscore;
             WatchStatus = showwatchstatus;
             LastScrobbledEpisode = episode;
-            DetectedCurrentEpisode = episode;
+            DetectedCurrentEpisode = [episode intValue];
             confirmed = true;
             return true;
         default:

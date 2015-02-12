@@ -790,8 +790,8 @@
 	[showscore selectItemWithTag:[MALEngine getScore]];
 	[showstatus selectItemAtIndex:[MALEngine getWatchStatus]];
     [episodefield setStringValue:[NSString stringWithFormat:@"%i", [MALEngine getCurrentEpisode]]];
-    if ([[MALEngine getTotalEpisodes] intValue] !=0) {
-        [epiformatter setMaximum:@([[MALEngine getTotalEpisodes] intValue])];
+    if ([MALEngine getTotalEpisodes] !=0) {
+        [epiformatter setMaximum:@([MALEngine getTotalEpisodes])];
     }
 	// Stop Timer temporarily if scrobbling is turned on
 	if (scrobbling == TRUE) {

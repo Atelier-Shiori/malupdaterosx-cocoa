@@ -54,16 +54,16 @@
 {
     return AniID;
 }
--(NSString *)getTotalEpisodes
+-(int)getTotalEpisodes
 {
 	return TotalEpisodes;
 }
 -(int)getScore
 {
-    return [TitleScore intValue];
+    return TitleScore;
 }
 -(int)getCurrentEpisode{
-    return [DetectedCurrentEpisode intValue];
+    return DetectedCurrentEpisode;
 }
 -(BOOL)getConfirmed{
     return confirmed;
