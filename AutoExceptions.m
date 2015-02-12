@@ -62,7 +62,7 @@
     //Test API
     [request startRequest];
     // Get Status Code
-    int statusCode = [request getStatusCode];
+    long statusCode = [request getStatusCode];
     switch (statusCode) {
         case 200:{
             NSLog(@"Updating Auto Exceptions!");
@@ -81,7 +81,7 @@
                 [allExceptions setEntity:[NSEntityDescription entityForName:@"AutoExceptions" inManagedObjectContext:moc]];
                 NSPredicate *predicate = [NSPredicate predicateWithFormat: @"(detectedTitle == %@) AND (group == %@) AND (correctTitle == %@)", detectedtitlea, groupa, correcttitlea];
                 [allExceptions setPredicate:predicate];
-                NSError * error = nil;
+                error= nil;
                 NSArray * aExceptions = [moc executeFetchRequest:allExceptions error:&error];
                 if (aExceptions.count > 0) {
                     for (NSManagedObject * entry in aExceptions) {
@@ -101,7 +101,7 @@
                     continue;
                 }
                 else{
-                    NSError * error = nil;
+                    NSError * aerror = nil;
                     // Add Entry to Auto Exceptions
                     NSManagedObject *obj = [NSEntityDescription
                                             insertNewObjectForEntityForName:@"AutoExceptions"
@@ -113,7 +113,7 @@
                     [obj setValue:[d objectForKey:@"threshold"] forKey:@"episodethreshold"];
                     [obj setValue:[d objectForKey:@"group"] forKey:@"group"];
                     //Save
-                    [moc save:&error];
+                    [moc save:&aerror];
                 }
             }
             // Set the last updated date

@@ -327,7 +327,6 @@
         [alert addButtonWithTitle:cancelButton];
 		
         NSInteger answer = [alert runModal];
-        alert = nil;
         
         if (answer == NSAlertAlternateReturn) return NSTerminateCancel;
 		
@@ -769,9 +768,6 @@
 -(bool)getisScrobblingActive{
     return scrobbleractive;
 }
--(NSManagedObjectModel *)getObjectModel{
-    return managedObjectModel;
-}
 -(NSManagedObjectContext *)getObjectContext{
     return managedObjectContext;
 }
@@ -788,7 +784,7 @@
 	[NSApp beginSheet:updatepanel
 	   modalForWindow:w modalDelegate:self
 	   didEndSelector:@selector(updateDidEnd:returnCode:contextInfo:)
-		  contextInfo:(void *)[NSNumber numberWithFloat:choice]];
+		  contextInfo:(__bridge void *)[NSNumber numberWithFloat:choice]];
 	// Set up UI
 	[showtitle setObjectValue:[MALEngine getLastScrobbledTitle]];
 	[showscore selectItemWithTag:[MALEngine getScore]];
@@ -815,7 +811,7 @@
     }
 
     if (returnCode == 1) {
-        BOOL result = [MALEngine updatestatus:[MALEngine getAniID] score:[showscore selectedTag] watchstatus:[showstatus titleOfSelectedItem] episode:tmpepisode];
+        BOOL result = [MALEngine updatestatus:[MALEngine getAniID] score:(int) [showscore selectedTag] watchstatus:[showstatus titleOfSelectedItem] episode:tmpepisode];
         if (result)
             [self setStatusText:@"Scrobble Status: Updating of Watch Status/Score Successful."];
         if (episodechanged) {

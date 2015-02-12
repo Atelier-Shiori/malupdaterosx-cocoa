@@ -51,7 +51,7 @@
         NSTask *task;
         task = [[NSTask alloc] init];
         [task setLaunchPath: @"/usr/sbin/lsof"];
-        [task setArguments: [NSArray arrayWithObjects:@"-c", (NSString *)[player objectAtIndex:i], @"-F", @"n", nil]]; 		//lsof -c '<player name>' -Fn
+        [task setArguments: [NSArray arrayWithObjects:@"-c", (NSString *) [player objectAtIndex:(NSUInteger) i], @"-F", @"n", nil]]; 		//lsof -c '<player name>' -Fn
         NSPipe *pipe;
         pipe = [NSPipe pipe];
         [task setStandardOutput: pipe];
@@ -143,7 +143,7 @@
     
     NSError* error;
     
-    d = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+    d = [NSJSONSerialization JSONObjectWithData:data options:nil error:&error];
     if ([d objectForKey:@"result"]  == [NSNull null]){ // Check to see if anything is playing on stream
         return nil;
     }
@@ -156,7 +156,7 @@
         else{
             NSString * DetectedTitle = (NSString *)[result objectForKey:@"title"];
             NSString * DetectedEpisode = [NSString stringWithFormat:@"%@",[result objectForKey:@"episode"]];
-            NSString * DetectedSource = [NSString stringWithFormat:@"%@ in %@", (NSString *)[[result objectForKey:@"site"] capitalizedString], [result objectForKey:@"browser"]];
+            NSString * DetectedSource = [NSString stringWithFormat:@"%@ in %@", [[result objectForKey:@"site"] capitalizedString], [result objectForKey:@"browser"]];
             NSString * DetectedGroup = (NSString *)[result objectForKey:@"site"];
             return [[NSDictionary alloc] initWithObjectsAndKeys: DetectedTitle,@"detectedtitle", DetectedEpisode, @"detectedepisode", [NSNumber numberWithInt:0], @"detectedseason", DetectedSource, @"detectedsource", DetectedGroup, @"group", nil];
         }

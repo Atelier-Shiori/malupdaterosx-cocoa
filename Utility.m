@@ -32,35 +32,25 @@
     switch (season) {
         case 1:
             return @"first";
-            break;
         case 2:
             return @"second";
-            break;
         case 3:
             return @"third";
-            break;
         case 4:
             return @"fourth";
-            break;
         case 5:
             return @"fifth";
-            break;
         case 6:
             return @"sixth";
-            break;
         case 7:
             return @"seventh";
-            break;
         case 8:
             return @"eighth";
-            break;
         case 9:
             return @"ninth";
-            break;
         default:
             return @"";
-            break;
-    }
+}
 }
 +(BOOL)checktoken{
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -85,7 +75,7 @@
     [alert setMessageText:message];
     [alert setInformativeText:explaination];
     // Set Message type to Warning
-    [alert setAlertStyle:1];
+    [alert setAlertStyle:NSInformationalAlertStyle];
     // Show as Sheet on Preference Window
     [alert beginSheetModalForWindow:w
                       modalDelegate:self

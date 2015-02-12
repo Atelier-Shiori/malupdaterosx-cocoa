@@ -31,8 +31,8 @@
             // Set detected episode to 1
             DetectedEpisode = @"1";
         }
-        NSError* error;
-        NSDictionary *animeinfo = [NSJSONSerialization JSONObjectWithData:[request getResponseData] options:kNilOptions error:&error];
+        NSError* jerror;
+        NSDictionary *animeinfo = [NSJSONSerialization JSONObjectWithData:[request getResponseData] options:nil error:&jerror];
         if ([animeinfo objectForKey:@"episodes"] == [NSNull null]) { // To prevent the scrobbler from failing because there is no episode total.
             TotalEpisodes = @"0"; // No Episode Total, Set to 0.
         }
@@ -157,11 +157,9 @@
                 confirmed = true;
                 // Update Successful
                 return 22;
-                break;
             default:
                 // Update Unsuccessful
                 return 53;
-                break;
         }
         
     }
@@ -210,11 +208,9 @@
             }
             confirmed = true;
             return 21;
-            break;
         default:
             // Update Unsuccessful
             return 52;
-            break;
     }
 }
 -(bool)removetitle:(NSString *)titleid{
@@ -238,11 +234,9 @@
         case 200:
         case 201:
             return true;
-            break;
         default:
             // Update Unsuccessful
             return false;
-            break;
     }
     return false;
 }
@@ -280,11 +274,9 @@
             DetectedCurrentEpisode = episode;
             confirmed = true;
             return true;
-            break;
         default:
             // Update Unsuccessful
             return false;
-            break;
     }
 }
 

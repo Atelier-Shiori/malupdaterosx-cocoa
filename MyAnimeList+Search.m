@@ -52,30 +52,26 @@
     [request startRequest];
     
     // Get Status Code
-    int statusCode = [request getStatusCode];
+    long statusCode = [request getStatusCode];
     switch (statusCode) {
         case 0:
             online = false;
             Success = NO;
             return @"";
-            break;
         case 200:
             online = true;
             return [self findaniid:[request getResponseData] searchterm:searchtitle];
-            break;
-            
         default:
             online = true;
             Success = NO;
             return @"";
-            break;
     }
     
 }
 -(NSString *)findaniid:(NSData *)ResponseData searchterm:(NSString *)term{
     // Initalize JSON parser and parse data
     NSError* error;
-    NSArray *searchdata = [NSJSONSerialization JSONObjectWithData:ResponseData options:kNilOptions error:&error];
+    NSArray *searchdata = [NSJSONSerialization JSONObjectWithData:ResponseData options:nil error:&error];
     //Initalize NSString to dump the title temporarily
     NSString *theshowtitle = @"";
     NSString *alttitle = @"";

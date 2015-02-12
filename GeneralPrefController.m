@@ -7,7 +7,6 @@
 //
 
 #import "GeneralPrefController.h"
-#import "Base64Category.h"
 #import "EasyNSURLConnection.h"
 #import "MAL_Updater_OS_XAppDelegate.h"
 #import "AutoExceptions.h"
@@ -66,7 +65,7 @@
     NSArray *loginItems = (NSArray *)LSSharedFileListCopySnapshot(loginItemsRef, nil);
     for (int currentIndex = 0; currentIndex < [loginItems count]; currentIndex++) {
         // Get the current LoginItem and resolve its URL.
-        LSSharedFileListItemRef currentItemRef = (LSSharedFileListItemRef)[loginItems objectAtIndex:currentIndex];
+        LSSharedFileListItemRef currentItemRef = (LSSharedFileListItemRef) [loginItems objectAtIndex:(NSUInteger) currentIndex];
         if (LSSharedFileListItemResolve(currentItemRef, 0, (CFURLRef *) &itemUrl, NULL) == noErr) {
             // Compare the URLs for the current LoginItem and the app.
             if ([itemUrl isEqual:appUrl]) {
@@ -123,7 +122,7 @@
 	//Test API
 	[request startRequest];
 	// Get Status Code
-	int statusCode = [request getStatusCode];
+	long statusCode = [request getStatusCode];
 	switch (statusCode) {
 		case 200:
             [Utility showsheetmessage:@"API Test Successful" explaination:[NSString stringWithFormat:@"HTTP Code: %i", statusCode] window: [[self view] window]];

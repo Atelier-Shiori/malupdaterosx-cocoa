@@ -36,7 +36,6 @@
 	BOOL Success;
     BOOL online;
 	BOOL correcting;
-	int choice;
     NSManagedObjectContext *managedObjectContext;
 }
 @property (nonatomic, readonly) NSManagedObjectContext *managedObjectContext;

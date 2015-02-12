@@ -8,7 +8,6 @@
 
 #import <Cocoa/Cocoa.h>
 
-@class PreferenceController;
 @class MyAnimeList;
 @class FixSearchDialog;
 @class HistoryWindow;
@@ -20,9 +19,7 @@
 	IBOutlet NSMenu *statusMenu;
     NSStatusItem                *statusItem;
     NSImage                        *statusImage;
-    NSImage                        *statusHighlightImage;
-	PreferenceController * preferenceController;
-	NSManagedObjectModel *managedObjectModel;
+    NSManagedObjectModel *managedObjectModel;
 	NSManagedObjectContext *managedObjectContext;
 	NSPersistentStoreCoordinator *persistentStoreCoordinator;
 	NSTimer * timer;
@@ -100,6 +97,5 @@
 -(IBAction)showAboutWindow:(id)sender;
 -(bool)getisScrobbling;
 -(bool)getisScrobblingActive;
--(NSManagedObjectModel *)getObjectModel;
 -(NSManagedObjectContext *)getObjectContext;
 @end

@@ -131,11 +131,6 @@
             [savebut setKeyEquivalent:@"\r"];
         }
     }
-
-    //release
-    request = nil;
-    url = nil;
-
 }
 -(IBAction)registermal:(id)sender
 {

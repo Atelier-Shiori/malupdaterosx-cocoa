@@ -7,7 +7,6 @@
 //
 
 #import "MyAnimeList.h"
-#import "EasyNSURLConnection.h"
 #import "Detection.h"
 #import "MyAnimeList+Search.h"
 #import "MyAnimeList+Update.h"
@@ -61,7 +60,7 @@
 }
 -(int)getScore
 {
-    return [TitleScore integerValue];
+    return [TitleScore intValue];
 }
 -(int)getCurrentEpisode{
     return [DetectedCurrentEpisode intValue];
@@ -271,11 +270,9 @@
             DetectedEpisode = nil;
             DetectedSource = nil;
             return true;
-            break;
             
         default:
             return false;
-            break;
     }
 }
 -(NSDictionary *)getLastScrobbledInfo{
