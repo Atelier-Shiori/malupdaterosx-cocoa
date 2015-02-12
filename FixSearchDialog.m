@@ -72,7 +72,7 @@
 -(void)finish:(NSDictionary *)d{
     selectedtitle = d[@"title"];
     selectedaniid = [d[@"id"] stringValue];
-    selectedtotalepisodes = d[@"episodes"];
+    selectedtotalepisodes = [(NSNumber *)d[@"episodes"] intValue];
     [self.window orderOut:self];
     [NSApp endSheet:self.window returnCode:1];
 }
@@ -155,7 +155,7 @@
 -(NSString *)getSelectedAniID{
     return selectedaniid;
 }
--(NSString *)getSelectedTotalEpisodes{
+-(int)getSelectedTotalEpisodes{
     return selectedtotalepisodes;
 }
 -(bool)getdeleteTitleonCorrection{

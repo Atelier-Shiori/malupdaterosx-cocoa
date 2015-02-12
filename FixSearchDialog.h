@@ -17,7 +17,7 @@
     IBOutlet NSTextView *selectedsynopsis;
     NSString * selectedtitle;
     NSString * selectedaniid;
-    NSString * selectedtotalepisodes;
+    int selectedtotalepisodes;
     NSString * searchquery;
     bool correction;
     bool allowdelete;
@@ -27,7 +27,7 @@
 -(void)setAllowDelete:(BOOL)deleteallowed;
 -(NSString *)getSelectedTitle;
 -(NSString *)getSelectedAniID;
--(NSString *)getSelectedTotalEpisodes;
+-(int)getSelectedTotalEpisodes;
 -(bool)getdeleteTitleonCorrection;
 -(bool)getcorrectonce;
 -(void)setSearchField:(NSString *)term;
