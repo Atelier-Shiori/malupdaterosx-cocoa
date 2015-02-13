@@ -436,6 +436,7 @@
 				8D11072C0486CEB800E47090 /* Sources */,
 				8D11072E0486CEB800E47090 /* Frameworks */,
 				3A4C6253120DF5580032F63A /* CopyFiles */,
+				6FD505201A8E6BE700BC3CAD /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -499,6 +500,22 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		6FD505201A8E6BE700BC3CAD /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "#! /bin/bash\n\n# Put this in a 'run script' run phase in xcode\n# Delete all framework headers\ncd \"${BUILD_DIR}/${CONFIGURATION}/${PRODUCT_NAME}.app/Contents/Frameworks\"\n\nif [ $? = 0 ]; then\nfind . -name \"*.h\" -print0 | xargs -0 rm\nfi";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		8D11072C0486CEB800E47090 /* Sources */ = {
