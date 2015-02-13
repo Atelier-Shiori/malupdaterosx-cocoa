@@ -214,6 +214,8 @@
     DetectedSource = nil;
     DetectedGroup = nil;
     DetectedSeason = 0;
+    // Clear Core Data Objects from Memory
+    [managedObjectContext reset];
     // Reset correcting Value
     correcting = false;
     NSLog(@"Scrobble Complete with Status Code: %i", status);
