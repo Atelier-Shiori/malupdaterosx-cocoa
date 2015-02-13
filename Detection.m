@@ -51,7 +51,7 @@
         NSTask *task;
         task = [[NSTask alloc] init];
         [task setLaunchPath: @"/usr/sbin/lsof"];
-        [task setArguments: @[@"-c", (NSString *) player[(NSUInteger) i], @"-F", @"n"]]; 		//lsof -c '<player name>' -Fn
+        [task setArguments: @[@"-c", (NSString *)player[i], @"-F", @"n"]]; 		//lsof -c '<player name>' -Fn
         NSPipe *pipe;
         pipe = [NSPipe pipe];
         [task setStandardOutput: pipe];
@@ -88,13 +88,6 @@
                 NSString * DetectedSource;
                 // Source Detection
                 switch (i) {
-                    case 0:
-                    case 1:
-                    case 3:
-                    case 6:
-                    case 7:
-                        DetectedSource = (NSString *)player[i];
-                        break;
                     case 2:
                         DetectedSource = @"SMPlayerX";
                         break;
@@ -103,6 +96,7 @@
                         DetectedSource = @"Quicktime";
                         break;
                     default:
+                        DetectedSource = (NSString *)player[i];
                         break;
                 }
                 if (DetectedTitle.length > 0) {
@@ -143,7 +137,7 @@
     
     NSError* error;
     
-    d = [NSJSONSerialization JSONObjectWithData:data options:nil error:&error];
+    d = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
     if (d[@"result"]  == [NSNull null]){ // Check to see if anything is playing on stream
         return nil;
     }
@@ -158,7 +152,8 @@
             NSString * DetectedEpisode = [NSString stringWithFormat:@"%@",result[@"episode"]];
             NSString * DetectedSource = [NSString stringWithFormat:@"%@ in %@", [result[@"site"] capitalizedString], result[@"browser"]];
             NSString * DetectedGroup = (NSString *)result[@"site"];
-            return @{@"detectedtitle": DetectedTitle, @"detectedepisode": DetectedEpisode, @"detectedseason": @0, @"detectedsource": DetectedSource, @"group": DetectedGroup};
+            NSNumber * DetectedSeason = (NSNumber *)result[@"season"];
+            return @{@"detectedtitle": DetectedTitle, @"detectedepisode": DetectedEpisode, @"detectedseason": DetectedSeason, @"detectedsource": DetectedSource, @"group": DetectedGroup};
         }
     }
 }
@@ -209,3 +204,4 @@
     return false;
 }
 @end
+
