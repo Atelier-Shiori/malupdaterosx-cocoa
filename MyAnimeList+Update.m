@@ -138,7 +138,7 @@
             [request addFormData:WatchStatus forKey:@"status"];
         }
         // Set existing score to prevent the score from being erased.
-        [request addFormData:[NSNumber numberWithInt:TitleScore] forKey:@"score"];
+        [request addFormData:[[NSNumber numberWithInt:TitleScore] stringValue] forKey:@"score"];
         // Do Update
         [request startFormRequest];
         

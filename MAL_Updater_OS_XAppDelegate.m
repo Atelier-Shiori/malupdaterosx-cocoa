@@ -407,6 +407,11 @@
         [updatenow setTitle:@"Update Now"];
     }
 }
+-(void)EnableStatusUpdating:(BOOL)enable{
+    [updatecorrect setAutoenablesItems:enable];
+    [updatetoolbaritem setEnabled:enable];
+    [updatedupdatestatus setEnabled:enable];
+}
 
 #pragma mark Timer Functions
 
@@ -525,8 +530,7 @@
                     // Show normal info
                     [self updateLastScrobbledTitleStatus:false];
                     //Enable Update Status functions
-                    [updatetoolbaritem setEnabled:YES];
-                    [updatedupdatestatus setEnabled:YES];
+                    [self EnableStatusUpdating:YES];
                     [confirmupdate setHidden:YES];
                 }
                 else{
@@ -535,9 +539,10 @@
                         [confirmupdate setHidden:NO];
                     if ([MALEngine getisNewTitle]) {
                         // Disable Update Status functions for new and unconfirmed titles.
-                        [updatecorrect setAutoenablesItems:NO];
-                        [updatetoolbaritem setEnabled:NO];
-                        [updatedupdatestatus setEnabled:NO];
+                        [self EnableStatusUpdating:NO];
+                    }
+                    else{
+                        [self EnableStatusUpdating:YES];
                     }
                 }
                 [sharetoolbaritem setEnabled:YES];
@@ -889,9 +894,7 @@
         [self showNotication:@"MAL Updater OS X" message:[NSString stringWithFormat:@"%@ Episode %@ has been updated.",[MALEngine getLastScrobbledActualTitle],[MALEngine getLastScrobbledEpisode]]];
         if ([MALEngine getisNewTitle]) {
             // Enable Update Status functions for new and unconfirmed titles.
-            [confirmupdate setHidden:YES];
-			[updatetoolbaritem setEnabled:YES];
-            [updatedupdatestatus setEnabled:YES];
+            [self EnableStatusUpdating:YES];
         }
     }
     else{
