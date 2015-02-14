@@ -98,18 +98,12 @@
         // Already Watched, no need to scrobble
         // Store Scrobbled Title and Episode
         confirmed = true;
-        LastScrobbledTitle = DetectedTitle;
-        LastScrobbledEpisode = DetectedEpisode;
-        LastScrobbledActualTitle = (NSString *)LastScrobbledInfo[@"title"];
-        LastScrobbledSource = DetectedSource;
+        [self storeLastScrobbled];
         return 2;
     }
     else if (!LastScrobbledTitleNew && [[NSUserDefaults standardUserDefaults] boolForKey:@"ConfirmUpdates"] && !confirmed && !correcting && !confirming) {
         // Confirm before updating title
-        LastScrobbledTitle = DetectedTitle;
-        LastScrobbledEpisode = DetectedEpisode;
-        LastScrobbledActualTitle = (NSString *)LastScrobbledInfo[@"title"];
-        LastScrobbledSource = DetectedSource;
+        [self storeLastScrobbled];
         return 3;
     }
     else {
@@ -167,10 +161,7 @@
     //Check Confirm
     if (LastScrobbledTitleNew && [[NSUserDefaults standardUserDefaults] boolForKey:@"ConfirmNewTitle"] && !confirmed && !correcting && !confirming) {
         // Confirm before updating title
-        LastScrobbledTitle = DetectedTitle;
-        LastScrobbledEpisode = DetectedEpisode;
-        LastScrobbledActualTitle = (NSString *)LastScrobbledInfo[@"title"];
-        LastScrobbledSource = DetectedSource;
+        [self storeLastScrobbled];
         return 3;
     }
     // Add the title
@@ -277,5 +268,10 @@
             return false;
     }
 }
-
+-(void)storeLastScrobbled{
+    LastScrobbledTitle = DetectedTitle;
+    LastScrobbledEpisode = DetectedEpisode;
+    LastScrobbledActualTitle = (NSString *)LastScrobbledInfo[@"title"];
+    LastScrobbledSource = DetectedSource;
+}
 @end
