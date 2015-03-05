@@ -13,7 +13,7 @@
 @implementation AutoExceptions
 #pragma mark Importing Exceptions and Auto Exceptions
 +(void)importToCoreData{
-    MAL_Updater_OS_XAppDelegate* delegate = (MAL_Updater_OS_XAppDelegate *)[[NSApplication sharedApplication] delegate];
+    MAL_Updater_OS_XAppDelegate * delegate = (MAL_Updater_OS_XAppDelegate *)[[NSApplication sharedApplication] delegate];
     NSManagedObjectContext *moc = [delegate getObjectContext];
     // Check Exceptions
     NSArray *oexceptions = [[NSUserDefaults standardUserDefaults] objectForKey:@"exceptions"];
@@ -64,59 +64,32 @@
     //Test API
     [request startRequest];
     // Get Status Code
-    long statusCode = [request getStatusCode];
+    int statusCode = [request getStatusCode];
     switch (statusCode) {
         case 200:{
+            //Clear Auto Exceptions
+            [AutoExceptions clearAutoExceptions];
             NSLog(@"Updating Auto Exceptions!");
             //Parse and Import
             NSData *jsonData = [request getResponseData];
             NSError *error = nil;
             NSArray * a = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:&error];
-           MAL_Updater_OS_XAppDelegate * delegate = (MAL_Updater_OS_XAppDelegate *)[[NSApplication sharedApplication] delegate];
+            MAL_Updater_OS_XAppDelegate * delegate = (MAL_Updater_OS_XAppDelegate *)[[NSApplication sharedApplication] delegate];
             NSManagedObjectContext *moc = [delegate getObjectContext];
             for (NSDictionary *d in a) {
-                NSString * detectedtitlea = d[@"detectedtitle"];
-                NSString * groupa = d[@"group"];
-                NSString * correcttitlea = d[@"correcttitle"];
-                BOOL exists = false;
-                NSFetchRequest * allExceptions = [[NSFetchRequest alloc] init];
-                [allExceptions setEntity:[NSEntityDescription entityForName:@"AutoExceptions" inManagedObjectContext:moc]];
-                NSPredicate *predicate = [NSPredicate predicateWithFormat: @"(detectedTitle == %@) AND (group == %@) AND (correctTitle == %@)", detectedtitlea, groupa, correcttitlea];
-                [allExceptions setPredicate:predicate];
-                error= nil;
-                NSArray * aExceptions = [moc executeFetchRequest:allExceptions error:&error];
-                if (aExceptions.count > 0) {
-                    for (NSManagedObject * entry in aExceptions) {
-                        @autoreleasepool {
-                            NSString * title = [entry valueForKey:@"detectedTitle"];
-                            NSString * group = [entry valueForKey:@"group"];
-                            NSString * correcttitle = [entry valueForKey:@"correctTitle"];
-                            if ([title isEqualToString:detectedtitlea]&& [group isEqualToString:groupa] && [correcttitle isEqualToString:correcttitlea]) {
-                                exists = true;
-                            }
-                        }
-                    }
-                }
-                // Check to see if it exists on the list already
-                if (exists) {
-                    //Check next title
-                    continue;
-                }
-                else{
-                    NSError * aerror = nil;
-                    // Add Entry to Auto Exceptions
-                    NSManagedObject *obj = [NSEntityDescription
-                                            insertNewObjectForEntityForName:@"AutoExceptions"
-                                            inManagedObjectContext: moc];
-                    // Set values in the new record
-                    [obj setValue:d[@"detectedtitle"] forKey:@"detectedTitle"];
-                    [obj setValue:d[@"correcttitle"] forKey:@"correctTitle"];
-                    [obj setValue:d[@"offset"] forKey:@"episodeOffset"];
-                    [obj setValue:d[@"threshold"] forKey:@"episodethreshold"];
-                    [obj setValue:d[@"group"] forKey:@"group"];
-                    //Save
-                    [moc save:&aerror];
-                }
+                NSError * error = nil;
+                // Add Entry to Auto Exceptions
+                NSManagedObject *obj = [NSEntityDescription
+                                        insertNewObjectForEntityForName:@"AutoExceptions"
+                                        inManagedObjectContext: moc];
+                // Set values in the new record
+                [obj setValue:d[@"detectedtitle"] forKey:@"detectedTitle"];
+                [obj setValue:d[@"correcttitle"] forKey:@"correctTitle"];
+                [obj setValue:d[@"offset"] forKey:@"episodeOffset"];
+                [obj setValue:d[@"threshold"] forKey:@"episodethreshold"];
+                [obj setValue:d[@"group"] forKey:@"group"];
+                //Save
+                [moc save:&error];
             }
             // Set the last updated date
             [[NSUserDefaults standardUserDefaults] setValue:[NSDate date] forKey:@"ExceptionsLastUpdated"];
@@ -128,6 +101,24 @@
             NSLog(@"Auto Exceptions List Update Failed!");
             break;
     }
+}
++(void)clearAutoExceptions{
+    // Remove All cache data from Auto Exceptions
+    MAL_Updater_OS_XAppDelegate * delegate = (MAL_Updater_OS_XAppDelegate *)[[NSApplication sharedApplication] delegate];
+    NSManagedObjectContext *moc = [delegate getObjectContext];
+    NSFetchRequest * allExceptions = [[NSFetchRequest alloc] init];
+    [allExceptions setEntity:[NSEntityDescription entityForName:@"AutoExceptions" inManagedObjectContext:moc]];
+    
+    NSError * error = nil;
+    NSArray * exceptions = [moc executeFetchRequest:allExceptions error:&error];
+    //error handling goes here
+    for (NSManagedObject * exception in exceptions) {
+        [moc deleteObject:exception];
+    }
+    error = nil;
+    [moc save:&error];
+    // Clear Core Data Objects from Memory
+    [moc reset];
 }
 
 @end
