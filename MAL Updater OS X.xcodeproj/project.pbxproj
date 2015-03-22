@@ -50,6 +50,8 @@
 		6F28DC1B1A67092F00AF063F /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F28DC1A1A67092F00AF063F /* Carbon.framework */; };
 		6F5F6C701A71696D006D4607 /* MAL_Updater_OS_X_DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6F5F6C6D1A71696D006D4607 /* MAL_Updater_OS_X_DataModel.xcdatamodeld */; };
 		6FAA0C1F1A7E938400416079 /* ExceptionsCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FAA0C1E1A7E938400416079 /* ExceptionsCache.m */; };
+		6FBA5A081ABE460600B6DB79 /* AdvancedPrefController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FBA5A061ABE460600B6DB79 /* AdvancedPrefController.m */; };
+		6FBA5A0A1ABE484B00B6DB79 /* AdvancedPrefController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6FBA5A0C1ABE484B00B6DB79 /* AdvancedPrefController.xib */; };
 		6FF033301A73F2C70096FC69 /* rules.png in Resources */ = {isa = PBXBuildFile; fileRef = 6FF0332F1A73F2C70096FC69 /* rules.png */; };
 		8227C1171A1D8D34005F3301 /* anitomy-osx.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8227C1161A1D8D34005F3301 /* anitomy-osx.framework */; };
 		8227C1181A1D8D47005F3301 /* anitomy-osx.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8227C1161A1D8D34005F3301 /* anitomy-osx.framework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -155,6 +157,9 @@
 		6FAA0C1E1A7E938400416079 /* ExceptionsCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExceptionsCache.m; sourceTree = "<group>"; };
 		6FAA877D1A7EB22100EFFAC1 /* Preferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Preferences.h; sourceTree = "<group>"; };
 		6FAA87801A7EB5C500EFFAC1 /* Hotkeys.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Hotkeys.h; sourceTree = "<group>"; };
+		6FBA5A051ABE460600B6DB79 /* AdvancedPrefController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdvancedPrefController.h; sourceTree = "<group>"; };
+		6FBA5A061ABE460600B6DB79 /* AdvancedPrefController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdvancedPrefController.m; sourceTree = "<group>"; };
+		6FBA5A0B1ABE484B00B6DB79 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/AdvancedPrefController.xib; sourceTree = "<group>"; };
 		6FF0332F1A73F2C70096FC69 /* rules.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rules.png; sourceTree = "<group>"; };
 		8227C1161A1D8D34005F3301 /* anitomy-osx.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "anitomy-osx.framework"; path = "Frameworks/anitomy-osx.framework"; sourceTree = "<group>"; };
 		822AEB861A202931003DD682 /* FixSearchDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FixSearchDialog.h; sourceTree = "<group>"; };
@@ -281,6 +286,7 @@
 				3A20383112122B2B003813B2 /* dsa_pub.pem */,
 				8D1107310486CEB800E47090 /* MAL_Updater_OS_X-Info.plist */,
 				089C165CFE840E0CC02AAC07 /* InfoPlist.strings */,
+				6FBA5A0C1ABE484B00B6DB79 /* AdvancedPrefController.xib */,
 				6F27CE961A6869E8004E51F8 /* ExceptionsPref.xib */,
 				6F27CE991A6869ED004E51F8 /* HotkeysPrefs.xib */,
 				1DDD58140DA1D0A300B32029 /* MainMenu.xib */,
@@ -352,6 +358,8 @@
 			isa = PBXGroup;
 			children = (
 				6FAA877D1A7EB22100EFFAC1 /* Preferences.h */,
+				6FBA5A051ABE460600B6DB79 /* AdvancedPrefController.h */,
+				6FBA5A061ABE460600B6DB79 /* AdvancedPrefController.m */,
 				6F28DC021A67082400AF063F /* HotkeysPrefs.h */,
 				6F28DC031A67082400AF063F /* HotkeysPrefs.m */,
 				822AEB8B1A202A7B003DD682 /* ExceptionsPref.h */,
@@ -483,6 +491,7 @@
 			files = (
 				8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */,
 				8294C45E19F99B2F009DE98B /* Images.xcassets in Resources */,
+				6FBA5A0A1ABE484B00B6DB79 /* AdvancedPrefController.xib in Resources */,
 				6F27CE971A6869ED004E51F8 /* HotkeysPrefs.xib in Resources */,
 				6FF033301A73F2C70096FC69 /* rules.png in Resources */,
 				5C07DA751A815F580003A827 /* HistoryWindow.xib in Resources */,
@@ -548,6 +557,7 @@
 				6F28DC131A67085800AF063F /* MASShortcut+Monitoring.m in Sources */,
 				6FAA0C1F1A7E938400416079 /* ExceptionsCache.m in Sources */,
 				829727951A8BB093004F73AB /* MyAnimeList+Search.m in Sources */,
+				6FBA5A081ABE460600B6DB79 /* AdvancedPrefController.m in Sources */,
 				5CBE9EC319F2F0E300CA3E5D /* LoginPref.m in Sources */,
 				6F28DC041A67082400AF063F /* HotkeysPrefs.m in Sources */,
 				5C000E4419F30EA50026F350 /* SoftwareUpdatesPref.m in Sources */,
@@ -635,6 +645,14 @@
 				6F27CE9B1A686A04004E51F8 /* Base */,
 			);
 			name = MASPreferencesWindow.xib;
+			sourceTree = "<group>";
+		};
+		6FBA5A0C1ABE484B00B6DB79 /* AdvancedPrefController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				6FBA5A0B1ABE484B00B6DB79 /* Base */,
+			);
+			name = AdvancedPrefController.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
