@@ -90,5 +90,40 @@
                                                                                                   (CFStringRef)@"!*'();:@&=+$,/?%#[]",
                                                                                                   kCFStringEncodingUTF8 ));
 }
++(void)showDonateReminder{
+    // Shows Donation Reminder
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"donatereminderdate"] == nil){
+        [Utility setReminderDate];
+    }
+    if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"donatereminderdate"] timeIntervalSinceNow] < 0 && ![[NSUserDefaults standardUserDefaults] boolForKey: @"donateremindersuppress"]) {
+        NSAlert * alert = [[NSAlert alloc] init] ;
+        [alert addButtonWithTitle:@"Donate"];
+        [alert addButtonWithTitle:@"Remind Me Later"];
+        [alert setMessageText:@"Please Support MAL Updater OS X"];
+        [alert setInformativeText:@"We noticed that you have been using MAL Updater OS X for a while. While MAL Updater OS X is free, it cost us money and time to keep the Unofficial MAL API up and running along with developing this program. \r\rIf you find this program helpful, please consider contributing to our Patreon. All money will help future development and keep the Unofficial MAL API running. Note that contributing to my Patreon is completely optional."];
+        [alert setShowsSuppressionButton:YES];
+        // Set Message type to Warning
+        [alert setAlertStyle:NSInformationalAlertStyle];
+        if ([alert runModal]== NSAlertFirstButtonReturn) {
+            // Open Donation Page
+            [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://www.patreon.com/chikorita157"]];
+            [Utility setReminderDate];
+        }
+        else{
+            [Utility setReminderDate];
+        }
+        if (alert.suppressionButton.state == NSOnState){
+            //Set in user defaults not to show Donation Reminder again.
+            [[NSUserDefaults standardUserDefaults] setBool: YES forKey: @"donateremindersuppress"];
+        }
+    }
+}
+
++(void)setReminderDate{
+    //Sets Reminder Date
+    NSDate *now = [NSDate date];
+    NSDate * reminderdate = [now dateByAddingTimeInterval:60*60*24*7];
+    [[NSUserDefaults standardUserDefaults] setObject:reminderdate forKey:@"donatereminderdate"];
+}
 
 @end

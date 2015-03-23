@@ -270,6 +270,8 @@
 	}
     // Import existing Exceptions Data
     [AutoExceptions importToCoreData];
+    // Show Donation Message
+    [Utility showDonateReminder];
     
 }
 #pragma mark General UI Functions

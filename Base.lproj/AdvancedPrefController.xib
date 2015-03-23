@@ -55,7 +55,7 @@
                     <rect key="frame" x="149" y="109" width="268" height="56"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="7G9-zR-zjL">
                         <font key="font" metaFont="smallSystem"/>
-                        <string key="title">The host is usually an IP address that is running Plex Theater. If you running Plex Theater/Kodi on the same machine, specify localhost as the host.</string>
+                        <string key="title">The host is usually an IP address that is running Kodi or Plex Theater. If you running Kodi or Plex Theater on the same machine, please specify localhost as the host.</string>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
@@ -69,8 +69,8 @@
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Mxp-Ed-WKM">
-                    <rect key="frame" x="149" y="48" width="275" height="23"/>
-                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="The default port number is 3005." id="XKP-As-iQI">
+                    <rect key="frame" x="149" y="48" width="275" height="28"/>
+                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="The default port number is 3005 in Plex Theater and 80 in Kodi." id="XKP-As-iQI">
                         <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -86,18 +86,18 @@
                         <binding destination="8ch-Z3-2Y0" name="value" keyPath="values.enablekodiapi" id="6p3-6F-lKA"/>
                     </connections>
                 </button>
-                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Z3P-ov-X8s">
-                    <rect key="frame" x="77" y="11" width="340" height="34"/>
-                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="In order to make Kodi/Plex Theater JSON RPC API detection work, you need to have HTTP JSON-RPC enabled." id="Agl-d8-C1u">
-                        <font key="font" metaFont="smallSystem"/>
-                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gnC-PW-UbL">
                     <rect key="frame" x="37" y="172" width="103" height="17"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Host:" id="Sfk-hk-xua">
                         <font key="font" metaFont="system"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Z3P-ov-X8s">
+                    <rect key="frame" x="77" y="7" width="340" height="34"/>
+                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="In order to make Kodi/Plex Theater JSON RPC API detection work, you need to have HTTP JSON-RPC enabled." id="Agl-d8-C1u">
+                        <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
