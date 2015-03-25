@@ -294,6 +294,7 @@
                 <outlet property="findtitle" destination="hzK-en-4jo" id="jb6-mJ-i9t"/>
                 <outlet property="img" destination="gfr-73-DLn" id="iLO-3a-xch"/>
                 <outlet property="lastupdateheader" destination="53a-L9-dCg" id="Nsn-Jb-mIY"/>
+                <outlet property="openAnimePage" destination="GWr-5m-lgQ" id="h6z-S7-zGA"/>
                 <outlet property="seperator" destination="egk-cQ-duZ" id="JnP-Yt-mVt"/>
                 <outlet property="seperator2" destination="ZEo-hm-rcH" id="g9l-WQ-yu2"/>
                 <outlet property="shareMenu" destination="ltR-rE-E7c" id="k8c-iR-Onz"/>
@@ -584,21 +585,6 @@ Gw
                             <action selector="updatestatus:" target="560" id="3Wt-yz-WbX"/>
                         </connections>
                     </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="038CB579-0FFA-4844-983C-72E11B7CEC96" label="Preferences" paletteLabel="Preferences" toolTip="Preferences" image="NSActionTemplate" id="wq9-kC-J4D">
-                        <size key="minSize" width="32" height="25"/>
-                        <size key="maxSize" width="32" height="32"/>
-                        <button key="view" verticalHuggingPriority="750" id="Ddf-Ar-Aia">
-                            <rect key="frame" x="15" y="14" width="32" height="25"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="NSActionTemplate" imagePosition="overlaps" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="PDE-DY-34l">
-                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                <font key="font" metaFont="system"/>
-                            </buttonCell>
-                        </button>
-                        <connections>
-                            <action selector="showPreferences:" target="560" id="Mvr-JX-0w4"/>
-                        </connections>
-                    </toolbarItem>
                     <toolbarItem implicitItemIdentifier="9D874849-1C76-4C4D-888C-5339B9C19B4B" label="Update History" paletteLabel="Update History" toolTip="Update History" image="history" id="eo4-15-Ehk">
                         <size key="minSize" width="32" height="25"/>
                         <size key="maxSize" width="32" height="32"/>
@@ -658,13 +644,31 @@ Gw
                             </connections>
                         </popUpButton>
                     </toolbarItem>
+                    <toolbarItem implicitItemIdentifier="DBB7A4EC-2BC9-443C-A50F-D5C55F12B236" label="View on MyAnimeList" paletteLabel="View on MyAnimeList" toolTip="View on MyAnimeList" image="Info" id="GWr-5m-lgQ">
+                        <size key="minSize" width="32" height="25"/>
+                        <size key="maxSize" width="32" height="32"/>
+                        <button key="view" verticalHuggingPriority="750" id="KFJ-iS-Wdx">
+                            <rect key="frame" x="15" y="14" width="32" height="25"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="Info" imagePosition="above" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="dZI-lo-iNp">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="system"/>
+                                <connections>
+                                    <action selector="showLastScrobbledInformation:" target="560" id="dtW-bn-jMC"/>
+                                </connections>
+                            </buttonCell>
+                        </button>
+                        <connections>
+                            <action selector="showPreferences:" target="560" id="2ZS-jU-YOh"/>
+                        </connections>
+                    </toolbarItem>
                 </allowedToolbarItems>
                 <defaultToolbarItems>
-                    <toolbarItem reference="wq9-kC-J4D"/>
                     <toolbarItem reference="eo4-15-Ehk"/>
                     <toolbarItem reference="k8g-Fn-fps"/>
                     <toolbarItem reference="ddD-eA-X8S"/>
                     <toolbarItem reference="vKI-CB-Acb"/>
+                    <toolbarItem reference="GWr-5m-lgQ"/>
                 </defaultToolbarItems>
             </toolbar>
             <contentBorderThickness minY="22"/>
@@ -672,7 +676,7 @@ Gw
         </window>
     </objects>
     <resources>
-        <image name="NSActionTemplate" width="14" height="14"/>
+        <image name="Info" width="32" height="32"/>
         <image name="NSShareTemplate" width="18" height="16"/>
         <image name="correct" width="32" height="32"/>
         <image name="history" width="32" height="32"/>

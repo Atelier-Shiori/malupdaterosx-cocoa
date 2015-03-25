@@ -57,6 +57,7 @@
 	IBOutlet NSToolbarItem * updatetoolbaritem;
     IBOutlet NSToolbarItem * correcttoolbaritem;
     IBOutlet NSToolbarItem * sharetoolbaritem;
+    IBOutlet NSToolbarItem * openAnimePage;
 	IBOutlet NSTextField * showtitle;
 	IBOutlet NSPopUpButton * showstatus;
 	IBOutlet NSPopUpButton * showscore;
