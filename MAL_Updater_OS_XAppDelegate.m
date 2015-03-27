@@ -263,7 +263,7 @@
         }
 	}
     if ([Utility checkoldAPI]) {
-        [self showNotication:@"MAL Updater OS X" message:@"The API URL has been automatically updated."];
+        [self showNotification:@"MAL Updater OS X" message:@"The API URL has been automatically updated."];
         [[NSUserDefaults standardUserDefaults] setObject:@"https://malapi.ateliershiori.moe" forKey:@"MALAPIURL"];
     }
 	// Autostart Scrobble at Startup
@@ -426,13 +426,13 @@
 - (IBAction)toggletimer:(id)sender {
 	//Check to see if there is an API Key stored
 	if (![Utility checktoken]) {
-        [self showNotication:@"MAL Updater OS X" message:@"Add a login before you start scrobbling."];
+        [self showNotification:@"MAL Updater OS X" message:@"Add a login before you start scrobbling."];
 	}
 	else {
 		if (scrobbling == FALSE) {
 			[self starttimer];
 			[togglescrobbler setTitle:@"Stop Scrobbling"];
-            [self showNotication:@"MAL Updater OS X" message:@"Auto Scrobble is now turned on."];
+            [self showNotification:@"MAL Updater OS X" message:@"Auto Scrobble is now turned on."];
 			[ScrobblerStatus setObjectValue:@"Scrobble Status: Started"];
 			//Set Scrobbling State to true
 			scrobbling = TRUE;
@@ -441,7 +441,7 @@
 			[self stoptimer];
 			[togglescrobbler setTitle:@"Start Scrobbling"];
 			[ScrobblerStatus setObjectValue:@"Scrobble Status: Stopped"];
-            [self showNotication:@"MAL Updater OS X" message:@"Auto Scrobble is now turned off."];
+            [self showNotification:@"MAL Updater OS X" message:@"Auto Scrobble is now turned off."];
 			//Set Scrobbling State to false
 			scrobbling = FALSE;
 		}
@@ -451,7 +451,7 @@
 -(void)autostarttimer {
 	//Check to see if there is an API Key stored
 	if (![Utility checktoken]) {
-         [self showNotication:@"MAL Updater OS X" message:@"Add a login before you start scrobbling."];
+         [self showNotification:@"MAL Updater OS X" message:@"Add a login before you start scrobbling."];
 	}
 	else {
 		[self starttimer];
@@ -502,27 +502,27 @@
             case 3:{
                 [self setStatusText:@"Scrobble Status: Please confirm update."];
                 NSDictionary * userinfo = @{@"title": [MALEngine getLastScrobbledTitle],  @"episode": [MALEngine getLastScrobbledEpisode]};
-                [self showConfirmationNotication:@"Confirm Update" message:[NSString stringWithFormat:@"Click here to confirm update for %@ Episode %@.",[MALEngine getLastScrobbledActualTitle],[MALEngine getLastScrobbledEpisode]] updateData:userinfo];
+                [self showConfirmationNotification:@"Confirm Update" message:[NSString stringWithFormat:@"Click here to confirm update for %@ Episode %@.",[MALEngine getLastScrobbledActualTitle],[MALEngine getLastScrobbledEpisode]] updateData:userinfo];
                 break;
             }
             case 21:
             case 22:
                 [self setStatusText:@"Scrobble Status: Scrobble Successful..."];
-                [self showNotication:@"Scrobble Successful."message:[NSString stringWithFormat:@"%@ - %@",[MALEngine getLastScrobbledActualTitle],[MALEngine getLastScrobbledEpisode]]];
+                [self showNotification:@"Scrobble Successful."message:[NSString stringWithFormat:@"%@ - %@",[MALEngine getLastScrobbledActualTitle],[MALEngine getLastScrobbledEpisode]]];
                 //Add History Record
                 [HistoryWindow addrecord:[MALEngine getLastScrobbledActualTitle] Episode:[MALEngine getLastScrobbledEpisode] Date:[NSDate date]];
                 break;
             case 51:
                 [self setStatusText:@"Scrobble Status: Couldn't find title."];
-                [self showNotication:@"Scrobble Unsuccessful." message:[NSString stringWithFormat:@"Couldn't find %@.", [MALEngine getFailedTitle]]];
+                [self showNotification:@"Couldn't find title." message:[NSString stringWithFormat:@"Click here to find %@ manually.", [MALEngine getFailedTitle]]];
                 break;
             case 52:
             case 53:
-                [self showNotication:@"Scrobble Unsuccessful." message:@"Retrying in 5 mins..."];
+                [self showNotification:@"Scrobble Unsuccessful." message:@"Retrying in 5 mins..."];
                 [self setStatusText:@"Scrobble Status: Scrobble Failed. Retrying in 5 mins..."];
                 break;
             case 54:
-                [self showNotication:@"Scrobble Unsuccessful." message:@"Check user credentials in Preferences. You may need to login again."];
+                [self showNotification:@"Scrobble Unsuccessful." message:@"Check user credentials in Preferences. You may need to login again."];
                 [self setStatusText:@"Scrobble Status: Scrobble Failed. User credentials might have expired."];
                 break;
             case 55:
@@ -592,7 +592,7 @@
 
 -(IBAction)updatenow:(id)sender{
     if (![Utility checktoken])
-        [self showNotication:@"MAL Updater OS X" message:@"Add a login before you start scrobbling."];
+        [self showNotification:@"MAL Updater OS X" message:@"Add a login before you start scrobbling."];
     else
         [self firetimer:nil];
 }
@@ -676,7 +676,7 @@
                 case 21:
                 case 22:{
                     [self setStatusText:@"Scrobble Status: Correction Successful..."];
-                    [self showNotication:@"MAL Updater OS X" message:@"Correction was successful"];
+                    [self showNotification:@"MAL Updater OS X" message:@"Correction was successful"];
                     [self setStatusMenuTitleEpisode:[MALEngine getLastScrobbledActualTitle] episode:[MALEngine getLastScrobbledEpisode]];
                     [self updateLastScrobbledTitleStatus:false];
                     if (!findtitle.hidden) {
@@ -697,7 +697,7 @@
                 }
                 default:
                     [self setStatusText:@"Scrobble Status: Correction unsuccessful..."];
-                    [self showNotication:@"MAL Updater OS X" message:@"Correction was not successful."];
+                    [self showNotification:@"MAL Updater OS X" message:@"Correction was not successful."];
                     break;
             }
         }
@@ -856,7 +856,7 @@
 
 #pragma mark Notification Center and Title/Update Confirmation
 
--(void)showNotication:(NSString *)title message:(NSString *) message{
+-(void)showNotification:(NSString *)title message:(NSString *) message{
     NSUserNotification *notification = [[NSUserNotification alloc] init];
     notification.title = title;
     notification.informativeText = message;
@@ -864,7 +864,7 @@
     
     [[NSUserNotificationCenter defaultUserNotificationCenter] deliverNotification:notification];
 }
--(void)showConfirmationNotication:(NSString *)title message:(NSString *) message updateData:(NSDictionary *)d{
+-(void)showConfirmationNotification:(NSString *)title message:(NSString *) message updateData:(NSDictionary *)d{
     NSUserNotification *notification = [[NSUserNotification alloc] init];
     notification.title = title;
     notification.informativeText = message;
@@ -890,6 +890,10 @@
             return;
         }
     }
+    else if ([notification.title isEqualToString:@"Couldn't find title."] && !findtitle.hidden){
+        //Find title
+        [self showCorrectionSearchWindow:nil];
+    }
 }
 -(IBAction)confirmupdate:(id)sender{
     [self confirmupdate];
@@ -901,14 +905,14 @@
         [HistoryWindow addrecord:[MALEngine getLastScrobbledActualTitle] Episode:[MALEngine getLastScrobbledEpisode] Date:[NSDate date]];
         [confirmupdate setHidden:YES];
         [self setStatusText:@"Scrobble Status: Update was successful."];
-        [self showNotication:@"MAL Updater OS X" message:[NSString stringWithFormat:@"%@ Episode %@ has been updated.",[MALEngine getLastScrobbledActualTitle],[MALEngine getLastScrobbledEpisode]]];
+        [self showNotification:@"MAL Updater OS X" message:[NSString stringWithFormat:@"%@ Episode %@ has been updated.",[MALEngine getLastScrobbledActualTitle],[MALEngine getLastScrobbledEpisode]]];
         if ([MALEngine getisNewTitle]) {
             // Enable Update Status functions for new and unconfirmed titles.
             [self EnableStatusUpdating:YES];
         }
     }
     else{
-        [self showNotication:@"MAL Updater OS X" message:@"Failed to confirm update. Please try again later."];
+        [self showNotification:@"MAL Updater OS X" message:@"Failed to confirm update. Please try again later."];
         [self setStatusText:@"Unable to confirm update."];
     }
 }
