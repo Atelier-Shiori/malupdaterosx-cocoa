@@ -118,6 +118,10 @@
                 }
                 else{alttitle = @"";}
                 
+                // Remove colons as they are invalid characters for filenames and to improve accuracy
+                theshowtitle = [theshowtitle stringByReplacingOccurrencesOfString:@":" withString:@""];
+                alttitle = [alttitle stringByReplacingOccurrencesOfString:@":" withString:@""];
+                
                 if ([Utility checkMatch:theshowtitle alttitle:alttitle regex:regex option:i]) {
                 }
                 DetectedEpisode = @"1"; // Usually, there is one episode in a movie.
@@ -141,6 +145,9 @@
                 }
             }
             else{alttitle = @"";}
+            // Remove colons as they are invalid characters for filenames and to improve accuracy
+            theshowtitle = [theshowtitle stringByReplacingOccurrencesOfString:@":" withString:@""];
+            alttitle = [alttitle stringByReplacingOccurrencesOfString:@":" withString:@""];
             if ([Utility checkMatch:theshowtitle alttitle:alttitle regex:regex option:i]) {
                 if ([[NSString stringWithFormat:@"%@", searchentry[@"type"]] isEqualToString:@"TV"]) { // Check Seasons if the title is a TV show type
                     // Used for Season Checking
