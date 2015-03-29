@@ -235,6 +235,8 @@
         DetectedSource = result[@"detectedsource"];
         // Check if the title was previously scrobbled
         [self checkExceptions];
+        // Check for Episode 0 titles
+        [self checkzeroEpisode];
         
         if ([DetectedTitle isEqualToString:LastScrobbledTitle] && [DetectedEpisode isEqualToString: LastScrobbledEpisode] && Success == 1) {
             // Do Nothing
@@ -282,6 +284,16 @@
 }
 -(void)clearAnimeInfo{
     LastScrobbledInfo = nil;
+}
+-(void)checkzeroEpisode{
+    // For 00 Episodes
+    if ([DetectedEpisode isEqualToString:@"00"]||[DetectedEpisode isEqualToString:@"0"]) {
+        // Specify it in the title instead
+        DetectedTitle = [NSString stringWithFormat:@"%@ Episode 0", DetectedTitle];
+        DetectedEpisode = @"1";
+        DetectedTitleisEpisodeZero = true;
+    }
+    else{DetectedTitleisEpisodeZero = false;}
 }
 -(NSString *)checkCache{
     NSManagedObjectContext *moc = managedObjectContext;

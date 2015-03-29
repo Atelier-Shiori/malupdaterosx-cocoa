@@ -25,6 +25,7 @@
     NSString * FailedEpisode;
     NSString * FailedSource;
     BOOL DetectedTitleisMovie;
+    BOOL DetectedTitleisEpisodeZero;
     int DetectedSeason;
 	int DetectedCurrentEpisode;
 	int TotalEpisodes;
