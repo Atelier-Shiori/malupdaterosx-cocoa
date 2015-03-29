@@ -233,10 +233,10 @@
         DetectedSeason = [(NSNumber *)result[@"detectedseason"] intValue];
         DetectedGroup = result[@"group"];
         DetectedSource = result[@"detectedsource"];
-        // Check if the title was previously scrobbled
-        [self checkExceptions];
         // Check for Episode 0 titles
         [self checkzeroEpisode];
+        // Check if the title was previously scrobbled
+        [self checkExceptions];
         
         if ([DetectedTitle isEqualToString:LastScrobbledTitle] && [DetectedEpisode isEqualToString: LastScrobbledEpisode] && Success == 1) {
             // Do Nothing
@@ -359,6 +359,7 @@
                             DetectedEpisode = [NSString stringWithFormat:@"%i", tmpepisode];
                         }
                         DetectedSeason = 0;
+                        DetectedTitleisEpisodeZero = false;
                         found = true;
 						break;
                     }
