@@ -342,7 +342,7 @@
                     }
                     else {
                         NSLog(@"%@ is found on exceptions list as %@.", DetectedTitle, correcttitle);
-                        DetectedTitle = correcttitle;
+                        DetectedTitle = [correcttitle stringByReplacingOccurrencesOfString:@":" withString:@""];
                         if (tmpepisode > 0) {
                             DetectedEpisode = [NSString stringWithFormat:@"%i", tmpepisode];
                         }
