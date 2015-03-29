@@ -100,7 +100,7 @@
         [alert addButtonWithTitle:@"Donate"];
         [alert addButtonWithTitle:@"Remind Me Later"];
         [alert setMessageText:@"Please Support MAL Updater OS X"];
-        [alert setInformativeText:@"We noticed that you have been using MAL Updater OS X for a while. While MAL Updater OS X is free, it cost us money and time to develop this program and keep the Unofficial MAL API running. \r\rIf you find this program helpful, please consider contributing to our Patreon. All money will help future development and keep the program functional. Note that contributing to my Patreon is completely optional."];
+        [alert setInformativeText:@"We noticed that you have been using MAL Updater OS X for a while. While MAL Updater OS X is free, it cost us money and time to develop this program and keep the Unofficial MAL API running. \r\rIf you find this program helpful, please consider contributing to our Patreon. Funding will help future development and keep the program functional. Note that contributing to my Patreon is completely optional."];
         [alert setShowsSuppressionButton:YES];
         // Set Message type to Warning
         [alert setAlertStyle:NSInformationalAlertStyle];
