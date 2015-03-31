@@ -175,7 +175,19 @@
     [request addHeader:[NSString stringWithFormat:@"Basic %@",[defaults objectForKey:@"Base64Token"]]  forKey:@"Authorization"];
     [request addFormData:titleid forKey:@"anime_id"];
     [request addFormData:DetectedEpisode forKey:@"episodes"];
-    [request addFormData:@"watching" forKey:@"status"];
+    // Check if the detected episode is equal to total episodes. If so, set it as complete (mostly for specials and movies)
+    if([DetectedEpisode intValue] == TotalEpisodes) {
+        //Set Title State for Title (use for Twitter feature)
+        WatchStatus = @"completed";
+        // Since Detected Episode = Total Episode, set the status as "Complete"
+        [request addFormData:WatchStatus forKey:@"status"];
+    }
+    else {
+        //Set Title State for Title (use for Twitter feature)
+        WatchStatus = @"watching";
+        // Still Watching
+        [request addFormData:WatchStatus forKey:@"status"];
+    }
     // Do Update
     [request startFormRequest];
     
