@@ -144,8 +144,13 @@
         NSString *theid = [self checkCache];
         if (theid.length == 0)
             AniID = [self searchanime]; // Not in cache, search
-        else
+        else{
             AniID = theid; // Set cached show id as AniID
+            //If Detected Episode is missing, set it to 1 for sanity
+            if ([DetectedEpisode length] == 0) {
+                DetectedEpisode = @"1";
+            }
+        }
     }
     else {
         AniID = [self searchanime]; // Search Cache Disabled
@@ -238,7 +243,7 @@
         // Check if the title was previously scrobbled
         [self checkExceptions];
         
-        if ([DetectedTitle isEqualToString:LastScrobbledTitle] && [DetectedEpisode isEqualToString: LastScrobbledEpisode] && Success == 1) {
+        if ([DetectedTitle isEqualToString:LastScrobbledTitle] && ([DetectedEpisode isEqualToString: LastScrobbledEpisode]||[self checkBlankDetectedEpisode]) && Success == 1) {
             // Do Nothing
             return 1;
         }
@@ -250,6 +255,12 @@
     else{
         return 0;
     }
+}
+-(BOOL)checkBlankDetectedEpisode{
+    if ([LastScrobbledEpisode isEqualToString:@"1"] && [DetectedEpisode length] == 0) {
+        return true;
+    }
+    return false;
 }
 -(BOOL)confirmupdate{
     DetectedTitle = LastScrobbledTitle;
