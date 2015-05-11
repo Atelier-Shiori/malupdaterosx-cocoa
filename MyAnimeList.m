@@ -218,6 +218,7 @@
     DetectedEpisode = nil;
     DetectedSource = nil;
     DetectedGroup = nil;
+    DetectedType = nil;
     DetectedSeason = 0;
     // Clear Core Data Objects from Memory
     [managedObjectContext reset];
@@ -238,6 +239,12 @@
         DetectedSeason = [(NSNumber *)result[@"detectedseason"] intValue];
         DetectedGroup = result[@"group"];
         DetectedSource = result[@"detectedsource"];
+        if ([(NSArray *)result[@"types"] count] > 0) {
+            DetectedType = [result[@"types"] objectAtIndex:0];
+        }
+        else{
+            DetectedType = @"";
+        }
         // Check for Episode 0 titles
         [self checkzeroEpisode];
         // Check if the title was previously scrobbled

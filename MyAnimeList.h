@@ -21,6 +21,7 @@
 	__weak NSString * DetectedEpisode;
     __weak NSString * DetectedSource;
     __weak NSString * DetectedGroup;
+    __weak NSString * DetectedType;
     NSString * FailedTitle;
     NSString * FailedEpisode;
     NSString * FailedSource;
