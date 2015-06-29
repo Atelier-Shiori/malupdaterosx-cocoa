@@ -52,6 +52,8 @@
 		6FAA0C1F1A7E938400416079 /* ExceptionsCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FAA0C1E1A7E938400416079 /* ExceptionsCache.m */; };
 		6FBA5A081ABE460600B6DB79 /* AdvancedPrefController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FBA5A061ABE460600B6DB79 /* AdvancedPrefController.m */; };
 		6FBA5A0A1ABE484B00B6DB79 /* AdvancedPrefController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6FBA5A0C1ABE484B00B6DB79 /* AdvancedPrefController.xib */; };
+		6FD961411B419E3F00DE539C /* MALScripting.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FD961401B419E3F00DE539C /* MALScripting.m */; };
+		6FD961431B419E4C00DE539C /* MAL Updater OS X.sdef in Resources */ = {isa = PBXBuildFile; fileRef = 6FD961421B419E4C00DE539C /* MAL Updater OS X.sdef */; };
 		6FF033301A73F2C70096FC69 /* rules.png in Resources */ = {isa = PBXBuildFile; fileRef = 6FF0332F1A73F2C70096FC69 /* rules.png */; };
 		8227C1171A1D8D34005F3301 /* anitomy-osx.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8227C1161A1D8D34005F3301 /* anitomy-osx.framework */; };
 		8227C1181A1D8D47005F3301 /* anitomy-osx.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8227C1161A1D8D34005F3301 /* anitomy-osx.framework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -160,6 +162,9 @@
 		6FBA5A051ABE460600B6DB79 /* AdvancedPrefController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdvancedPrefController.h; sourceTree = "<group>"; };
 		6FBA5A061ABE460600B6DB79 /* AdvancedPrefController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdvancedPrefController.m; sourceTree = "<group>"; };
 		6FBA5A0B1ABE484B00B6DB79 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/AdvancedPrefController.xib; sourceTree = "<group>"; };
+		6FD9613F1B419E3F00DE539C /* MALScripting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MALScripting.h; sourceTree = "<group>"; };
+		6FD961401B419E3F00DE539C /* MALScripting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MALScripting.m; sourceTree = "<group>"; };
+		6FD961421B419E4C00DE539C /* MAL Updater OS X.sdef */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "MAL Updater OS X.sdef"; sourceTree = "<group>"; };
 		6FF0332F1A73F2C70096FC69 /* rules.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rules.png; sourceTree = "<group>"; };
 		8227C1161A1D8D34005F3301 /* anitomy-osx.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "anitomy-osx.framework"; path = "Frameworks/anitomy-osx.framework"; sourceTree = "<group>"; };
 		822AEB861A202931003DD682 /* FixSearchDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FixSearchDialog.h; sourceTree = "<group>"; };
@@ -205,6 +210,7 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				6FD9613E1B419E2F00DE539C /* Scripting Support */,
 				5C07DA621A8156210003A827 /* Window Controllers */,
 				6FAA87811A7EB68D00EFFAC1 /* Support Classes */,
 				5C8ACEB619F409C60001A101 /* Other Classes */,
@@ -279,6 +285,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				6FD961421B419E4C00DE539C /* MAL Updater OS X.sdef */,
 				82B9559919FD553900A032FB /* DetectStream */,
 				8294C45D19F99B2F009DE98B /* Images.xcassets */,
 				5C8ACEB919F409F90001A101 /* Images */,
@@ -415,6 +422,15 @@
 			name = "Support Classes";
 			sourceTree = "<group>";
 		};
+		6FD9613E1B419E2F00DE539C /* Scripting Support */ = {
+			isa = PBXGroup;
+			children = (
+				6FD9613F1B419E3F00DE539C /* MALScripting.h */,
+				6FD961401B419E3F00DE539C /* MALScripting.m */,
+			);
+			name = "Scripting Support";
+			sourceTree = "<group>";
+		};
 		8285DED41A1D529200D6A53F /* Exception/Correction */ = {
 			isa = PBXGroup;
 			children = (
@@ -491,6 +507,7 @@
 			files = (
 				8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */,
 				8294C45E19F99B2F009DE98B /* Images.xcassets in Resources */,
+				6FD961431B419E4C00DE539C /* MAL Updater OS X.sdef in Resources */,
 				6FBA5A0A1ABE484B00B6DB79 /* AdvancedPrefController.xib in Resources */,
 				6F27CE971A6869ED004E51F8 /* HotkeysPrefs.xib in Resources */,
 				6FF033301A73F2C70096FC69 /* rules.png in Resources */,
@@ -540,6 +557,7 @@
 				3A6AB37F120F313E00D51D2C /* Base64Category.m in Sources */,
 				6F12909B1A7D833100B8C3E6 /* AutoExceptions.m in Sources */,
 				6F28DC121A67085800AF063F /* MASShortcut.m in Sources */,
+				6FD961411B419E3F00DE539C /* MALScripting.m in Sources */,
 				6F5F6C701A71696D006D4607 /* MAL_Updater_OS_X_DataModel.xcdatamodeld in Sources */,
 				5C881EFB19F462B400E20425 /* NSString_stripHtml.m in Sources */,
 				829727981A8BB14E004F73AB /* MyAnimeList+Update.m in Sources */,

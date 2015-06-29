@@ -98,5 +98,6 @@
 -(IBAction)showAboutWindow:(id)sender;
 -(bool)getisScrobbling;
 -(bool)getisScrobblingActive;
+-(NSDictionary *)getNowPlaying;
 -(NSManagedObjectContext *)getObjectContext;
 @end

@@ -973,6 +973,18 @@
         
     [[animeinfo textStorage] appendAttributedString:attr];
 }
+-(NSDictionary *)getNowPlaying{
+    // Outputs Currently Playing information into JSON
+    NSMutableDictionary * output = [NSMutableDictionary new];
+    if ([MALEngine.getLastScrobbledTitle length] > 0){
+        [output setObject:[MALEngine getAniID] forKey:@"id"];
+        [output setObject:[MALEngine getLastScrobbledTitle] forKey:@"scrobbledtitle"];
+        [output setObject:[MALEngine getLastScrobbledActualTitle] forKey:@"scrobbledactualtitle"];
+        [output setObject:[MALEngine getLastScrobbledEpisode] forKey:@"scrobbledEpisode"];
+        [output setObject:[MALEngine getLastScrobbledSource] forKey:@"source"];
+    }
+    return output;
+}
 #pragma mark Share Services
 -(void)generateShareMenu{
     //Clear Share Menu
