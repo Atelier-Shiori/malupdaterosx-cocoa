@@ -83,7 +83,7 @@
         dispatch_async(queue, ^{
         NSString * searchterm = [Utility urlEncodeString:[search stringValue]];
         //Set Search API
-        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/anime/search?q=%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"MALAPIURL"], searchterm]];
+        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/1/anime/search?q=%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"MALAPIURL"], searchterm]];
         EasyNSURLConnection *request = [[EasyNSURLConnection alloc] initWithURL:url];
         //Ignore Cookies
         [request setUseCookies:NO];

@@ -44,7 +44,7 @@
     NSString * searchterm = [Utility urlEncodeString:searchtitle];
     
     //Set Search API
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/anime/search?q=%@",MALApiUrl, searchterm]];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/1/anime/search?q=%@",MALApiUrl, searchterm]];
     EasyNSURLConnection *request = [[EasyNSURLConnection alloc] initWithURL:url];
     //Ignore Cookies
     [request setUseCookies:NO];

@@ -96,7 +96,7 @@
 -(void)login:(NSString *)username password:(NSString *)password{
     //Set Login URL
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/account/verify_credentials", [defaults objectForKey:@"MALAPIURL"]]];
+	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/1/account/verify_credentials", [defaults objectForKey:@"MALAPIURL"]]];
     EasyNSURLConnection *request = [[EasyNSURLConnection alloc] initWithURL:url];
 	//Ignore Cookies
 	[request setUseCookies:NO];
