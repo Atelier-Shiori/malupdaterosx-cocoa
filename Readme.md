@@ -7,6 +7,8 @@ XCode 6.1 or higher is required to build (Deployment Target is OS X 10.8)
 
 Like this program and want to support the development of this program? [Become our Patreon](http://www.patreon.com/chikorita157)
 
+Note: Starting with MAL Updater OS X 2.2.7.1, the application is now Developer ID signed. In order to build, you need to have an Apple Developer ID certificate. Otherwise, you would need to disable code signing.
+
 ## How to use
 Check the [Getting Started Guide](https://github.com/chikorita157/malupdaterosx-cocoa/wiki/Getting-Started)
 
