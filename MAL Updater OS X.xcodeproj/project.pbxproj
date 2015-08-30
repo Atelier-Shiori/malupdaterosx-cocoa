@@ -35,6 +35,7 @@
 		6F0CF36F1A7DBADD00261A43 /* Utility.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F0CF36E1A7DBADD00261A43 /* Utility.m */; };
 		6F12909B1A7D833100B8C3E6 /* AutoExceptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F12909A1A7D833100B8C3E6 /* AutoExceptions.m */; };
 		6F1865931A7D79CB00C74A47 /* Detection.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F1865921A7D79CB00C74A47 /* Detection.m */; };
+		6F1A2C8F1B929B9800D47FE2 /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = 6F1A2C8E1B929B9800D47FE2 /* dsa_pub.pem */; };
 		6F27071E1A69905D0020913A /* FixSearchDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6F2707201A69905D0020913A /* FixSearchDialog.xib */; };
 		6F27CE941A6869E8004E51F8 /* ExceptionsPref.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6F27CE961A6869E8004E51F8 /* ExceptionsPref.xib */; };
 		6F27CE971A6869ED004E51F8 /* HotkeysPrefs.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6F27CE991A6869ED004E51F8 /* HotkeysPrefs.xib */; };
@@ -132,6 +133,7 @@
 		6F12909A1A7D833100B8C3E6 /* AutoExceptions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AutoExceptions.m; sourceTree = "<group>"; };
 		6F1865911A7D79CB00C74A47 /* Detection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Detection.h; sourceTree = "<group>"; };
 		6F1865921A7D79CB00C74A47 /* Detection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Detection.m; sourceTree = "<group>"; };
+		6F1A2C8E1B929B9800D47FE2 /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = dsa_pub.pem; path = deprecated/dsa_pub.pem; sourceTree = "<group>"; };
 		6F27071F1A69905D0020913A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/FixSearchDialog.xib; sourceTree = "<group>"; };
 		6F27CE951A6869E8004E51F8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/ExceptionsPref.xib; sourceTree = "<group>"; };
 		6F27CE981A6869ED004E51F8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/HotkeysPrefs.xib; sourceTree = "<group>"; };
@@ -288,6 +290,7 @@
 				8294C45D19F99B2F009DE98B /* Images.xcassets */,
 				5C8ACEB919F409F90001A101 /* Images */,
 				5C0A2C4A122C7F960096908D /* Credits.rtf */,
+				6F1A2C8E1B929B9800D47FE2 /* dsa_pub.pem */,
 				8D1107310486CEB800E47090 /* MAL_Updater_OS_X-Info.plist */,
 				089C165CFE840E0CC02AAC07 /* InfoPlist.strings */,
 				6FBA5A0C1ABE484B00B6DB79 /* AdvancedPrefController.xib */,
@@ -508,6 +511,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */,
+				6F1A2C8F1B929B9800D47FE2 /* dsa_pub.pem in Resources */,
 				8294C45E19F99B2F009DE98B /* Images.xcassets in Resources */,
 				6FD961431B419E4C00DE539C /* MAL Updater OS X.sdef in Resources */,
 				6FBA5A0A1ABE484B00B6DB79 /* AdvancedPrefController.xib in Resources */,
@@ -683,8 +687,8 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "Mac Developer";
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "";
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -716,8 +720,8 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "Mac Developer";
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
+				CODE_SIGN_IDENTITY = "Developer ID Application";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Developer ID Application";
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
