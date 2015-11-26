@@ -17,6 +17,9 @@
 		3A6AB415120F351B00D51D2C /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3A6AB40D120F350400D51D2C /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		3A6AB587120F402A00D51D2C /* OgreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A4C61D3120DF3ED0032F63A /* OgreKit.framework */; };
 		3AFEF129120DF8CE0098B59D /* MyAnimeList.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AFEF128120DF8CE0098B59D /* MyAnimeList.m */; };
+		5902411F1C074A7A00495A2F /* SSKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 5902411C1C074A7A00495A2F /* SSKeychain.m */; settings = {ASSET_TAGS = (); }; };
+		590241201C074A7A00495A2F /* SSKeychainQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 5902411E1C074A7A00495A2F /* SSKeychainQuery.m */; settings = {ASSET_TAGS = (); }; };
+		590241261C074AF500495A2F /* MyAnimeList+Keychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 590241251C074AF500495A2F /* MyAnimeList+Keychain.m */; settings = {ASSET_TAGS = (); }; };
 		5C000E4419F30EA50026F350 /* SoftwareUpdatesPref.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C000E4319F30EA50026F350 /* SoftwareUpdatesPref.m */; };
 		5C07DA671A8156420003A827 /* HistoryWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C07DA651A8156420003A827 /* HistoryWindow.m */; };
 		5C07DA751A815F580003A827 /* HistoryWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5C07DA771A815F580003A827 /* HistoryWindow.xib */; };
@@ -105,6 +108,12 @@
 		3A6AB40D120F350400D51D2C /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sparkle.framework; path = Frameworks/Sparkle.framework; sourceTree = "<group>"; };
 		3AFEF127120DF8CE0098B59D /* MyAnimeList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyAnimeList.h; sourceTree = "<group>"; };
 		3AFEF128120DF8CE0098B59D /* MyAnimeList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyAnimeList.m; sourceTree = "<group>"; };
+		5902411B1C074A7A00495A2F /* SSKeychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSKeychain.h; sourceTree = "<group>"; };
+		5902411C1C074A7A00495A2F /* SSKeychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSKeychain.m; sourceTree = "<group>"; };
+		5902411D1C074A7A00495A2F /* SSKeychainQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSKeychainQuery.h; sourceTree = "<group>"; };
+		5902411E1C074A7A00495A2F /* SSKeychainQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSKeychainQuery.m; sourceTree = "<group>"; };
+		590241241C074AF500495A2F /* MyAnimeList+Keychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MyAnimeList+Keychain.h"; sourceTree = "<group>"; };
+		590241251C074AF500495A2F /* MyAnimeList+Keychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MyAnimeList+Keychain.m"; sourceTree = "<group>"; };
 		5C000E4219F30EA50026F350 /* SoftwareUpdatesPref.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoftwareUpdatesPref.h; sourceTree = "<group>"; };
 		5C000E4319F30EA50026F350 /* SoftwareUpdatesPref.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SoftwareUpdatesPref.m; sourceTree = "<group>"; };
 		5C07DA641A8156420003A827 /* HistoryWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryWindow.h; sourceTree = "<group>"; };
@@ -217,6 +226,8 @@
 				5CD36B9419F2EA91007BB6B6 /* Preferences */,
 				256AC3D80F4B6AC300CF3369 /* MAL_Updater_OS_XAppDelegate.h */,
 				256AC3D90F4B6AC300CF3369 /* MAL_Updater_OS_XAppDelegate.m */,
+				590241241C074AF500495A2F /* MyAnimeList+Keychain.h */,
+				590241251C074AF500495A2F /* MyAnimeList+Keychain.m */,
 				829727931A8BB093004F73AB /* MyAnimeList+Search.h */,
 				829727941A8BB093004F73AB /* MyAnimeList+Search.m */,
 				829727961A8BB14E004F73AB /* MyAnimeList+Update.h */,
@@ -340,6 +351,10 @@
 		5C8ACEB619F409C60001A101 /* Other Classes */ = {
 			isa = PBXGroup;
 			children = (
+				5902411B1C074A7A00495A2F /* SSKeychain.h */,
+				5902411C1C074A7A00495A2F /* SSKeychain.m */,
+				5902411D1C074A7A00495A2F /* SSKeychainQuery.h */,
+				5902411E1C074A7A00495A2F /* SSKeychainQuery.m */,
 				6F28DC071A67084B00AF063F /* Hotkey */,
 				5C950B581A295683001BFBDD /* EasyNSURLConnection.h */,
 				5C950B591A295683001BFBDD /* EasyNSURLConnection.m */,
@@ -554,6 +569,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8D11072D0486CEB800E47090 /* main.m in Sources */,
+				590241201C074A7A00495A2F /* SSKeychainQuery.m in Sources */,
 				823D4D211A1AB46600392ACB /* Recognition.m in Sources */,
 				6F0CF36F1A7DBADD00261A43 /* Utility.m in Sources */,
 				256AC3DA0F4B6AC300CF3369 /* MAL_Updater_OS_XAppDelegate.m in Sources */,
@@ -570,6 +586,7 @@
 				6F1865931A7D79CB00C74A47 /* Detection.m in Sources */,
 				5C07DA671A8156420003A827 /* HistoryWindow.m in Sources */,
 				6F28DC141A67085800AF063F /* MASShortcut+UserDefaults.m in Sources */,
+				590241261C074AF500495A2F /* MyAnimeList+Keychain.m in Sources */,
 				6F28DC161A67085800AF063F /* MASShortcutView+UserDefaults.m in Sources */,
 				822AEB8D1A202A7B003DD682 /* ExceptionsPref.m in Sources */,
 				6F28DC151A67085800AF063F /* MASShortcutView.m in Sources */,
@@ -578,6 +595,7 @@
 				5CD36B9A19F2EA9B007BB6B6 /* MASPreferencesWindowController.m in Sources */,
 				5CD36BBA19F2ED88007BB6B6 /* GeneralPrefController.m in Sources */,
 				6F28DC131A67085800AF063F /* MASShortcut+Monitoring.m in Sources */,
+				5902411F1C074A7A00495A2F /* SSKeychain.m in Sources */,
 				6FAA0C1F1A7E938400416079 /* ExceptionsCache.m in Sources */,
 				829727951A8BB093004F73AB /* MyAnimeList+Search.m in Sources */,
 				6FBA5A081ABE460600B6DB79 /* AdvancedPrefController.m in Sources */,
@@ -686,6 +704,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "";
@@ -719,6 +738,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "Developer ID Application";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Developer ID Application";

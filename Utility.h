@@ -17,7 +17,6 @@
            option:(int)i;
 +(NSString *)desensitizeSeason:(NSString *)title;
 +(NSString *)seasonInWords:(int)season;
-+(BOOL)checktoken;
 +(BOOL)checkoldAPI;
 +(void)showsheetmessage:(NSString *)message
            explaination:(NSString *)explaination

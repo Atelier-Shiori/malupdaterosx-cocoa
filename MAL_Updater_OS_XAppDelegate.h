@@ -100,4 +100,5 @@
 -(bool)getisScrobblingActive;
 -(NSDictionary *)getNowPlaying;
 -(NSManagedObjectContext *)getObjectContext;
+-(MyAnimeList *)getMALEngineInstance;
 @end

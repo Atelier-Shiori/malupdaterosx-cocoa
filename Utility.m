@@ -52,14 +52,6 @@
             return @"";
 }
 }
-+(BOOL)checktoken{
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    if ([[defaults objectForKey:@"Base64Token"] length] == 0) {
-        return false;
-    }
-    else
-        return true;
-}
 +(BOOL)checkoldAPI{
     if ([[NSString stringWithFormat:@"%@", [[NSUserDefaults standardUserDefaults] objectForKey:@"MALAPIURL"]] isEqualToString:@"https://malapi.shioridiary.me"]||[[NSString stringWithFormat:@"%@", [[NSUserDefaults standardUserDefaults] objectForKey:@"MALAPIURL"]] isEqualToString:@"http://mal-api.com"]) {
         return true;

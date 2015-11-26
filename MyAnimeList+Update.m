@@ -8,18 +8,18 @@
 
 #import "MyAnimeList+Update.h"
 #import "EasyNSURLConnection.h"
+#import "MyAnimeList+Keychain.h"
 
 @implementation MyAnimeList (Update)
 -(BOOL)checkstatus:(NSString *)titleid {
     NSLog(@"Checking Status");
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     //Set Search API
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/1/anime/%@?mine=1",MALApiUrl, titleid]];
     EasyNSURLConnection *request = [[EasyNSURLConnection alloc] initWithURL:url];
     //Ignore Cookies
     [request setUseCookies:NO];
     //Set Token
-    [request addHeader:[NSString stringWithFormat:@"Basic %@",[defaults objectForKey:@"Base64Token"]]  forKey:@"Authorization"];
+            [request addHeader:[NSString stringWithFormat:@"Basic %@",[self getBase64]]  forKey:@"Authorization"];
     //Perform Search
     [request startRequest];
     // Get Status Code
@@ -108,14 +108,13 @@
     }
     else {
         // Update the title
-        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         //Set library/scrobble API
         NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/1/animelist/anime/%@", MALApiUrl, titleid]];
         EasyNSURLConnection *request = [[EasyNSURLConnection alloc] initWithURL:url];
         //Ignore Cookies
         [request setUseCookies:NO];
         //Set Token
-        [request addHeader:[NSString stringWithFormat:@"Basic %@",[defaults objectForKey:@"Base64Token"]]  forKey:@"Authorization"];
+                [request addHeader:[NSString stringWithFormat:@"Basic %@",[self getBase64]]  forKey:@"Authorization"];
         [request setPostMethod:@"PUT"];
         [request addFormData:DetectedEpisode forKey:@"episodes"];
         //Set Status
@@ -165,14 +164,13 @@
         return 3;
     }
     // Add the title
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     //Set library/scrobble API
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/1/animelist/anime", MALApiUrl]];
     EasyNSURLConnection *request = [[EasyNSURLConnection alloc] initWithURL:url];
     //Ignore Cookies
     [request setUseCookies:NO];
     //Set Token
-    [request addHeader:[NSString stringWithFormat:@"Basic %@",[defaults objectForKey:@"Base64Token"]]  forKey:@"Authorization"];
+            [request addHeader:[NSString stringWithFormat:@"Basic %@",[self getBase64]]  forKey:@"Authorization"];
     [request addFormData:titleid forKey:@"anime_id"];
     [request addFormData:DetectedEpisode forKey:@"episodes"];
     // Check if the detected episode is equal to total episodes. If so, set it as complete (mostly for specials and movies)
@@ -219,14 +217,13 @@
     //Set up Delegate
     
     // Update the title
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     //Set library/scrobble API
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/1/animelist/anime/%@", MALApiUrl, titleid]];
     EasyNSURLConnection *request = [[EasyNSURLConnection alloc] initWithURL:url];
     //Ignore Cookies
     [request setUseCookies:NO];
     //Set Token
-    [request addHeader:[NSString stringWithFormat:@"Basic %@",[defaults objectForKey:@"Base64Token"]]  forKey:@"Authorization"];
+            [request addHeader:[NSString stringWithFormat:@"Basic %@",[self getBase64]]  forKey:@"Authorization"];
     //Set method to Delete
     [request setPostMethod:@"DELETE"];
     // Do Update
@@ -248,14 +245,13 @@
 {
     NSLog(@"Updating Status for %@", titleid);
     // Update the title
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     //Set library/scrobble API
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/1/animelist/anime/%@", MALApiUrl, titleid]];
     EasyNSURLConnection *request = [[EasyNSURLConnection alloc] initWithURL:url];
     //Ignore Cookies
     [request setUseCookies:NO];
     //Set Token
-    [request addHeader:[NSString stringWithFormat:@"Basic %@",[defaults objectForKey:@"Base64Token"]]  forKey:@"Authorization"];
+            [request addHeader:[NSString stringWithFormat:@"Basic %@",[self getBase64]]  forKey:@"Authorization"];
     [request setPostMethod:@"PUT"];
     //Set current episode
     [request addFormData:episode forKey:@"episodes"];

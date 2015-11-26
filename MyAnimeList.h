@@ -17,6 +17,7 @@
 	NSString * LastScrobbledActualTitle;
     NSString * LastScrobbledSource;
     NSDictionary * LastScrobbledInfo;
+    NSString * username;
 	__weak NSString * DetectedTitle;
 	__weak NSString * DetectedEpisode;
     __weak NSString * DetectedSource;

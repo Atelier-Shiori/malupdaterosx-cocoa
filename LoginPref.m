@@ -9,6 +9,7 @@
 #import "LoginPref.h"
 #import "Base64Category.h"
 #import "MAL_Updater_OS_XAppDelegate.h"
+
 #import "EasyNSURLConnection.h"
 #import "Utility.h"
 
@@ -26,6 +27,8 @@
 }
 -(void)loadView{
     [super loadView];
+    // Retrieve MyAnimeList Engine instance from app delegate
+    MALEngine = [appdelegate getMALEngineInstance];
     // Set Logo
     [logo setImage:[NSApp applicationIconImage]];
     // Load Login State
@@ -53,15 +56,12 @@
 -(void)loadlogin
 {
 	// Load Username
-	
-	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	NSString *Base64Token = [defaults objectForKey:@"Base64Token"];
-	if (Base64Token.length > 0) {
+	if ([MALEngine checkaccount]) {
 		[clearbut setEnabled: YES];
 		[savebut setEnabled: NO];
         [loggedinview setHidden:NO];
         [loginview setHidden:YES];
-        [loggedinuser setStringValue:(NSString *)[[NSUserDefaults standardUserDefaults] objectForKey:@"Username"]];
+        [loggedinuser setStringValue:[MALEngine getusername]];
 	}
 	else {
 		//Disable Clearbut
@@ -108,11 +108,9 @@
     NSError * error = [request getError];
     if ([request getStatusCode] == 200 && error == nil) {
         //Login successful
-        [Utility showsheetmessage:@"Login Successful" explaination: @"Login Token has been recieved." window:[[self view] window]];
-		// Generate API Key
-		NSString * Token = [NSString stringWithFormat:@"%@:%@", [fieldusername stringValue], [fieldpassword stringValue]];
-		[defaults setObject:[Token base64Encoding] forKey:@"Base64Token"];
-        [defaults setObject:username forKey:@"Username"];
+        [Utility showsheetmessage:@"Login Successful" explaination: @"Login is successful." window:[[self view] window]];
+		// Store account in login keychain
+        [MALEngine storeaccount:[fieldusername stringValue] password:[fieldpassword stringValue]];
         [clearbut setEnabled: YES];
         [loggedinuser setStringValue:username];
         [loggedinview setHidden:NO];
@@ -154,16 +152,16 @@
         // Set Message type to Warning
         [alert setAlertStyle:NSWarningAlertStyle];
         if ([alert runModal]== NSAlertFirstButtonReturn) {
-            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-            [defaults setObject:@"" forKey:@"Base64Token"];
-            // Clear Username
-            [defaults setObject:@"" forKey:@"Username"];
+            //Remove account from keychain
+            [MALEngine removeaccount];
             //Disable Clearbut
             [clearbut setEnabled: NO];
             [savebut setEnabled: YES];
             [loggedinuser setStringValue:@""];
             [loggedinview setHidden:YES];
             [loginview setHidden:NO];
+            [fieldusername setStringValue:@""];
+            [fieldpassword setStringValue:@""];
         }
     }
     else{

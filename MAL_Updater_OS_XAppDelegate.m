@@ -9,6 +9,7 @@
 #import "MAL_Updater_OS_XAppDelegate.h"
 #import "MyAnimeList.h"
 #import "MyAnimeList+Update.h"
+#import "MyAnimeList+Keychain.h"
 #import "PFMoveApplication.h"
 #import "Preferences.h"
 #import "FixSearchDialog.h"
@@ -246,13 +247,13 @@
     }
 	
 	// Notify User if there is no Account Info
-	if (![Utility checktoken]) {
+	if (![MALEngine checkaccount]) {
         // First time prompt
         NSAlert * alert = [[NSAlert alloc] init] ;
         [alert addButtonWithTitle:@"Yes"];
         [alert addButtonWithTitle:@"No"];
         [alert setMessageText:@"Welcome to MAL Updater OS X"];
-        [alert setInformativeText:@"Before using this program, you need to login. Do you want to open Preferences to log in now?"];
+        [alert setInformativeText:@"Before using this program, you need to login. Do you want to open Preferences to log in now?\r\rPlease note that MAL Updater OS X now stores user information in the Keychain and therefore, you must login again."];
         // Set Message type to Warning
         [alert setAlertStyle:NSInformationalAlertStyle];
         if ([alert runModal]== NSAlertFirstButtonReturn) {
@@ -425,7 +426,7 @@
 
 - (IBAction)toggletimer:(id)sender {
 	//Check to see if there is an API Key stored
-	if (![Utility checktoken]) {
+	if (![MALEngine checkaccount]) {
         [self showNotification:@"MAL Updater OS X" message:@"Add a login before you start scrobbling."];
 	}
 	else {
@@ -450,7 +451,7 @@
 }
 -(void)autostarttimer {
 	//Check to see if there is an API Key stored
-	if (![Utility checktoken]) {
+	if (![MALEngine checkaccount]) {
          [self showNotification:@"MAL Updater OS X" message:@"Add a login before you start scrobbling."];
 	}
 	else {
@@ -591,7 +592,7 @@
 }
 
 -(IBAction)updatenow:(id)sender{
-    if (![Utility checktoken])
+    if (![MALEngine checkaccount])
         [self showNotification:@"MAL Updater OS X" message:@"Add a login before you start scrobbling."];
     else
         [self firetimer:nil];
@@ -786,6 +787,9 @@
 -(NSManagedObjectContext *)getObjectContext{
     return managedObjectContext;
 }
+-(MyAnimeList *)getMALEngineInstance{
+    return MALEngine;
+}
 #pragma mark Update Status functions
 -(IBAction)updatestatus:(id)sender {
     [self showUpdateDialog:[self window]];
@@ -920,7 +924,7 @@
 -(void)registerHotkey{
     [MASShortcut registerGlobalShortcutWithUserDefaultsKey:kPreferenceScrobbleNowShortcut handler:^{
         // Scrobble Now Global Hotkey
-        if ([Utility checktoken] && !panelactive) {
+        if ([MALEngine checkaccount] && !panelactive) {
             [self firetimer:nil];
         }
     }];

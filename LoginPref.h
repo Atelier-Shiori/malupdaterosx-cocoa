@@ -9,6 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #import "MASPreferencesViewController.h"
 #import "MAL_Updater_OS_XAppDelegate.h"
+#import "MyAnimeList+Keychain.h"
 
 @interface LoginPref : NSViewController <MASPreferencesViewController> {
     IBOutlet NSImageView * logo;
@@ -19,6 +20,7 @@
 	IBOutlet NSButton * clearbut;
     IBOutlet NSTextField * loggedinuser;
     MAL_Updater_OS_XAppDelegate* appdelegate;
+    MyAnimeList* MALEngine;
     IBOutlet NSView * loginview;
     IBOutlet NSView * loggedinview;
     //Reauthorize Panel
