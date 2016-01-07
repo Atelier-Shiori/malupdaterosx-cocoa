@@ -155,7 +155,10 @@
     else{
         NSArray * c = d[@"result"];
         NSDictionary * result = c[0];
-        if ([self checkifTitleIgnored:(NSString *)result[@"title"] source:result[@"site"]]) {
+        if (result[@"title"] == nil) {
+            return nil;
+        }
+        else if ([self checkifTitleIgnored:(NSString *)result[@"title"] source:result[@"site"]]) {
             return nil;
         }
         else if (result[@"episode"] == nil){

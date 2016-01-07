@@ -210,8 +210,16 @@
 -(NSString *)foundtitle:(NSString *)titleid info:(NSDictionary *)found{
     //Check to see if Seach Cache is enabled. If so, add it to the cache.
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"useSearchCache"] && titleid.length > 0) {
+        NSNumber * episodes;
+        if (found[@"episodes"] == [NSNull null]) {
+            // Set no total episodes
+            episodes = [NSNumber numberWithInt:0];
+        }
+        else{
+            episodes = (NSNumber *)found[@"episodes"];
+        }
         //Save AniID
-        [ExceptionsCache addtoCache:DetectedTitle showid:titleid actualtitle:(NSString *)found[@"title"] totalepisodes:[(NSNumber *)found[@"episodes"] intValue] ];
+        [ExceptionsCache addtoCache:DetectedTitle showid:titleid actualtitle:(NSString *)found[@"title"] totalepisodes:[episodes intValue]];
     }
     //Return the AniID
     return titleid;
