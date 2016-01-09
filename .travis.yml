@@ -1,3 +1,4 @@
 language: objective-c
 xcode_project: MAL Updater OS X.xcodeproj 
 xcode_scheme: MAL Updater OS X
+script: "xcodebuild -scheme Hachidori CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO | xcpretty -c && exit ${PIPESTATUS[0]}"
