@@ -140,15 +140,21 @@
     
     // Launch Task
     [task launch];
-    
+    [task waitUntilExit]; 
     // Parse Data from JSON and return dictionary
     NSData *data;
     data = [file readDataToEndOfFile];
     
     
     NSError* error;
+    //Check if detectstream successfully exited. If not, ignore detection to prevent the program from crashing
+    if ([task terminationStatus] != 0){
+        NSLog(@"detectstream crashed, ignoring stream detection");
+        return nil;
+    }
     
     d = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+    
     if (d[@"result"]  == [NSNull null]){ // Check to see if anything is playing on stream
         return nil;
     }
