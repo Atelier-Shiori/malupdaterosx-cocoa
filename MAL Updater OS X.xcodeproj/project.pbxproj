@@ -20,6 +20,7 @@
 		5902411F1C074A7A00495A2F /* SSKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 5902411C1C074A7A00495A2F /* SSKeychain.m */; settings = {ASSET_TAGS = (); }; };
 		590241201C074A7A00495A2F /* SSKeychainQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 5902411E1C074A7A00495A2F /* SSKeychainQuery.m */; settings = {ASSET_TAGS = (); }; };
 		590241261C074AF500495A2F /* MyAnimeList+Keychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 590241251C074AF500495A2F /* MyAnimeList+Keychain.m */; settings = {ASSET_TAGS = (); }; };
+		5967C9341C95AD51005FCBC7 /* string_score.c in Sources */ = {isa = PBXBuildFile; fileRef = 5967C9321C95AD51005FCBC7 /* string_score.c */; settings = {ASSET_TAGS = (); }; };
 		5C000E4419F30EA50026F350 /* SoftwareUpdatesPref.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C000E4319F30EA50026F350 /* SoftwareUpdatesPref.m */; };
 		5C07DA671A8156420003A827 /* HistoryWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C07DA651A8156420003A827 /* HistoryWindow.m */; };
 		5C07DA751A815F580003A827 /* HistoryWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5C07DA771A815F580003A827 /* HistoryWindow.xib */; };
@@ -114,6 +115,8 @@
 		5902411E1C074A7A00495A2F /* SSKeychainQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSKeychainQuery.m; sourceTree = "<group>"; };
 		590241241C074AF500495A2F /* MyAnimeList+Keychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MyAnimeList+Keychain.h"; sourceTree = "<group>"; };
 		590241251C074AF500495A2F /* MyAnimeList+Keychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MyAnimeList+Keychain.m"; sourceTree = "<group>"; };
+		5967C9321C95AD51005FCBC7 /* string_score.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = string_score.c; sourceTree = "<group>"; };
+		5967C9331C95AD51005FCBC7 /* string_score.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = string_score.h; sourceTree = "<group>"; };
 		5C000E4219F30EA50026F350 /* SoftwareUpdatesPref.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoftwareUpdatesPref.h; sourceTree = "<group>"; };
 		5C000E4319F30EA50026F350 /* SoftwareUpdatesPref.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SoftwareUpdatesPref.m; sourceTree = "<group>"; };
 		5C07DA641A8156420003A827 /* HistoryWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryWindow.h; sourceTree = "<group>"; };
@@ -351,6 +354,8 @@
 		5C8ACEB619F409C60001A101 /* Other Classes */ = {
 			isa = PBXGroup;
 			children = (
+				5967C9321C95AD51005FCBC7 /* string_score.c */,
+				5967C9331C95AD51005FCBC7 /* string_score.h */,
 				5902411B1C074A7A00495A2F /* SSKeychain.h */,
 				5902411C1C074A7A00495A2F /* SSKeychain.m */,
 				5902411D1C074A7A00495A2F /* SSKeychainQuery.h */,
@@ -585,6 +590,7 @@
 				6F28DC121A67085800AF063F /* MASShortcut.m in Sources */,
 				6FD961411B419E3F00DE539C /* MALScripting.m in Sources */,
 				6F5F6C701A71696D006D4607 /* MAL_Updater_OS_X_DataModel.xcdatamodeld in Sources */,
+				5967C9341C95AD51005FCBC7 /* string_score.c in Sources */,
 				5C881EFB19F462B400E20425 /* NSString_stripHtml.m in Sources */,
 				829727981A8BB14E004F73AB /* MyAnimeList+Update.m in Sources */,
 				5C950B5A1A295683001BFBDD /* EasyNSURLConnection.m in Sources */,
