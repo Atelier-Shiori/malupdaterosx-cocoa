@@ -953,8 +953,14 @@
     [self appendToAnimeInfo:@""];
     //Description
     NSString * anidescription = d[@"synopsis"];
-    anidescription = [anidescription stripHtml]; //Removes HTML tags
-    [self appendToAnimeInfo:@"Description"];
+    if (d[@"synopsis"] != [NSNull null]) {
+        anidescription = [anidescription stripHtml]; //Removes HTML tags
+        [self appendToAnimeInfo:@"Description"];
+
+    }
+    else {
+        anidescription = @"No description available.";
+    }
     [self appendToAnimeInfo:anidescription];
     //Meta Information
     [self appendToAnimeInfo:@""];
