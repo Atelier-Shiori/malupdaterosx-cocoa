@@ -93,6 +93,8 @@
                 case 5:
                     DetectedSource = @"Quicktime";
                     break;
+                case 8:
+                    DetectedSource = @"Beamer/ffmpeg";
                 default:
                     DetectedSource = (NSString *)player[i];
                     break;
