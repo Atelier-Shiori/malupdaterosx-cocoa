@@ -968,7 +968,14 @@
     [self appendToAnimeInfo:[NSString stringWithFormat:@"Classification: %@", d[@"classification"]]];
     [self appendToAnimeInfo:[NSString stringWithFormat:@"Start Date: %@", d[@"start_date"]]];
     [self appendToAnimeInfo:[NSString stringWithFormat:@"Airing Status: %@", d[@"status"]]];
-    [self appendToAnimeInfo:[NSString stringWithFormat:@"Episodes: %@", d[@"episodes"]]];
+    NSString * epi;
+    if (d[@"episodes"] == [NSNull null]) {
+        epi = @"Unknown";
+    }
+    else{
+        epi = d[@"episodes"];
+    }
+    [self appendToAnimeInfo:[NSString stringWithFormat:@"Episodes: %@", epi]];
     [self appendToAnimeInfo:[NSString stringWithFormat:@"Popularity: %@", d[@"popularity_rank"]]];
     [self appendToAnimeInfo:[NSString stringWithFormat:@"Favorited: %@", d[@"favorited_count"]]];
     //Image

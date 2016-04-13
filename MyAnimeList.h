@@ -63,4 +63,5 @@
 -(BOOL)getisNewTitle;
 -(NSDictionary *)getLastScrobbledInfo;
 -(void)clearAnimeInfo;
+-(NSString *)startSearch;
 @end

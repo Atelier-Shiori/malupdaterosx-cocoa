@@ -10,6 +10,7 @@
 #import "Detection.h"
 #import "MyAnimeList+Search.h"
 #import "MyAnimeList+Update.h"
+#import "MyAnimeList+HummingbirdSearch.h"
 
 @interface MyAnimeList ()
 -(int)detectmedia; // 0 - Nothing, 1 - Same, 2 - Update
@@ -142,8 +143,11 @@
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"useSearchCache"]) {
         // Check Cache
         NSString *theid = [self checkCache];
-        if (theid.length == 0)
-            AniID = [self searchanime]; // Not in cache, search
+        if (theid.length == 0){
+            // Search for title
+            AniID = [self startSearch];
+        }
+           
         else{
             AniID = theid; // Set cached show id as AniID
             //If Detected Episode is missing, set it to 1 for sanity
@@ -153,7 +157,7 @@
         }
     }
     else {
-        AniID = [self searchanime]; // Search Cache Disabled
+        AniID = [self startSearch]; //Search Cache Disabled
     }
     if (AniID.length > 0) {
         NSLog(@"Found %@", AniID);
@@ -386,5 +390,21 @@
             if (found){break;} //Break from exceptions check loop
         }
     }
+}
+-(NSString *)startSearch{
+    // Performs Search
+    NSString * tmpid;
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"useHummingbirdSearch"]) {
+        // Search using Hummingbird.me Search API to get malapi_id
+        tmpid = [self hsearchanime];
+        if (tmpid.length == 0) {
+            // Fallback
+            tmpid =[self searchanime];
+        }
+    }
+    else{
+        tmpid = [self searchanime]; // Use MAL Search
+    }
+    return tmpid;
 }
 @end
