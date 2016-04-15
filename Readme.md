@@ -1,9 +1,9 @@
-[![Build Status](https://travis-ci.org/chikorita157/malupdaterosx-cocoa.svg?branch=master)](https://travis-ci.org/chikorita157/malupdaterosx-cocoa) [![License](https://img.shields.io/badge/license-BSD-green.svg)](http://opensource.org/licenses/BSD-3-Clause)
+ [![License](https://img.shields.io/badge/license-BSD-green.svg)](http://opensource.org/licenses/BSD-3-Clause)
 
 # MAL Updater OS X 2.2
 MAL Updater OS X is an open source OS X scrobbler that automatically detects what's playing and updates the user's MyAnimeList.
 
-XCode 6.1 or higher is required to build (Deployment Target is OS X 10.8)
+XCode 7 or higher is required to build (Deployment Target is OS X 10.8)
 
 Like this program and want to support the development of this program? [Become our Patreon](http://www.patreon.com/chikorita157)
 
@@ -24,7 +24,7 @@ All the frameworks are included. Just build! Here are the frameworks that are us
 * OgreKit.framework
 
 ##License
-Copyright © 2009-2015, Atelier Shiori.
+Copyright © 2009-2016, Atelier Shiori.
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met: 
