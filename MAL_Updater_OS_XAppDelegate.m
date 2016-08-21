@@ -185,9 +185,15 @@
 	// Initialize MALEngine
 	MALEngine = [[MyAnimeList alloc] init];
     [MALEngine setManagedObjectContext:managedObjectContext];
-	// Insert code here to initialize your application
-	//Check if Application is in the /Applications Folder
-	PFMoveToApplicationsFolderIfNecessary();
+    if (floor(NSAppKitVersionNumber) < 1485){
+    #ifdef DEBUG
+    #else
+        // Check if Application is in the /Applications Folder
+        // Only Activate in OS X/macOS is 10.11 or earlier due to Gatekeeper changes in macOS Sierra
+        // Note: Sierra Appkit Version is 1485
+        PFMoveToApplicationsFolderIfNecessary();
+    #endif
+    }
 	//Since LSUIElement is set to 1 to hide the dock icon, it causes unattended behavior of having the program windows not show to the front.
 	[NSApp activateIgnoringOtherApps:YES];
     
