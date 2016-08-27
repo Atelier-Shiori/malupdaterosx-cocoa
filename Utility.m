@@ -87,13 +87,13 @@
     if ([[NSUserDefaults standardUserDefaults] objectForKey:@"donatereminderdate"] == nil){
         [Utility setReminderDate];
     }
-    if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"donatereminderdate"] timeIntervalSinceNow] < 0 && ![[NSUserDefaults standardUserDefaults] boolForKey: @"donateremindersuppress"]) {
+    if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"donatereminderdate"] timeIntervalSinceNow] < 0) {
         NSAlert * alert = [[NSAlert alloc] init] ;
         [alert addButtonWithTitle:@"Donate"];
         [alert addButtonWithTitle:@"Remind Me Later"];
         [alert setMessageText:@"Please Support MAL Updater OS X"];
         [alert setInformativeText:@"We noticed that you have been using MAL Updater OS X for a while. Although MAL Updater OS X is free, it cost us money and time to develop this program as I don't have as much free time to work on it. \r\rIf you find this program helpful, please consider making a donation. Funding will help future development and keep the program functional. Note that donating is completely optional."];
-        [alert setShowsSuppressionButton:YES];
+        [alert setShowsSuppressionButton:NO];
         // Set Message type to Warning
         [alert setAlertStyle:NSInformationalAlertStyle];
         if ([alert runModal]== NSAlertFirstButtonReturn) {
@@ -114,7 +114,7 @@
 +(void)setReminderDate{
     //Sets Reminder Date
     NSDate *now = [NSDate date];
-    NSDate * reminderdate = [now dateByAddingTimeInterval:60*60*24*7];
+    NSDate * reminderdate = [now dateByAddingTimeInterval:60*60*24*30];
     [[NSUserDefaults standardUserDefaults] setObject:reminderdate forKey:@"donatereminderdate"];
 }
 
