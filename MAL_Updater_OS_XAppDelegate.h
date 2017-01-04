@@ -11,6 +11,7 @@
 @class MyAnimeList;
 @class FixSearchDialog;
 @class HistoryWindow;
+@class DonationWindowController;
 @interface MAL_Updater_OS_XAppDelegate : NSObject <NSApplicationDelegate, NSUserNotificationCenterDelegate, NSSharingServiceDelegate> {
 	/* Windows */
     __unsafe_unretained NSWindow *window;
@@ -73,6 +74,7 @@
 @property (nonatomic, retain, readonly) NSManagedObjectContext *managedObjectContext;
 @property(strong) FixSearchDialog *fsdialog;
 @property (strong) HistoryWindow * historywindowcontroller;
+@property (strong) DonationWindowController * dwindow;
 
 -(void)showhistory:(id)sender;
 -(IBAction)togglescrobblewindow:(id)sender;
