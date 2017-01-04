@@ -23,8 +23,6 @@
            explaination:(NSString *)explaination
                  window:(NSWindow *)w;
 +(NSString *)urlEncodeString:(NSString *)string;
-+(void)donateCheck;
 +(void)showDonateReminder;
 +(void)setReminderDate;
-+(BOOL)checkDonationKey:(NSString *)key name:(NSString *)name;
 @end

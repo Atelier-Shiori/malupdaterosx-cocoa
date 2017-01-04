@@ -18,7 +18,6 @@
 #import "Utility.h"
 #import "ExceptionsCache.h"
 #import "HistoryWindow.h"
-#import "DonationWindowController.h"
 
 @implementation MAL_Updater_OS_XAppDelegate
 
@@ -281,7 +280,7 @@
     // Import existing Exceptions Data
     [AutoExceptions importToCoreData];
     // Show Donation Message
-    [Utility donateCheck];
+    [Utility showDonateReminder];
     
 }
 #pragma mark General UI Functions
@@ -359,15 +358,6 @@
 		[NSApp activateIgnoringOtherApps:YES];
 		[window makeKeyAndOrderFront:self]; 
 	} 
-}
--(IBAction)enterDonationKey:(id)sender{
-    //Since LSUIElement is set to 1 to hide the dock icon, it causes unattended behavior of having the program windows not show to the front.
-    [NSApp activateIgnoringOtherApps:YES];
-    if (!_dwindow) {
-        _dwindow = [[DonationWindowController alloc] init];
-    }
-    [[_dwindow window] makeKeyAndOrderFront:nil];
-    
 }
 -(IBAction)getHelp:(id)sender{
     //Show Help
