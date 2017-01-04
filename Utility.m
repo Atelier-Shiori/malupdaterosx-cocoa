@@ -7,7 +7,7 @@
 //
 
 #import "Utility.h"
-
+#import "EasyNSURLConnection.h"
 @implementation Utility
 +(bool)checkMatch:(NSString *)title
          alttitle:(NSString *)atitle
@@ -82,7 +82,29 @@
                                                                                                   (CFStringRef)@"!*'();:@&=+$,/?%#[]",
                                                                                                   kCFStringEncodingUTF8 ));
 }
++(void)donateCheck{
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"donatereminderdate"] == nil){
+        [Utility setReminderDate];
+    }
+    if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"donatereminderdate"] timeIntervalSinceNow] < 0) {
+        if ([[NSUserDefaults standardUserDefaults] objectForKey:@"donated"]){
+            bool validkey = [Utility checkDonationKey:[[NSUserDefaults standardUserDefaults] objectForKey:@"donatekey"] name:[[NSUserDefaults standardUserDefaults] objectForKey:@"donor"]];
+            if (validkey){
+                [Utility setReminderDate];
+            }
+            else{
+                [Utility showDonateReminder];
+        [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:NO] forKey:@"donated"];
+            }
+        }
+        else{
+            [Utility setReminderDate];
+        }
+    }
+}
 +(void)showDonateReminder{
+
+    
     // Shows Donation Reminder
     if ([[NSUserDefaults standardUserDefaults] objectForKey:@"donatereminderdate"] == nil){
         [Utility setReminderDate];
@@ -92,21 +114,17 @@
         [alert addButtonWithTitle:@"Donate"];
         [alert addButtonWithTitle:@"Remind Me Later"];
         [alert setMessageText:@"Please Support MAL Updater OS X"];
-        [alert setInformativeText:@"We noticed that you have been using MAL Updater OS X for a while. Although MAL Updater OS X is free, it cost us money and time to develop this program as I don't have as much free time to work on it. \r\rIf you find this program helpful, please consider making a donation. Funding will help future development and keep the program functional. Note that donating is completely optional."];
+        [alert setInformativeText:@"We noticed that you have been using MAL Updater OS X for a while. Although MAL Updater OS X is free, it cost us money and time to develop this program. \r\rIf you find this program helpful, please consider making a donation. You will recieve a key to remove this message and enable weekly builds update channel."];
         [alert setShowsSuppressionButton:NO];
         // Set Message type to Warning
         [alert setAlertStyle:NSInformationalAlertStyle];
         if ([alert runModal]== NSAlertFirstButtonReturn) {
             // Open Donation Page
-            [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://malupdaterosx.ateliershiori.moe/donate/"]];
+            [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"https://www.patreon.com/ateliershiori"]];
             [Utility setReminderDate];
         }
         else{
             [Utility setReminderDate];
-        }
-        if (alert.suppressionButton.state == NSOnState){
-            //Set in user defaults not to show Donation Reminder again.
-            [[NSUserDefaults standardUserDefaults] setBool: YES forKey: @"donateremindersuppress"];
         }
     }
 }
@@ -116,6 +134,39 @@
     NSDate *now = [NSDate date];
     NSDate * reminderdate = [now dateByAddingTimeInterval:60*60*24*30];
     [[NSUserDefaults standardUserDefaults] setObject:reminderdate forKey:@"donatereminderdate"];
+}
++(BOOL)checkDonationKey:(NSString *)key name:(NSString *)name{
+        //Set Search API
+        NSURL *url = [NSURL URLWithString:@"https://updates.ateliershiori.moe/keycheck/check.php"];
+        EasyNSURLConnection *request = [[EasyNSURLConnection alloc] initWithURL:url];
+        [request addFormData:name forKey:@"name"];
+        [request addFormData:key forKey:@"key"];
+        //Ignore Cookies
+        [request setUseCookies:NO];
+        //Perform Search
+        [request startFormRequest];
+        // Get Status Code
+        long statusCode = [request getStatusCode];
+    if (statusCode == 200){
+        NSError* jerror;
+        NSDictionary * d = [NSJSONSerialization JSONObjectWithData:[request getResponseData] options:nil error:&jerror];
+        int valid = [(NSNumber *)d[@"valid"] intValue];
+        NSLog(@"%@",[request getResponseDataString]);
+        if (valid == 1) {
+            // Valid Key
+            return YES;
+        }
+        else{
+            // Invalid Key
+            return NO;
+        }
+    }
+    else{
+        // No Internet
+        return NO;
+    }
+
+
 }
 
 @end
