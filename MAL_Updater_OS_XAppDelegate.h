@@ -98,6 +98,7 @@
 - (void)appendToAnimeInfo:(NSString*)text;
 -(void)showNotification:(NSString *)title message:(NSString *) message;
 -(IBAction)showAboutWindow:(id)sender;
+-(IBAction)enterDonationKey:(id)sender;
 -(bool)getisScrobbling;
 -(bool)getisScrobblingActive;
 -(NSDictionary *)getNowPlaying;

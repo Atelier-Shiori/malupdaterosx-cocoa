@@ -281,7 +281,7 @@
     // Import existing Exceptions Data
     [AutoExceptions importToCoreData];
     // Show Donation Message
-    [Utility donateCheck];
+    [Utility donateCheck:self];
     
 }
 #pragma mark General UI Functions

@@ -10,6 +10,7 @@
 #import <OgreKit/OgreKit.h>
 #import "NSString_stripHtml.h"
 #import "string_score.h"
+#import "MAL_Updater_OS_XAppDelegate.h"
 
 @interface Utility : NSObject
 +(bool)checkMatch:(NSString *)title
@@ -23,8 +24,8 @@
            explaination:(NSString *)explaination
                  window:(NSWindow *)w;
 +(NSString *)urlEncodeString:(NSString *)string;
-+(void)donateCheck;
-+(void)showDonateReminder;
++(void)donateCheck:(MAL_Updater_OS_XAppDelegate*)delegate;
++(void)showDonateReminder:(MAL_Updater_OS_XAppDelegate*)delegate;
 +(void)setReminderDate;
 +(int)checkDonationKey:(NSString *)key name:(NSString *)name;
 @end
