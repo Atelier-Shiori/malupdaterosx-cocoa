@@ -40,4 +40,5 @@
 -(void)startRequest;
 -(void)startFormRequest;
 -(void)startJSONRequest:(NSString *)body;
+-(void)startJSONFormRequest;
 @end

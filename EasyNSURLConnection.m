@@ -176,6 +176,49 @@
     error = rerror;
     response = rresponse;
 }
+-(void)startJSONFormRequest{
+    // Send a synchronous request
+    NSMutableURLRequest * request = [NSMutableURLRequest requestWithURL:URL];
+    NSHTTPURLResponse * rresponse = nil;
+    // Set Method
+    if (postmethod.length != 0) {
+        [request setHTTPMethod:postmethod];
+    }
+    else
+        [request setHTTPMethod:@"POST"];
+    // Set content type to form data
+    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    // Do not use Cookies
+    request.HTTPShouldHandleCookies = usecookies;
+    // Set User Agent
+    [request setValue:useragent forHTTPHeaderField:@"User-Agent"];
+    // Set Timeout
+    request.timeoutInterval = 5;
+    NSLock * lock = [NSLock new]; // NSMutableArray is not Thread Safe, lock before performing operation
+    [lock lock];
+    //Set Post Data
+    NSError *jerror;
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:[self arraytodictionary:formdata] options:0 error:&jerror];
+    if (!jsonData) {}
+    else{
+        NSString *JSONString = [[NSString alloc] initWithBytes:jsonData.bytes length:jsonData.length encoding:NSUTF8StringEncoding];
+        request.HTTPBody = [JSONString dataUsingEncoding:NSUTF8StringEncoding];
+    }
+    // Set Other headers, if any
+    if (headers != nil) {
+        for (NSDictionary *d in headers ) {
+            //Set any headers
+            [request setValue:d.allValues[0]forHTTPHeaderField:d.allKeys[0]];
+        }
+    }
+    [lock unlock];
+    NSError * rerror;
+    responsedata = [NSURLConnection sendSynchronousRequest:request
+                                         returningResponse:&rresponse
+                                                     error:&rerror];
+    error = rerror;
+    response = rresponse;
+}
 
 
 #pragma helpers
@@ -189,5 +232,14 @@
     }
     NSString *encodedDictionary = [parts componentsJoinedByString:@"&"];
     return [encodedDictionary dataUsingEncoding:NSUTF8StringEncoding];
+}
+-(NSDictionary *)arraytodictionary:(NSArray *)array{
+    NSMutableDictionary * doutput = [NSMutableDictionary new];
+    for (NSDictionary * d in array) {
+        NSString * akey = d.allKeys[0];
+        NSString *acontent = d[d.allKeys[0]];
+        doutput[akey] = acontent;
+    }
+    return doutput;
 }
 @end
