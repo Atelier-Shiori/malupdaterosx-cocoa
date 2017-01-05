@@ -5,7 +5,7 @@ MAL Updater OS X is an open source OS X scrobbler that automatically detects wha
 
 XCode 7 or higher is required to build (Deployment Target is OS X 10.8)
 
-Like this program and want to support the development of this program? [Become our Patreon](http://www.patreon.com/chikorita157)
+Like this program and want to support the development of this program? [Become our Patreon](http://www.patreon.com/ateliershiori) or [Donate](https://malupdaterosx.ateliershiori.moe/donate/)
 
 Note: Starting with MAL Updater OS X 2.2.7.1, the application is now Developer ID signed. In order to build, you need to have an Apple Developer ID certificate. Otherwise, you would need to disable code signing.
 
