@@ -310,12 +310,10 @@
 -(void)checkzeroEpisode{
     // For 00 Episodes
     if ([DetectedEpisode isEqualToString:@"00"]||[DetectedEpisode isEqualToString:@"0"]) {
-        // Specify it in the title instead
-        DetectedTitle = [NSString stringWithFormat:@"%@ Episode 0", DetectedTitle];
         DetectedEpisode = @"1";
         DetectedTitleisEpisodeZero = true;
     }
-    if ([DetectedType isLike:@"Movie"] && ([DetectedEpisode isEqualToString:@"0"] || DetectedEpisode.length == 0)){
+    else if ([DetectedType isLike:@"Movie"] && ([DetectedEpisode isEqualToString:@"0"] || DetectedEpisode.length == 0)){
         DetectedEpisode = @"1";
     }
     else{DetectedTitleisEpisodeZero = false;}
@@ -346,39 +344,50 @@
 -(void)checkExceptions{
     // Check Exceptions
     NSManagedObjectContext * moc = self.managedObjectContext;
-	bool found = false;
-	NSPredicate *predicate;
+    bool found = false;
+    NSPredicate *predicate;
     for (int i = 0; i < 2; i++) {
         NSFetchRequest * allExceptions = [[NSFetchRequest alloc] init];
         NSError * error = nil;
         if (i == 0) {
             NSLog(@"Check Exceptions List");
-            [allExceptions setEntity:[NSEntityDescription entityForName:@"Exceptions" inManagedObjectContext:moc]];
-			predicate = [NSPredicate predicateWithFormat: @"detectedTitle == %@", DetectedTitle];
+            allExceptions.entity = [NSEntityDescription entityForName:@"Exceptions" inManagedObjectContext:moc];
+            predicate = [NSPredicate predicateWithFormat: @"detectedTitle == %@", DetectedTitle];
         }
         else if (i== 1 && [[NSUserDefaults standardUserDefaults] boolForKey:@"UseAutoExceptions"]){
-                NSLog(@"Checking Auto Exceptions");
-                [allExceptions setEntity:[NSEntityDescription entityForName:@"AutoExceptions" inManagedObjectContext:moc]];
-				predicate = [NSPredicate predicateWithFormat: @"(detectedTitle ==[c] %@) AND (group == %@) OR (group == %@)", DetectedTitle, DetectedGroup, @"ALL"];
+            NSLog(@"Checking Auto Exceptions");
+            allExceptions.entity = [NSEntityDescription entityForName:@"AutoExceptions" inManagedObjectContext:moc];
+            predicate = [NSPredicate predicateWithFormat: @"(detectedTitle ==[c] %@) AND ((group == %@) OR (group == %@))", DetectedTitle, DetectedGroup, @"ALL"];
         }
         else{break;}
-		// Set Predicate and filter exceiptions array
-        [allExceptions setPredicate:predicate];
+        // Set Predicate and filter exceiptions array
+        [allExceptions setPredicate: predicate];
         NSArray * exceptions = [moc executeFetchRequest:allExceptions error:&error];
         if (exceptions.count > 0) {
             NSString * correcttitle;
             for (NSManagedObject * entry in exceptions) {
+                NSLog(@"%@",(NSString *)[entry valueForKey:@"detectedTitle"]);
                 if ([DetectedTitle isEqualToString:(NSString *)[entry valueForKey:@"detectedTitle"]]) {
                     correcttitle = (NSString *)[entry valueForKey:@"correctTitle"];
                     // Set Correct Title and Episode offset (if any)
-                    int threshold = [(NSNumber *)[entry valueForKey:@"episodethreshold"] intValue];
-                    int offset = [(NSNumber *)[entry valueForKey:@"episodeOffset"] intValue];
-                    int tmpepisode = [DetectedEpisode intValue] - offset;
-                    if ((tmpepisode > threshold && threshold != 0) || (tmpepisode <= 0 && threshold != 1 && i==0)||(tmpepisode <= 0 && i==1)) {
+                    int threshold = ((NSNumber *)[entry valueForKey:@"episodethreshold"]).intValue;
+                    int offset = ((NSNumber *)[entry valueForKey:@"episodeOffset"]).intValue;
+                    int tmpepisode = DetectedEpisode.intValue - offset;
+                    int mappedepisode = [(NSNumber *)[entry valueForKey:@"mappedepisode"] intValue];
+                    bool iszeroepisode = [(NSNumber *)[entry valueForKey:@"iszeroepisode"] boolValue];
+                    if (i==1 && DetectedTitleisEpisodeZero == iszeroepisode){
+                        NSLog(@"%@ zero episode is found on exceptions list as %@.", DetectedTitle, correcttitle);
+                        DetectedTitle = [correcttitle stringByReplacingOccurrencesOfString:@":" withString:@""];
+                        DetectedEpisode = [NSString stringWithFormat:@"%i", mappedepisode];
+                        DetectedTitleisEpisodeZero = true;
+                        found = true;
+                        break;
+                    }
+                    else if ((tmpepisode > threshold && threshold != 0) || (tmpepisode <= 0 && threshold != 1 && i==0)||(tmpepisode <= 0 && i==1)) {
                         continue;
                     }
                     else {
-                        NSLog(@"%@ is found on exceptions list as %@.", DetectedTitle, correcttitle);
+                        NSLog(@"%@ found on exceptions list as %@.", DetectedTitle, correcttitle);
                         DetectedTitle = [correcttitle stringByReplacingOccurrencesOfString:@":" withString:@""];
                         if (tmpepisode > 0) {
                             DetectedEpisode = [NSString stringWithFormat:@"%i", tmpepisode];
@@ -386,7 +395,7 @@
                         DetectedSeason = 0;
                         DetectedTitleisEpisodeZero = false;
                         found = true;
-						break;
+                        break;
                     }
                 }
             }
