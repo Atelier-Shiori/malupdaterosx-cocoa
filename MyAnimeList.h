@@ -63,6 +63,7 @@
 -(int)getWatchStatus;
 -(BOOL)getSuccess;
 -(BOOL)getisNewTitle;
+-(BOOL)getOnlineStatus;
 -(NSDictionary *)getLastScrobbledInfo;
 -(void)clearAnimeInfo;
 -(NSString *)startSearch;

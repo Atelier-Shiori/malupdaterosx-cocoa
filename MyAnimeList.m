@@ -109,7 +109,9 @@
 -(BOOL)getSuccess{
     return Success;
 }
-
+-(BOOL)getOnlineStatus{
+    return online;
+}
 /*
  
  Update Methods
@@ -118,7 +120,7 @@
 
 - (int)startscrobbling {
 
-    // 0 - nothing playing; 1 - same episode playing; 2 - No Update Needed; 3 - Confirm title before updating  21 - Add Title Successful; 22 - Update Title Successful;  51 - Can't find Title; 52 - Add Failed; 53 - Update Failed; 54 - Scrobble Failed;
+    // 0 - nothing playing; 1 - same episode playing; 2 - No Update Needed; 3 - Confirm title before updating  21 - Add Title Successful; 22 - Update Title Successful;  51 - Can't find Title; 52 - Add Failed; 53 - Update Failed; 54 - Scrobble Failed - 23 - Offline Queue;
     int detectstatus;
 	//Set up Delegate
 	
@@ -126,6 +128,42 @@
 	if (detectstatus == 2) { // Detects Title
         if (online){
             return [self scrobble];
+        }
+        else{
+            NSError * error;
+            if (![self checkifexistinqueue]) {
+                // Store in offline queue
+                NSManagedObject *obj = [NSEntityDescription
+                                        insertNewObjectForEntityForName:@"OfflineQueue"
+                                        inManagedObjectContext: managedObjectContext];
+                // Set values in the new record
+                [obj setValue:DetectedTitle forKey:@"detectedtitle"];
+                [obj setValue:DetectedEpisode forKey:@"detectedepisode"];
+                [obj setValue:DetectedType forKey:@"detectedtype"];
+                [obj setValue:[NSNumber numberWithInteger:DetectedSeason] forKey:@"detectedseason"];
+                [obj setValue:[NSNumber numberWithBool:DetectedTitleisMovie] forKey:@"ismovie"];
+                [obj setValue:[NSNumber numberWithBool:DetectedTitleisEpisodeZero] forKey:@"iszeroepisode"];
+                [obj setValue:[NSNumber numberWithInteger:23] forKey:@"status"];
+                [obj setValue:[NSNumber numberWithBool:false] forKey:@"scrobbled"];
+                //Save
+                [managedObjectContext save:&error];
+            }
+            // Store Last Scrobbled Title
+            LastScrobbledTitle = DetectedTitle;
+            LastScrobbledEpisode = DetectedEpisode;
+            DetectedCurrentEpisode = [DetectedEpisode intValue];
+            LastScrobbledSource = DetectedSource;
+            LastScrobbledActualTitle = DetectedTitle;
+            confirmed = true;
+            // Reset Detected Info
+            DetectedTitle = nil;
+            DetectedEpisode = nil;
+            DetectedSource = nil;
+            DetectedGroup = nil;
+            DetectedType = nil;
+            DetectedSeason = 0;
+            Success = true;
+            return 23;
         }
 	}
 
@@ -446,5 +484,19 @@
         tmpid = [self searchanime]; // Use MAL Search
     }
     return tmpid;
+}
+-(NSManagedObject *)checkifexistinqueue{
+    // Return existing offline queue item
+    NSError * error;
+    NSManagedObjectContext * moc = self.managedObjectContext;
+    NSPredicate * predicate = [NSPredicate predicateWithFormat: @"(detectedtitle ==[c] %@) AND (detectedepisode == %@) AND (detectedtype ==[c] %@) AND (ismovie == %@) AND (iszeroepisode == %@) AND (detectedseason == %@) AND (source == %@)", DetectedTitle, DetectedEpisode, DetectedType, [NSNumber numberWithBool:DetectedTitleisMovie], [NSNumber numberWithBool:DetectedTitleisEpisodeZero], [NSNumber numberWithInteger:DetectedSeason], DetectedSource];
+    NSFetchRequest * queuefetch = [[NSFetchRequest alloc] init];
+    queuefetch.entity = [NSEntityDescription entityForName:@"OfflineQueue" inManagedObjectContext:moc];
+    [queuefetch setPredicate: predicate];
+    NSArray * queue = [moc executeFetchRequest:queuefetch error:&error];
+    if (queue.count > 0) {
+        return (NSManagedObject *)queue[0];
+    }
+    return nil;
 }
 @end
