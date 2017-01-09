@@ -11,6 +11,7 @@
 #import "MyAnimeList+Search.h"
 #import "MyAnimeList+Update.h"
 #import "MyAnimeList+HummingbirdSearch.h"
+#import "Reachability.h"
 
 @interface MyAnimeList ()
 -(int)detectmedia; // 0 - Nothing, 1 - Same, 2 - Update
@@ -21,6 +22,24 @@
 @synthesize managedObjectContext;
 -(id)init{
     confirmed = true;
+    //Create Reachability Object
+    reach = [Reachability reachabilityWithHostname:@"malapi.ateliershiori.moe"];
+    // Set up blocks
+    // Set the blocks
+    reach.reachableBlock = ^(Reachability*reach)
+    {
+        online = true;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSLog(@"Atarashii-API is reachable.");
+        });
+    };
+    reach.unreachableBlock = ^(Reachability*reach)
+    {
+        online = false;
+        NSLog(@"Computer not connected to internet or Atarashii-API Server is down");
+    };
+    // Start notifier
+    [reach startNotifier];
     return [super init];
 }
 -(void)setManagedObjectContext:(NSManagedObjectContext *)context{
@@ -105,10 +124,16 @@
 	
     detectstatus = [self detectmedia];
 	if (detectstatus == 2) { // Detects Title
-        return [self scrobble];
+        if (online){
+            return [self scrobble];
+        }
 	}
 
     return detectstatus;
+}
+-(int)scrobblefromqueue:(NSDictionary *)info{
+    // Restore Detected Media
+    
 }
 -(int)scrobbleagain:(NSString *)showtitle Episode:(NSString *)episode correctonce:(BOOL)correctonce{
 	correcting = true;

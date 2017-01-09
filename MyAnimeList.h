@@ -9,6 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #import <OgreKit/OgreKit.h>
 #import "MAL_Updater_OS_XAppDelegate.h"
+#import "Reachability.h"
 
 @interface MyAnimeList : NSObject {
 	NSString * MALApiUrl;
@@ -39,6 +40,7 @@
 	BOOL Success;
     BOOL online;
 	BOOL correcting;
+    Reachability* reach;
     NSManagedObjectContext *managedObjectContext;
 }
 @property (nonatomic, readonly) NSManagedObjectContext *managedObjectContext;

@@ -19,6 +19,7 @@
 #import "ExceptionsCache.h"
 #import "HistoryWindow.h"
 #import "DonationWindowController.h"
+#import "OfflineViewQueue.h"
 
 @implementation MAL_Updater_OS_XAppDelegate
 
@@ -367,6 +368,15 @@
         _dwindow = [[DonationWindowController alloc] init];
     }
     [[_dwindow window] makeKeyAndOrderFront:nil];
+    
+}
+-(IBAction)showOfflineQueue:(id)sender{
+    //Since LSUIElement is set to 1 to hide the dock icon, it causes unattended behavior of having the program windows not show to the front.
+    [NSApp activateIgnoringOtherApps:YES];
+    if (!_owindow) {
+        _owindow = [[OfflineViewQueue alloc] initwithDelegate:self];
+    }
+    [[_owindow window] makeKeyAndOrderFront:nil];
     
 }
 -(IBAction)getHelp:(id)sender{

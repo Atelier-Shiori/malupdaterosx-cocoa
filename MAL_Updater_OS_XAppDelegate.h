@@ -12,6 +12,7 @@
 @class FixSearchDialog;
 @class HistoryWindow;
 @class DonationWindowController;
+@class OfflineViewQueue;
 @interface MAL_Updater_OS_XAppDelegate : NSObject <NSApplicationDelegate, NSUserNotificationCenterDelegate, NSSharingServiceDelegate> {
 	/* Windows */
     __unsafe_unretained NSWindow *window;
@@ -75,6 +76,7 @@
 @property(strong) FixSearchDialog *fsdialog;
 @property (strong) HistoryWindow * historywindowcontroller;
 @property (strong) DonationWindowController * dwindow;
+@property (strong) OfflineViewQueue * owindow;
 
 -(void)showhistory:(id)sender;
 -(IBAction)togglescrobblewindow:(id)sender;
