@@ -12,4 +12,9 @@
 +(void)importToCoreData;
 +(void)updateAutoExceptions;
 +(void)clearAutoExceptions;
++(NSManagedObject *)checkAutoExceptionsEntry:(NSString *)ctitle
+                                       group:(NSString *)group
+                                correcttitle:(NSString *)correcttitle
+                                 zeroepisode:(bool)zeroepisode
+                                      offset:(int)offset;
 @end
