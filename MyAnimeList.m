@@ -140,6 +140,7 @@
                 [obj setValue:DetectedTitle forKey:@"detectedtitle"];
                 [obj setValue:DetectedEpisode forKey:@"detectedepisode"];
                 [obj setValue:DetectedType forKey:@"detectedtype"];
+                [obj setValue:DetectedSource forKey:@"source"];
                 [obj setValue:[NSNumber numberWithInteger:DetectedSeason] forKey:@"detectedseason"];
                 [obj setValue:[NSNumber numberWithBool:DetectedTitleisMovie] forKey:@"ismovie"];
                 [obj setValue:[NSNumber numberWithBool:DetectedTitleisEpisodeZero] forKey:@"iszeroepisode"];
@@ -489,7 +490,7 @@
     // Return existing offline queue item
     NSError * error;
     NSManagedObjectContext * moc = self.managedObjectContext;
-    NSPredicate * predicate = [NSPredicate predicateWithFormat: @"(detectedtitle ==[c] %@) AND (detectedepisode == %@) AND (detectedtype ==[c] %@) AND (ismovie == %@) AND (iszeroepisode == %@) AND (detectedseason == %@) AND (source == %@)", DetectedTitle, DetectedEpisode, DetectedType, [NSNumber numberWithBool:DetectedTitleisMovie], [NSNumber numberWithBool:DetectedTitleisEpisodeZero], [NSNumber numberWithInteger:DetectedSeason], DetectedSource];
+    NSPredicate * predicate = [NSPredicate predicateWithFormat: @"(detectedtitle ==[c] %@) AND (detectedepisode ==[c] %@) AND (detectedtype ==[c] %@) AND (ismovie == %i) AND (iszeroepisode == %i) AND (detectedseason == %i) AND (source == %@)", DetectedTitle, DetectedEpisode, DetectedType, DetectedTitleisMovie, DetectedTitleisEpisodeZero, DetectedSeason, DetectedSource];
     NSFetchRequest * queuefetch = [[NSFetchRequest alloc] init];
     queuefetch.entity = [NSEntityDescription entityForName:@"OfflineQueue" inManagedObjectContext:moc];
     [queuefetch setPredicate: predicate];
