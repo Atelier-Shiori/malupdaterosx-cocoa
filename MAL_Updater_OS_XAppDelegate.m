@@ -374,7 +374,7 @@
     //Since LSUIElement is set to 1 to hide the dock icon, it causes unattended behavior of having the program windows not show to the front.
     [NSApp activateIgnoringOtherApps:YES];
     if (!_owindow) {
-        _owindow = [[OfflineViewQueue alloc] initwithDelegate:self];
+        _owindow = [[OfflineViewQueue alloc] init];
     }
     [[_owindow window] makeKeyAndOrderFront:nil];
     

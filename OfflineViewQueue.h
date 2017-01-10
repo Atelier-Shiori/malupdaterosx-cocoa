@@ -13,6 +13,5 @@
     	NSManagedObjectContext *managedObjectContext;
     MAL_Updater_OS_XAppDelegate * delegate;
 }
-@property (nonatomic, retain, readonly) NSManagedObjectContext *managedObjectContext;
--(id)initwithDelegate:(MAL_Updater_OS_XAppDelegate *)d;
+@property (nonatomic, readonly) NSManagedObjectContext *managedObjectContext;
 @end

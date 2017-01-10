@@ -13,16 +13,16 @@
 @end
 
 @implementation OfflineViewQueue
+@dynamic managedObjectContext;
+- (NSManagedObjectContext *)managedObjectContext {
+    MAL_Updater_OS_XAppDelegate *appDelegate = (MAL_Updater_OS_XAppDelegate *)[NSApplication sharedApplication].delegate;
+    return appDelegate.managedObjectContext;
+}
 -(id)init{
     self = [super initWithWindowNibName:@"OfflineViewQueue"];
     if(!self)
         return nil;
     return self;
-}
--(id)initwithDelegate:(MAL_Updater_OS_XAppDelegate *)d{
-    delegate = d;
-    managedObjectContext = [delegate getObjectContext];
-    return [self init];
 }
 - (void)windowDidLoad {
     [super windowDidLoad];
