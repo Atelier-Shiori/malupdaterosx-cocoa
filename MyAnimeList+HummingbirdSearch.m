@@ -160,7 +160,7 @@
                 }
                 //Return titleid if episode is valid
                 int episodecount;
-                if (searchentry[@"episodeCount"] == [NSNull null]) {
+                if (searchentry[@"episodeCount"] == nil) {
                     // No episode Count, set episode count to zero
                     episodecount = 0;
                 }
