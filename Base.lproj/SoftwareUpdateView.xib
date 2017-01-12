@@ -127,7 +127,7 @@
                     </textFieldCell>
                 </textField>
                 <button toolTip="Enabling this option allows MAL Updater OS X to check for experimental builds." misplaced="YES" id="lo0-rU-aZf">
-                    <rect key="frame" x="164" y="135" width="231" height="18"/>
+                    <rect key="frame" x="165" y="135" width="231" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Check for weekly experimental builds" bezelStyle="regularSquare" imagePosition="left" inset="2" id="dT2-4B-iAP">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
