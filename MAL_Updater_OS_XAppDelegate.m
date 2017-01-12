@@ -515,7 +515,7 @@
         int status;
         for (int i = 0; i < 2; i++){
             if (i == 0){
-                if ([MALEngine getQueueCount] > 0){
+                if ([MALEngine getQueueCount] > 0 && [MALEngine getOnlineStatus]){
                     NSDictionary * status = [MALEngine scrobblefromqueue];
                     int success = [status[@"success"] intValue];
                     int fail = [status[@"fail"] intValue];
@@ -583,63 +583,64 @@
                 }
                 });
                 }
-            if ([MALEngine getSuccess] == 1) {
-                [findtitle setHidden:true];
-                if ([MALEngine getOnlineStatus]) {
-                    [self setStatusMenuTitleEpisode:[MALEngine getLastScrobbledActualTitle] episode:[MALEngine getLastScrobbledEpisode]];
-                    if (status != 3 && [MALEngine getConfirmed]){
-                        // Show normal info
-                        [self updateLastScrobbledTitleStatus:false];
-                        //Enable Update Status functions
-                        [self EnableStatusUpdating:YES];
-                        [confirmupdate setHidden:YES];
-                    }
-                    else{
-                        // Show that user needs to confirm update
-                        [self updateLastScrobbledTitleStatus:true];
-                        [confirmupdate setHidden:NO];
-                        if ([MALEngine getisNewTitle]) {
-                            // Disable Update Status functions for new and unconfirmed titles.
-                            [self EnableStatusUpdating:NO];
-                        }
-                        else{
-                            [self EnableStatusUpdating:YES];
-                        }
-                    }
-                    [sharetoolbaritem setEnabled:YES];
-                    [correcttoolbaritem setEnabled:YES];
-                    [openAnimePage setEnabled:YES];
-                    NSDictionary * ainfo = [MALEngine getLastScrobbledInfo];
-                    if (ainfo !=nil) { // Checks if MAL Updater OS X already populated info about the just updated title.
-                        [self showAnimeInfo:ainfo];
-                        [self generateShareMenu];
-                        [shareMenuItem setHidden:NO];
-                    }
-                }
-                else{
-                    [self updateLastScrobbledTitleStatus:false];
-                    [self setStatusMenuTitleEpisode:[MALEngine getLastScrobbledTitle] episode:[MALEngine getLastScrobbledEpisode]];
-                    [self EnableStatusUpdating:NO];
-                    [animeinfo setString:@"No information available."];
-                    [confirmupdate setHidden:YES];
-                    [sharetoolbaritem setEnabled:NO];
-                    [correcttoolbaritem setEnabled:NO];
-                    [shareMenuItem setHidden:YES];
-                }
-                
-                // Show hidden menus
-                [self unhideMenus];
-                
-            }
-            if (status == 51) {
-                //Show option to find title
-                [findtitle setHidden:false];
-            }
-            // Enable Menu Items
-            scrobbleractive = false;
-            [self toggleScrobblingUIEnable:true];
 
         }
+        if ([MALEngine getSuccess] == 1) {
+            [findtitle setHidden:true];
+            if ([MALEngine getOnlineStatus]) {
+                [self setStatusMenuTitleEpisode:[MALEngine getLastScrobbledActualTitle] episode:[MALEngine getLastScrobbledEpisode]];
+                if (status != 3 && [MALEngine getConfirmed]){
+                    // Show normal info
+                    [self updateLastScrobbledTitleStatus:false];
+                    //Enable Update Status functions
+                    [self EnableStatusUpdating:YES];
+                    [confirmupdate setHidden:YES];
+                }
+                else{
+                    // Show that user needs to confirm update
+                    [self updateLastScrobbledTitleStatus:true];
+                    [confirmupdate setHidden:NO];
+                    if ([MALEngine getisNewTitle]) {
+                        // Disable Update Status functions for new and unconfirmed titles.
+                        [self EnableStatusUpdating:NO];
+                    }
+                    else{
+                        [self EnableStatusUpdating:YES];
+                    }
+                }
+                [sharetoolbaritem setEnabled:YES];
+                [correcttoolbaritem setEnabled:YES];
+                [openAnimePage setEnabled:YES];
+                NSDictionary * ainfo = [MALEngine getLastScrobbledInfo];
+                if (ainfo !=nil) { // Checks if MAL Updater OS X already populated info about the just updated title.
+                    [self showAnimeInfo:ainfo];
+                    [self generateShareMenu];
+                    [shareMenuItem setHidden:NO];
+                }
+            }
+            else{
+                [self updateLastScrobbledTitleStatus:false];
+                [self setStatusMenuTitleEpisode:[MALEngine getLastScrobbledTitle] episode:[MALEngine getLastScrobbledEpisode]];
+                [self EnableStatusUpdating:NO];
+                [animeinfo setString:@"No information available."];
+                [confirmupdate setHidden:YES];
+                [sharetoolbaritem setEnabled:NO];
+                [correcttoolbaritem setEnabled:NO];
+                [shareMenuItem setHidden:YES];
+            }
+            
+            // Show hidden menus
+            [self unhideMenus];
+            
+        }
+        if (status == 51) {
+            //Show option to find title
+            [findtitle setHidden:false];
+        }
+        // Enable Menu Items
+        scrobbleractive = false;
+        [self toggleScrobblingUIEnable:true];
+
     });
     
     }

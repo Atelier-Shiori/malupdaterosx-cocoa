@@ -204,7 +204,7 @@
     queuefetch.entity = [NSEntityDescription entityForName:@"OfflineQueue" inManagedObjectContext:moc];
     [queuefetch setPredicate: predicate];
     NSArray * queue = [moc executeFetchRequest:queuefetch error:&error];
-    int success = 0;
+    int successc = 0;
     int fail = 0;
     bool confirmneeded;
     if (queue.count > 0) {
@@ -233,7 +233,7 @@
                     break;
                     
                 default:
-                    success++;
+                    successc++;
                     scrobbled = true;
                     break;
             }
@@ -247,7 +247,10 @@
             }
         }
     }
-    return @{@"success": [NSNumber numberWithInt:success], @"fail": [NSNumber numberWithInt:fail], @"confirmneeded" : [NSNumber numberWithBool:confirmneeded], @"remaining" : [NSNumber numberWithInt:[queue count]-success-fail]};
+    if (successc > 0){
+        Success = true;
+    }
+    return @{@"success": [NSNumber numberWithInt:successc], @"fail": [NSNumber numberWithInt:fail], @"confirmneeded" : [NSNumber numberWithBool:confirmneeded]};
 }
 -(int)scrobbleagain:(NSString *)showtitle Episode:(NSString *)episode correctonce:(BOOL)correctonce{
 	correcting = true;
