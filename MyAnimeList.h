@@ -48,6 +48,7 @@
 - (int)startscrobbling;
 -(int)scrobbleagain:(NSString *)showtitle Episode:(NSString *)episode correctonce:(BOOL)correctonce;
 -(int)scrobble;
+-(NSDictionary *)scrobblefromqueue;
 -(BOOL)confirmupdate;
 -(NSString *)getLastScrobbledTitle;
 -(NSString *)getLastScrobbledEpisode;
@@ -65,6 +66,7 @@
 -(BOOL)getisNewTitle;
 -(BOOL)getOnlineStatus;
 -(NSDictionary *)getLastScrobbledInfo;
+-(int)getQueueCount;
 -(void)clearAnimeInfo;
 -(NSString *)startSearch;
 @end

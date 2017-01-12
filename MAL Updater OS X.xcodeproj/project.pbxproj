@@ -105,6 +105,7 @@
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		2D60876A1E28239D00D6E583 /* MAL_Updater_OS_X_DataModel 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "MAL_Updater_OS_X_DataModel 3.xcdatamodel"; sourceTree = "<group>"; };
 		2DAFC1D01E2301ED00FB7A14 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		2DAFC1D11E2301ED00FB7A14 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		2DAFC1D71E2313B100FB7A14 /* OfflineViewQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OfflineViewQueue.h; sourceTree = "<group>"; };
@@ -920,10 +921,11 @@
 		6F5F6C6D1A71696D006D4607 /* MAL_Updater_OS_X_DataModel.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				2D60876A1E28239D00D6E583 /* MAL_Updater_OS_X_DataModel 3.xcdatamodel */,
 				6F5F6C6E1A71696D006D4607 /* MAL_Updater_OS_X_DataModel 2.xcdatamodel */,
 				6F5F6C6F1A71696D006D4607 /* MAL_Updater_OS_X_DataModel.xcdatamodel */,
 			);
-			currentVersion = 6F5F6C6E1A71696D006D4607 /* MAL_Updater_OS_X_DataModel 2.xcdatamodel */;
+			currentVersion = 2D60876A1E28239D00D6E583 /* MAL_Updater_OS_X_DataModel 3.xcdatamodel */;
 			path = MAL_Updater_OS_X_DataModel.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

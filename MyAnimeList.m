@@ -112,6 +112,18 @@
 -(BOOL)getOnlineStatus{
     return online;
 }
+-(int)getQueueCount{
+    NSError * error;
+    NSManagedObjectContext * moc = self.managedObjectContext;
+    NSPredicate * predicate = [NSPredicate predicateWithFormat: @"(scrobbled == %i) AND (status == %i)", false, 23];
+    NSFetchRequest * queuefetch = [[NSFetchRequest alloc] init];
+    queuefetch.entity = [NSEntityDescription entityForName:@"OfflineQueue" inManagedObjectContext:moc];
+    [queuefetch setPredicate: predicate];
+    NSArray * queue = [moc executeFetchRequest:queuefetch error:&error];
+    int count = queue.count;
+    [managedObjectContext reset];
+    return count;
+}
 /*
  
  Update Methods
@@ -127,7 +139,19 @@
     detectstatus = [self detectmedia];
 	if (detectstatus == 2) { // Detects Title
         if (online){
-            return [self scrobble];
+            int result = [self scrobble];
+            // Empty out Detected Title/Episode to prevent same title detection
+            DetectedTitle = nil;
+            DetectedEpisode = nil;
+            DetectedSource = nil;
+            DetectedGroup = nil;
+            DetectedType = nil;
+            DetectedSeason = 0;
+            // Clear Core Data Objects from Memory
+            [managedObjectContext reset];
+            // Reset correcting Value
+            correcting = false;
+            return result;
         }
         else{
             NSError * error;
@@ -164,15 +188,66 @@
             DetectedType = nil;
             DetectedSeason = 0;
             Success = true;
+            [managedObjectContext reset];
             return 23;
         }
 	}
 
     return detectstatus;
 }
--(int)scrobblefromqueue:(NSDictionary *)info{
+-(NSDictionary *)scrobblefromqueue{
     // Restore Detected Media
-    
+    NSError * error;
+    NSManagedObjectContext * moc = self.managedObjectContext;
+    NSPredicate * predicate = [NSPredicate predicateWithFormat: @"(scrobbled == %i) AND (status == %i)", false, 23];
+    NSFetchRequest * queuefetch = [[NSFetchRequest alloc] init];
+    queuefetch.entity = [NSEntityDescription entityForName:@"OfflineQueue" inManagedObjectContext:moc];
+    [queuefetch setPredicate: predicate];
+    NSArray * queue = [moc executeFetchRequest:queuefetch error:&error];
+    int success = 0;
+    int fail = 0;
+    bool confirmneeded;
+    if (queue.count > 0) {
+        for (NSManagedObject * item in queue){
+            // Restore detected title and episode from coredata
+            DetectedTitle = [item valueForKey:@"detectedtitle"];
+            DetectedEpisode = [item valueForKey:@"detectedepisode"];
+            DetectedSource = [item valueForKey:@"source"];
+            DetectedType = [item valueForKey:@"detectedtype"];
+            DetectedSeason = [[item valueForKey:@"detectedseason"] intValue];
+            DetectedTitleisMovie = [[item valueForKey:@"ismovie"] boolValue];
+            DetectedTitleisEpisodeZero = [[item valueForKey:@"iszeroepisode"] boolValue];
+            int result = [self scrobble];
+            bool scrobbled;
+            NSManagedObject * record = [self checkifexistinqueue];
+            // Record Results
+            [record setValue:[NSNumber numberWithInteger:result] forKey:@"status"];
+                // 0 - nothing playing; 1 - same episode playing; 2 - No Update Needed; 3 - Confirm title before updating  21 - Add Title Successful; 22 - Update Title Successful;  51 - Can't find Title; 52 - Add Failed; 53 - Update Failed; 54 - Scrobble Failed - 23 - Offline Queue;
+            switch (result) {
+                case 51:
+                case 52:
+                case 53:
+                case 54:
+                    fail++;
+                    scrobbled = false;
+                    break;
+                    
+                default:
+                    success++;
+                    scrobbled = true;
+                    break;
+            }
+             [record setValue:[NSNumber numberWithBool:scrobbled] forKey:@"scrobbled"];
+                [moc save:&error];
+            
+            //Save
+            if (result == 3){
+                confirmneeded = true;
+                break;
+            }
+        }
+    }
+    return @{@"success": [NSNumber numberWithInt:success], @"fail": [NSNumber numberWithInt:fail], @"confirmneeded" : [NSNumber numberWithBool:confirmneeded], @"remaining" : [NSNumber numberWithInt:[queue count]-success-fail]};
 }
 -(int)scrobbleagain:(NSString *)showtitle Episode:(NSString *)episode correctonce:(BOOL)correctonce{
 	correcting = true;
@@ -281,15 +356,6 @@
         }
         
     }
-    // Empty out Detected Title/Episode to prevent same title detection
-    DetectedTitle = nil;
-    DetectedEpisode = nil;
-    DetectedSource = nil;
-    DetectedGroup = nil;
-    DetectedType = nil;
-    DetectedSeason = 0;
-    // Clear Core Data Objects from Memory
-    [managedObjectContext reset];
     // Reset correcting Value
     correcting = false;
     NSLog(@"Scrobble Complete with Status Code: %i", status);

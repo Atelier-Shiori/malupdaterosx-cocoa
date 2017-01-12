@@ -513,81 +513,102 @@
             }
         }
         int status;
-        status = [MALEngine startscrobbling];
-        dispatch_async(dispatch_get_main_queue(), ^{
-	//Enable the Update button if a title is detected
-        switch (status) { // 0 - nothing playing; 1 - same episode playing; 21 - Add Title Successful; 22 - Update Title Successful;  51 - Can't find Title; 52 - Add Failed; 53 - Update Failed; 54 - Scrobble Failed; 
-            case 0:
-                [self setStatusText:@"Scrobble Status: Idle..."];
-                break;
-            case 1:
-                [self setStatusText:@"Scrobble Status: Same Episode Playing, Scrobble not needed."];
-                break;
-            case 2:
-                [self setStatusText:@"Scrobble Status: No update needed."];
-                break;
-            case 3:{
-                [self setStatusText:@"Scrobble Status: Please confirm update."];
-                NSDictionary * userinfo = @{@"title": [MALEngine getLastScrobbledTitle],  @"episode": [MALEngine getLastScrobbledEpisode]};
-                [self showConfirmationNotification:@"Confirm Update" message:[NSString stringWithFormat:@"Click here to confirm update for %@ Episode %@.",[MALEngine getLastScrobbledActualTitle],[MALEngine getLastScrobbledEpisode]] updateData:userinfo];
-                break;
+        for (int i = 0; i < 2; i++){
+            if (i == 0){
+                if ([MALEngine getQueueCount] > 0){
+                    NSDictionary * status = [MALEngine scrobblefromqueue];
+                    int success = [status[@"success"] intValue];
+                    int fail = [status[@"fail"] intValue];
+                    bool confirmneeded = [status[@"confirmneeded"] boolValue];
+                    if (confirmneeded) {
+                        [self setStatusText:@"Scrobble Status: Please confirm update."];
+                        NSDictionary * userinfo = @{@"title": [MALEngine getLastScrobbledTitle],  @"episode": [MALEngine getLastScrobbledEpisode]};
+                        [self showConfirmationNotification:@"Confirm Update" message:[NSString stringWithFormat:@"Click here to confirm update for %@ Episode %@.",[MALEngine getLastScrobbledActualTitle],[MALEngine getLastScrobbledEpisode]] updateData:userinfo];
+                        break;
+                    }
+                    else{
+                        [self showNotification:@"Updated Queued Items" message:[NSString stringWithFormat:@"%i scrobbled successfully and %i failed",success, fail]];
+                    }
+                }
             }
-            case 21:
-            case 22:
-                [self setStatusText:@"Scrobble Status: Scrobble Successful..."];
-                [self showNotification:@"Scrobble Successful."message:[NSString stringWithFormat:@"%@ - %@",[MALEngine getLastScrobbledActualTitle],[MALEngine getLastScrobbledEpisode]]];
-                //Add History Record
-                [HistoryWindow addrecord:[MALEngine getLastScrobbledActualTitle] Episode:[MALEngine getLastScrobbledEpisode] Date:[NSDate date]];
-                break;
-            case 23:
-                [self setStatusText:@"Scrobble Status: Scrobble Queued..."];
-                [self showNotification:@"Scrobble Queued." message:[NSString stringWithFormat:@"%@ - %@",[MALEngine getLastScrobbledActualTitle],[MALEngine getLastScrobbledEpisode]]];
-                break;
-            case 51:
-                [self setStatusText:@"Scrobble Status: Couldn't find title."];
-                [self showNotification:@"Couldn't find title." message:[NSString stringWithFormat:@"Click here to find %@ manually.", [MALEngine getFailedTitle]]];
-                break;
-            case 52:
-            case 53:
-                [self showNotification:@"Scrobble Unsuccessful." message:@"Retrying in 5 mins..."];
-                [self setStatusText:@"Scrobble Status: Scrobble Failed. Retrying in 5 mins..."];
-                break;
-            case 54:
-                [self showNotification:@"Scrobble Unsuccessful." message:@"Check user credentials in Preferences. You may need to login again."];
-                [self setStatusText:@"Scrobble Status: Scrobble Failed. User credentials might have expired or MAL Updater OS X needs to be updated."];
-                break;
-            case 55:
-                [self setStatusText:@"Scrobble Status: No internet connection."];
-                break;
-            default:
-                break;
-        }
+            else{
+                status = [MALEngine startscrobbling];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                //Enable the Update button if a title is detected
+                switch (status) { // 0 - nothing playing; 1 - same episode playing; 21 - Add Title Successful; 22 - Update Title Successful;  51 - Can't find Title; 52 - Add Failed; 53 - Update Failed; 54 - Scrobble Failed; 
+                    case 0:
+                        [self setStatusText:@"Scrobble Status: Idle..."];
+                        break;
+                    case 1:
+                        [self setStatusText:@"Scrobble Status: Same Episode Playing, Scrobble not needed."];
+                        break;
+                    case 2:
+                        [self setStatusText:@"Scrobble Status: No update needed."];
+                        break;
+                    case 3:{
+                        [self setStatusText:@"Scrobble Status: Please confirm update."];
+                        NSDictionary * userinfo = @{@"title": [MALEngine getLastScrobbledTitle],  @"episode": [MALEngine getLastScrobbledEpisode]};
+                        [self showConfirmationNotification:@"Confirm Update" message:[NSString stringWithFormat:@"Click here to confirm update for %@ Episode %@.",[MALEngine getLastScrobbledActualTitle],[MALEngine getLastScrobbledEpisode]] updateData:userinfo];
+                        break;
+                    }
+                    case 21:
+                    case 22:
+                        [self setStatusText:@"Scrobble Status: Scrobble Successful..."];
+                        [self showNotification:@"Scrobble Successful."message:[NSString stringWithFormat:@"%@ - %@",[MALEngine getLastScrobbledActualTitle],[MALEngine getLastScrobbledEpisode]]];
+                        //Add History Record
+                        [HistoryWindow addrecord:[MALEngine getLastScrobbledActualTitle] Episode:[MALEngine getLastScrobbledEpisode] Date:[NSDate date]];
+                        break;
+                    case 23:
+                        [self setStatusText:@"Scrobble Status: Scrobble Queued..."];
+                        [self showNotification:@"Scrobble Queued." message:[NSString stringWithFormat:@"%@ - %@",[MALEngine getLastScrobbledActualTitle],[MALEngine getLastScrobbledEpisode]]];
+                        break;
+                    case 51:
+                        [self setStatusText:@"Scrobble Status: Couldn't find title."];
+                        [self showNotification:@"Couldn't find title." message:[NSString stringWithFormat:@"Click here to find %@ manually.", [MALEngine getFailedTitle]]];
+                        break;
+                    case 52:
+                    case 53:
+                        [self showNotification:@"Scrobble Unsuccessful." message:@"Retrying in 5 mins..."];
+                        [self setStatusText:@"Scrobble Status: Scrobble Failed. Retrying in 5 mins..."];
+                        break;
+                    case 54:
+                        [self showNotification:@"Scrobble Unsuccessful." message:@"Check user credentials in Preferences. You may need to login again."];
+                        [self setStatusText:@"Scrobble Status: Scrobble Failed. User credentials might have expired or MAL Updater OS X needs to be updated."];
+                        break;
+                    case 55:
+                        [self setStatusText:@"Scrobble Status: No internet connection."];
+                        break;
+                    default:
+                        break;
+                }
+                });
+                }
             if ([MALEngine getSuccess] == 1) {
-                 [findtitle setHidden:true];
+                [findtitle setHidden:true];
                 if ([MALEngine getOnlineStatus]) {
-                        [self setStatusMenuTitleEpisode:[MALEngine getLastScrobbledActualTitle] episode:[MALEngine getLastScrobbledEpisode]];
-                        if (status != 3 && [MALEngine getConfirmed]){
-                            // Show normal info
-                            [self updateLastScrobbledTitleStatus:false];
-                            //Enable Update Status functions
-                            [self EnableStatusUpdating:YES];
-                            [confirmupdate setHidden:YES];
+                    [self setStatusMenuTitleEpisode:[MALEngine getLastScrobbledActualTitle] episode:[MALEngine getLastScrobbledEpisode]];
+                    if (status != 3 && [MALEngine getConfirmed]){
+                        // Show normal info
+                        [self updateLastScrobbledTitleStatus:false];
+                        //Enable Update Status functions
+                        [self EnableStatusUpdating:YES];
+                        [confirmupdate setHidden:YES];
+                    }
+                    else{
+                        // Show that user needs to confirm update
+                        [self updateLastScrobbledTitleStatus:true];
+                        [confirmupdate setHidden:NO];
+                        if ([MALEngine getisNewTitle]) {
+                            // Disable Update Status functions for new and unconfirmed titles.
+                            [self EnableStatusUpdating:NO];
                         }
                         else{
-                            // Show that user needs to confirm update
-                            [self updateLastScrobbledTitleStatus:true];
-                            [confirmupdate setHidden:NO];
-                            if ([MALEngine getisNewTitle]) {
-                                // Disable Update Status functions for new and unconfirmed titles.
-                                [self EnableStatusUpdating:NO];
-                            }
-                            else{
-                                [self EnableStatusUpdating:YES];
-                            }
+                            [self EnableStatusUpdating:YES];
                         }
-                        [sharetoolbaritem setEnabled:YES];
-                        [correcttoolbaritem setEnabled:YES];
-                        [openAnimePage setEnabled:YES];
+                    }
+                    [sharetoolbaritem setEnabled:YES];
+                    [correcttoolbaritem setEnabled:YES];
+                    [openAnimePage setEnabled:YES];
                     NSDictionary * ainfo = [MALEngine getLastScrobbledInfo];
                     if (ainfo !=nil) { // Checks if MAL Updater OS X already populated info about the just updated title.
                         [self showAnimeInfo:ainfo];
@@ -605,10 +626,10 @@
                     [correcttoolbaritem setEnabled:NO];
                     [shareMenuItem setHidden:YES];
                 }
-
+                
                 // Show hidden menus
                 [self unhideMenus];
-         
+                
             }
             if (status == 51) {
                 //Show option to find title
@@ -617,7 +638,8 @@
             // Enable Menu Items
             scrobbleractive = false;
             [self toggleScrobblingUIEnable:true];
-	});
+
+        }
     });
     
     }
@@ -964,6 +986,10 @@
         if ([MALEngine getisNewTitle]) {
             // Enable Update Status functions for new and unconfirmed titles.
             [self EnableStatusUpdating:YES];
+        }
+        if ([MALEngine getQueueCount] > 0){
+            // Continue to scrobble rest of the queue.
+            [self firetimer:nil];
         }
     }
     else{
