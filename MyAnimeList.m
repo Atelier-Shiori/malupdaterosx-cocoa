@@ -199,7 +199,7 @@
     // Restore Detected Media
     NSError * error;
     NSManagedObjectContext * moc = self.managedObjectContext;
-    NSPredicate * predicate = [NSPredicate predicateWithFormat: @"(scrobbled == %i) AND (status == %i)", false, 23];
+    NSPredicate * predicate = [NSPredicate predicateWithFormat: @"(scrobbled == %i) AND ((status == %i) OR (status == %i))", false, 23, 3];
     NSFetchRequest * queuefetch = [[NSFetchRequest alloc] init];
     queuefetch.entity = [NSEntityDescription entityForName:@"OfflineQueue" inManagedObjectContext:moc];
     [queuefetch setPredicate: predicate];
@@ -231,7 +231,9 @@
                     fail++;
                     scrobbled = false;
                     break;
-                    
+                case 3:
+                    successc++;
+                    scrobbled = true;
                 default:
                     successc++;
                     scrobbled = true;
@@ -421,16 +423,21 @@
 		status = [self updatetitle:AniID confirming:true];
 	}
     NSLog(@"Confirming process complete with status code: %i", status);
-    switch (status) {
-        case 21:
-        case 22:
+    
+    if (status == 21 || status ==22){
             // Clear Detected Episode and Title
             DetectedTitle = nil;
             DetectedEpisode = nil;
             DetectedSource = nil;
+            // Record Confirm for Offline Queued Item, if exists
+            NSManagedObject * obj = [self checkifexistinqueue];
+            if (obj){
+                [obj setValue:[NSNumber numberWithInt:status] forKey:@"status"];
+                [obj setValue:[NSNumber numberWithBool:false] forKey:@"scrobbled"];
+             }
             return true;
-            
-        default:
+    }
+    else{
             return false;
     }
 }
