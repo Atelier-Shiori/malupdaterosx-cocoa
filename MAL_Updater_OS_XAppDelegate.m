@@ -295,7 +295,7 @@
 		NSViewController *suViewController = [[SoftwareUpdatesPref alloc] init];
         NSViewController *exceptionsViewController = [[ExceptionsPref alloc] init];
         NSViewController *hotkeyViewController = [[HotkeysPrefs alloc] init];
-        NSViewController *advancedViewController = [[AdvancedPrefController alloc] init];
+        NSViewController *advancedViewController = [[AdvancedPrefController alloc] initwithAppDelegate:self];
         NSArray *controllers = @[generalViewController, loginViewController, hotkeyViewController, exceptionsViewController, suViewController, advancedViewController];
             _preferencesWindowController = [[MASPreferencesWindowController alloc] initWithViewControllers:controllers];
     }

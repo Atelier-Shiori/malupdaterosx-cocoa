@@ -10,6 +10,9 @@
 #import "Recognition.h"
 #import "EasyNSURLConnection.h"
 
+#import "MyAnimeList.h"
+#import "MAL_Updater_OS_XAppDelegate.h"
+
 @interface Detection()
 #pragma Private Methods
 -(NSDictionary *)detectStream;
@@ -196,61 +199,70 @@
     }
 }
 -(NSDictionary *)detectKodi{
-    // Kodi/Plex Theater Detection
-    NSString * address = [[NSUserDefaults standardUserDefaults] objectForKey:@"kodiaddress"];
-    NSString * port = [NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"kodiport"]];
-    if (address.length == 0) {
-        return nil;
-    }
-    if (port.length == 0) {
-        port = @"3005";
-    }
-    EasyNSURLConnection * request = [[EasyNSURLConnection alloc] initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://%@:%@/jsonrpc", address,port]]];
-    [request startJSONRequest:@"{\"jsonrpc\": \"2.0\", \"method\": \"Player.GetItem\", \"params\": { \"properties\": [\"title\", \"season\", \"episode\", \"showtitle\", \"tvshowid\", \"thumbnail\", \"file\", \"fanart\", \"streamdetails\"], \"playerid\": 1 }, \"id\": \"VideoGetItem\"}"];
-    if (request.getStatusCode == 200) {
-        NSDictionary * result;
-        NSError * error = nil;
-        result = [NSJSONSerialization JSONObjectWithData:[request getResponseData] options:kNilOptions error:&error];
-        if (result[@"result"] != nil) {
-            //Valid Result, parse title
-            NSDictionary * items = result[@"result"];
-            NSDictionary * item = items[@"item"];
-            NSString * label;
-            if ([[NSUserDefaults standardUserDefaults] boolForKey:@"kodiusefilename"])
-            {
-                // Use filename for recognition
-                label = item[@"file"];
-            }
-            else{
-                // Use the label
-                label = item[@"label"];
-            }
-            NSDictionary * d=[[Recognition alloc] recognize:label];
-            BOOL invalidepisode = [self checkIgnoredKeywords:d[@"types"]];
-            if (!invalidepisode){
-                NSString * DetectedTitle = (NSString *)d[@"title"];
-                NSString * DetectedEpisode = (NSString *)d[@"episode"];
-                NSNumber * DetectedSeason = d[@"season"];
-                NSString * DetectedGroup = d[@"group"];
-                NSString * DetectedSource = @"Kodi/Plex";
-                if ([self checkifTitleIgnored:(NSString *)DetectedTitle source:DetectedSource]) {
-                    return nil;
+    // Get MyAnimeList Engine Instance
+    MAL_Updater_OS_XAppDelegate * delegate = (MAL_Updater_OS_XAppDelegate *)[[NSApplication sharedApplication] delegate];
+    MyAnimeList *malengine =  [delegate getMALEngineInstance];
+    // Only Detect from Kodi RPC when the host is reachable.
+    if ([malengine getKodiOnlineStatus]){
+        // Kodi/Plex Theater Detection
+        NSString * address = [[NSUserDefaults standardUserDefaults] objectForKey:@"kodiaddress"];
+        NSString * port = [NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"kodiport"]];
+        if (address.length == 0) {
+            return nil;
+        }
+        if (port.length == 0) {
+            port = @"3005";
+        }
+        EasyNSURLConnection * request = [[EasyNSURLConnection alloc] initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://%@:%@/jsonrpc", address,port]]];
+        [request startJSONRequest:@"{\"jsonrpc\": \"2.0\", \"method\": \"Player.GetItem\", \"params\": { \"properties\": [\"title\", \"season\", \"episode\", \"showtitle\", \"tvshowid\", \"thumbnail\", \"file\", \"fanart\", \"streamdetails\"], \"playerid\": 1 }, \"id\": \"VideoGetItem\"}"];
+        if (request.getStatusCode == 200) {
+            NSDictionary * result;
+            NSError * error = nil;
+            result = [NSJSONSerialization JSONObjectWithData:[request getResponseData] options:kNilOptions error:&error];
+            if (result[@"result"] != nil) {
+                //Valid Result, parse title
+                NSDictionary * items = result[@"result"];
+                NSDictionary * item = items[@"item"];
+                NSString * label;
+                if ([[NSUserDefaults standardUserDefaults] boolForKey:@"kodiusefilename"])
+                {
+                    // Use filename for recognition
+                    label = item[@"file"];
                 }
                 else{
-                    NSDictionary * output = @{@"detectedtitle": DetectedTitle, @"detectedepisode": DetectedEpisode, @"detectedseason": DetectedSeason, @"detectedsource": DetectedSource, @"group": DetectedGroup, @"types": d[@"types"]};
-                    return output;
+                    // Use the label
+                    label = item[@"label"];
+                }
+                NSDictionary * d=[[Recognition alloc] recognize:label];
+                BOOL invalidepisode = [self checkIgnoredKeywords:d[@"types"]];
+                if (!invalidepisode){
+                    NSString * DetectedTitle = (NSString *)d[@"title"];
+                    NSString * DetectedEpisode = (NSString *)d[@"episode"];
+                    NSNumber * DetectedSeason = d[@"season"];
+                    NSString * DetectedGroup = d[@"group"];
+                    NSString * DetectedSource = @"Kodi/Plex";
+                    if ([self checkifTitleIgnored:(NSString *)DetectedTitle source:DetectedSource]) {
+                        return nil;
+                    }
+                    else{
+                        NSDictionary * output = @{@"detectedtitle": DetectedTitle, @"detectedepisode": DetectedEpisode, @"detectedseason": DetectedSeason, @"detectedsource": DetectedSource, @"group": DetectedGroup, @"types": d[@"types"]};
+                        return output;
+                    }
+                }
+                else{
+                    return nil;
                 }
             }
             else{
+                // Unexpected Output or Kodi/Plex not playing anything, return nil object
                 return nil;
             }
         }
         else{
-            // Unexpected Output or Kodi/Plex not playing anything, return nil object
             return nil;
         }
     }
-    else{
+    else {
         return nil;
     }
 }

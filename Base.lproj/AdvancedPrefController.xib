@@ -9,6 +9,7 @@
         <customObject id="-2" userLabel="File's Owner" customClass="AdvancedPrefController">
             <connections>
                 <outlet property="APIUrl" destination="QB2-4z-Xb7" id="2y7-5H-HNk"/>
+                <outlet property="kodicheck" destination="Zuh-Gd-n0d" id="Q2z-ah-1ey"/>
                 <outlet property="view" destination="c22-O7-iKe" id="n4d-Z2-zna"/>
             </connections>
         </customObject>
@@ -42,6 +43,7 @@
                                 <bool key="NSContinuouslyUpdatesValue" value="YES"/>
                             </dictionary>
                         </binding>
+                        <outlet property="delegate" destination="-2" id="3FC-CE-cja"/>
                     </connections>
                 </textField>
                 <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gJg-m2-aJf">
@@ -81,6 +83,7 @@
                         <font key="font" metaFont="system"/>
                     </buttonCell>
                     <connections>
+                        <action selector="setKodiReach:" target="-2" id="dQ6-B9-fZA"/>
                         <binding destination="8ch-Z3-2Y0" name="value" keyPath="values.enablekodiapi" id="6p3-6F-lKA"/>
                     </connections>
                 </button>

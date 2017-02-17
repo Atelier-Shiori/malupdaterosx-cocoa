@@ -39,8 +39,10 @@
 	BOOL confirmed;
 	BOOL Success;
     BOOL online;
+    BOOL kodionline;
 	BOOL correcting;
     Reachability* reach;
+    Reachability* kodireach;
     NSManagedObjectContext *managedObjectContext;
 }
 @property (nonatomic, readonly) NSManagedObjectContext *managedObjectContext;
@@ -65,8 +67,11 @@
 -(BOOL)getSuccess;
 -(BOOL)getisNewTitle;
 -(BOOL)getOnlineStatus;
+-(BOOL)getKodiOnlineStatus;
 -(NSDictionary *)getLastScrobbledInfo;
 -(int)getQueueCount;
 -(void)clearAnimeInfo;
 -(NSString *)startSearch;
+-(void)setKodiReach:(BOOL)enable;
+-(void)setKodiReachAddress:(NSString *)url;
 @end

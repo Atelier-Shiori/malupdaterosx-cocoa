@@ -40,6 +40,9 @@
     };
     // Start notifier
     [reach startNotifier];
+    //Set up Kodi Reachability
+    [self setKodiReach:[[NSUserDefaults standardUserDefaults] boolForKey:@"enablekodiapi"]];
+    // Return Object
     return [super init];
 }
 -(void)setManagedObjectContext:(NSManagedObjectContext *)context{
@@ -111,6 +114,9 @@
 }
 -(BOOL)getOnlineStatus{
     return online;
+}
+-(BOOL)getKodiOnlineStatus{
+    return kodionline;
 }
 -(int)getQueueCount{
     NSError * error;
@@ -575,5 +581,42 @@
         return (NSManagedObject *)queue[0];
     }
     return nil;
+}
+-(void)setKodiReach:(BOOL)enable{
+    if (enable == 1) {
+        //Create Reachability Object
+        kodireach = [Reachability reachabilityWithHostname:(NSString *)[[NSUserDefaults standardUserDefaults] objectForKey:@"kodiaddress"]];
+        // Set up blocks
+        kodireach.reachableBlock = ^(Reachability*reach)
+        {
+            kodionline = true;
+        };
+        kodireach.unreachableBlock = ^(Reachability*reach)
+        {
+            kodionline = false;
+        };
+        // Start notifier
+        [kodireach startNotifier];
+    }
+    else{
+        [kodireach stopNotifier];
+        kodireach = nil;
+    }
+}
+-(void)setKodiReachAddress:(NSString *)url{
+    [kodireach stopNotifier];
+    kodireach = [Reachability reachabilityWithHostname:url];
+    // Set up blocks
+    // Set the blocks
+    kodireach.reachableBlock = ^(Reachability*reach)
+    {
+        kodionline = true;
+    };
+    kodireach.unreachableBlock = ^(Reachability*reach)
+    {
+        kodionline = false;
+    };
+    // Start notifier
+    [kodireach startNotifier];
 }
 @end

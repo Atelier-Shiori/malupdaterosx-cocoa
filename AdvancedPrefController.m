@@ -20,6 +20,10 @@
 {
     return [super initWithNibName:@"AdvancedPrefController" bundle:nil];
 }
+- (id)initwithAppDelegate:(MAL_Updater_OS_XAppDelegate *)adelegate{
+    appdelegate = adelegate;
+    return [super initWithNibName:@"AdvancedPrefController" bundle:nil];
+}
 
 #pragma mark -
 #pragma mark MASPreferencesViewController
@@ -73,6 +77,20 @@
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults] ;
     [defaults setObject:[APIUrl stringValue] forKey:@"MALAPIURL"];
     
+}
+- (void)controlTextDidChange:(NSNotification *)notification {
+    NSTextField * textfield = [notification object];
+    [[appdelegate getMALEngineInstance] setKodiReachAddress:[textfield stringValue]];
+}
+-(IBAction)setKodiReach:(id)sender{
+    if ([kodicheck state] == 0){
+        // Turn off reachability notification for Kodi
+        [[appdelegate getMALEngineInstance] setKodiReach:false];
+    }
+    else{
+        // Turn on reachability notification for Kodi
+        [[appdelegate getMALEngineInstance] setKodiReach:true];
+    }
 }
 
 @end
