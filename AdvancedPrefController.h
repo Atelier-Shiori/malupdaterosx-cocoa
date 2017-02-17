@@ -9,6 +9,9 @@
 #import <Cocoa/Cocoa.h>
 #import "MASPreferencesViewController.h"
 
-@interface AdvancedPrefController : NSViewController <MASPreferencesViewController>
-
+@interface AdvancedPrefController : NSViewController <MASPreferencesViewController>{
+    	IBOutlet NSTextField * APIUrl;
+}
+-(IBAction)testapi:(id)sender;
+-(IBAction)resetapiurl:(id)sender;
 @end

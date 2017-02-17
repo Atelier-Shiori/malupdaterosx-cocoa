@@ -110,40 +110,6 @@
     return NSLocalizedString(@"General", @"Toolbar item name for the General preference pane");
 }
 #pragma mark General Preferences Functions
--(IBAction)testapi:(id)sender
-{
-	//Load API URL
-	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	//Set URL
-	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/1/animelist/chikorita157", [defaults objectForKey:@"MALAPIURL"]]];
-	EasyNSURLConnection *request = [[EasyNSURLConnection alloc] initWithURL:url];
-	//Ignore Cookies
-	[request setUseCookies:NO];
-	//Test API
-	[request startRequest];
-	// Get Status Code
-	long statusCode = [request getStatusCode];
-	switch (statusCode) {
-		case 200:
-            [Utility showsheetmessage:@"API Test Successful" explaination:[NSString stringWithFormat:@"HTTP Code: %li", statusCode] window: [[self view] window]];
-			break;
-		default:
-			[Utility showsheetmessage:@"API Test Unsuccessful" explaination:[NSString stringWithFormat:@"HTTP Code: %li", statusCode] window:[[self view] window]];
-			break;
-	}
-	//release
-    [request release];
-	
-}
--(IBAction)resetapiurl:(id)sender
-{
-	//Reset Unofficial MAL API URL
-	[APIUrl setStringValue:@"https://malapi.ateliershiori.moe"];
-	// Generate API Key
-	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults] ;
-	[defaults setObject:[APIUrl stringValue] forKey:@"MALAPIURL"];
-	
-}
 -(IBAction)clearSearchCache:(id)sender{
     // Remove All cache data from Core Data Entity
     MAL_Updater_OS_XAppDelegate * delegate = (MAL_Updater_OS_XAppDelegate *)[[NSApplication sharedApplication] delegate];
