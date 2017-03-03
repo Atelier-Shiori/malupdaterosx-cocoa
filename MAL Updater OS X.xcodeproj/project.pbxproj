@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD58140DA1D0A300B32029 /* MainMenu.xib */; };
 		256AC3DA0F4B6AC300CF3369 /* MAL_Updater_OS_XAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 256AC3D90F4B6AC300CF3369 /* MAL_Updater_OS_XAppDelegate.m */; };
+		2D9C3AE11E6A0BC7007D8F68 /* EasyNSURLConnection.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D9C3AE01E6A0BC7007D8F68 /* EasyNSURLConnection.framework */; };
+		2D9C3AE21E6A0C07007D8F68 /* EasyNSURLConnection.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D9C3AE01E6A0BC7007D8F68 /* EasyNSURLConnection.framework */; };
+		2D9C3AE31E6A0C07007D8F68 /* EasyNSURLConnection.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2D9C3AE01E6A0BC7007D8F68 /* EasyNSURLConnection.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2DAFC1D21E2301ED00FB7A14 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DAFC1D11E2301ED00FB7A14 /* Reachability.m */; };
 		2DAFC1DA1E2313B100FB7A14 /* OfflineViewQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DAFC1D81E2313B100FB7A14 /* OfflineViewQueue.m */; };
 		2DAFC1DC1E23143100FB7A14 /* OfflineViewQueue.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2DAFC1DE1E23143100FB7A14 /* OfflineViewQueue.xib */; };
@@ -36,7 +39,6 @@
 		5C2D50601329810000B31C08 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C2D505F1329810000B31C08 /* libxml2.dylib */; };
 		5C2D50621329810700B31C08 /* libxml2.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C2D50611329810700B31C08 /* libxml2.2.dylib */; };
 		5C881EFB19F462B400E20425 /* NSString_stripHtml.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C881EFA19F462B400E20425 /* NSString_stripHtml.m */; };
-		5C950B5A1A295683001BFBDD /* EasyNSURLConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C950B591A295683001BFBDD /* EasyNSURLConnection.m */; };
 		5C97491D19F3117D000EC02E /* SoftwareUpdateView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5C97491C19F3117D000EC02E /* SoftwareUpdateView.xib */; };
 		5CBE9EC319F2F0E300CA3E5D /* LoginPref.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CBE9EC219F2F0E300CA3E5D /* LoginPref.m */; };
 		5CBE9FEC19F2F9CA00CA3E5D /* LoginView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5CBE9FEB19F2F9CA00CA3E5D /* LoginView.xib */; };
@@ -90,6 +92,7 @@
 				8227C1181A1D8D47005F3301 /* anitomy-osx.framework in CopyFiles */,
 				3A4C61D4120DF3ED0032F63A /* OgreKit.framework in CopyFiles */,
 				59D503791CB004BA0002532D /* Sparkle.framework in CopyFiles */,
+				2D9C3AE31E6A0C07007D8F68 /* EasyNSURLConnection.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -106,6 +109,7 @@
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		2D60876A1E28239D00D6E583 /* MAL_Updater_OS_X_DataModel 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "MAL_Updater_OS_X_DataModel 3.xcdatamodel"; sourceTree = "<group>"; };
+		2D9C3AE01E6A0BC7007D8F68 /* EasyNSURLConnection.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EasyNSURLConnection.framework; path = Frameworks/EasyNSURLConnection.framework; sourceTree = "<group>"; };
 		2DAFC1D01E2301ED00FB7A14 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		2DAFC1D11E2301ED00FB7A14 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		2DAFC1D71E2313B100FB7A14 /* OfflineViewQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OfflineViewQueue.h; sourceTree = "<group>"; };
@@ -149,8 +153,6 @@
 		5C2D50611329810700B31C08 /* libxml2.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.2.dylib; path = usr/lib/libxml2.2.dylib; sourceTree = SDKROOT; };
 		5C881EF919F462B400E20425 /* NSString_stripHtml.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSString_stripHtml.h; sourceTree = "<group>"; };
 		5C881EFA19F462B400E20425 /* NSString_stripHtml.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSString_stripHtml.m; sourceTree = "<group>"; };
-		5C950B581A295683001BFBDD /* EasyNSURLConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EasyNSURLConnection.h; sourceTree = "<group>"; };
-		5C950B591A295683001BFBDD /* EasyNSURLConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EasyNSURLConnection.m; sourceTree = "<group>"; };
 		5CBE9EC119F2F0E300CA3E5D /* LoginPref.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginPref.h; sourceTree = "<group>"; };
 		5CBE9EC219F2F0E300CA3E5D /* LoginPref.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginPref.m; sourceTree = "<group>"; };
 		5CD36B9519F2EA9B007BB6B6 /* MASPreferencesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASPreferencesViewController.h; sourceTree = "<group>"; };
@@ -225,12 +227,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				6F28DC1B1A67092F00AF063F /* Carbon.framework in Frameworks */,
+				2D9C3AE11E6A0BC7007D8F68 /* EasyNSURLConnection.framework in Frameworks */,
 				8227C1171A1D8D34005F3301 /* anitomy-osx.framework in Frameworks */,
 				5C2D50621329810700B31C08 /* libxml2.2.dylib in Frameworks */,
 				5C2D50601329810000B31C08 /* libxml2.dylib in Frameworks */,
 				59D503781CB004B10002532D /* Sparkle.framework in Frameworks */,
 				3A6AB587120F402A00D51D2C /* OgreKit.framework in Frameworks */,
 				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
+				2D9C3AE21E6A0C07007D8F68 /* EasyNSURLConnection.framework in Frameworks */,
 				3A2DCCBE1210B3D900C920F1 /* Security.framework in Frameworks */,
 				5C2B9DFC1221EB25006DEF0D /* CoreData.framework in Frameworks */,
 			);
@@ -281,6 +285,7 @@
 		1058C7A2FEA54F0111CA2CBB /* Other Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2D9C3AE01E6A0BC7007D8F68 /* EasyNSURLConnection.framework */,
 				59D503771CB004B10002532D /* Sparkle.framework */,
 				8227C1161A1D8D34005F3301 /* anitomy-osx.framework */,
 				3A4C61D3120DF3ED0032F63A /* OgreKit.framework */,
@@ -407,8 +412,6 @@
 				5902411D1C074A7A00495A2F /* SSKeychainQuery.h */,
 				5902411E1C074A7A00495A2F /* SSKeychainQuery.m */,
 				6F28DC071A67084B00AF063F /* Hotkey */,
-				5C950B581A295683001BFBDD /* EasyNSURLConnection.h */,
-				5C950B591A295683001BFBDD /* EasyNSURLConnection.m */,
 				3A2DCCB41210B3BF00C920F1 /* PFMoveApplication.h */,
 				3A2DCCB51210B3BF00C920F1 /* PFMoveApplication.m */,
 				3A6AB37D120F313E00D51D2C /* Base64Category.h */,
@@ -646,7 +649,6 @@
 				5967C9341C95AD51005FCBC7 /* string_score.c in Sources */,
 				5C881EFB19F462B400E20425 /* NSString_stripHtml.m in Sources */,
 				829727981A8BB14E004F73AB /* MyAnimeList+Update.m in Sources */,
-				5C950B5A1A295683001BFBDD /* EasyNSURLConnection.m in Sources */,
 				6F1865931A7D79CB00C74A47 /* Detection.m in Sources */,
 				59D99C071CBEDB0000762EA5 /* MyAnimeList+HummingbirdSearch.m in Sources */,
 				5C07DA671A8156420003A827 /* HistoryWindow.m in Sources */,
@@ -807,7 +809,7 @@
 				GCC_PREFIX_HEADER = MAL_Updater_OS_X_Prefix.pch;
 				INFOPLIST_FILE = "MAL_Updater_OS_X-Info.plist";
 				INSTALL_PATH = "$(HOME)/Documents/Build/Debug";
-				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				PRODUCT_NAME = "MAL Updater OS X";
 				PROVISIONING_PROFILE = "";
@@ -840,7 +842,7 @@
 				GCC_PREFIX_HEADER = MAL_Updater_OS_X_Prefix.pch;
 				INFOPLIST_FILE = "MAL_Updater_OS_X-Info.plist";
 				INSTALL_PATH = "$(HOME)/Documents/Build/Release";
-				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				PRODUCT_NAME = "MAL Updater OS X";
 				PROVISIONING_PROFILE = "";
