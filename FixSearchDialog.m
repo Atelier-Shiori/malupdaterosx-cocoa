@@ -7,7 +7,7 @@
 //
 
 #import "FixSearchDialog.h"
-#import "EasyNSURLConnection.h"
+#import <EasyNSURLConnection/EasyNSURLConnectionClass.h>
 #import "NSString_stripHtml.h"
 #import "Utility.h"
 

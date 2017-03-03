@@ -1,44 +1,19 @@
 //
 //  EasyNSURLConnection.h
-//  MAL Updater OS X
+//  EasyNSURLConnection
 //
-//  Created by Nanoha Takamachi on 2014/11/25.
-//  Copyright (c) 2014年 Atelier Shiori.
-//
-//  This class allows easy access to NSURLConnection Functions
+//  Created by 桐間紗路 on 2017/03/03.
+//  Copyright © 2017 Atelier Shiori. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import <Cocoa/Cocoa.h>
 
-@interface EasyNSURLConnection : NSObject{
-    NSString * useragent;
-    NSString * postmethod;
-    NSMutableArray * headers;
-    NSMutableArray * formdata;
-   __weak NSHTTPURLResponse * response;
-    NSData * responsedata;
-    __weak NSError * error;
-    NSURL * URL;
-    BOOL usecookies;
-}
-@property(weak) NSURLResponse * response;
-@property(weak) NSError * error;
--(id)init;
--(id)initWithURL:(NSURL *)address;
--(NSData *)getResponseData;
--(NSString *)getResponseDataString;
--(long)getStatusCode;
--(NSError *)getError;
--(void)addHeader:(id)object
-         forKey:(NSString *)key;
--(void)addFormData:(id)object
-           forKey:(NSString *)key;
--(void)setUserAgent:(NSString *)string;
--(void)setUseCookies:(BOOL)choice;
--(void)setURL:(NSURL *)address;
--(void)setPostMethod:(NSString *)method;
--(void)startRequest;
--(void)startFormRequest;
--(void)startJSONRequest:(NSString *)body;
--(void)startJSONFormRequest;
-@end
+//! Project version number for EasyNSURLConnection.
+FOUNDATION_EXPORT double EasyNSURLConnectionVersionNumber;
+
+//! Project version string for EasyNSURLConnection.
+FOUNDATION_EXPORT const unsigned char EasyNSURLConnectionVersionString[];
+
+// In this header, you should import all the public headers of your framework using statements like #import <EasyNSURLConnection/PublicHeader.h>
+
+#import <EasyNSURLConnection/EasyNSURLConnectionClass.h>

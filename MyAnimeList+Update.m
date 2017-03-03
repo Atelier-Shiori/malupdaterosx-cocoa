@@ -7,7 +7,7 @@
 //
 
 #import "MyAnimeList+Update.h"
-#import "EasyNSURLConnection.h"
+#import <EasyNSURLConnection/EasyNSURLConnectionClass.h>
 #import "MyAnimeList+Keychain.h"
 
 @implementation MyAnimeList (Update)

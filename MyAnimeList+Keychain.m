@@ -7,7 +7,7 @@
 //
 
 #import "MyAnimeList+Keychain.h"
-#import "EasyNSURLConnection.h"
+#import <EasyNSURLConnection/EasyNSURLConnectionClass.h>
 #import "Base64Category.h"
 
 @implementation MyAnimeList (Keychain)

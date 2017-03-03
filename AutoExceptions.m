@@ -7,7 +7,7 @@
 //
 
 #import "AutoExceptions.h"
-#import "EasyNSURLConnection.h"
+#import <EasyNSURLConnection/EasyNSURLConnectionClass.h>
 #import "MAL_Updater_OS_XAppDelegate.h"
 
 @implementation AutoExceptions

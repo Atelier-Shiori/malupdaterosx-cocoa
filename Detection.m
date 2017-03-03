@@ -8,7 +8,7 @@
 
 #import "Detection.h"
 #import "Recognition.h"
-#import "EasyNSURLConnection.h"
+#import <EasyNSURLConnection/EasyNSURLConnectionClass.h>
 
 #import "MyAnimeList.h"
 #import "MAL_Updater_OS_XAppDelegate.h"

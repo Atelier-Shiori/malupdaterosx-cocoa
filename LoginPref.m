@@ -10,7 +10,7 @@
 #import "Base64Category.h"
 #import "MAL_Updater_OS_XAppDelegate.h"
 
-#import "EasyNSURLConnection.h"
+#import <EasyNSURLConnection/EasyNSURLConnectionClass.h>
 #import "Utility.h"
 
 
