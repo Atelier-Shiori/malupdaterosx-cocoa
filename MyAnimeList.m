@@ -240,6 +240,7 @@
                 case 3:
                     successc++;
                     scrobbled = true;
+                    break;
                 default:
                     successc++;
                     scrobbled = true;

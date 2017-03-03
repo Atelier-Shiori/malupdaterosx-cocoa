@@ -512,7 +512,7 @@
                 [AutoExceptions updateAutoExceptions];
             }
         }
-        int status;
+        int status = 0;
         for (int i = 0; i < 2; i++){
             if (i == 0){
                 if ([MALEngine getQueueCount] > 0 && [MALEngine getOnlineStatus]){
