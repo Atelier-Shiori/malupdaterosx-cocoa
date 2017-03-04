@@ -20,6 +20,7 @@
 #import "HistoryWindow.h"
 #import "DonationWindowController.h"
 #import "OfflineViewQueue.h"
+#import "MSWeakTimer.h"
 
 @implementation MAL_Updater_OS_XAppDelegate
 
@@ -158,9 +159,10 @@
 	//Register Dictionary
 	[[NSUserDefaults standardUserDefaults]
 	 registerDefaults:defaultValues];
-	
 }
 - (void) awakeFromNib{
+    // Register queue
+    _privateQueue = dispatch_queue_create("com.chikorita157.malupdaterosx", DISPATCH_QUEUE_CONCURRENT);
     
     //Create the NSStatusBar and set its length
     statusItem = [[NSStatusBar systemStatusBar] statusItemWithLength:NSSquareStatusItemLength];
@@ -488,17 +490,14 @@
 		scrobbling = TRUE;
 	}
 }
--(void)firetimer:(NSTimer *)aTimer {
+-(void)firetimer {
 	//Tell MALEngine to detect and scrobble if necessary.
 	NSLog(@"Starting...");
     if (!scrobbleractive) {
         scrobbleractive = true;
         // Disable toggle scrobbler and update now menu items
         [self toggleScrobblingUIEnable:false];
-    dispatch_queue_t queue = dispatch_get_global_queue(
-                                                       DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-    
-    dispatch_async(queue, ^{
+
         if ([[NSUserDefaults standardUserDefaults] boolForKey:@"UseAutoExceptions"]) {
             // Check for latest list of Auto Exceptions automatically each week
             if ([[NSUserDefaults standardUserDefaults] objectForKey:@"ExceptionsLastUpdated"] != nil) {
@@ -640,18 +639,17 @@
         // Enable Menu Items
         scrobbleractive = false;
         [self toggleScrobblingUIEnable:true];
-
-    });
     
     }
 }
 -(void)starttimer {
     NSLog(@"Starting Auto Scrobble.");
-    timer = [NSTimer scheduledTimerWithTimeInterval:300
+    timer = [MSWeakTimer scheduledTimerWithTimeInterval:300
                                              target:self
-                                           selector:@selector(firetimer:)
+                                           selector:@selector(firetimer)
                                            userInfo:nil
-                                            repeats:YES];
+                                            repeats:YES
+                                          dispatchQueue:_privateQueue];
 }
 -(void)stoptimer {
     NSLog(@"Stopping Auto Scrobble.");
@@ -662,8 +660,13 @@
 -(IBAction)updatenow:(id)sender{
     if (![MALEngine checkaccount])
         [self showNotification:@"MAL Updater OS X" message:@"Add a login before you start scrobbling."];
-    else
-        [self firetimer:nil];
+    else{
+        dispatch_queue_t queue = dispatch_get_global_queue(
+                                                           DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+        dispatch_async(queue, ^{
+        [self firetimer];
+            });
+    }
 }
 #pragma mark Correction
 -(IBAction)showCorrectionSearchWindow:(id)sender{
@@ -977,8 +980,13 @@
     [self confirmupdate];
 }
 -(void)confirmupdate{
+    dispatch_queue_t queue = dispatch_get_global_queue(
+                                                       DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    
+    dispatch_async(queue, ^{
     BOOL success = [MALEngine confirmupdate];
     if (success) {
+         dispatch_async(dispatch_get_main_queue(), ^{
         [self updateLastScrobbledTitleStatus:false];
         [HistoryWindow addrecord:[MALEngine getLastScrobbledActualTitle] Episode:[MALEngine getLastScrobbledEpisode] Date:[NSDate date]];
         [confirmupdate setHidden:YES];
@@ -988,23 +996,32 @@
             // Enable Update Status functions for new and unconfirmed titles.
             [self EnableStatusUpdating:YES];
         }
+         });
         if ([MALEngine getQueueCount] > 0){
             // Continue to scrobble rest of the queue.
-            [self firetimer:nil];
+            [self firetimer];
         }
     }
     else{
+        dispatch_async(dispatch_get_main_queue(), ^{
         [self showNotification:@"MAL Updater OS X" message:@"Failed to confirm update. Please try again later."];
         [self setStatusText:@"Unable to confirm update."];
+        });
     }
+    });
 }
 #pragma mark Hotkeys
 -(void)registerHotkey{
     [MASShortcut registerGlobalShortcutWithUserDefaultsKey:kPreferenceScrobbleNowShortcut handler:^{
         // Scrobble Now Global Hotkey
+        dispatch_queue_t queue = dispatch_get_global_queue(
+                                                           DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+        
+        dispatch_async(queue, ^{
         if ([MALEngine checkaccount] && !panelactive) {
-            [self firetimer:nil];
+            [self firetimer];
         }
+            });
     }];
     [MASShortcut registerGlobalShortcutWithUserDefaultsKey:kPreferenceShowStatusMenuShortcut handler:^{
         // Status Window Toggle Global Hotkey
