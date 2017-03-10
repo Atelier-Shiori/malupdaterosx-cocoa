@@ -81,6 +81,7 @@
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
+		91A8DD5E1E736814006E3566 /* NSNumberFormatterNumberOnly.m in Sources */ = {isa = PBXBuildFile; fileRef = 91A8DD5C1E736814006E3566 /* NSNumberFormatterNumberOnly.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -222,6 +223,8 @@
 		82B9559719FD553500A032FB /* detectstream */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; name = detectstream; path = detectstream/detectstream; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* MAL_Updater_OS_X-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "MAL_Updater_OS_X-Info.plist"; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* MAL Updater OS X.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MAL Updater OS X.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		91A8DD5C1E736814006E3566 /* NSNumberFormatterNumberOnly.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSNumberFormatterNumberOnly.m; sourceTree = "<group>"; };
+		91A8DD5D1E736814006E3566 /* NSNumberFormatterNumberOnly.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSNumberFormatterNumberOnly.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -494,6 +497,8 @@
 				2DAFC1D11E2301ED00FB7A14 /* Reachability.m */,
 				2D417C1D1E6A378D008D225B /* MSWeakTimer.h */,
 				2D417C1E1E6A378D008D225B /* MSWeakTimer.m */,
+				91A8DD5C1E736814006E3566 /* NSNumberFormatterNumberOnly.m */,
+				91A8DD5D1E736814006E3566 /* NSNumberFormatterNumberOnly.h */,
 			);
 			name = "Support Classes";
 			sourceTree = "<group>";
@@ -650,6 +655,7 @@
 				2DC900361E257C3300E45570 /* InttoStatus.m in Sources */,
 				2DAFC1D21E2301ED00FB7A14 /* Reachability.m in Sources */,
 				6F28DC121A67085800AF063F /* MASShortcut.m in Sources */,
+				91A8DD5E1E736814006E3566 /* NSNumberFormatterNumberOnly.m in Sources */,
 				6FD961411B419E3F00DE539C /* MALScripting.m in Sources */,
 				6F5F6C701A71696D006D4607 /* MAL_Updater_OS_X_DataModel.xcdatamodeld in Sources */,
 				5967C9341C95AD51005FCBC7 /* string_score.c in Sources */,

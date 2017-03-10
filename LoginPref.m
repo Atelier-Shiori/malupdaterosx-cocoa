@@ -88,7 +88,13 @@
 				[savebut setEnabled: YES];
 			}
 			else {
+                [savebut setEnabled:NO];
+                dispatch_queue_t queue = dispatch_get_global_queue(
+                                                                   DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+                
+                dispatch_async(queue, ^{
                     [self login:[fieldusername stringValue] password:[fieldpassword stringValue]];
+                });
                 }
 		}
 	}
@@ -106,29 +112,32 @@
 	[request startRequest];
 	// Check for errors
     NSError * error = [request getError];
-    if ([request getStatusCode] == 200 && error == nil) {
-        //Login successful
-        [Utility showsheetmessage:@"Login Successful" explaination: @"Login is successful." window:[[self view] window]];
-		// Store account in login keychain
-        [MALEngine storeaccount:[fieldusername stringValue] password:[fieldpassword stringValue]];
-        [clearbut setEnabled: YES];
-        [loggedinuser setStringValue:username];
-        [loggedinview setHidden:NO];
-        [loginview setHidden:YES];
-    }
-    else{
-        if (error.code == NSURLErrorNotConnectedToInternet) {
-            [Utility showsheetmessage:@"MAL Updater OS X was unable to log you in since you are not connected to the internet" explaination:@"Check your internet connection and try again." window:[[self view] window]];
-            [savebut setEnabled: YES];
-            [savebut setKeyEquivalent:@"\r"];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if ([request getStatusCode] == 200 && error == nil) {
+                //Login successful
+                [Utility showsheetmessage:@"Login Successful" explaination: @"Login is successful." window:[[self view] window]];
+                // Store account in login keychain
+                [MALEngine storeaccount:[fieldusername stringValue] password:[fieldpassword stringValue]];
+                [clearbut setEnabled: YES];
+                [loggedinuser setStringValue:username];
+                [loggedinview setHidden:NO];
+                [loginview setHidden:YES];
         }
         else{
-            //Login Failed, show error message
-            [Utility showsheetmessage:@"MAL Updater OS X was unable to log you in since you don't have the correct username and/or password." explaination:@"Check your username and password and try logging in again. If you recently changed your password, enter your new password and try again." window:[[self view] window]];
-            [savebut setEnabled: YES];
-            [savebut setKeyEquivalent:@"\r"];
+            if (error.code == NSURLErrorNotConnectedToInternet) {
+                [Utility showsheetmessage:@"MAL Updater OS X was unable to log you in since you are not connected to the internet" explaination:@"Check your internet connection and try again." window:[[self view] window]];
+                [savebut setEnabled: YES];
+                [savebut setKeyEquivalent:@"\r"];
+            }
+            else{
+                //Login Failed, show error message
+                [Utility showsheetmessage:@"MAL Updater OS X was unable to log you in since you don't have the correct username and/or password." explaination:@"Check your username and password and try logging in again. If you recently changed your password, enter your new password and try again." window:[[self view] window]];
+                [savebut setEnabled: YES];
+                [savebut setKeyEquivalent:@"\r"];
+            }
         }
-    }
+        [savebut setEnabled:YES];
+    });
 }
 -(IBAction)registermal:(id)sender
 {
@@ -184,7 +193,12 @@
 }
 - (void)reAuthPanelDidEnd:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo {
     if (returnCode == 1) {
+        dispatch_queue_t queue = dispatch_get_global_queue(
+                                                           DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+        
+        dispatch_async(queue, ^{
         [self login: (NSString *)[[NSUserDefaults standardUserDefaults] objectForKey:@"Username"] password:[passwordinput stringValue]];
+        });
     }
     //Reset and Close
     [passwordinput setStringValue:@""];

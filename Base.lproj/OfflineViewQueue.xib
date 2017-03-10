@@ -16,7 +16,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="196" y="240" width="783" height="341"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
             <value key="minSize" type="size" width="783" height="341"/>
             <view key="contentView" id="xsz-hb-rIV">
                 <rect key="frame" x="0.0" y="0.0" width="783" height="341"/>
@@ -109,11 +109,11 @@
                             </subviews>
                         </clipView>
                         <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="843-yO-E3P">
-                            <rect key="frame" x="1" y="7" width="0.0" height="16"/>
+                            <rect key="frame" x="-7" y="8" width="0.0" height="15"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                         <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="Ez5-zg-WcI">
-                            <rect key="frame" x="-15" y="23" width="16" height="0.0"/>
+                            <rect key="frame" x="-14" y="16" width="15" height="0.0"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                         <tableHeaderView key="headerView" id="lZh-jB-JxL">
@@ -131,7 +131,7 @@
                         <button key="view" verticalHuggingPriority="750" id="9Gd-ke-WNi">
                             <rect key="frame" x="16" y="14" width="32" height="25"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="clear" imagePosition="overlaps" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="QfS-xR-vX9">
+                            <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="clear" imagePosition="below" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="QfS-xR-vX9">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="system"/>
                             </buttonCell>

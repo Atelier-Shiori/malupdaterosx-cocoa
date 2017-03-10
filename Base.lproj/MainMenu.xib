@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="11201" systemVersion="16C67" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="11201" systemVersion="16D32" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
         <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11201"/>
@@ -451,7 +451,7 @@ Gw
                         <rect key="frame" x="125" y="44" width="96" height="22"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="1Wd-zK-E5l">
-                            <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="decimal" minimumIntegerDigits="1" maximumIntegerDigits="309" maximumFractionDigits="3" id="bN5-qb-o9D">
+                            <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="decimal" minimumIntegerDigits="1" maximumIntegerDigits="309" maximumFractionDigits="3" id="bN5-qb-o9D" customClass="NSNumberFormatterNumberOnly">
                                 <real key="minimum" value="0.0"/>
                             </numberFormatter>
                             <font key="font" metaFont="system"/>
@@ -587,7 +587,7 @@ Gw
                         <button key="view" verticalHuggingPriority="750" id="Meq-3s-3x5">
                             <rect key="frame" x="12" y="14" width="32" height="25"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="update" imagePosition="overlaps" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="bg1-7y-pBr">
+                            <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="update" imagePosition="below" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="bg1-7y-pBr">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
@@ -602,7 +602,7 @@ Gw
                         <button key="view" verticalHuggingPriority="750" id="sGW-w2-kC0">
                             <rect key="frame" x="22" y="14" width="32" height="25"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="history" imagePosition="overlaps" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Z3h-uy-9hi">
+                            <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="history" imagePosition="below" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Z3h-uy-9hi">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
@@ -625,7 +625,7 @@ Gw
                         <button key="view" verticalHuggingPriority="750" id="uu4-Ct-6q9">
                             <rect key="frame" x="16" y="14" width="32" height="25"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="correct" imagePosition="overlaps" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="kSD-gp-80T">
+                            <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="correct" imagePosition="below" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="kSD-gp-80T">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
@@ -661,7 +661,7 @@ Gw
                         <button key="view" verticalHuggingPriority="750" id="KFJ-iS-Wdx">
                             <rect key="frame" x="37" y="14" width="32" height="25"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="Info" imagePosition="above" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="dZI-lo-iNp">
+                            <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="Info" imagePosition="below" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="dZI-lo-iNp">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="system"/>
                                 <connections>
