@@ -520,20 +520,26 @@
                     int fail = [status[@"fail"] intValue];
                     bool confirmneeded = [status[@"confirmneeded"] boolValue];
                     if (confirmneeded) {
+                        dispatch_async(dispatch_get_main_queue(), ^{
                         [self setStatusText:@"Scrobble Status: Please confirm update."];
                         NSDictionary * userinfo = @{@"title": [MALEngine getLastScrobbledTitle],  @"episode": [MALEngine getLastScrobbledEpisode]};
                         [self showConfirmationNotification:@"Confirm Update" message:[NSString stringWithFormat:@"Click here to confirm update for %@ Episode %@.",[MALEngine getLastScrobbledActualTitle],[MALEngine getLastScrobbledEpisode]] updateData:userinfo];
+                            });
                         break;
                     }
                     else{
+                        dispatch_async(dispatch_get_main_queue(), ^{
                         [self showNotification:@"Updated Queued Items" message:[NSString stringWithFormat:@"%i scrobbled successfully and %i failed",success, fail]];
+                        });
                     }
+                
+                    
                 }
             }
             else{
                 status = [MALEngine startscrobbling];
-                dispatch_async(dispatch_get_main_queue(), ^{
                 //Enable the Update button if a title is detected
+                dispatch_async(dispatch_get_main_queue(), ^{
                 switch (status) { // 0 - nothing playing; 1 - same episode playing; 21 - Add Title Successful; 22 - Update Title Successful;  51 - Can't find Title; 52 - Add Failed; 53 - Update Failed; 54 - Scrobble Failed; 
                     case 0:
                         [self setStatusText:@"Scrobble Status: Idle..."];
@@ -584,6 +590,7 @@
                 }
 
         }
+        dispatch_async(dispatch_get_main_queue(), ^{
         if ([MALEngine getSuccess] == 1) {
             [findtitle setHidden:true];
             if ([MALEngine getOnlineStatus]) {
@@ -639,7 +646,7 @@
         // Enable Menu Items
         scrobbleractive = false;
         [self toggleScrobblingUIEnable:true];
-    
+        });
     }
 }
 -(void)starttimer {
