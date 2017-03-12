@@ -42,7 +42,6 @@
 		5CBE9EC319F2F0E300CA3E5D /* LoginPref.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CBE9EC219F2F0E300CA3E5D /* LoginPref.m */; };
 		5CBE9FEC19F2F9CA00CA3E5D /* LoginView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5CBE9FEB19F2F9CA00CA3E5D /* LoginView.xib */; };
 		5CBE9FEF19F2F9E500CA3E5D /* GeneralPreferenceView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5CBE9FEE19F2F9E500CA3E5D /* GeneralPreferenceView.xib */; };
-		5CD36B9A19F2EA9B007BB6B6 /* MASPreferencesWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CD36B9819F2EA9B007BB6B6 /* MASPreferencesWindowController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		5CD36BBA19F2ED88007BB6B6 /* GeneralPrefController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CD36BB919F2ED88007BB6B6 /* GeneralPrefController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		6F0CF36F1A7DBADD00261A43 /* Utility.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F0CF36E1A7DBADD00261A43 /* Utility.m */; };
 		6F12909B1A7D833100B8C3E6 /* AutoExceptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F12909A1A7D833100B8C3E6 /* AutoExceptions.m */; };
@@ -51,13 +50,7 @@
 		6F27071E1A69905D0020913A /* FixSearchDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6F2707201A69905D0020913A /* FixSearchDialog.xib */; };
 		6F27CE941A6869E8004E51F8 /* ExceptionsPref.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6F27CE961A6869E8004E51F8 /* ExceptionsPref.xib */; };
 		6F27CE971A6869ED004E51F8 /* HotkeysPrefs.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6F27CE991A6869ED004E51F8 /* HotkeysPrefs.xib */; };
-		6F27CE9A1A686A04004E51F8 /* MASPreferencesWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6F27CE9C1A686A04004E51F8 /* MASPreferencesWindow.xib */; };
 		6F28DC041A67082400AF063F /* HotkeysPrefs.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F28DC031A67082400AF063F /* HotkeysPrefs.m */; };
-		6F28DC121A67085800AF063F /* MASShortcut.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F28DC091A67085800AF063F /* MASShortcut.m */; };
-		6F28DC131A67085800AF063F /* MASShortcut+Monitoring.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F28DC0B1A67085800AF063F /* MASShortcut+Monitoring.m */; };
-		6F28DC141A67085800AF063F /* MASShortcut+UserDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F28DC0D1A67085800AF063F /* MASShortcut+UserDefaults.m */; };
-		6F28DC151A67085800AF063F /* MASShortcutView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F28DC0F1A67085800AF063F /* MASShortcutView.m */; };
-		6F28DC161A67085800AF063F /* MASShortcutView+UserDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F28DC111A67085800AF063F /* MASShortcutView+UserDefaults.m */; };
 		6F28DC191A67087300AF063F /* HotKeyConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F28DC181A67087300AF063F /* HotKeyConstants.m */; };
 		6F28DC1B1A67092F00AF063F /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F28DC1A1A67092F00AF063F /* Carbon.framework */; };
 		6F5F6C701A71696D006D4607 /* MAL_Updater_OS_X_DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6F5F6C6D1A71696D006D4607 /* MAL_Updater_OS_X_DataModel.xcdatamodeld */; };
@@ -79,6 +72,13 @@
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
+		91206C1B1E75F3E50050E9C5 /* MASShortcut.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91206C1A1E75F3E50050E9C5 /* MASShortcut.framework */; };
+		91206C1D1E75F3F00050E9C5 /* MASPreferences.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91206C1C1E75F3F00050E9C5 /* MASPreferences.framework */; };
+		91206C1E1E75F5AD0050E9C5 /* MASPreferences.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91206C1C1E75F3F00050E9C5 /* MASPreferences.framework */; };
+		91206C1F1E75F5AD0050E9C5 /* MASPreferences.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 91206C1C1E75F3F00050E9C5 /* MASPreferences.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		91206C231E75F8920050E9C5 /* MASShortcut.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91206C221E75F8920050E9C5 /* MASShortcut.framework */; };
+		9149EBE21E75F8A700B1AA22 /* MASShortcut.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91206C221E75F8920050E9C5 /* MASShortcut.framework */; };
+		9149EBE31E75F8A700B1AA22 /* MASShortcut.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 91206C221E75F8920050E9C5 /* MASShortcut.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		91A8DD5E1E736814006E3566 /* NSNumberFormatterNumberOnly.m in Sources */ = {isa = PBXBuildFile; fileRef = 91A8DD5C1E736814006E3566 /* NSNumberFormatterNumberOnly.m */; };
 /* End PBXBuildFile section */
 
@@ -89,8 +89,10 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				9149EBE31E75F8A700B1AA22 /* MASShortcut.framework in CopyFiles */,
 				8227C1181A1D8D47005F3301 /* anitomy-osx.framework in CopyFiles */,
 				3A4C61D4120DF3ED0032F63A /* OgreKit.framework in CopyFiles */,
+				91206C1F1E75F5AD0050E9C5 /* MASPreferences.framework in CopyFiles */,
 				59D503791CB004BA0002532D /* Sparkle.framework in CopyFiles */,
 				2D9C3AE31E6A0C07007D8F68 /* EasyNSURLConnection.framework in CopyFiles */,
 			);
@@ -154,9 +156,6 @@
 		5C881EFA19F462B400E20425 /* NSString_stripHtml.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSString_stripHtml.m; sourceTree = "<group>"; };
 		5CBE9EC119F2F0E300CA3E5D /* LoginPref.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginPref.h; sourceTree = "<group>"; };
 		5CBE9EC219F2F0E300CA3E5D /* LoginPref.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginPref.m; sourceTree = "<group>"; };
-		5CD36B9519F2EA9B007BB6B6 /* MASPreferencesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASPreferencesViewController.h; sourceTree = "<group>"; };
-		5CD36B9719F2EA9B007BB6B6 /* MASPreferencesWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASPreferencesWindowController.h; sourceTree = "<group>"; };
-		5CD36B9819F2EA9B007BB6B6 /* MASPreferencesWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MASPreferencesWindowController.m; sourceTree = "<group>"; };
 		5CD36BB819F2ED88007BB6B6 /* GeneralPrefController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeneralPrefController.h; sourceTree = "<group>"; };
 		5CD36BB919F2ED88007BB6B6 /* GeneralPrefController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeneralPrefController.m; sourceTree = "<group>"; };
 		6F0CF36D1A7DBADD00261A43 /* Utility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utility.h; sourceTree = "<group>"; };
@@ -169,19 +168,8 @@
 		6F27071F1A69905D0020913A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/FixSearchDialog.xib; sourceTree = "<group>"; };
 		6F27CE951A6869E8004E51F8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/ExceptionsPref.xib; sourceTree = "<group>"; };
 		6F27CE981A6869ED004E51F8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/HotkeysPrefs.xib; sourceTree = "<group>"; };
-		6F27CE9B1A686A04004E51F8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MASPreferencesWindow.xib; sourceTree = "<group>"; };
 		6F28DC021A67082400AF063F /* HotkeysPrefs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HotkeysPrefs.h; sourceTree = "<group>"; };
 		6F28DC031A67082400AF063F /* HotkeysPrefs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HotkeysPrefs.m; sourceTree = "<group>"; };
-		6F28DC081A67085800AF063F /* MASShortcut.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASShortcut.h; sourceTree = "<group>"; };
-		6F28DC091A67085800AF063F /* MASShortcut.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MASShortcut.m; sourceTree = "<group>"; };
-		6F28DC0A1A67085800AF063F /* MASShortcut+Monitoring.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MASShortcut+Monitoring.h"; sourceTree = "<group>"; };
-		6F28DC0B1A67085800AF063F /* MASShortcut+Monitoring.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MASShortcut+Monitoring.m"; sourceTree = "<group>"; };
-		6F28DC0C1A67085800AF063F /* MASShortcut+UserDefaults.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MASShortcut+UserDefaults.h"; sourceTree = "<group>"; };
-		6F28DC0D1A67085800AF063F /* MASShortcut+UserDefaults.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MASShortcut+UserDefaults.m"; sourceTree = "<group>"; };
-		6F28DC0E1A67085800AF063F /* MASShortcutView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASShortcutView.h; sourceTree = "<group>"; };
-		6F28DC0F1A67085800AF063F /* MASShortcutView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MASShortcutView.m; sourceTree = "<group>"; };
-		6F28DC101A67085800AF063F /* MASShortcutView+UserDefaults.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MASShortcutView+UserDefaults.h"; sourceTree = "<group>"; };
-		6F28DC111A67085800AF063F /* MASShortcutView+UserDefaults.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MASShortcutView+UserDefaults.m"; sourceTree = "<group>"; };
 		6F28DC171A67087300AF063F /* HotKeyConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HotKeyConstants.h; sourceTree = "<group>"; };
 		6F28DC181A67087300AF063F /* HotKeyConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HotKeyConstants.m; sourceTree = "<group>"; };
 		6F28DC1A1A67092F00AF063F /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
@@ -217,6 +205,9 @@
 		82B9559719FD553500A032FB /* detectstream */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; name = detectstream; path = detectstream/detectstream; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* MAL_Updater_OS_X-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "MAL_Updater_OS_X-Info.plist"; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* MAL Updater OS X.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MAL Updater OS X.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		91206C1A1E75F3E50050E9C5 /* MASShortcut.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MASShortcut.framework; path = "/Volumes/MacStorage/malupdaterosx-cocoa/Frameworks/MASShortcut.framework"; sourceTree = "<absolute>"; };
+		91206C1C1E75F3F00050E9C5 /* MASPreferences.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MASPreferences.framework; path = Frameworks/MASPreferences.framework; sourceTree = "<group>"; };
+		91206C221E75F8920050E9C5 /* MASShortcut.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MASShortcut.framework; path = Frameworks/MASShortcut.framework; sourceTree = "<group>"; };
 		91A8DD5C1E736814006E3566 /* NSNumberFormatterNumberOnly.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSNumberFormatterNumberOnly.m; sourceTree = "<group>"; };
 		91A8DD5D1E736814006E3566 /* NSNumberFormatterNumberOnly.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSNumberFormatterNumberOnly.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -226,11 +217,16 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				91206C1D1E75F3F00050E9C5 /* MASPreferences.framework in Frameworks */,
+				91206C1B1E75F3E50050E9C5 /* MASShortcut.framework in Frameworks */,
 				6F28DC1B1A67092F00AF063F /* Carbon.framework in Frameworks */,
+				91206C1E1E75F5AD0050E9C5 /* MASPreferences.framework in Frameworks */,
+				9149EBE21E75F8A700B1AA22 /* MASShortcut.framework in Frameworks */,
 				2D9C3AE11E6A0BC7007D8F68 /* EasyNSURLConnection.framework in Frameworks */,
 				8227C1171A1D8D34005F3301 /* anitomy-osx.framework in Frameworks */,
 				59D503781CB004B10002532D /* Sparkle.framework in Frameworks */,
 				3A6AB587120F402A00D51D2C /* OgreKit.framework in Frameworks */,
+				91206C231E75F8920050E9C5 /* MASShortcut.framework in Frameworks */,
 				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
 				2D9C3AE21E6A0C07007D8F68 /* EasyNSURLConnection.framework in Frameworks */,
 				3A2DCCBE1210B3D900C920F1 /* Security.framework in Frameworks */,
@@ -283,6 +279,8 @@
 		1058C7A2FEA54F0111CA2CBB /* Other Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				91206C221E75F8920050E9C5 /* MASShortcut.framework */,
+				91206C1C1E75F3F00050E9C5 /* MASPreferences.framework */,
 				2D9C3AE01E6A0BC7007D8F68 /* EasyNSURLConnection.framework */,
 				59D503771CB004B10002532D /* Sparkle.framework */,
 				8227C1161A1D8D34005F3301 /* anitomy-osx.framework */,
@@ -440,10 +438,6 @@
 				5C000E4319F30EA50026F350 /* SoftwareUpdatesPref.m */,
 				5CBE9EC119F2F0E300CA3E5D /* LoginPref.h */,
 				5CBE9EC219F2F0E300CA3E5D /* LoginPref.m */,
-				6F27CE9C1A686A04004E51F8 /* MASPreferencesWindow.xib */,
-				5CD36B9519F2EA9B007BB6B6 /* MASPreferencesViewController.h */,
-				5CD36B9719F2EA9B007BB6B6 /* MASPreferencesWindowController.h */,
-				5CD36B9819F2EA9B007BB6B6 /* MASPreferencesWindowController.m */,
 			);
 			name = Preferences;
 			sourceTree = "<group>";
@@ -452,16 +446,6 @@
 			isa = PBXGroup;
 			children = (
 				6FAA87801A7EB5C500EFFAC1 /* Hotkeys.h */,
-				6F28DC081A67085800AF063F /* MASShortcut.h */,
-				6F28DC091A67085800AF063F /* MASShortcut.m */,
-				6F28DC0A1A67085800AF063F /* MASShortcut+Monitoring.h */,
-				6F28DC0B1A67085800AF063F /* MASShortcut+Monitoring.m */,
-				6F28DC0C1A67085800AF063F /* MASShortcut+UserDefaults.h */,
-				6F28DC0D1A67085800AF063F /* MASShortcut+UserDefaults.m */,
-				6F28DC0E1A67085800AF063F /* MASShortcutView.h */,
-				6F28DC0F1A67085800AF063F /* MASShortcutView.m */,
-				6F28DC101A67085800AF063F /* MASShortcutView+UserDefaults.h */,
-				6F28DC111A67085800AF063F /* MASShortcutView+UserDefaults.m */,
 				6F28DC171A67087300AF063F /* HotKeyConstants.h */,
 				6F28DC181A67087300AF063F /* HotKeyConstants.m */,
 			);
@@ -598,7 +582,6 @@
 				5C0A2C4B122C7F960096908D /* Credits.rtf in Resources */,
 				2DDBB7401E1D521D0075B0D0 /* DonationWindow.xib in Resources */,
 				6F27CE941A6869E8004E51F8 /* ExceptionsPref.xib in Resources */,
-				6F27CE9A1A686A04004E51F8 /* MASPreferencesWindow.xib in Resources */,
 				5CBE9FEF19F2F9E500CA3E5D /* GeneralPreferenceView.xib in Resources */,
 				5CBE9FEC19F2F9CA00CA3E5D /* LoginView.xib in Resources */,
 				82B9559819FD553500A032FB /* detectstream in Resources */,
@@ -642,7 +625,6 @@
 				2DDBB73D1E1D52100075B0D0 /* DonationWindowController.m in Sources */,
 				2DC900361E257C3300E45570 /* InttoStatus.m in Sources */,
 				2DAFC1D21E2301ED00FB7A14 /* Reachability.m in Sources */,
-				6F28DC121A67085800AF063F /* MASShortcut.m in Sources */,
 				91A8DD5E1E736814006E3566 /* NSNumberFormatterNumberOnly.m in Sources */,
 				6FD961411B419E3F00DE539C /* MALScripting.m in Sources */,
 				6F5F6C701A71696D006D4607 /* MAL_Updater_OS_X_DataModel.xcdatamodeld in Sources */,
@@ -652,17 +634,12 @@
 				6F1865931A7D79CB00C74A47 /* Detection.m in Sources */,
 				59D99C071CBEDB0000762EA5 /* MyAnimeList+HummingbirdSearch.m in Sources */,
 				5C07DA671A8156420003A827 /* HistoryWindow.m in Sources */,
-				6F28DC141A67085800AF063F /* MASShortcut+UserDefaults.m in Sources */,
 				590241261C074AF500495A2F /* MyAnimeList+Keychain.m in Sources */,
-				6F28DC161A67085800AF063F /* MASShortcutView+UserDefaults.m in Sources */,
 				822AEB8D1A202A7B003DD682 /* ExceptionsPref.m in Sources */,
-				6F28DC151A67085800AF063F /* MASShortcutView.m in Sources */,
 				2DAFC1DA1E2313B100FB7A14 /* OfflineViewQueue.m in Sources */,
 				3A2DCCB61210B3BF00C920F1 /* PFMoveApplication.m in Sources */,
 				822AEB891A202931003DD682 /* FixSearchDialog.m in Sources */,
-				5CD36B9A19F2EA9B007BB6B6 /* MASPreferencesWindowController.m in Sources */,
 				5CD36BBA19F2ED88007BB6B6 /* GeneralPrefController.m in Sources */,
-				6F28DC131A67085800AF063F /* MASShortcut+Monitoring.m in Sources */,
 				5902411F1C074A7A00495A2F /* SSKeychain.m in Sources */,
 				6FAA0C1F1A7E938400416079 /* ExceptionsCache.m in Sources */,
 				829727951A8BB093004F73AB /* MyAnimeList+Search.m in Sources */,
@@ -762,14 +739,6 @@
 				6F27CE981A6869ED004E51F8 /* Base */,
 			);
 			name = HotkeysPrefs.xib;
-			sourceTree = "<group>";
-		};
-		6F27CE9C1A686A04004E51F8 /* MASPreferencesWindow.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				6F27CE9B1A686A04004E51F8 /* Base */,
-			);
-			name = MASPreferencesWindow.xib;
 			sourceTree = "<group>";
 		};
 		6FBA5A0C1ABE484B00B6DB79 /* AdvancedPrefController.xib */ = {

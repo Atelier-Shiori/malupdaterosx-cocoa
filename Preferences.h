@@ -9,7 +9,7 @@
 
 #ifndef MAL_Updater_OS_X_Preferences_h
 #define MAL_Updater_OS_X_Preferences_h
-#import "MASPreferencesWindowController.h"
+#import <MASPreferences/MASPreferences.h>
 #import "GeneralPrefController.h"
 #import "LoginPref.h"
 #import "HotkeysPrefs.h"

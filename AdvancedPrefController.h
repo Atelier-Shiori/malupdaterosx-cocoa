@@ -7,7 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "MASPreferencesViewController.h"
+#import <MASPreferences/MASPreferences.h>
 #import "MAL_Updater_OS_XAppDelegate.h"
 #import "MyAnimeList.h"
 

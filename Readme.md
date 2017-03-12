@@ -20,9 +20,11 @@ Check the [Getting Started Guide](https://github.com/chikorita157/malupdaterosx-
 All the frameworks are included. Just build! Here are the frameworks that are used in this app:
 
 * anitomy-osx.framework (MPL Licensed, included as a submodule)
+* EasyNSURLConnection.framework
+* MASPreferences.framework
+* MASShortcut.framework
 * Sparkle.framework
 * OgreKit.framework
-* EasyNSURLConnection.framework
 
 ##License
 Unless stated, Source code is licensed under [New BSD License](https://github.com/Atelier-Shiori/malupdaterosx-cocoa/blob/master/License.md).
