@@ -160,18 +160,20 @@
         [alert setInformativeText:@"Once you logged out, you need to log back in before you can use this application."];
         // Set Message type to Warning
         [alert setAlertStyle:NSWarningAlertStyle];
-        if ([alert runModal]== NSAlertFirstButtonReturn) {
-            //Remove account from keychain
-            [MALEngine removeaccount];
-            //Disable Clearbut
-            [clearbut setEnabled: NO];
-            [savebut setEnabled: YES];
-            [loggedinuser setStringValue:@""];
-            [loggedinview setHidden:YES];
-            [loginview setHidden:NO];
-            [fieldusername setStringValue:@""];
-            [fieldpassword setStringValue:@""];
-        }
+        [alert beginSheetModalForWindow:[[self view] window] completionHandler:^(NSModalResponse returnCode) {
+            if (returnCode== NSAlertFirstButtonReturn) {
+                //Remove account from keychain
+                [MALEngine removeaccount];
+                //Disable Clearbut
+                [clearbut setEnabled: NO];
+                [savebut setEnabled: YES];
+                [loggedinuser setStringValue:@""];
+                [loggedinview setHidden:YES];
+                [loginview setHidden:NO];
+                [fieldusername setStringValue:@""];
+                [fieldpassword setStringValue:@""];
+            }
+        }];
     }
     else{
         [Utility showsheetmessage:@"Cannot Logout" explaination:@"Please turn off automatic scrobbling before logging out." window:[[self view] window]];

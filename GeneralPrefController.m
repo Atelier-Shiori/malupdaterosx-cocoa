@@ -153,21 +153,21 @@
         [self updateAutoExceptions:sender];
     }
     else{
-    // Clears Exceptions if User chooses
-    // Set Up Prompt Message Window
-    NSAlert * alert = [[NSAlert alloc] init] ;
-    [alert addButtonWithTitle:@"Yes"];
-    [alert addButtonWithTitle:@"No"];
-    [alert setMessageText:@"Do you want to remove all Auto Exceptions Data?"];
-    [alert setInformativeText:@"Since you are disabling Auto Exceptions, you can delete the Auto Exceptions Data. You will be able to download it again."];
-    // Set Message type to Warning
-    [alert setAlertStyle:NSWarningAlertStyle];
-    if ([alert runModal]== NSAlertFirstButtonReturn) {
-        // Remove All cache data from Auto Exceptions
-        [AutoExceptions clearAutoExceptions];
-    }
+        // Clears Exceptions if User chooses
+        // Set Up Prompt Message Window
+        NSAlert * alert = [[NSAlert alloc] init] ;
+        [alert addButtonWithTitle:@"Yes"];
+        [alert addButtonWithTitle:@"No"];
+        [alert setMessageText:@"Do you want to remove all Auto Exceptions Data?"];
+        [alert setInformativeText:@"Since you are disabling Auto Exceptions, you can delete the Auto Exceptions Data. You will be able to download it again."];
+        // Set Message type to Warning
+        [alert setAlertStyle:NSWarningAlertStyle];
+        [alert beginSheetModalForWindow:[[self view] window] completionHandler:^(NSModalResponse returnCode) {
+                if (returnCode== NSAlertFirstButtonReturn) {
+                    [AutoExceptions clearAutoExceptions];
+                }
+        }];
         [alert release];
     }
-
 }
 @end
