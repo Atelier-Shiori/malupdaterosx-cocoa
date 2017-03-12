@@ -68,7 +68,8 @@ typedef enum {
 	OgreGNURegexSyntax, 
 	OgreJavaSyntax, 
 	OgrePerlSyntax, 
-	OgreRubySyntax
+	OgreRubySyntax,
+    OgrePythonSyntax,
 } OgreSyntax;
 
 // @"\\"
@@ -131,7 +132,7 @@ extern NSString	* const OgreException;
   OgreFindLongestOption			find longest match
   OgreFindNotEmptyOption		ignore empty match
   OgreNegateSingleLineOption	clear OgreSINGLELINEOption which is default on
-								in OgrePOSIXxxxxSyntax, OgrePerlSyntax and OgreJavaSyntax.
+								in OgrePOSIXxxxxSyntax, OgrePerlSyntax, OgreJavaSyntax and OgrePythonSyntax.
   OgreDontCaptureGroupOption	named group only captured.  (/.../g)
   OgreCaptureGroupOption		named and no-named group captured. (/.../G)
   OgreDelimitByWhitespaceOption	delimit words by whitespace in OgreSimpleMatchingSyntax
@@ -146,6 +147,7 @@ extern NSString	* const OgreException;
   OgreJavaSyntax			Java (Sun java.util.regex)
   OgrePerlSyntax			Perl
   OgreRubySyntax			Ruby (default)
+  OgrePythonSyntax			Python
   OgreSimpleMatchingSyntax	Simple Matching
   
  escapeCharacter:
