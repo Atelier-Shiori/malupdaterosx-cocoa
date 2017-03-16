@@ -903,6 +903,9 @@
 	
 }
 - (void)updateDidEnd:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo {
+    dispatch_queue_t queue = dispatch_get_global_queue(
+                                                       DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    dispatch_async(queue, ^{
     // Check if Episode field is empty. If so, set it to last scrobbled episode
     NSString * tmpepisode = [episodefield stringValue];
     bool episodechanged = false;
@@ -914,6 +917,7 @@
     }
 
     if (returnCode == 1) {
+         dispatch_async(dispatch_get_main_queue(), ^{
         BOOL result = [MALEngine updatestatus:[MALEngine getAniID] score:(int) [showscore selectedTag] watchstatus:[showstatus titleOfSelectedItem] episode:tmpepisode];
         if (result)
             [self setStatusText:@"Scrobble Status: Updating of Watch Status/Score Successful."];
@@ -925,12 +929,16 @@
         }
         else
             [self setStatusText:@"Scrobble Status: Unable to update Watch Status/Score."];
+         });
     }
+    dispatch_async(dispatch_get_main_queue(), ^{
     //If scrobbling is on, restart timer
 	if (scrobbling == TRUE) {
 		[self starttimer];
 	}
     [self enableUpdateItems];
+    });
+    });
 }
 
 -(IBAction)closeupdatestatus:(id)sender {
