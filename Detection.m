@@ -15,8 +15,8 @@
 
 @interface Detection()
 #pragma Private Methods
--(NSDictionary *)detectStream;
--(NSDictionary *)detectPlayer;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSDictionary *detectStream;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSDictionary *detectPlayer;
 -(bool)checkifIgnored:(NSString *)filename source:(NSString *)source;
 -(bool)checkifTitleIgnored:(NSString *)filename source:(NSString *)source;
 -(bool)checkifDirectoryIgnored:(NSString *)filename;
@@ -57,17 +57,17 @@
     NSArray * player = @[@"mplayer", @"mpv", @"mplayer-mt", @"VLC", @"QuickTime Playe", @"QTKitServer", @"Kodi", @"Movist", @"Squire", @"ffmpeg", @"IINA", @"VLCX"];
     NSString *string;
     OGRegularExpression    *regex;
-    for(int i = 0; i <[player count]; i++){
+    for(int i = 0; i <player.count; i++){
         NSTask *task;
         task = [[NSTask alloc] init];
-        [task setLaunchPath: @"/usr/sbin/lsof"];
-        [task setArguments: @[@"-c", (NSString *)player[i], @"-F", @"n"]]; 		//lsof -c '<player name>' -Fn
+        task.launchPath = @"/usr/sbin/lsof";
+        task.arguments = @[@"-c", (NSString *)player[i], @"-F", @"n"]; 		//lsof -c '<player name>' -Fn
         NSPipe *pipe;
         pipe = [NSPipe pipe];
-        [task setStandardOutput: pipe];
+        task.standardOutput = pipe;
         
         NSFileHandle *file;
-        file = [pipe fileHandleForReading];
+        file = pipe.fileHandleForReading;
         
         [task launch];
         
@@ -86,7 +86,6 @@
             while ((match = [enumerator nextObject]) != nil) {
                 [filenames addObject:[match matchedString]];
             }
-            NSLog(@"%@",filenames);
             // Populate Source
             NSString * DetectedSource;
             // Source Detection
@@ -98,7 +97,7 @@
                 case 5:
                     DetectedSource = @"Quicktime";
                     break;
-                case 10:
+                case 8:
                     DetectedSource = @"Beamer/ffmpeg";
                     break;
                 default:
@@ -106,9 +105,9 @@
                     break;
             }
             //Check if thee file name or directory is on any ignore list
-            for (int i = [filenames count]-1;i >= 0;i--) {
+            for (long i = filenames.count-1;i >= 0;i--) {
                 //Check every possible match
-                string = [filenames objectAtIndex:i];
+                string = filenames[i];
                 BOOL onIgnoreList = [self checkifIgnored:string source:DetectedSource];
                 //Make sure the file name is valid, even if player is open. Do not update video files in ignored directories
                 
@@ -145,20 +144,20 @@
     NSTask *task;
     task = [[NSTask alloc] init];
     NSBundle *myBundle = [NSBundle mainBundle];
-    [task setLaunchPath:[myBundle pathForResource:@"detectstream" ofType:@""]];
+    task.launchPath = [myBundle pathForResource:@"detectstream" ofType:@""];
     
     
     NSPipe *pipe;
     pipe = [NSPipe pipe];
-    [task setStandardOutput: pipe];
+    task.standardOutput = pipe;
     
     // Reads Output
     NSFileHandle *file;
-    file = [pipe fileHandleForReading];
+    file = pipe.fileHandleForReading;
     
     // Launch Task
     [task launch];
-    [task waitUntilExit]; 
+    [task waitUntilExit];
     // Parse Data from JSON and return dictionary
     NSData *data;
     data = [file readDataToEndOfFile];
@@ -166,7 +165,7 @@
     
     NSError* error;
     //Check if detectstream successfully exited. If not, ignore detection to prevent the program from crashing
-    if ([task terminationStatus] != 0){
+    if (task.terminationStatus != 0){
         NSLog(@"detectstream crashed, ignoring stream detection");
         return nil;
     }
@@ -185,6 +184,20 @@
         else if ([self checkifTitleIgnored:(NSString *)result[@"title"] source:result[@"site"]]) {
             return nil;
         }
+        else if ([(NSString *)result[@"site"] isEqualToString:@"plex"]){
+            //Do additional pharsing
+            NSDictionary *d2 = [[Recognition alloc] recognize:result[@"title"]];
+            NSString * DetectedTitle = (NSString *)d2[@"title"];
+            NSString * DetectedEpisode = (NSString *)d2[@"episode"];
+            NSString * DetectedSource = [NSString stringWithFormat:@"%@ in %@", [result[@"site"] capitalizedString], result[@"browser"]];
+            NSNumber * DetectedSeason = d2[@"season"];
+            NSString * DetectedGroup = (NSString *)d2[@"group"];
+            if (DetectedTitle.length > 0 && ![self checkifTitleIgnored:DetectedTitle source:result[@"site"]]) {
+                //Return result
+                return @{@"detectedtitle": DetectedTitle, @"detectedepisode": DetectedEpisode, @"detectedseason": DetectedSeason, @"detectedsource": DetectedSource, @"group": DetectedGroup, @"types": d2[@"types"]};
+            }
+            
+        }
         else if (result[@"episode"] == nil){
             //Episode number is missing. Do not use the stream data as a failsafe to keep the program from crashing
             return nil;
@@ -198,72 +211,65 @@
             return @{@"detectedtitle": DetectedTitle, @"detectedepisode": DetectedEpisode, @"detectedseason": DetectedSeason, @"detectedsource": DetectedSource, @"group": DetectedGroup, @"types": [NSArray new]};
         }
     }
+    return nil;
 }
 -(NSDictionary *)detectKodi{
-    // Get MyAnimeList Engine Instance
-    MAL_Updater_OS_XAppDelegate * delegate = (MAL_Updater_OS_XAppDelegate *)[[NSApplication sharedApplication] delegate];
-    MyAnimeList *malengine =  [delegate getMALEngineInstance];
-    // Only Detect from Kodi RPC when the host is reachable.
-    if ([malengine getKodiOnlineStatus]){
-        // Kodi/Plex Theater Detection
-        NSString * address = [[NSUserDefaults standardUserDefaults] objectForKey:@"kodiaddress"];
-        NSString * port = [NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"kodiport"]];
-        if (address.length == 0) {
-            return nil;
-        }
-        if (port.length == 0) {
-            port = @"3005";
-        }
-        EasyNSURLConnection * request = [[EasyNSURLConnection alloc] initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://%@:%@/jsonrpc", address,port]]];
-        [request startJSONRequest:@"{\"jsonrpc\": \"2.0\", \"method\": \"Player.GetItem\", \"params\": { \"properties\": [\"title\", \"season\", \"episode\", \"showtitle\", \"tvshowid\", \"thumbnail\", \"file\", \"fanart\", \"streamdetails\"], \"playerid\": 1 }, \"id\": \"VideoGetItem\"}"];
-        if (request.getStatusCode == 200) {
-            NSDictionary * result;
-            NSError * error = nil;
-            result = [NSJSONSerialization JSONObjectWithData:[request getResponseData] options:kNilOptions error:&error];
-            if (result[@"result"] != nil) {
-                //Valid Result, parse title
-                NSDictionary * items = result[@"result"];
-                NSDictionary * item = items[@"item"];
-                NSString * label;
-                if ([[NSUserDefaults standardUserDefaults] boolForKey:@"kodiusefilename"])
-                {
-                    // Use filename for recognition
-                    label = item[@"file"];
-                }
-                else{
-                    // Use the label
-                    label = item[@"label"];
-                }
-                NSDictionary * d=[[Recognition alloc] recognize:label];
-                BOOL invalidepisode = [self checkIgnoredKeywords:d[@"types"]];
-                if (!invalidepisode){
-                    NSString * DetectedTitle = (NSString *)d[@"title"];
-                    NSString * DetectedEpisode = (NSString *)d[@"episode"];
-                    NSNumber * DetectedSeason = d[@"season"];
-                    NSString * DetectedGroup = d[@"group"];
-                    NSString * DetectedSource = @"Kodi/Plex";
-                    if ([self checkifTitleIgnored:(NSString *)DetectedTitle source:DetectedSource]) {
-                        return nil;
-                    }
-                    else{
-                        NSDictionary * output = @{@"detectedtitle": DetectedTitle, @"detectedepisode": DetectedEpisode, @"detectedseason": DetectedSeason, @"detectedsource": DetectedSource, @"group": DetectedGroup, @"types": d[@"types"]};
-                        return output;
-                    }
-                }
-                else{
+    // Kodi/Plex Theater Detection
+    NSString * address = [[NSUserDefaults standardUserDefaults] objectForKey:@"kodiaddress"];
+    NSString * port = [NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"kodiport"]];
+    if (address.length == 0) {
+        return nil;
+    }
+    if (port.length == 0) {
+        port = @"3005";
+    }
+    EasyNSURLConnection * request = [[EasyNSURLConnection alloc] initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://%@:%@/jsonrpc", address,port]]];
+    [request startJSONRequest:@"{\"jsonrpc\": \"2.0\", \"method\": \"Player.GetItem\", \"params\": { \"properties\": [\"title\", \"season\", \"episode\", \"showtitle\", \"tvshowid\", \"thumbnail\", \"file\", \"fanart\", \"streamdetails\"], \"playerid\": 1 }, \"id\": \"VideoGetItem\"}"];
+    if (request.getStatusCode == 200) {
+        NSDictionary * result;
+        NSError * error = nil;
+        result = [NSJSONSerialization JSONObjectWithData:[request getResponseData] options:kNilOptions error:&error];
+        if (result[@"result"] != nil) {
+            //Valid Result, parse title
+            NSDictionary * items = result[@"result"];
+            NSDictionary * item = items[@"item"];
+            NSString * label;
+            if ([[NSUserDefaults standardUserDefaults] boolForKey:@"kodiusefilename"])
+            {
+                // Use filename for recognition
+                label = item[@"file"];
+            }
+            else{
+                // Use the label
+                label = item[@"label"];
+            }
+            NSDictionary * d=[[Recognition alloc] recognize:label];
+            BOOL invalidepisode = [self checkIgnoredKeywords:d[@"types"]];
+            if (!invalidepisode){
+                NSString * DetectedTitle = (NSString *)d[@"title"];
+                NSString * DetectedEpisode = (NSString *)d[@"episode"];
+                NSNumber * DetectedSeason = d[@"season"];
+                NSString * DetectedGroup = d[@"group"];
+                NSString * DetectedSource = @"Kodi/Plex";
+                NSLog(@"Debug: Title: %@ Episode: %@ Season: %@ Group: %@ Source: %@", DetectedTitle, DetectedEpisode, DetectedGroup, DetectedSeason, DetectedSource);
+                if ([self checkifTitleIgnored:(NSString *)DetectedTitle source:DetectedSource]) {
                     return nil;
+                }
+                else{
+                    NSDictionary * output = @{@"detectedtitle": DetectedTitle, @"detectedepisode": DetectedEpisode, @"detectedseason": DetectedSeason, @"detectedsource": DetectedSource, @"group": DetectedGroup, @"types": d[@"types"]};
+                    return output;
                 }
             }
             else{
-                // Unexpected Output or Kodi/Plex not playing anything, return nil object
                 return nil;
             }
         }
         else{
+            // Unexpected Output or Kodi/Plex not playing anything, return nil object
             return nil;
         }
     }
-    else {
+    else{
         return nil;
     }
 }
@@ -278,8 +284,8 @@
     filename = [[OGRegularExpression regularExpressionWithString:@"^.+/"] replaceAllMatchesInString:filename withString:@""];
     source = [[OGRegularExpression regularExpressionWithString:@"\\sin\\s\\w+"] replaceAllMatchesInString:source withString:@""];
     NSArray * ignoredfilenames = [[[NSUserDefaults standardUserDefaults] objectForKey:@"IgnoreTitleRules"] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"(rulesource == %@) OR (rulesource ==[c] %@)" , @"All Sources", source]];
-    
-    if ([ignoredfilenames count] > 0) {
+    NSLog(@"Debug: %@", filename);
+    if (ignoredfilenames.count > 0) {
         for (NSDictionary * d in ignoredfilenames) {
             NSString * rule = [NSString stringWithFormat:@"%@", d[@"rule"]];
             if ([[OGRegularExpression regularExpressionWithString:rule options:OgreIgnoreCaseOption] matchInString:filename] && rule.length !=0) { // Blank rules are infinite, thus should not be counted
@@ -294,10 +300,13 @@
     //Checks if file name or directory is on ignore list
     filename = [filename stringByReplacingOccurrencesOfString:@"n/" withString:@"/"];
     // Get only the path
-    filename = [[[NSURL fileURLWithPath:filename] path] stringByDeletingLastPathComponent];
+    filename = [NSURL fileURLWithPath:filename].path.stringByDeletingLastPathComponent;
+    if (filename == nil){
+        return false;
+    }
     //Check ignore directories. If on ignore directory, set onIgnoreList to true.
     NSArray * ignoredirectories = [[NSUserDefaults standardUserDefaults] objectForKey:@"ignoreddirectories"];
-    if ([ignoredirectories count] > 0) {
+    if (ignoredirectories.count > 0) {
         for (NSDictionary * d in ignoredirectories) {
             if ([filename isEqualToString:d[@"directory"]]) {
                 NSLog(@"Video being played is in ignored directory");
