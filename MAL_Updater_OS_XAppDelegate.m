@@ -532,8 +532,6 @@
                         [self showNotification:@"Updated Queued Items" message:[NSString stringWithFormat:@"%i scrobbled successfully and %i failed",success, fail]];
                         });
                     }
-                
-                    
                 }
             }
             else{
