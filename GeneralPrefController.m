@@ -170,4 +170,12 @@
         [alert release];
     }
 }
+- (IBAction)changetimerinterval:(id)sender {
+    // Sets new time for the timer, if running
+    MAL_Updater_OS_XAppDelegate * delegate = (MAL_Updater_OS_XAppDelegate *)[NSApplication sharedApplication].delegate;
+    if ([delegate getisScrobbling]){
+        [delegate stoptimer];
+        [delegate starttimer];
+    }
+}
 @end
