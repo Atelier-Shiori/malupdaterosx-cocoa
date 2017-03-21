@@ -240,6 +240,12 @@
                 <menuItem isSeparatorItem="YES" id="555">
                     <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                 </menuItem>
+                <menuItem title="Open Stream and Update…" id="LmD-Sb-XbD">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="openstream:" target="560" id="qv4-fO-HeJ"/>
+                    </connections>
+                </menuItem>
                 <menuItem title="Start Scrobbling" id="557">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
@@ -293,6 +299,7 @@
                     </connections>
                 </menuItem>
             </items>
+            <point key="canvasLocation" x="-364" y="14"/>
         </menu>
         <customObject id="560" customClass="MAL_Updater_OS_XAppDelegate">
             <connections>
@@ -308,6 +315,7 @@
                 <outlet property="img" destination="gfr-73-DLn" id="iLO-3a-xch"/>
                 <outlet property="lastupdateheader" destination="53a-L9-dCg" id="Nsn-Jb-mIY"/>
                 <outlet property="openAnimePage" destination="GWr-5m-lgQ" id="h6z-S7-zGA"/>
+                <outlet property="openstream" destination="LmD-Sb-XbD" id="4LR-cQ-YkD"/>
                 <outlet property="seperator" destination="egk-cQ-duZ" id="JnP-Yt-mVt"/>
                 <outlet property="seperator2" destination="ZEo-hm-rcH" id="g9l-WQ-yu2"/>
                 <outlet property="shareMenu" destination="ltR-rE-E7c" id="k8c-iR-Onz"/>

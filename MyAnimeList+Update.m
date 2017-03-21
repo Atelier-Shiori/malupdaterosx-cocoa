@@ -114,7 +114,7 @@
         //Ignore Cookies
         [request setUseCookies:NO];
         //Set Token
-                [request addHeader:[NSString stringWithFormat:@"Basic %@",[self getBase64]]  forKey:@"Authorization"];
+        [request addHeader:[NSString stringWithFormat:@"Basic %@",[self getBase64]]  forKey:@"Authorization"];
         [request setPostMethod:@"PUT"];
         [request addFormData:DetectedEpisode forKey:@"episodes"];
         //Set Status

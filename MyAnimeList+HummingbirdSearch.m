@@ -326,7 +326,7 @@
                 NSString * MALID = [NSString stringWithFormat:@"%@",[m[@"attributes"] valueForKey:@"externalId"]];
                 if ([[NSUserDefaults standardUserDefaults] boolForKey:@"useSearchCache"] && titleid.length > 0) {
                     NSNumber * totalepisodes;
-                    if (found[@"episode_count"] != [NSNull null]) {
+                    if (found[@"episode_count"] != nil) {
                         totalepisodes = (NSNumber *)found[@"episodeCount"];
                     }
                     else{

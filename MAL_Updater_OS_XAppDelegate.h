@@ -14,6 +14,8 @@
 @class DonationWindowController;
 @class OfflineViewQueue;
 @class MSWeakTimer;
+@class streamlinkopen;
+
 @interface MAL_Updater_OS_XAppDelegate : NSObject <NSApplicationDelegate, NSUserNotificationCenterDelegate, NSSharingServiceDelegate> {
 	/* Windows */
     __unsafe_unretained NSWindow *window;
@@ -26,6 +28,7 @@
 	NSManagedObjectContext *managedObjectContext;
 	NSPersistentStoreCoordinator *persistentStoreCoordinator;
     MSWeakTimer * timer;
+    IBOutlet NSMenuItem *openstream;
 	IBOutlet NSMenuItem * togglescrobbler;
     IBOutlet NSMenuItem * updatenow;
 	IBOutlet NSMenuItem * confirmupdate;
@@ -67,6 +70,7 @@
     IBOutlet NSTextField * episodefield;
     IBOutlet NSNumberFormatter * epiformatter;
 	NSWindowController *_preferencesWindowController;
+    streamlinkopen * streamlinkopenw;
 }
 @property (strong, nonatomic) dispatch_queue_t privateQueue;
 @property (nonatomic, readonly) NSWindowController *preferencesWindowController;

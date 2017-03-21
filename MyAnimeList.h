@@ -10,6 +10,7 @@
 #import <OgreKit/OgreKit.h>
 #import "MAL_Updater_OS_XAppDelegate.h"
 #import "Reachability.h"
+#import <streamlinkdetect/streamlinkdetect.h>
 
 @interface MyAnimeList : NSObject {
 	NSString * MALApiUrl;
@@ -44,11 +45,13 @@
     Reachability* reach;
     Reachability* kodireach;
     NSManagedObjectContext *managedObjectContext;
+    streamlinkdetector * detector;
 }
 @property (nonatomic, readonly) NSManagedObjectContext *managedObjectContext;
 -(void)setManagedObjectContext:(NSManagedObjectContext *)context;
 - (int)startscrobbling;
 -(int)scrobbleagain:(NSString *)showtitle Episode:(NSString *)episode correctonce:(BOOL)correctonce;
+-(int)scrobblefromstreamlink:(NSString *)url withStream:(NSString *)stream;
 -(int)scrobble;
 -(NSDictionary *)scrobblefromqueue;
 -(BOOL)confirmupdate;

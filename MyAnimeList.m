@@ -284,6 +284,32 @@
     }
     return status;
 }
+-(int)scrobblefromstreamlink:(NSString *)url withStream:(NSString *)stream {
+    if (!detector){
+        detector = [streamlinkdetector new];
+    }
+    // Set stream URL and stream
+    [detector setStreamURL:url];
+    [detector setStream:stream];
+    // Get detection information
+    if ([detector getDetectionInfo]) {
+        if ([[detector getdetectinfo] count] > 0){
+            NSDictionary * d = [[detector getdetectinfo] objectAtIndex:0];
+            // Check if title is ignored. Update if not on list.
+            NSDictionary * detectioninfo = [Detection checksstreamlinkinfo:d];
+            if (detectioninfo) {
+                int result = [self populatevalues:detectioninfo];
+                // Start Stream
+                [detector startStream];
+                if (result == 2){
+                    // Perform the update
+                    return [self scrobble];
+                }
+            }
+        }
+    }
+    return 0;
+}
 -(int)scrobble{
     NSLog(@"=============");
     NSLog(@"Scrobbling...");
@@ -408,6 +434,38 @@
     else{
         return 0;
     }
+}
+-(int)populatevalues:(NSDictionary *) result{
+    if (result !=nil) {
+        //Populate Data
+        DetectedTitle = result[@"detectedtitle"];
+        DetectedEpisode = result[@"detectedepisode"];
+        DetectedSeason = ((NSNumber *)result[@"detectedseason"]).intValue;
+        DetectedGroup = result[@"group"];
+        DetectedSource = result[@"detectedsource"];
+        if (((NSArray *)result[@"types"]).count > 0) {
+            DetectedType = (result[@"types"])[0];
+        }
+        else{
+            DetectedType = @"";
+        }
+        //Check for zero episode as the detected episode
+        [self checkzeroEpisode];
+        // Check if the title was previously scrobbled
+        [self checkExceptions];
+        if ([DetectedTitle isEqualToString:LastScrobbledTitle] && ([DetectedEpisode isEqualToString: LastScrobbledEpisode]||[self checkBlankDetectedEpisode]) && Success == 1) {
+            // Do Nothing
+            return 1;
+        }
+        else {
+            // Not Scrobbled Yet or Unsuccessful
+            return 2;
+        }
+    }
+    else{
+        return 0;
+    }
+    
 }
 -(BOOL)checkBlankDetectedEpisode{
     if ([LastScrobbledEpisode isEqualToString:@"1"] && [DetectedEpisode length] == 0) {

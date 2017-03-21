@@ -72,6 +72,11 @@
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
+		910D22681E81DEC200760A08 /* streamlinkopen.m in Sources */ = {isa = PBXBuildFile; fileRef = 910D22671E81DEC200760A08 /* streamlinkopen.m */; };
+		910D226A1E81DFD100760A08 /* streamlinkdetect.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 910D22691E81DFD100760A08 /* streamlinkdetect.framework */; };
+		910D226D1E81DFEE00760A08 /* streamlinkopen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 910D226F1E81DFEE00760A08 /* streamlinkopen.xib */; };
+		910D22701E81E05300760A08 /* streamlinkdetect.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 910D22691E81DFD100760A08 /* streamlinkdetect.framework */; };
+		910D22711E81E05300760A08 /* streamlinkdetect.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 910D22691E81DFD100760A08 /* streamlinkdetect.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		91206C1B1E75F3E50050E9C5 /* MASShortcut.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91206C1A1E75F3E50050E9C5 /* MASShortcut.framework */; };
 		91206C1D1E75F3F00050E9C5 /* MASPreferences.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91206C1C1E75F3F00050E9C5 /* MASPreferences.framework */; };
 		91206C1E1E75F5AD0050E9C5 /* MASPreferences.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91206C1C1E75F3F00050E9C5 /* MASPreferences.framework */; };
@@ -89,6 +94,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				910D22711E81E05300760A08 /* streamlinkdetect.framework in CopyFiles */,
 				9149EBE31E75F8A700B1AA22 /* MASShortcut.framework in CopyFiles */,
 				8227C1181A1D8D47005F3301 /* anitomy-osx.framework in CopyFiles */,
 				3A4C61D4120DF3ED0032F63A /* OgreKit.framework in CopyFiles */,
@@ -205,6 +211,10 @@
 		82B9559719FD553500A032FB /* detectstream */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; name = detectstream; path = detectstream/detectstream; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* MAL_Updater_OS_X-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "MAL_Updater_OS_X-Info.plist"; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* MAL Updater OS X.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MAL Updater OS X.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		910D22661E81DEC200760A08 /* streamlinkopen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = streamlinkopen.h; sourceTree = "<group>"; };
+		910D22671E81DEC200760A08 /* streamlinkopen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = streamlinkopen.m; sourceTree = "<group>"; };
+		910D22691E81DFD100760A08 /* streamlinkdetect.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = streamlinkdetect.framework; path = Frameworks/streamlinkdetect.framework; sourceTree = "<group>"; };
+		910D226E1E81DFEE00760A08 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/streamlinkopen.xib; sourceTree = "<group>"; };
 		91206C1A1E75F3E50050E9C5 /* MASShortcut.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MASShortcut.framework; path = "/Volumes/MacStorage/malupdaterosx-cocoa/Frameworks/MASShortcut.framework"; sourceTree = "<absolute>"; };
 		91206C1C1E75F3F00050E9C5 /* MASPreferences.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MASPreferences.framework; path = Frameworks/MASPreferences.framework; sourceTree = "<group>"; };
 		91206C221E75F8920050E9C5 /* MASShortcut.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MASShortcut.framework; path = Frameworks/MASShortcut.framework; sourceTree = "<group>"; };
@@ -222,9 +232,11 @@
 				6F28DC1B1A67092F00AF063F /* Carbon.framework in Frameworks */,
 				91206C1E1E75F5AD0050E9C5 /* MASPreferences.framework in Frameworks */,
 				9149EBE21E75F8A700B1AA22 /* MASShortcut.framework in Frameworks */,
+				910D226A1E81DFD100760A08 /* streamlinkdetect.framework in Frameworks */,
 				2D9C3AE11E6A0BC7007D8F68 /* EasyNSURLConnection.framework in Frameworks */,
 				8227C1171A1D8D34005F3301 /* anitomy-osx.framework in Frameworks */,
 				59D503781CB004B10002532D /* Sparkle.framework in Frameworks */,
+				910D22701E81E05300760A08 /* streamlinkdetect.framework in Frameworks */,
 				3A6AB587120F402A00D51D2C /* OgreKit.framework in Frameworks */,
 				91206C231E75F8920050E9C5 /* MASShortcut.framework in Frameworks */,
 				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
@@ -279,6 +291,7 @@
 		1058C7A2FEA54F0111CA2CBB /* Other Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				910D22691E81DFD100760A08 /* streamlinkdetect.framework */,
 				91206C221E75F8920050E9C5 /* MASShortcut.framework */,
 				91206C1C1E75F3F00050E9C5 /* MASPreferences.framework */,
 				2D9C3AE01E6A0BC7007D8F68 /* EasyNSURLConnection.framework */,
@@ -339,6 +352,7 @@
 				5CBE9FEE19F2F9E500CA3E5D /* GeneralPreferenceView.xib */,
 				5CBE9FEB19F2F9CA00CA3E5D /* LoginView.xib */,
 				5C97491C19F3117D000EC02E /* SoftwareUpdateView.xib */,
+				910D226F1E81DFEE00760A08 /* streamlinkopen.xib */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -376,6 +390,8 @@
 		5C07DA621A8156210003A827 /* Window Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				910D22661E81DEC200760A08 /* streamlinkopen.h */,
+				910D22671E81DEC200760A08 /* streamlinkopen.m */,
 				2DAFC1D31E23135D00FB7A14 /* Offline View Queue */,
 				2DDBB73A1E1D52040075B0D0 /* Donation */,
 				5C07DA631A8156380003A827 /* History */,
@@ -570,6 +586,7 @@
 			files = (
 				8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */,
 				6F1A2C8F1B929B9800D47FE2 /* dsa_pub.pem in Resources */,
+				910D226D1E81DFEE00760A08 /* streamlinkopen.xib in Resources */,
 				8294C45E19F99B2F009DE98B /* Images.xcassets in Resources */,
 				6FD961431B419E4C00DE539C /* MAL Updater OS X.sdef in Resources */,
 				6FBA5A0A1ABE484B00B6DB79 /* AdvancedPrefController.xib in Resources */,
@@ -639,6 +656,7 @@
 				2DAFC1DA1E2313B100FB7A14 /* OfflineViewQueue.m in Sources */,
 				3A2DCCB61210B3BF00C920F1 /* PFMoveApplication.m in Sources */,
 				822AEB891A202931003DD682 /* FixSearchDialog.m in Sources */,
+				910D22681E81DEC200760A08 /* streamlinkopen.m in Sources */,
 				5CD36BBA19F2ED88007BB6B6 /* GeneralPrefController.m in Sources */,
 				5902411F1C074A7A00495A2F /* SSKeychain.m in Sources */,
 				6FAA0C1F1A7E938400416079 /* ExceptionsCache.m in Sources */,
@@ -747,6 +765,14 @@
 				6FBA5A0B1ABE484B00B6DB79 /* Base */,
 			);
 			name = AdvancedPrefController.xib;
+			sourceTree = "<group>";
+		};
+		910D226F1E81DFEE00760A08 /* streamlinkopen.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				910D226E1E81DFEE00760A08 /* Base */,
+			);
+			name = streamlinkopen.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
