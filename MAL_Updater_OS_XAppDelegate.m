@@ -22,6 +22,7 @@
 #import "OfflineViewQueue.h"
 #import "MSWeakTimer.h"
 #import "streamlinkopen.h"
+#import <streamlinkdetect/streamlinkdetect.h>
 
 @implementation MAL_Updater_OS_XAppDelegate
 
@@ -1158,34 +1159,40 @@
 }
 #pragma mark Streamlink
 - (IBAction)openstream:(id)sender {
-    if ([Utility checkifStreamLinkExists]){
-        // Shows the Open Stream dialog
-        [NSApp activateIgnoringOtherApps:YES];
-        if ([MALEngine getOnlineStatus]) {
-            if (!streamlinkopenw)
-                streamlinkopenw = [streamlinkopen new];
-            
-            bool isVisible = window.visible;
-            if (isVisible) {
-                [self disableUpdateItems]; //Prevent user from opening up another modal window if access from Status Window
-                [NSApp beginSheet:streamlinkopenw.window
-                   modalForWindow:window modalDelegate:self
-                   didEndSelector:@selector(streamopenDidEnd:returnCode:contextInfo:)
-                      contextInfo:(void *)nil];
+    if ([MALEngine checkaccount]) {
+        streamlinkdetector * detector = [streamlinkdetector new];
+        if ([detector checkifStreamLinkExists]){
+            // Shows the Open Stream dialog
+            [NSApp activateIgnoringOtherApps:YES];
+            if ([MALEngine getOnlineStatus]) {
+                if (!streamlinkopenw)
+                    streamlinkopenw = [streamlinkopen new];
+                
+                bool isVisible = window.visible;
+                if (isVisible) {
+                    [self disableUpdateItems]; //Prevent user from opening up another modal window if access from Status Window
+                    [NSApp beginSheet:streamlinkopenw.window
+                       modalForWindow:window modalDelegate:self
+                       didEndSelector:@selector(streamopenDidEnd:returnCode:contextInfo:)
+                          contextInfo:(void *)nil];
+                }
+                else{
+                    [NSApp beginSheet:streamlinkopenw.window
+                       modalForWindow:nil modalDelegate:self
+                       didEndSelector:@selector(streamopenDidEnd:returnCode:contextInfo:)
+                          contextInfo:(void *)nil];
+                }
             }
             else{
-                [NSApp beginSheet:streamlinkopenw.window
-                   modalForWindow:nil modalDelegate:self
-                   didEndSelector:@selector(streamopenDidEnd:returnCode:contextInfo:)
-                      contextInfo:(void *)nil];
+                [self showNotification:NSLocalizedString(@"MAL Updater OS X",nil) message:NSLocalizedString(@"You need to be online to use this feature.",nil)];
             }
         }
         else{
-            [self showNotification:NSLocalizedString(@"Hachidori",nil) message:NSLocalizedString(@"You need to be online to use this feature.",nil)];
+            [detector checkStreamLink:nil];
         }
     }
-    else{
-        [Utility showStreamLinkNotInstalledAlert];
+    else {
+        [self showNotification:@"MAL Updater OS X" message:@"Add a login before you use this feature."];
     }
 }
 -(void)streamopenDidEnd:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo {

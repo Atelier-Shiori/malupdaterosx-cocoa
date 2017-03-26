@@ -130,6 +130,9 @@
     [managedObjectContext reset];
     return count;
 }
+-(streamlinkdetector *)getstreamlinkdetector{
+    return detector;
+}
 /*
  
  Update Methods
