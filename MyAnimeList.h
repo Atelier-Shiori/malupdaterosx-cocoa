@@ -73,6 +73,7 @@
 -(BOOL)getKodiOnlineStatus;
 -(NSDictionary *)getLastScrobbledInfo;
 -(int)getQueueCount;
+-(streamlinkdetector *)getstreamlinkdetector;
 -(void)clearAnimeInfo;
 -(NSString *)startSearch;
 -(void)setKodiReach:(BOOL)enable;

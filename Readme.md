@@ -33,5 +33,5 @@ All the frameworks are included. Just build! Here are the frameworks that are us
 * OgreKit.framework
 * streamlinkdetect.framework
 
-##License
+## License
 Unless stated, Source code is licensed under [New BSD License](https://github.com/Atelier-Shiori/malupdaterosx-cocoa/blob/master/License.md).
