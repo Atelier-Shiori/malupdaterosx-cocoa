@@ -84,6 +84,8 @@
 		91206C231E75F8920050E9C5 /* MASShortcut.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91206C221E75F8920050E9C5 /* MASShortcut.framework */; };
 		9149EBE21E75F8A700B1AA22 /* MASShortcut.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91206C221E75F8920050E9C5 /* MASShortcut.framework */; };
 		9149EBE31E75F8A700B1AA22 /* MASShortcut.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 91206C221E75F8920050E9C5 /* MASShortcut.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		9161B2011E90246200FBF52F /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9161B1FF1E90246200FBF52F /* Fabric.framework */; };
+		9161B2021E90246200FBF52F /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9161B2001E90246200FBF52F /* Crashlytics.framework */; };
 		91A8DD5E1E736814006E3566 /* NSNumberFormatterNumberOnly.m in Sources */ = {isa = PBXBuildFile; fileRef = 91A8DD5C1E736814006E3566 /* NSNumberFormatterNumberOnly.m */; };
 /* End PBXBuildFile section */
 
@@ -218,6 +220,8 @@
 		91206C1A1E75F3E50050E9C5 /* MASShortcut.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MASShortcut.framework; path = "/Volumes/MacStorage/malupdaterosx-cocoa/Frameworks/MASShortcut.framework"; sourceTree = "<absolute>"; };
 		91206C1C1E75F3F00050E9C5 /* MASPreferences.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MASPreferences.framework; path = Frameworks/MASPreferences.framework; sourceTree = "<group>"; };
 		91206C221E75F8920050E9C5 /* MASShortcut.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MASShortcut.framework; path = Frameworks/MASShortcut.framework; sourceTree = "<group>"; };
+		9161B1FF1E90246200FBF52F /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
+		9161B2001E90246200FBF52F /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		91A8DD5C1E736814006E3566 /* NSNumberFormatterNumberOnly.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSNumberFormatterNumberOnly.m; sourceTree = "<group>"; };
 		91A8DD5D1E736814006E3566 /* NSNumberFormatterNumberOnly.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSNumberFormatterNumberOnly.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -237,11 +241,13 @@
 				8227C1171A1D8D34005F3301 /* anitomy-osx.framework in Frameworks */,
 				59D503781CB004B10002532D /* Sparkle.framework in Frameworks */,
 				910D22701E81E05300760A08 /* streamlinkdetect.framework in Frameworks */,
+				9161B2021E90246200FBF52F /* Crashlytics.framework in Frameworks */,
 				3A6AB587120F402A00D51D2C /* OgreKit.framework in Frameworks */,
 				91206C231E75F8920050E9C5 /* MASShortcut.framework in Frameworks */,
 				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
 				2D9C3AE21E6A0C07007D8F68 /* EasyNSURLConnection.framework in Frameworks */,
 				3A2DCCBE1210B3D900C920F1 /* Security.framework in Frameworks */,
+				9161B2011E90246200FBF52F /* Fabric.framework in Frameworks */,
 				5C2B9DFC1221EB25006DEF0D /* CoreData.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -291,6 +297,8 @@
 		1058C7A2FEA54F0111CA2CBB /* Other Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9161B1FF1E90246200FBF52F /* Fabric.framework */,
+				9161B2001E90246200FBF52F /* Crashlytics.framework */,
 				910D22691E81DFD100760A08 /* streamlinkdetect.framework */,
 				91206C221E75F8920050E9C5 /* MASShortcut.framework */,
 				91206C1C1E75F3F00050E9C5 /* MASPreferences.framework */,
@@ -530,6 +538,7 @@
 				8D11072E0486CEB800E47090 /* Frameworks */,
 				3A4C6253120DF5580032F63A /* CopyFiles */,
 				6FD505201A8E6BE700BC3CAD /* ShellScript */,
+				9161B1FE1E90244D00FBF52F /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -621,6 +630,19 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "#! /bin/bash\n\n# Put this in a 'run script' run phase in xcode\n# Delete all framework headers\ncd \"${BUILD_DIR}/${CONFIGURATION}/${PRODUCT_NAME}.app/Contents/Frameworks\"\n\nif [ $? = 0 ]; then\nfind . -name \"*.h\" -print0 | xargs -0 rm\nfi";
+		};
+		9161B1FE1E90244D00FBF52F /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "./Fabric.framework/run edf1f68ef4cfd794c1422ddd2479104d63a34c60 ade433e882a67945940f2ec881e3037340dd4257128bf5ded4a841135d3800ad";
 		};
 /* End PBXShellScriptBuildPhase section */
 

@@ -23,6 +23,8 @@
 #import "MSWeakTimer.h"
 #import "streamlinkopen.h"
 #import <streamlinkdetect/streamlinkdetect.h>
+#import <Fabric/Fabric.h>
+#import <Crashlytics/Crashlytics.h>
 
 @implementation MAL_Updater_OS_XAppDelegate
 
@@ -158,7 +160,8 @@
         defaultValues[@"DisableYosemiteTitleBar"] = @NO;
         defaultValues[@"DisableYosemiteVibrance"] = @NO;
     }
-        defaultValues[@"timerinterval"] = @(300);
+    defaultValues[@"timerinterval"] = @(300);
+    defaultValues[@"NSApplicationCrashOnExceptions"] = @YES;
 	//Register Dictionary
 	[[NSUserDefaults standardUserDefaults]
 	 registerDefaults:defaultValues];
@@ -288,7 +291,8 @@
     [AutoExceptions importToCoreData];
     // Show Donation Message
     [Utility donateCheck:self];
-    
+    // Fabric
+    [Fabric with:@[[Crashlytics class]]];
 }
 #pragma mark General UI Functions
 - (NSWindowController *)preferencesWindowController

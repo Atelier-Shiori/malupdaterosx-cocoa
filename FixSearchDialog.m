@@ -72,7 +72,13 @@
 -(void)finish:(NSDictionary *)d{
     selectedtitle = d[@"title"];
     selectedaniid = [d[@"id"] stringValue];
-    selectedtotalepisodes = [(NSNumber *)d[@"episodes"] intValue];
+	if (d[@"episodes"]){
+    	selectedtotalepisodes = [(NSNumber *)d[@"episodes"] intValue];
+	}
+	else{
+		// No episode total yet, set to set
+		selectedtotalepisodes = @(0);
+	}
     [self.window orderOut:self];
     [NSApp endSheet:self.window returnCode:1];
 }
