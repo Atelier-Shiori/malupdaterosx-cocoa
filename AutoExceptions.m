@@ -110,8 +110,6 @@
             }
             // Set the last updated date
             [[NSUserDefaults standardUserDefaults] setValue:[NSDate date] forKey:@"ExceptionsLastUpdated"];
-            // Clear Core Data Objects from Memory
-            [moc reset];
             break;
         }
         default:
