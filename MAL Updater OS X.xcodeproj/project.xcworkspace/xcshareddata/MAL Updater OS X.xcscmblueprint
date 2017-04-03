@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "A969EE05C616F468823DDD48BE7B82DFC9463570",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "404BD35706280D498D457EF806B3AE541E8B14A8" : 9223372036854775807,
+    "A969EE05C616F468823DDD48BE7B82DFC9463570" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "01CC7F18-67B9-42A8-B5B1-6A8A7F62C64B",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "404BD35706280D498D457EF806B3AE541E8B14A8" : "hachidori\/",
+    "A969EE05C616F468823DDD48BE7B82DFC9463570" : "malupdaterosx-cocoa\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "MAL Updater OS X",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "MAL Updater OS X.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/Atelier-Shiori\/hachidori.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "404BD35706280D498D457EF806B3AE541E8B14A8"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/chikorita157\/malupdaterosx-cocoa.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "A969EE05C616F468823DDD48BE7B82DFC9463570"
+    }
+  ]
+}

@@ -42,7 +42,7 @@
 		5CBE9EC319F2F0E300CA3E5D /* LoginPref.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CBE9EC219F2F0E300CA3E5D /* LoginPref.m */; };
 		5CBE9FEC19F2F9CA00CA3E5D /* LoginView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5CBE9FEB19F2F9CA00CA3E5D /* LoginView.xib */; };
 		5CBE9FEF19F2F9E500CA3E5D /* GeneralPreferenceView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5CBE9FEE19F2F9E500CA3E5D /* GeneralPreferenceView.xib */; };
-		5CD36BBA19F2ED88007BB6B6 /* GeneralPrefController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CD36BB919F2ED88007BB6B6 /* GeneralPrefController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		5CD36BBA19F2ED88007BB6B6 /* GeneralPrefController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CD36BB919F2ED88007BB6B6 /* GeneralPrefController.m */; };
 		6F0CF36F1A7DBADD00261A43 /* Utility.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F0CF36E1A7DBADD00261A43 /* Utility.m */; };
 		6F12909B1A7D833100B8C3E6 /* AutoExceptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F12909A1A7D833100B8C3E6 /* AutoExceptions.m */; };
 		6F1865931A7D79CB00C74A47 /* Detection.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F1865921A7D79CB00C74A47 /* Detection.m */; };
@@ -82,6 +82,7 @@
 		91206C1E1E75F5AD0050E9C5 /* MASPreferences.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91206C1C1E75F3F00050E9C5 /* MASPreferences.framework */; };
 		91206C1F1E75F5AD0050E9C5 /* MASPreferences.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 91206C1C1E75F3F00050E9C5 /* MASPreferences.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		91206C231E75F8920050E9C5 /* MASShortcut.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91206C221E75F8920050E9C5 /* MASShortcut.framework */; };
+		9131B2111E91625000EC4614 /* LoginItems.m in Sources */ = {isa = PBXBuildFile; fileRef = 9131B2101E91625000EC4614 /* LoginItems.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		9149EBE21E75F8A700B1AA22 /* MASShortcut.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91206C221E75F8920050E9C5 /* MASShortcut.framework */; };
 		9149EBE31E75F8A700B1AA22 /* MASShortcut.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 91206C221E75F8920050E9C5 /* MASShortcut.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		9161B2011E90246200FBF52F /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9161B1FF1E90246200FBF52F /* Fabric.framework */; };
@@ -220,8 +221,10 @@
 		91206C1A1E75F3E50050E9C5 /* MASShortcut.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MASShortcut.framework; path = "/Volumes/MacStorage/malupdaterosx-cocoa/Frameworks/MASShortcut.framework"; sourceTree = "<absolute>"; };
 		91206C1C1E75F3F00050E9C5 /* MASPreferences.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MASPreferences.framework; path = Frameworks/MASPreferences.framework; sourceTree = "<group>"; };
 		91206C221E75F8920050E9C5 /* MASShortcut.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MASShortcut.framework; path = Frameworks/MASShortcut.framework; sourceTree = "<group>"; };
-		9161B1FF1E90246200FBF52F /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
-		9161B2001E90246200FBF52F /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
+		9131B20F1E91625000EC4614 /* LoginItems.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoginItems.h; path = ../hachidori/LoginItems.h; sourceTree = "<group>"; };
+		9131B2101E91625000EC4614 /* LoginItems.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LoginItems.m; path = ../hachidori/LoginItems.m; sourceTree = "<group>"; };
+		9161B1FF1E90246200FBF52F /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Fabric.framework; path = Frameworks/Fabric.framework; sourceTree = "<group>"; };
+		9161B2001E90246200FBF52F /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Crashlytics.framework; path = Frameworks/Crashlytics.framework; sourceTree = "<group>"; };
 		91A8DD5C1E736814006E3566 /* NSNumberFormatterNumberOnly.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSNumberFormatterNumberOnly.m; sourceTree = "<group>"; };
 		91A8DD5D1E736814006E3566 /* NSNumberFormatterNumberOnly.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSNumberFormatterNumberOnly.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -489,6 +492,8 @@
 				6F1865921A7D79CB00C74A47 /* Detection.m */,
 				6F0CF36D1A7DBADD00261A43 /* Utility.h */,
 				6F0CF36E1A7DBADD00261A43 /* Utility.m */,
+				9131B20F1E91625000EC4614 /* LoginItems.h */,
+				9131B2101E91625000EC4614 /* LoginItems.m */,
 				2DAFC1D01E2301ED00FB7A14 /* Reachability.h */,
 				2DAFC1D11E2301ED00FB7A14 /* Reachability.m */,
 				2D417C1D1E6A378D008D225B /* MSWeakTimer.h */,
@@ -668,6 +673,7 @@
 				6FD961411B419E3F00DE539C /* MALScripting.m in Sources */,
 				6F5F6C701A71696D006D4607 /* MAL_Updater_OS_X_DataModel.xcdatamodeld in Sources */,
 				5967C9341C95AD51005FCBC7 /* string_score.c in Sources */,
+				9131B2111E91625000EC4614 /* LoginItems.m in Sources */,
 				5C881EFB19F462B400E20425 /* NSString_stripHtml.m in Sources */,
 				829727981A8BB14E004F73AB /* MyAnimeList+Update.m in Sources */,
 				6F1865931A7D79CB00C74A47 /* Detection.m in Sources */,
