@@ -162,7 +162,14 @@
                     OGRegularExpression    *regex2 = [OGRegularExpression regularExpressionWithString:[NSString stringWithFormat:@"((%i(st|nd|rd|th)|%@) season|\\W%i)", DetectedSeason, [Utility seasonInWords:DetectedSeason],DetectedSeason] options:OgreIgnoreCaseOption];
                     OGRegularExpressionMatch * smatch = [regex2 matchInString:[NSString stringWithFormat:@"%@ - %@",theshowtitle, alttitle]];
                     // Description check
-                    OGRegularExpressionMatch * smatch2 = [regex2 matchInString:(NSString *)searchentry[@"synopsis"]];
+					NSString * description;
+					if (NSString *)searchentry[@"synopsis"]){
+						description = NSString *)searchentry[@"synopsis"];
+					}
+					else {
+						description = @"";
+					}
+                    OGRegularExpressionMatch * smatch2 = [regex2 matchInString:];
                     if (DetectedSeason >= 2) { // Season detected, check to see if there is a match. If not, continue.
                         if (smatch == nil && smatch2 == nil && [[sortedArray filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"(type == %@)", @"TV"]] count] > 1) { // If there is a second season match, in most cases, it would be the only entry
                             continue;
