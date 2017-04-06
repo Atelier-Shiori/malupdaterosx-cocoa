@@ -440,19 +440,21 @@
     //[shareMenuItem setHidden:NO];
 }
 -(void)toggleScrobblingUIEnable:(BOOL)enable{
-    [statusMenu setAutoenablesItems:enable];
-    [updatenow setEnabled:enable];
-    [togglescrobbler setEnabled:enable];
-    [confirmupdate setEnabled:enable];
-    [findtitle setEnabled:enable];
-    [openstream setEnabled:enable];
-    if (!enable) {
-        [updatenow setTitle:@"Updating..."];
-        [self setStatusText:@"Scrobble Status: Scrobbling..."];
-    }
-    else{
-        [updatenow setTitle:@"Update Now"];
-    }
+	dispatch_async(dispatch_get_main_queue(), ^{
+	    [statusMenu setAutoenablesItems:enable];
+	    [updatenow setEnabled:enable];
+	    [togglescrobbler setEnabled:enable];
+	    [confirmupdate setEnabled:enable];
+	    [findtitle setEnabled:enable];
+	    [openstream setEnabled:enable];
+	    if (!enable) {
+	        [updatenow setTitle:@"Updating..."];
+	        [self setStatusText:@"Scrobble Status: Scrobbling..."];
+	    }
+	    else{
+	        [updatenow setTitle:@"Update Now"];
+	    }
+	});
 }
 -(void)EnableStatusUpdating:(BOOL)enable{
     [updatecorrect setAutoenablesItems:enable];
