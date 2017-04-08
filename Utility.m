@@ -88,7 +88,7 @@
         [Utility setReminderDate];
     }
     if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"donatereminderdate"] timeIntervalSinceNow] < 0) {
-        if ([[NSUserDefaults standardUserDefaults] objectForKey:@"donated"]){
+        if ([(NSNumber *)[[NSUserDefaults standardUserDefaults] objectForKey:@"donated"] boolValue]){
             int validkey = [Utility checkDonationKey:[[NSUserDefaults standardUserDefaults] objectForKey:@"donatekey"] name:[[NSUserDefaults standardUserDefaults] objectForKey:@"donor"]];
             if (validkey == 1){
                 //Reset check
@@ -148,7 +148,7 @@
         NSURL *url = [NSURL URLWithString:@"https://updates.ateliershiori.moe/keycheck/check.php"];
         EasyNSURLConnection *request = [[EasyNSURLConnection alloc] initWithURL:url];
         [request addFormData:name forKey:@"name"];
-        [request addFormData:key forKey:@"key"];
+        [request addFormData:key forKey:@"donatekey"];
         //Ignore Cookies
         [request setUseCookies:NO];
         //Perform Search
