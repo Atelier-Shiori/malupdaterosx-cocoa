@@ -108,8 +108,8 @@
                     }
                     //Save
                     [moc save:&error];
-                    [moc reset];
                 }
+                [moc reset];s
             });
             // Set the last updated date
             [[NSUserDefaults standardUserDefaults] setValue:[NSDate date] forKey:@"ExceptionsLastUpdated"];
