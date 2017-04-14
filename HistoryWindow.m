@@ -40,23 +40,22 @@
 }
 +(void)addrecord:(NSString *)title
          Episode:(NSString *)episode
-            Date:(NSDate *)date
-{
-    // Add scrobble history record to the SQLite Database via Core Data
-    MAL_Updater_OS_XAppDelegate *appDelegate = (MAL_Updater_OS_XAppDelegate *)[NSApplication sharedApplication].delegate;
-    NSManagedObjectContext *moc = [appDelegate getObjectContext];
-    NSManagedObject *obj = [NSEntityDescription
-                            insertNewObjectForEntityForName :@"History"
-                            inManagedObjectContext: moc];
-    // Set values in the new record
-    [obj setValue:title forKey:@"Title"];
-    [obj setValue:episode forKey:@"Episode"];
-    [obj setValue:date forKey:@"Date"];
-    [moc save:nil];
-    
+            Date:(NSDate *)date {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        // Add scrobble history record to the SQLite Database via Core Data
+        MAL_Updater_OS_XAppDelegate *appDelegate = (MAL_Updater_OS_XAppDelegate *)[NSApplication sharedApplication].delegate;
+        NSManagedObjectContext *moc = [appDelegate getObjectContext];
+        NSManagedObject *obj = [NSEntityDescription
+                                insertNewObjectForEntityForName :@"History"
+                                inManagedObjectContext: moc];
+        // Set values in the new record
+        [obj setValue:title forKey:@"Title"];
+        [obj setValue:episode forKey:@"Episode"];
+        [obj setValue:date forKey:@"Date"];
+        [moc save:nil];
+    });
 }
--(IBAction)clearhistory:(id)sender
-{
+-(IBAction)clearhistory:(id)sender {
     // Set Up Prompt Message Window
     NSAlert * alert = [[NSAlert alloc] init];
     [alert addButtonWithTitle:@"Yes"];

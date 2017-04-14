@@ -77,37 +77,40 @@
             NSError *error = nil;
             NSArray * a = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:&error];
             MAL_Updater_OS_XAppDelegate * delegate = (MAL_Updater_OS_XAppDelegate *)[NSApplication sharedApplication].delegate;
-            NSManagedObjectContext *moc = [delegate getObjectContext];
-            for (NSDictionary *d in a) {
-                NSString * detectedtitle = d[@"detectedtitle"];
-                NSString * group = d[@"group"];
-                NSString * correcttitle = d[@"correcttitle"];
-                bool iszeroepisode = [(NSNumber *)d[@"iszeroepisode"] boolValue];
-                int offset = [(NSNumber *)d[@"offset"] intValue];
-                NSError * error = nil;
-                NSManagedObject *obj = [self checkAutoExceptionsEntry:detectedtitle group:group correcttitle:correcttitle zeroepisode:iszeroepisode offset:offset];
-                if (obj) {
-                    // Update Entry
-                    [obj setValue:d[@"offset"] forKey:@"episodeOffset"];
-                    [obj setValue:d[@"threshold"] forKey:@"episodethreshold"];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                NSManagedObjectContext *moc = [delegate getObjectContext];
+                for (NSDictionary *d in a) {
+                    NSString * detectedtitle = d[@"detectedtitle"];
+                    NSString * group = d[@"group"];
+                    NSString * correcttitle = d[@"correcttitle"];
+                    bool iszeroepisode = [(NSNumber *)d[@"iszeroepisode"] boolValue];
+                    int offset = [(NSNumber *)d[@"offset"] intValue];
+                    NSError * error = nil;
+                    NSManagedObject *obj = [self checkAutoExceptionsEntry:detectedtitle group:group correcttitle:correcttitle zeroepisode:iszeroepisode offset:offset];
+                    if (obj) {
+                        // Update Entry
+                        [obj setValue:d[@"offset"] forKey:@"episodeOffset"];
+                        [obj setValue:d[@"threshold"] forKey:@"episodethreshold"];
+                    }
+                    else{
+                        // Add Entry to Auto Exceptions
+                        obj = [NSEntityDescription
+                               insertNewObjectForEntityForName:@"AutoExceptions"
+                               inManagedObjectContext: moc];
+                        // Set values in the new record
+                        [obj setValue:detectedtitle forKey:@"detectedTitle"];
+                        [obj setValue:correcttitle forKey:@"correctTitle"]; // Use Universal Correct Title
+                        [obj setValue:d[@"offset"] forKey:@"episodeOffset"];
+                        [obj setValue:d[@"threshold"] forKey:@"episodethreshold"];
+                        [obj setValue:group forKey:@"group"];
+                        [obj setValue:[NSNumber numberWithBool:iszeroepisode] forKey:@"iszeroepisode"];
+                        [obj setValue:d[@"mappedepisode"] forKey:@"mappedepisode"];
+                    }
+                    //Save
+                    [moc save:&error];
+                    [moc reset];
                 }
-                else{
-                    // Add Entry to Auto Exceptions
-                    obj = [NSEntityDescription
-                           insertNewObjectForEntityForName:@"AutoExceptions"
-                           inManagedObjectContext: moc];
-                    // Set values in the new record
-                    [obj setValue:detectedtitle forKey:@"detectedTitle"];
-                    [obj setValue:correcttitle forKey:@"correctTitle"]; // Use Universal Correct Title
-                    [obj setValue:d[@"offset"] forKey:@"episodeOffset"];
-                    [obj setValue:d[@"threshold"] forKey:@"episodethreshold"];
-                    [obj setValue:group forKey:@"group"];
-                    [obj setValue:[NSNumber numberWithBool:iszeroepisode] forKey:@"iszeroepisode"];
-                    [obj setValue:d[@"mappedepisode"] forKey:@"mappedepisode"];
-                }
-                //Save
-                [moc save:&error];
-            }
+            });
             // Set the last updated date
             [[NSUserDefaults standardUserDefaults] setValue:[NSDate date] forKey:@"ExceptionsLastUpdated"];
             break;
