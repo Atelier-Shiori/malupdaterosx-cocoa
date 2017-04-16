@@ -143,7 +143,7 @@
                 else {
                     if ([[NSString stringWithFormat:@"%@", searchentry[@"showType"]] isEqualToString:@"TV"]||[[NSString stringWithFormat:@"%@", searchentry[@"showType"]] isEqualToString:@"ONA"]) { // Check Seasons if the title is a TV show type
                         // Used for Season Checking
-                        OnigRegexp   *regex2 = [OnigRegexp compile:[NSString stringWithFormat:@"(%i(st|nd|rd|th) season|\\W%i)", DetectedSeason, DetectedSeason] options:OnigOptionIgnorecase];options:OgreIgnoreCaseOption];
+                        OnigRegexp   *regex2 = [OnigRegexp compile:[NSString stringWithFormat:@"(%i(st|nd|rd|th) season|\\W%i)", DetectedSeason, DetectedSeason] options:OnigOptionIgnorecase];
                         OnigResult * smatch = [regex2 match:[NSString stringWithFormat:@"%@ - %@ - %@", theshowtitle, alttitle, searchentry[@"slug"]]];
                         if (DetectedSeason >= 2) { // Season detected, check to see if there is a matcch. If not, continue.
                             if (!smatch) {
