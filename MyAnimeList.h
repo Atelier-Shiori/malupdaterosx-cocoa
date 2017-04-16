@@ -7,7 +7,8 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import <OgreKit/OgreKit.h>
+#import <CocoaOniguruma/OnigRegexp.h>
+#import <CocoaOniguruma/OnigRegexpUtility.h>
 #import "MAL_Updater_OS_XAppDelegate.h"
 #import "Reachability.h"
 #import <streamlinkdetect/streamlinkdetect.h>

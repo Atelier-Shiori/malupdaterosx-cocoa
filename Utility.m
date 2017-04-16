@@ -12,18 +12,18 @@
 @implementation Utility
 +(bool)checkMatch:(NSString *)title
          alttitle:(NSString *)atitle
-            regex:(OGRegularExpression *)regex
+            regex:(OnigRegexp *)regex
            option:(int)i{
     //Checks for matches
-    if ([regex matchInString:title] || ([regex matchInString:atitle] && [atitle length] >0 && i==0)) {
+    if ([regex match:title] || ([regex match:atitle] && [atitle length] >0 && i==0)) {
         return true;
     }
     return false;
 }
 +(NSString *)desensitizeSeason:(NSString *)title {
     // Get rid of season references
-    OGRegularExpression * regex = [OGRegularExpression regularExpressionWithString: @"(s)\\d" options:OgreIgnoreCaseOption];
-    title = [regex replaceAllMatchesInString:title withString:@""];
+    OnigRegexp * regex = [OnigRegexp compile:@"(s)\\d" options:OnigOptionIgnorecase];
+    title = [title replaceByRegexp:regex with:@""];
     // Remove any Whitespace
     title = [title stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     return title;

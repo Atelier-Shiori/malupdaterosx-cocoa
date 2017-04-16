@@ -7,7 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <OgreKit/OgreKit.h>
+#import <CocoaOniguruma/OnigRegexp.h>
+#import <CocoaOniguruma/OnigRegexpUtility.h>
 #import "NSString_stripHtml.h"
 #import "string_score.h"
 #import "MAL_Updater_OS_XAppDelegate.h"
@@ -15,7 +16,7 @@
 @interface Utility : NSObject
 +(bool)checkMatch:(NSString *)title
          alttitle:(NSString *)atitle
-            regex:(OGRegularExpression *)regex
+            regex:(OnigRegexp *)regex
            option:(int)i;
 +(NSString *)desensitizeSeason:(NSString *)title;
 +(NSString *)seasonInWords:(int)season;
