@@ -30,7 +30,7 @@ All the frameworks are included. Just build! Here are the frameworks that are us
 * MASPreferences.framework
 * MASShortcut.framework
 * Sparkle.framework
-* OgreKit.framework
+* CocoaOniguruma.framework
 * streamlinkdetect.framework
 
 ## License
