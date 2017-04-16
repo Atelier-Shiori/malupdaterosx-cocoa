@@ -22,6 +22,10 @@ Check the [Getting Started Guide](https://github.com/chikorita157/malupdaterosx-
 1. Get the Source
 2. Type 'xcodebuild' to build. The build will be in the build/release folder.
 
+## Building Textual Plugin
+
+See readme.md in the MAL-Updater-OS-XTextualPlugin folder.
+
 ## Dependencies
 All the frameworks are included. Just build! Here are the frameworks that are used in this app:
 

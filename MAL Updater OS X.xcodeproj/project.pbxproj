@@ -81,6 +81,7 @@
 		91206C1F1E75F5AD0050E9C5 /* MASPreferences.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 91206C1C1E75F3F00050E9C5 /* MASPreferences.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		91206C231E75F8920050E9C5 /* MASShortcut.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91206C221E75F8920050E9C5 /* MASShortcut.framework */; };
 		9138142B1E92C448005FEF5E /* LoginItems.m in Sources */ = {isa = PBXBuildFile; fileRef = 9138142A1E92C448005FEF5E /* LoginItems.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		914374A81EA4150700ECC683 /* TPI_MALUpdaterOSX.m in Sources */ = {isa = PBXBuildFile; fileRef = 914374A71EA4150700ECC683 /* TPI_MALUpdaterOSX.m */; };
 		9149EBE21E75F8A700B1AA22 /* MASShortcut.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91206C221E75F8920050E9C5 /* MASShortcut.framework */; };
 		9149EBE31E75F8A700B1AA22 /* MASShortcut.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 91206C221E75F8920050E9C5 /* MASShortcut.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		9161B2011E90246200FBF52F /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9161B1FF1E90246200FBF52F /* Fabric.framework */; };
@@ -223,6 +224,107 @@
 		91206C221E75F8920050E9C5 /* MASShortcut.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MASShortcut.framework; path = Frameworks/MASShortcut.framework; sourceTree = "<group>"; };
 		913814291E92C448005FEF5E /* LoginItems.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginItems.h; sourceTree = "<group>"; };
 		9138142A1E92C448005FEF5E /* LoginItems.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginItems.m; sourceTree = "<group>"; };
+		9143749D1EA4142700ECC683 /* MAL-Updater-OS-XTextualPlugin.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "MAL-Updater-OS-XTextualPlugin.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9143749F1EA4142700ECC683 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		914374A61EA4150700ECC683 /* TPI_MALUpdaterOSX.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPI_MALUpdaterOSX.h; sourceTree = "<group>"; };
+		914374A71EA4150700ECC683 /* TPI_MALUpdaterOSX.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPI_MALUpdaterOSX.m; sourceTree = "<group>"; };
+		914374AA1EA4155A00ECC683 /* GCDAsyncSocket.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GCDAsyncSocket.h; path = ../../../../Applications/Textual.app/Contents/Headers/GCDAsyncSocket.h; sourceTree = "<group>"; };
+		914374AB1EA4155A00ECC683 /* GRMustache.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GRMustache.h; path = ../../../../Applications/Textual.app/Contents/Headers/GRMustache.h; sourceTree = "<group>"; };
+		914374AC1EA4155A00ECC683 /* GRMustacheAvailabilityMacros.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GRMustacheAvailabilityMacros.h; path = ../../../../Applications/Textual.app/Contents/Headers/GRMustacheAvailabilityMacros.h; sourceTree = "<group>"; };
+		914374AD1EA4155A00ECC683 /* GRMustacheConfiguration.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GRMustacheConfiguration.h; path = ../../../../Applications/Textual.app/Contents/Headers/GRMustacheConfiguration.h; sourceTree = "<group>"; };
+		914374AE1EA4155A00ECC683 /* GRMustacheContentType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GRMustacheContentType.h; path = ../../../../Applications/Textual.app/Contents/Headers/GRMustacheContentType.h; sourceTree = "<group>"; };
+		914374AF1EA4155A00ECC683 /* GRMustacheContext.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GRMustacheContext.h; path = ../../../../Applications/Textual.app/Contents/Headers/GRMustacheContext.h; sourceTree = "<group>"; };
+		914374B01EA4155A00ECC683 /* GRMustacheError.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GRMustacheError.h; path = ../../../../Applications/Textual.app/Contents/Headers/GRMustacheError.h; sourceTree = "<group>"; };
+		914374B11EA4155A00ECC683 /* GRMustacheFilter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GRMustacheFilter.h; path = ../../../../Applications/Textual.app/Contents/Headers/GRMustacheFilter.h; sourceTree = "<group>"; };
+		914374B21EA4155A00ECC683 /* GRMustacheLocalizer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GRMustacheLocalizer.h; path = ../../../../Applications/Textual.app/Contents/Headers/GRMustacheLocalizer.h; sourceTree = "<group>"; };
+		914374B31EA4155A00ECC683 /* GRMustacheRendering.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GRMustacheRendering.h; path = ../../../../Applications/Textual.app/Contents/Headers/GRMustacheRendering.h; sourceTree = "<group>"; };
+		914374B41EA4155A00ECC683 /* GRMustacheSafeKeyAccess.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GRMustacheSafeKeyAccess.h; path = ../../../../Applications/Textual.app/Contents/Headers/GRMustacheSafeKeyAccess.h; sourceTree = "<group>"; };
+		914374B51EA4155A00ECC683 /* GRMustacheTag.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GRMustacheTag.h; path = ../../../../Applications/Textual.app/Contents/Headers/GRMustacheTag.h; sourceTree = "<group>"; };
+		914374B61EA4155A00ECC683 /* GRMustacheTagDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GRMustacheTagDelegate.h; path = ../../../../Applications/Textual.app/Contents/Headers/GRMustacheTagDelegate.h; sourceTree = "<group>"; };
+		914374B71EA4155A00ECC683 /* GRMustacheTemplate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GRMustacheTemplate.h; path = ../../../../Applications/Textual.app/Contents/Headers/GRMustacheTemplate.h; sourceTree = "<group>"; };
+		914374B81EA4155A00ECC683 /* GRMustacheTemplateRepository.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GRMustacheTemplateRepository.h; path = ../../../../Applications/Textual.app/Contents/Headers/GRMustacheTemplateRepository.h; sourceTree = "<group>"; };
+		914374B91EA4155A00ECC683 /* GRMustacheVersion.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GRMustacheVersion.h; path = ../../../../Applications/Textual.app/Contents/Headers/GRMustacheVersion.h; sourceTree = "<group>"; };
+		914374BA1EA4155A00ECC683 /* GTMEncodeHTML.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GTMEncodeHTML.h; path = ../../../../Applications/Textual.app/Contents/Headers/GTMEncodeHTML.h; sourceTree = "<group>"; };
+		914374BB1EA4155A00ECC683 /* IRC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = IRC.h; path = ../../../../Applications/Textual.app/Contents/Headers/IRC.h; sourceTree = "<group>"; };
+		914374BC1EA4155A00ECC683 /* IRCAddressBook.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = IRCAddressBook.h; path = ../../../../Applications/Textual.app/Contents/Headers/IRCAddressBook.h; sourceTree = "<group>"; };
+		914374BD1EA4155A00ECC683 /* IRCAddressBookUserTracking.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = IRCAddressBookUserTracking.h; path = ../../../../Applications/Textual.app/Contents/Headers/IRCAddressBookUserTracking.h; sourceTree = "<group>"; };
+		914374BE1EA4155A00ECC683 /* IRCChannel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = IRCChannel.h; path = ../../../../Applications/Textual.app/Contents/Headers/IRCChannel.h; sourceTree = "<group>"; };
+		914374BF1EA4155A00ECC683 /* IRCChannelConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = IRCChannelConfig.h; path = ../../../../Applications/Textual.app/Contents/Headers/IRCChannelConfig.h; sourceTree = "<group>"; };
+		914374C01EA4155A00ECC683 /* IRCChannelMode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = IRCChannelMode.h; path = ../../../../Applications/Textual.app/Contents/Headers/IRCChannelMode.h; sourceTree = "<group>"; };
+		914374C11EA4155A00ECC683 /* IRCChannelUser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = IRCChannelUser.h; path = ../../../../Applications/Textual.app/Contents/Headers/IRCChannelUser.h; sourceTree = "<group>"; };
+		914374C21EA4155A00ECC683 /* IRCClient.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = IRCClient.h; path = ../../../../Applications/Textual.app/Contents/Headers/IRCClient.h; sourceTree = "<group>"; };
+		914374C31EA4155A00ECC683 /* IRCClientConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = IRCClientConfig.h; path = ../../../../Applications/Textual.app/Contents/Headers/IRCClientConfig.h; sourceTree = "<group>"; };
+		914374C41EA4155A00ECC683 /* IRCColorFormat.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = IRCColorFormat.h; path = ../../../../Applications/Textual.app/Contents/Headers/IRCColorFormat.h; sourceTree = "<group>"; };
+		914374C51EA4155A00ECC683 /* IRCCommandIndex.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = IRCCommandIndex.h; path = ../../../../Applications/Textual.app/Contents/Headers/IRCCommandIndex.h; sourceTree = "<group>"; };
+		914374C61EA4155A00ECC683 /* IRCConnection.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = IRCConnection.h; path = ../../../../Applications/Textual.app/Contents/Headers/IRCConnection.h; sourceTree = "<group>"; };
+		914374C71EA4155A00ECC683 /* IRCConnectionConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = IRCConnectionConfig.h; path = ../../../../Applications/Textual.app/Contents/Headers/IRCConnectionConfig.h; sourceTree = "<group>"; };
+		914374C81EA4155A00ECC683 /* IRCHighlightLogEntry.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = IRCHighlightLogEntry.h; path = ../../../../Applications/Textual.app/Contents/Headers/IRCHighlightLogEntry.h; sourceTree = "<group>"; };
+		914374C91EA4155A00ECC683 /* IRCHighlightMatchCondition.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = IRCHighlightMatchCondition.h; path = ../../../../Applications/Textual.app/Contents/Headers/IRCHighlightMatchCondition.h; sourceTree = "<group>"; };
+		914374CA1EA4155A00ECC683 /* IRCISupportInfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = IRCISupportInfo.h; path = ../../../../Applications/Textual.app/Contents/Headers/IRCISupportInfo.h; sourceTree = "<group>"; };
+		914374CB1EA4155A00ECC683 /* IRCMessage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = IRCMessage.h; path = ../../../../Applications/Textual.app/Contents/Headers/IRCMessage.h; sourceTree = "<group>"; };
+		914374CC1EA4155A00ECC683 /* IRCModeInfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = IRCModeInfo.h; path = ../../../../Applications/Textual.app/Contents/Headers/IRCModeInfo.h; sourceTree = "<group>"; };
+		914374CD1EA4155A00ECC683 /* IRCNetworkList.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = IRCNetworkList.h; path = ../../../../Applications/Textual.app/Contents/Headers/IRCNetworkList.h; sourceTree = "<group>"; };
+		914374CE1EA4155A00ECC683 /* IRCPrefix.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = IRCPrefix.h; path = ../../../../Applications/Textual.app/Contents/Headers/IRCPrefix.h; sourceTree = "<group>"; };
+		914374CF1EA4155B00ECC683 /* IRCSendingMessage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = IRCSendingMessage.h; path = ../../../../Applications/Textual.app/Contents/Headers/IRCSendingMessage.h; sourceTree = "<group>"; };
+		914374D01EA4155B00ECC683 /* IRCTreeItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = IRCTreeItem.h; path = ../../../../Applications/Textual.app/Contents/Headers/IRCTreeItem.h; sourceTree = "<group>"; };
+		914374D11EA4155B00ECC683 /* IRCUser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = IRCUser.h; path = ../../../../Applications/Textual.app/Contents/Headers/IRCUser.h; sourceTree = "<group>"; };
+		914374D21EA4155B00ECC683 /* IRCUserRelations.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = IRCUserRelations.h; path = ../../../../Applications/Textual.app/Contents/Headers/IRCUserRelations.h; sourceTree = "<group>"; };
+		914374D31EA4155B00ECC683 /* IRCWorld.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = IRCWorld.h; path = ../../../../Applications/Textual.app/Contents/Headers/IRCWorld.h; sourceTree = "<group>"; };
+		914374D41EA4155B00ECC683 /* NSColorHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = NSColorHelper.h; path = ../../../../Applications/Textual.app/Contents/Headers/NSColorHelper.h; sourceTree = "<group>"; };
+		914374D51EA4155B00ECC683 /* NSStringHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = NSStringHelper.h; path = ../../../../Applications/Textual.app/Contents/Headers/NSStringHelper.h; sourceTree = "<group>"; };
+		914374D61EA4155B00ECC683 /* NSViewHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = NSViewHelper.h; path = ../../../../Applications/Textual.app/Contents/Headers/NSViewHelper.h; sourceTree = "<group>"; };
+		914374D71EA4155B00ECC683 /* OELReachability.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OELReachability.h; path = ../../../../Applications/Textual.app/Contents/Headers/OELReachability.h; sourceTree = "<group>"; };
+		914374D81EA4155B00ECC683 /* StaticDefinitions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = StaticDefinitions.h; path = ../../../../Applications/Textual.app/Contents/Headers/StaticDefinitions.h; sourceTree = "<group>"; };
+		914374D91EA4155B00ECC683 /* TDCSheetBase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TDCSheetBase.h; path = ../../../../Applications/Textual.app/Contents/Headers/TDCSheetBase.h; sourceTree = "<group>"; };
+		914374DA1EA4155B00ECC683 /* TDCWindowBase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TDCWindowBase.h; path = ../../../../Applications/Textual.app/Contents/Headers/TDCWindowBase.h; sourceTree = "<group>"; };
+		914374DB1EA4155B00ECC683 /* TextualApplication.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TextualApplication.h; path = ../../../../Applications/Textual.app/Contents/Headers/TextualApplication.h; sourceTree = "<group>"; };
+		914374DC1EA4155B00ECC683 /* THOPluginProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = THOPluginProtocol.h; path = ../../../../Applications/Textual.app/Contents/Headers/THOPluginProtocol.h; sourceTree = "<group>"; };
+		914374DD1EA4155B00ECC683 /* THOUnicodeHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = THOUnicodeHelper.h; path = ../../../../Applications/Textual.app/Contents/Headers/THOUnicodeHelper.h; sourceTree = "<group>"; };
+		914374DE1EA4155B00ECC683 /* TLOEncryptionManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TLOEncryptionManager.h; path = ../../../../Applications/Textual.app/Contents/Headers/TLOEncryptionManager.h; sourceTree = "<group>"; };
+		914374DF1EA4155B00ECC683 /* TLOGrowlController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TLOGrowlController.h; path = ../../../../Applications/Textual.app/Contents/Headers/TLOGrowlController.h; sourceTree = "<group>"; };
+		914374E01EA4155B00ECC683 /* TLOInternetAddressLookup.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TLOInternetAddressLookup.h; path = ../../../../Applications/Textual.app/Contents/Headers/TLOInternetAddressLookup.h; sourceTree = "<group>"; };
+		914374E11EA4155B00ECC683 /* TLOKeyEventHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TLOKeyEventHandler.h; path = ../../../../Applications/Textual.app/Contents/Headers/TLOKeyEventHandler.h; sourceTree = "<group>"; };
+		914374E21EA4155B00ECC683 /* TLOLanguagePreferences.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TLOLanguagePreferences.h; path = ../../../../Applications/Textual.app/Contents/Headers/TLOLanguagePreferences.h; sourceTree = "<group>"; };
+		914374E31EA4155B00ECC683 /* TLOLinkParser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TLOLinkParser.h; path = ../../../../Applications/Textual.app/Contents/Headers/TLOLinkParser.h; sourceTree = "<group>"; };
+		914374E41EA4155B00ECC683 /* TLOpenLink.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TLOpenLink.h; path = ../../../../Applications/Textual.app/Contents/Headers/TLOpenLink.h; sourceTree = "<group>"; };
+		914374E51EA4155B00ECC683 /* TLOPopupPrompts.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TLOPopupPrompts.h; path = ../../../../Applications/Textual.app/Contents/Headers/TLOPopupPrompts.h; sourceTree = "<group>"; };
+		914374E61EA4155B00ECC683 /* TLOSoundPlayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TLOSoundPlayer.h; path = ../../../../Applications/Textual.app/Contents/Headers/TLOSoundPlayer.h; sourceTree = "<group>"; };
+		914374E71EA4155B00ECC683 /* TLOTimer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TLOTimer.h; path = ../../../../Applications/Textual.app/Contents/Headers/TLOTimer.h; sourceTree = "<group>"; };
+		914374E81EA4155B00ECC683 /* TPCApplicationInfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TPCApplicationInfo.h; path = ../../../../Applications/Textual.app/Contents/Headers/TPCApplicationInfo.h; sourceTree = "<group>"; };
+		914374E91EA4155B00ECC683 /* TPCPathInfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TPCPathInfo.h; path = ../../../../Applications/Textual.app/Contents/Headers/TPCPathInfo.h; sourceTree = "<group>"; };
+		914374EA1EA4155B00ECC683 /* TPCPreferences.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TPCPreferences.h; path = ../../../../Applications/Textual.app/Contents/Headers/TPCPreferences.h; sourceTree = "<group>"; };
+		914374EB1EA4155B00ECC683 /* TPCPreferencesImportExport.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TPCPreferencesImportExport.h; path = ../../../../Applications/Textual.app/Contents/Headers/TPCPreferencesImportExport.h; sourceTree = "<group>"; };
+		914374EC1EA4155B00ECC683 /* TPCPreferencesReload.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TPCPreferencesReload.h; path = ../../../../Applications/Textual.app/Contents/Headers/TPCPreferencesReload.h; sourceTree = "<group>"; };
+		914374ED1EA4155B00ECC683 /* TPCPreferencesUserDefaults.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TPCPreferencesUserDefaults.h; path = ../../../../Applications/Textual.app/Contents/Headers/TPCPreferencesUserDefaults.h; sourceTree = "<group>"; };
+		914374EE1EA4155B00ECC683 /* TPCPreferencesUserDefaultsMigrate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TPCPreferencesUserDefaultsMigrate.h; path = ../../../../Applications/Textual.app/Contents/Headers/TPCPreferencesUserDefaultsMigrate.h; sourceTree = "<group>"; };
+		914374EF1EA4155B00ECC683 /* TPCResourceManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TPCResourceManager.h; path = ../../../../Applications/Textual.app/Contents/Headers/TPCResourceManager.h; sourceTree = "<group>"; };
+		914374F01EA4155B00ECC683 /* TPCThemeController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TPCThemeController.h; path = ../../../../Applications/Textual.app/Contents/Headers/TPCThemeController.h; sourceTree = "<group>"; };
+		914374F11EA4155B00ECC683 /* TPCThemeSettings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TPCThemeSettings.h; path = ../../../../Applications/Textual.app/Contents/Headers/TPCThemeSettings.h; sourceTree = "<group>"; };
+		914374F21EA4155B00ECC683 /* TVCAutoExpandingTextField.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TVCAutoExpandingTextField.h; path = ../../../../Applications/Textual.app/Contents/Headers/TVCAutoExpandingTextField.h; sourceTree = "<group>"; };
+		914374F31EA4155B00ECC683 /* TVCAutoExpandingTokenField.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TVCAutoExpandingTokenField.h; path = ../../../../Applications/Textual.app/Contents/Headers/TVCAutoExpandingTokenField.h; sourceTree = "<group>"; };
+		914374F41EA4155B00ECC683 /* TVCBasicTableView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TVCBasicTableView.h; path = ../../../../Applications/Textual.app/Contents/Headers/TVCBasicTableView.h; sourceTree = "<group>"; };
+		914374F51EA4155B00ECC683 /* TVCChannelSelectionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TVCChannelSelectionViewController.h; path = ../../../../Applications/Textual.app/Contents/Headers/TVCChannelSelectionViewController.h; sourceTree = "<group>"; };
+		914374F61EA4155B00ECC683 /* TVCComboBoxWithValueValidation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TVCComboBoxWithValueValidation.h; path = ../../../../Applications/Textual.app/Contents/Headers/TVCComboBoxWithValueValidation.h; sourceTree = "<group>"; };
+		914374F71EA4155B00ECC683 /* TVCImageURLParser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TVCImageURLParser.h; path = ../../../../Applications/Textual.app/Contents/Headers/TVCImageURLParser.h; sourceTree = "<group>"; };
+		914374F81EA4155B00ECC683 /* TVCInputPromptDialog.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TVCInputPromptDialog.h; path = ../../../../Applications/Textual.app/Contents/Headers/TVCInputPromptDialog.h; sourceTree = "<group>"; };
+		914374F91EA4155B00ECC683 /* TVCLogController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TVCLogController.h; path = ../../../../Applications/Textual.app/Contents/Headers/TVCLogController.h; sourceTree = "<group>"; };
+		914374FA1EA4155B00ECC683 /* TVCLogLine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TVCLogLine.h; path = ../../../../Applications/Textual.app/Contents/Headers/TVCLogLine.h; sourceTree = "<group>"; };
+		914374FB1EA4155B00ECC683 /* TVCLogRenderer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TVCLogRenderer.h; path = ../../../../Applications/Textual.app/Contents/Headers/TVCLogRenderer.h; sourceTree = "<group>"; };
+		914374FC1EA4155B00ECC683 /* TVCLogView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TVCLogView.h; path = ../../../../Applications/Textual.app/Contents/Headers/TVCLogView.h; sourceTree = "<group>"; };
+		914374FD1EA4155B00ECC683 /* TVCMainWindow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TVCMainWindow.h; path = ../../../../Applications/Textual.app/Contents/Headers/TVCMainWindow.h; sourceTree = "<group>"; };
+		914374FE1EA4155B00ECC683 /* TVCMainWindowLoadingScreen.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TVCMainWindowLoadingScreen.h; path = ../../../../Applications/Textual.app/Contents/Headers/TVCMainWindowLoadingScreen.h; sourceTree = "<group>"; };
+		914374FF1EA4155B00ECC683 /* TVCMainWindowSplitView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TVCMainWindowSplitView.h; path = ../../../../Applications/Textual.app/Contents/Headers/TVCMainWindowSplitView.h; sourceTree = "<group>"; };
+		914375001EA4155B00ECC683 /* TVCMainWindowTextView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TVCMainWindowTextView.h; path = ../../../../Applications/Textual.app/Contents/Headers/TVCMainWindowTextView.h; sourceTree = "<group>"; };
+		914375011EA4155B00ECC683 /* TVCMemberList.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TVCMemberList.h; path = ../../../../Applications/Textual.app/Contents/Headers/TVCMemberList.h; sourceTree = "<group>"; };
+		914375021EA4155B00ECC683 /* TVCServerList.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TVCServerList.h; path = ../../../../Applications/Textual.app/Contents/Headers/TVCServerList.h; sourceTree = "<group>"; };
+		914375031EA4155B00ECC683 /* TVCTextFieldWithValueValidation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TVCTextFieldWithValueValidation.h; path = ../../../../Applications/Textual.app/Contents/Headers/TVCTextFieldWithValueValidation.h; sourceTree = "<group>"; };
+		914375041EA4155B00ECC683 /* TVCTextViewWithIRCFormatter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TVCTextViewWithIRCFormatter.h; path = ../../../../Applications/Textual.app/Contents/Headers/TVCTextViewWithIRCFormatter.h; sourceTree = "<group>"; };
+		914375051EA4155B00ECC683 /* TXGlobalModels.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TXGlobalModels.h; path = ../../../../Applications/Textual.app/Contents/Headers/TXGlobalModels.h; sourceTree = "<group>"; };
+		914375061EA4155B00ECC683 /* TXMasterController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TXMasterController.h; path = ../../../../Applications/Textual.app/Contents/Headers/TXMasterController.h; sourceTree = "<group>"; };
+		914375071EA4155B00ECC683 /* TXMenuController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TXMenuController.h; path = ../../../../Applications/Textual.app/Contents/Headers/TXMenuController.h; sourceTree = "<group>"; };
+		914375081EA4155B00ECC683 /* TXSharedApplication.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TXSharedApplication.h; path = ../../../../Applications/Textual.app/Contents/Headers/TXSharedApplication.h; sourceTree = "<group>"; };
+		914375091EA4155B00ECC683 /* TXUserInterface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TXUserInterface.h; path = ../../../../Applications/Textual.app/Contents/Headers/TXUserInterface.h; sourceTree = "<group>"; };
+		914375121EA41BBB00ECC683 /* ScriptingBridge.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ScriptingBridge.framework; path = System/Library/Frameworks/ScriptingBridge.framework; sourceTree = SDKROOT; };
 		9161B1FF1E90246200FBF52F /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Fabric.framework; path = Frameworks/Fabric.framework; sourceTree = "<group>"; };
 		9161B2001E90246200FBF52F /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Crashlytics.framework; path = Frameworks/Crashlytics.framework; sourceTree = "<group>"; };
 		91A609F21EA3E77400EF40AB /* CocoaOniguruma.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CocoaOniguruma.framework; path = Frameworks/CocoaOniguruma.framework; sourceTree = "<group>"; };
@@ -254,6 +356,13 @@
 				3A2DCCBE1210B3D900C920F1 /* Security.framework in Frameworks */,
 				9161B2011E90246200FBF52F /* Fabric.framework in Frameworks */,
 				5C2B9DFC1221EB25006DEF0D /* CoreData.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9143749A1EA4142700ECC683 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -319,6 +428,7 @@
 			isa = PBXGroup;
 			children = (
 				8D1107320486CEB800E47090 /* MAL Updater OS X.app */,
+				9143749D1EA4142700ECC683 /* MAL-Updater-OS-XTextualPlugin.bundle */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -329,6 +439,7 @@
 				080E96DDFE201D6D7F000001 /* Classes */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
+				9143749E1EA4142700ECC683 /* MAL-Updater-OS-XTextualPlugin */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
 			);
@@ -373,6 +484,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				914375121EA41BBB00ECC683 /* ScriptingBridge.framework */,
 				6F28DC1A1A67092F00AF063F /* Carbon.framework */,
 				1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */,
 				1058C7A2FEA54F0111CA2CBB /* Other Frameworks */,
@@ -533,6 +645,120 @@
 			name = DetectStream;
 			sourceTree = "<group>";
 		};
+		9143749E1EA4142700ECC683 /* MAL-Updater-OS-XTextualPlugin */ = {
+			isa = PBXGroup;
+			children = (
+				914374A91EA4154E00ECC683 /* Headers */,
+				914374A61EA4150700ECC683 /* TPI_MALUpdaterOSX.h */,
+				914374A71EA4150700ECC683 /* TPI_MALUpdaterOSX.m */,
+				9143749F1EA4142700ECC683 /* Info.plist */,
+			);
+			path = "MAL-Updater-OS-XTextualPlugin";
+			sourceTree = "<group>";
+		};
+		914374A91EA4154E00ECC683 /* Headers */ = {
+			isa = PBXGroup;
+			children = (
+				914374AA1EA4155A00ECC683 /* GCDAsyncSocket.h */,
+				914374AB1EA4155A00ECC683 /* GRMustache.h */,
+				914374AC1EA4155A00ECC683 /* GRMustacheAvailabilityMacros.h */,
+				914374AD1EA4155A00ECC683 /* GRMustacheConfiguration.h */,
+				914374AE1EA4155A00ECC683 /* GRMustacheContentType.h */,
+				914374AF1EA4155A00ECC683 /* GRMustacheContext.h */,
+				914374B01EA4155A00ECC683 /* GRMustacheError.h */,
+				914374B11EA4155A00ECC683 /* GRMustacheFilter.h */,
+				914374B21EA4155A00ECC683 /* GRMustacheLocalizer.h */,
+				914374B31EA4155A00ECC683 /* GRMustacheRendering.h */,
+				914374B41EA4155A00ECC683 /* GRMustacheSafeKeyAccess.h */,
+				914374B51EA4155A00ECC683 /* GRMustacheTag.h */,
+				914374B61EA4155A00ECC683 /* GRMustacheTagDelegate.h */,
+				914374B71EA4155A00ECC683 /* GRMustacheTemplate.h */,
+				914374B81EA4155A00ECC683 /* GRMustacheTemplateRepository.h */,
+				914374B91EA4155A00ECC683 /* GRMustacheVersion.h */,
+				914374BA1EA4155A00ECC683 /* GTMEncodeHTML.h */,
+				914374BB1EA4155A00ECC683 /* IRC.h */,
+				914374BC1EA4155A00ECC683 /* IRCAddressBook.h */,
+				914374BD1EA4155A00ECC683 /* IRCAddressBookUserTracking.h */,
+				914374BE1EA4155A00ECC683 /* IRCChannel.h */,
+				914374BF1EA4155A00ECC683 /* IRCChannelConfig.h */,
+				914374C01EA4155A00ECC683 /* IRCChannelMode.h */,
+				914374C11EA4155A00ECC683 /* IRCChannelUser.h */,
+				914374C21EA4155A00ECC683 /* IRCClient.h */,
+				914374C31EA4155A00ECC683 /* IRCClientConfig.h */,
+				914374C41EA4155A00ECC683 /* IRCColorFormat.h */,
+				914374C51EA4155A00ECC683 /* IRCCommandIndex.h */,
+				914374C61EA4155A00ECC683 /* IRCConnection.h */,
+				914374C71EA4155A00ECC683 /* IRCConnectionConfig.h */,
+				914374C81EA4155A00ECC683 /* IRCHighlightLogEntry.h */,
+				914374C91EA4155A00ECC683 /* IRCHighlightMatchCondition.h */,
+				914374CA1EA4155A00ECC683 /* IRCISupportInfo.h */,
+				914374CB1EA4155A00ECC683 /* IRCMessage.h */,
+				914374CC1EA4155A00ECC683 /* IRCModeInfo.h */,
+				914374CD1EA4155A00ECC683 /* IRCNetworkList.h */,
+				914374CE1EA4155A00ECC683 /* IRCPrefix.h */,
+				914374CF1EA4155B00ECC683 /* IRCSendingMessage.h */,
+				914374D01EA4155B00ECC683 /* IRCTreeItem.h */,
+				914374D11EA4155B00ECC683 /* IRCUser.h */,
+				914374D21EA4155B00ECC683 /* IRCUserRelations.h */,
+				914374D31EA4155B00ECC683 /* IRCWorld.h */,
+				914374D41EA4155B00ECC683 /* NSColorHelper.h */,
+				914374D51EA4155B00ECC683 /* NSStringHelper.h */,
+				914374D61EA4155B00ECC683 /* NSViewHelper.h */,
+				914374D71EA4155B00ECC683 /* OELReachability.h */,
+				914374D81EA4155B00ECC683 /* StaticDefinitions.h */,
+				914374D91EA4155B00ECC683 /* TDCSheetBase.h */,
+				914374DA1EA4155B00ECC683 /* TDCWindowBase.h */,
+				914374DB1EA4155B00ECC683 /* TextualApplication.h */,
+				914374DC1EA4155B00ECC683 /* THOPluginProtocol.h */,
+				914374DD1EA4155B00ECC683 /* THOUnicodeHelper.h */,
+				914374DE1EA4155B00ECC683 /* TLOEncryptionManager.h */,
+				914374DF1EA4155B00ECC683 /* TLOGrowlController.h */,
+				914374E01EA4155B00ECC683 /* TLOInternetAddressLookup.h */,
+				914374E11EA4155B00ECC683 /* TLOKeyEventHandler.h */,
+				914374E21EA4155B00ECC683 /* TLOLanguagePreferences.h */,
+				914374E31EA4155B00ECC683 /* TLOLinkParser.h */,
+				914374E41EA4155B00ECC683 /* TLOpenLink.h */,
+				914374E51EA4155B00ECC683 /* TLOPopupPrompts.h */,
+				914374E61EA4155B00ECC683 /* TLOSoundPlayer.h */,
+				914374E71EA4155B00ECC683 /* TLOTimer.h */,
+				914374E81EA4155B00ECC683 /* TPCApplicationInfo.h */,
+				914374E91EA4155B00ECC683 /* TPCPathInfo.h */,
+				914374EA1EA4155B00ECC683 /* TPCPreferences.h */,
+				914374EB1EA4155B00ECC683 /* TPCPreferencesImportExport.h */,
+				914374EC1EA4155B00ECC683 /* TPCPreferencesReload.h */,
+				914374ED1EA4155B00ECC683 /* TPCPreferencesUserDefaults.h */,
+				914374EE1EA4155B00ECC683 /* TPCPreferencesUserDefaultsMigrate.h */,
+				914374EF1EA4155B00ECC683 /* TPCResourceManager.h */,
+				914374F01EA4155B00ECC683 /* TPCThemeController.h */,
+				914374F11EA4155B00ECC683 /* TPCThemeSettings.h */,
+				914374F21EA4155B00ECC683 /* TVCAutoExpandingTextField.h */,
+				914374F31EA4155B00ECC683 /* TVCAutoExpandingTokenField.h */,
+				914374F41EA4155B00ECC683 /* TVCBasicTableView.h */,
+				914374F51EA4155B00ECC683 /* TVCChannelSelectionViewController.h */,
+				914374F61EA4155B00ECC683 /* TVCComboBoxWithValueValidation.h */,
+				914374F71EA4155B00ECC683 /* TVCImageURLParser.h */,
+				914374F81EA4155B00ECC683 /* TVCInputPromptDialog.h */,
+				914374F91EA4155B00ECC683 /* TVCLogController.h */,
+				914374FA1EA4155B00ECC683 /* TVCLogLine.h */,
+				914374FB1EA4155B00ECC683 /* TVCLogRenderer.h */,
+				914374FC1EA4155B00ECC683 /* TVCLogView.h */,
+				914374FD1EA4155B00ECC683 /* TVCMainWindow.h */,
+				914374FE1EA4155B00ECC683 /* TVCMainWindowLoadingScreen.h */,
+				914374FF1EA4155B00ECC683 /* TVCMainWindowSplitView.h */,
+				914375001EA4155B00ECC683 /* TVCMainWindowTextView.h */,
+				914375011EA4155B00ECC683 /* TVCMemberList.h */,
+				914375021EA4155B00ECC683 /* TVCServerList.h */,
+				914375031EA4155B00ECC683 /* TVCTextFieldWithValueValidation.h */,
+				914375041EA4155B00ECC683 /* TVCTextViewWithIRCFormatter.h */,
+				914375051EA4155B00ECC683 /* TXGlobalModels.h */,
+				914375061EA4155B00ECC683 /* TXMasterController.h */,
+				914375071EA4155B00ECC683 /* TXMenuController.h */,
+				914375081EA4155B00ECC683 /* TXSharedApplication.h */,
+				914375091EA4155B00ECC683 /* TXUserInterface.h */,
+			);
+			name = Headers;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -557,6 +783,23 @@
 			productReference = 8D1107320486CEB800E47090 /* MAL Updater OS X.app */;
 			productType = "com.apple.product-type.application";
 		};
+		9143749C1EA4142700ECC683 /* MAL-Updater-OS-XTextualPlugin */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 914374A21EA4142700ECC683 /* Build configuration list for PBXNativeTarget "MAL-Updater-OS-XTextualPlugin" */;
+			buildPhases = (
+				914374991EA4142700ECC683 /* Sources */,
+				9143749A1EA4142700ECC683 /* Frameworks */,
+				9143749B1EA4142700ECC683 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "MAL-Updater-OS-XTextualPlugin";
+			productName = "MAL-Updater-OS-XTextualPlugin";
+			productReference = 9143749D1EA4142700ECC683 /* MAL-Updater-OS-XTextualPlugin.bundle */;
+			productType = "com.apple.product-type.bundle";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -572,6 +815,11 @@
 								enabled = 0;
 							};
 						};
+					};
+					9143749C1EA4142700ECC683 = {
+						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = 9HDZTER525;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -591,6 +839,7 @@
 			projectRoot = "";
 			targets = (
 				8D1107260486CEB800E47090 /* MAL Updater OS X */,
+				9143749C1EA4142700ECC683 /* MAL-Updater-OS-XTextualPlugin */,
 			);
 		};
 /* End PBXProject section */
@@ -619,6 +868,13 @@
 				5CBE9FEC19F2F9CA00CA3E5D /* LoginView.xib in Resources */,
 				82B9559819FD553500A032FB /* detectstream in Resources */,
 				5C97491D19F3117D000EC02E /* SoftwareUpdateView.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9143749B1EA4142700ECC683 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -695,6 +951,14 @@
 				5CBE9EC319F2F0E300CA3E5D /* LoginPref.m in Sources */,
 				6F28DC041A67082400AF063F /* HotkeysPrefs.m in Sources */,
 				5C000E4419F30EA50026F350 /* SoftwareUpdatesPref.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		914374991EA4142700ECC683 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				914374A81EA4150700ECC683 /* TPI_MALUpdaterOSX.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -808,6 +1072,112 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		914374A01EA4142700ECC683 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				BUNDLE_LOADER = /Applications/Textual.app/Contents/MacOS/Textual;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 9HDZTER525;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				FRAMEWORK_SEARCH_PATHS = "\"/Applications/Textual.app/Contents/Frameworks/**\"";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				HEADER_SEARCH_PATHS = (
+					"\"${SDKROOT}/usr/include/libxml2\"/**",
+					"\"/Applications/Textual.app/Contents/Headers/**\"/**",
+				);
+				INFOPLIST_FILE = "MAL-Updater-OS-XTextualPlugin/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "moe.ateliershiori.MAL-Updater-OS-XTextualPlugin";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = Debug;
+		};
+		914374A11EA4142700ECC683 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				BUNDLE_LOADER = /Applications/Textual.app/Contents/MacOS/Textual;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				COMBINE_HIDPI_IMAGES = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 9HDZTER525;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = "\"/Applications/Textual.app/Contents/Frameworks/**\"";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				HEADER_SEARCH_PATHS = (
+					"\"${SDKROOT}/usr/include/libxml2\"/**",
+					"\"/Applications/Textual.app/Contents/Headers/**\"/**",
+				);
+				INFOPLIST_FILE = "MAL-Updater-OS-XTextualPlugin/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = "moe.ateliershiori.MAL-Updater-OS-XTextualPlugin";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = Release;
+		};
 		C01FCF4B08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -924,6 +1294,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		914374A21EA4142700ECC683 /* Build configuration list for PBXNativeTarget "MAL-Updater-OS-XTextualPlugin" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				914374A01EA4142700ECC683 /* Debug */,
+				914374A11EA4142700ECC683 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "MAL Updater OS X" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

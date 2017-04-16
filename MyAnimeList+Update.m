@@ -19,7 +19,7 @@
     //Ignore Cookies
     [request setUseCookies:NO];
     //Set Token
-            [request addHeader:[NSString stringWithFormat:@"Basic %@",[self getBase64]]  forKey:@"Authorization"];
+    [request addHeader:[NSString stringWithFormat:@"Basic %@",[self getBase64]]  forKey:@"Authorization"];
     //Perform Search
     [request startRequest];
     // Get Status Code
