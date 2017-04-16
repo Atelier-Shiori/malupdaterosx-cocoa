@@ -1,5 +1,6 @@
 # MAL Updater OS X Textual Plugin
-This plugin allows you to share what show you have scrobbled into [Textual IRC Client](https://www.codeux.com/textual/).
+![screenshot](http://i.imgur.com/BOajYrI.png)
+This plugin allows you to share what show you have scrobbled in [Textual IRC Client](https://www.codeux.com/textual/).
 
 There is no customization options yet, but that will be coming soon in a future release.
 
