@@ -51,7 +51,7 @@
             LastScrobbledTitleNew = false;
             WatchStatus = animeinfo[@"watched_status"];
             DetectedCurrentEpisode = [(NSNumber *)animeinfo[@"watched_episodes"] intValue];
-            if (animeinfo[@"score"] == [NSNull null]){
+            if (animeinfo[@"score"] == [NSNull null]) {
                 // Score is null, set to 0
                 TitleScore = 0;
             }
@@ -64,7 +64,7 @@
             // Manually confirm updates
             confirmed = false;
         }
-        else{
+        else {
             // Automatically confirm updates
             confirmed = true;
         }
@@ -72,7 +72,7 @@
         // Makes sure the values don't get released
         return YES;
     }
-    else if (error !=nil){
+    else if (error !=nil) {
         if (error.code == NSURLErrorNotConnectedToInternet) {
             online = false;
             return NO;

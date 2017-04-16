@@ -113,7 +113,7 @@
 	// Check for errors
     NSError * error = [request getError];
     dispatch_async(dispatch_get_main_queue(), ^{
-        if ([request getStatusCode] == 200 && error == nil) {
+        if ([request getStatusCode] == 200 && !error) {
                 //Login successful
                 [Utility showsheetmessage:@"Login Successful" explaination: @"Login is successful." window:[[self view] window]];
                 // Store account in login keychain
@@ -123,13 +123,13 @@
                 [loggedinview setHidden:NO];
                 [loginview setHidden:YES];
         }
-        else{
+        else {
             if (error.code == NSURLErrorNotConnectedToInternet) {
                 [Utility showsheetmessage:@"MAL Updater OS X was unable to log you in since you are not connected to the internet" explaination:@"Check your internet connection and try again." window:[[self view] window]];
                 [savebut setEnabled: YES];
                 [savebut setKeyEquivalent:@"\r"];
             }
-            else{
+            else {
                 //Login Failed, show error message
                 [Utility showsheetmessage:@"MAL Updater OS X was unable to log you in since you don't have the correct username and/or password." explaination:@"Check your username and password and try logging in again. If you recently changed your password, enter your new password and try again." window:[[self view] window]];
                 [savebut setEnabled: YES];
@@ -175,7 +175,7 @@
             }
         }];
     }
-    else{
+    else {
         [Utility showsheetmessage:@"Cannot Logout" explaination:@"Please turn off automatic scrobbling before logging out." window:[[self view] window]];
     }
 }
@@ -189,7 +189,7 @@
            didEndSelector:@selector(reAuthPanelDidEnd:returnCode:contextInfo:)
               contextInfo:(void *)nil];
     }
-    else{
+    else {
         [Utility showsheetmessage:@"Cannot Logout" explaination:@"Please turn off automatic scrobbling before reauthorizing." window:[[self view] window]];
     }
 }
@@ -218,7 +218,7 @@
         NSBeep();
         [invalidinput setHidden:NO];
     }
-    else{
+    else {
         [invalidinput setHidden:YES];
         [self.loginpanel orderOut:self];
         [NSApp endSheet:self.loginpanel returnCode:1];

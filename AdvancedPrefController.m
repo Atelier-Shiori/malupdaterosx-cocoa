@@ -95,11 +95,11 @@
     [[appdelegate getMALEngineInstance] setKodiReachAddress:[textfield stringValue]];
 }
 -(IBAction)setKodiReach:(id)sender{
-    if ([kodicheck state] == 0){
+    if ([kodicheck state] == 0) {
         // Turn off reachability notification for Kodi
         [[appdelegate getMALEngineInstance] setKodiReach:false];
     }
-    else{
+    else {
         // Turn on reachability notification for Kodi
         [[appdelegate getMALEngineInstance] setKodiReach:true];
     }

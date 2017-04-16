@@ -147,7 +147,7 @@
 	
     detectstatus = [self detectmedia];
 	if (detectstatus == 2) { // Detects Title
-        if (online){
+        if (online) {
             int result = [self scrobble];
             // Empty out Detected Title/Episode to prevent same title detection
             DetectedTitle = nil;
@@ -162,7 +162,7 @@
             correcting = false;
             return result;
         }
-        else{
+        else {
             NSError * error;
             if (![self checkifexistinqueue]) {
                 // Store in offline queue
@@ -217,7 +217,7 @@
     int fail = 0;
     bool confirmneeded;
     if (queue.count > 0) {
-        for (NSManagedObject * item in queue){
+        for (NSManagedObject * item in queue) {
             // Restore detected title and episode from coredata
             DetectedTitle = [item valueForKey:@"detectedtitle"];
             DetectedEpisode = [item valueForKey:@"detectedepisode"];
@@ -253,13 +253,13 @@
                 [moc save:&error];
             
             //Save
-            if (result == 3){
+            if (result == 3) {
                 confirmneeded = true;
                 break;
             }
         }
     }
-    if (successc > 0){
+    if (successc > 0) {
         Success = true;
     }
     return @{@"success": [NSNumber numberWithInt:successc], @"fail": [NSNumber numberWithInt:fail], @"confirmneeded" : [NSNumber numberWithBool:confirmneeded]};
@@ -272,10 +272,10 @@
     }
     DetectedTitle = showtitle;
     DetectedEpisode = episode;
-    if (FailedSource == nil) {
+    if (!FailedSource) {
         DetectedSource = LastScrobbledSource;
     }
-    else{
+    else {
         DetectedSource = FailedSource;
     }
     // Check Exceptions
@@ -288,7 +288,7 @@
     return status;
 }
 -(int)scrobblefromstreamlink:(NSString *)url withStream:(NSString *)stream {
-    if (!detector){
+    if (!detector) {
         detector = [streamlinkdetector new];
     }
     // Set stream URL and stream
@@ -296,7 +296,7 @@
     [detector setStream:stream];
     // Get detection information
     if ([detector getDetectionInfo]) {
-        if ([[detector getdetectinfo] count] > 0){
+        if ([[detector getdetectinfo] count] > 0) {
             NSDictionary * d = [[detector getdetectinfo] objectAtIndex:0];
             // Check if title is ignored. Update if not on list.
             NSDictionary * detectioninfo = [Detection checksstreamlinkinfo:d];
@@ -304,7 +304,7 @@
                 int result = [self populatevalues:detectioninfo];
                 // Start Stream
                 [detector startStream];
-                if (result == 2){
+                if (result == 2) {
                     // Perform the update
                     return [self scrobble];
                 }
@@ -323,12 +323,12 @@
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"useSearchCache"]) {
         // Check Cache
         NSString *theid = [self checkCache];
-        if (theid.length == 0){
+        if (theid.length == 0) {
             // Search for title
             AniID = [self startSearch];
         }
            
-        else{
+        else {
             AniID = theid; // Set cached show id as AniID
             //If Detected Episode is missing, set it to 1 for sanity
             if ([DetectedEpisode length] == 0) {
@@ -351,9 +351,9 @@
             if (LastScrobbledTitleNew) {
                 //Title is not on list. Add Title
                 int s = [self addtitle:AniID confirming:confirmed];
-                if (s == 21 || s == 3){
+                if (s == 21 || s == 3) {
                     Success = true;}
-                else{
+                else {
 					Success = false;}
 				status = s;
             }
@@ -363,18 +363,18 @@
                 if (s == 2 || s == 3 ||s == 22 ) {
                     Success = true;
                 }
-                else{
+                else {
                     Success = false;}
                 status = s;
                 
             }
         }
-        else{
+        else {
             if (online) {
                 NSLog(@"Error: Invalid Credentials.");
                 status = 54;
             }
-            else{
+            else {
                 NSLog(@"Error: User is offline.");
                 //Ofline
                 status = 55;
@@ -391,7 +391,7 @@
             FailedSource = DetectedSource;
             status = 51;
         }
-        else{
+        else {
             //Offline
             status = 55;
         }
@@ -417,7 +417,7 @@
         if ([(NSArray *)result[@"types"] count] > 0) {
             DetectedType = [result[@"types"] objectAtIndex:0];
         }
-        else{
+        else {
             DetectedType = @"";
         }
         // Check for Episode 0 titles
@@ -434,7 +434,7 @@
             return 2;
         }
     }
-    else{
+    else {
         return 0;
     }
 }
@@ -449,7 +449,7 @@
         if (((NSArray *)result[@"types"]).count > 0) {
             DetectedType = (result[@"types"])[0];
         }
-        else{
+        else {
             DetectedType = @"";
         }
         //Check for zero episode as the detected episode
@@ -465,7 +465,7 @@
             return 2;
         }
     }
-    else{
+    else {
         return 0;
     }
     
@@ -487,25 +487,25 @@
 	{
 		status = [self addtitle:AniID confirming:true];
 	}
-	else{
+	else {
 		status = [self updatetitle:AniID confirming:true];
 	}
     NSLog(@"Confirming process complete with status code: %i", status);
     
-    if (status == 21 || status ==22){
+    if (status == 21 || status ==22) {
             // Clear Detected Episode and Title
             DetectedTitle = nil;
             DetectedEpisode = nil;
             DetectedSource = nil;
             // Record Confirm for Offline Queued Item, if exists
             NSManagedObject * obj = [self checkifexistinqueue];
-            if (obj){
+            if (obj) {
                 [obj setValue:[NSNumber numberWithInt:status] forKey:@"status"];
                 [obj setValue:[NSNumber numberWithBool:false] forKey:@"scrobbled"];
              }
             return true;
     }
-    else{
+    else {
             return false;
     }
 }
@@ -521,10 +521,10 @@
         DetectedEpisode = @"1";
         DetectedTitleisEpisodeZero = true;
     }
-    else if ([DetectedType isLike:@"Movie"] && ([DetectedEpisode isEqualToString:@"0"] || DetectedEpisode.length == 0)){
+    else if ([DetectedType isLike:@"Movie"] && ([DetectedEpisode isEqualToString:@"0"] || DetectedEpisode.length == 0)) {
         DetectedEpisode = @"1";
     }
-    else{DetectedTitleisEpisodeZero = false;}
+    else {DetectedTitleisEpisodeZero = false;}
 }
 -(NSString *)checkCache{
     NSManagedObjectContext *moc = managedObjectContext;
@@ -562,12 +562,12 @@
             allExceptions.entity = [NSEntityDescription entityForName:@"Exceptions" inManagedObjectContext:moc];
             predicate = [NSPredicate predicateWithFormat: @"detectedTitle == %@", DetectedTitle];
         }
-        else if (i== 1 && [[NSUserDefaults standardUserDefaults] boolForKey:@"UseAutoExceptions"]){
+        else if (i== 1 && [[NSUserDefaults standardUserDefaults] boolForKey:@"UseAutoExceptions"]) {
             NSLog(@"Checking Auto Exceptions");
             allExceptions.entity = [NSEntityDescription entityForName:@"AutoExceptions" inManagedObjectContext:moc];
             predicate = [NSPredicate predicateWithFormat: @"(detectedTitle ==[c] %@) AND ((group == %@) OR (group == %@))", DetectedTitle, DetectedGroup, @"ALL"];
         }
-        else{break;}
+        else {break;}
         // Set Predicate and filter exceiptions array
         [allExceptions setPredicate: predicate];
         NSArray * exceptions = [moc executeFetchRequest:allExceptions error:&error];
@@ -582,20 +582,20 @@
                     int offset = ((NSNumber *)[entry valueForKey:@"episodeOffset"]).intValue;
                     int tmpepisode = DetectedEpisode.intValue - offset;
                     int mappedepisode;
-                    if (i == 1){
+                    if (i == 1) {
                         mappedepisode = [(NSNumber *)[entry valueForKey:@"mappedepisode"] intValue];
                     }
                     else {
                         mappedepisode = 0;
                     }
                     bool iszeroepisode;
-                    if (i == 1){
+                    if (i == 1) {
                         iszeroepisode = [(NSNumber *)[entry valueForKey:@"iszeroepisode"] boolValue];
                     }
                     else {
                         iszeroepisode = false;
                     }
-                    if (i==1 && DetectedTitleisEpisodeZero == true && iszeroepisode == true){
+                    if (i==1 && DetectedTitleisEpisodeZero == true && iszeroepisode == true) {
                         NSLog(@"%@ zero episode is found on exceptions list as %@.", DetectedTitle, correcttitle);
                         DetectedTitle = [correcttitle stringByReplacingOccurrencesOfString:@":" withString:@""];
                         DetectedEpisode = [NSString stringWithFormat:@"%i", mappedepisode];
@@ -603,7 +603,7 @@
                         found = true;
                         break;
                     }
-                    else if (i==1 && DetectedTitleisEpisodeZero == false && iszeroepisode == true){
+                    else if (i==1 && DetectedTitleisEpisodeZero == false && iszeroepisode == true) {
                         continue;
                     }
                     if ((tmpepisode > threshold && threshold != 0) || (tmpepisode <= 0 && threshold != 1 && i==0)||(tmpepisode <= 0 && i==1)) {
@@ -622,7 +622,7 @@
                     }
                 }
             }
-            if (found){break;} //Break from exceptions check loop
+            if (found) {break;} //Break from exceptions check loop
         }
     }
 }
@@ -637,7 +637,7 @@
             tmpid =[self searchanime];
         }
     }
-    else{
+    else {
         tmpid = [self searchanime]; // Use MAL Search
     }
     return tmpid;
@@ -672,7 +672,7 @@
         // Start notifier
         [kodireach startNotifier];
     }
-    else{
+    else {
         [kodireach stopNotifier];
         kodireach = nil;
     }

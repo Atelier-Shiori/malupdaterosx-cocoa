@@ -15,7 +15,7 @@
             regex:(OGRegularExpression *)regex
            option:(int)i{
     //Checks for matches
-    if ([regex matchInString:title] != nil || ([regex matchInString:atitle] != nil && [atitle length] >0 && i==0)) {
+    if ([regex matchInString:title] || ([regex matchInString:atitle] && [atitle length] >0 && i==0)) {
         return true;
     }
     return false;
@@ -84,27 +84,27 @@
                                                                                                   kCFStringEncodingUTF8 ));
 }
 +(void)donateCheck:(MAL_Updater_OS_XAppDelegate*)delegate{
-    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"donatereminderdate"] == nil){
+    if (![[NSUserDefaults standardUserDefaults] objectForKey:@"donatereminderdate"]) {
         [Utility setReminderDate];
     }
     if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"donatereminderdate"] timeIntervalSinceNow] < 0) {
-        if ([(NSNumber *)[[NSUserDefaults standardUserDefaults] objectForKey:@"donated"] boolValue]){
+        if ([(NSNumber *)[[NSUserDefaults standardUserDefaults] objectForKey:@"donated"] boolValue]) {
             int validkey = [Utility checkDonationKey:[[NSUserDefaults standardUserDefaults] objectForKey:@"donatekey"] name:[[NSUserDefaults standardUserDefaults] objectForKey:@"donor"]];
-            if (validkey == 1){
+            if (validkey == 1) {
                 //Reset check
                 [Utility setReminderDate];
             }
-            else if (validkey == 2){
+            else if (validkey == 2) {
                 //Try again when there is internet access
             }
-            else{
+            else {
                 //Invalid Key
                 [Utility showsheetmessage:@"Donation Key Error" explaination:@"This key has been revoked. Please contact the author of this program or enter a valid key." window:nil];
                 [Utility showDonateReminder:delegate];
         [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:NO] forKey:@"donated"];
             }
         }
-        else{
+        else {
             [Utility showDonateReminder:delegate];
         }
     }
@@ -131,7 +131,7 @@
         [delegate enterDonationKey:nil];
         [Utility setReminderDate];
     }
-    else{
+    else {
         // Surpress message for 2 weeks.
         [Utility setReminderDate];
     }
@@ -155,7 +155,7 @@
         [request startJSONFormRequest:EasyNSURLConnectionJsonType];
         // Get Status Code
         long statusCode = [request getStatusCode];
-    if (statusCode == 200){
+    if (statusCode == 200) {
         NSError* jerror;
         NSDictionary * d = [NSJSONSerialization JSONObjectWithData:[request getResponseData] options:nil error:&jerror];
         int valid = [(NSNumber *)d[@"valid"] intValue];
@@ -163,12 +163,12 @@
             // Valid Key
             return 1;
         }
-        else{
+        else {
             // Invalid Key
             return 0;
         }
     }
-    else{
+    else {
         // No Internet
         return 2;
     }

@@ -92,7 +92,7 @@
                         [obj setValue:d[@"offset"] forKey:@"episodeOffset"];
                         [obj setValue:d[@"threshold"] forKey:@"episodethreshold"];
                     }
-                    else{
+                    else {
                         // Add Entry to Auto Exceptions
                         obj = [NSEntityDescription
                                insertNewObjectForEntityForName:@"AutoExceptions"
@@ -109,7 +109,7 @@
                     //Save
                     [moc save:&error];
                 }
-                [moc reset];s
+                [moc reset];
             });
             // Set the last updated date
             [[NSUserDefaults standardUserDefaults] setValue:[NSDate date] forKey:@"ExceptionsLastUpdated"];

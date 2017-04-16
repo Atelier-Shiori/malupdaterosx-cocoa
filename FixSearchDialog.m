@@ -31,7 +31,7 @@
         }
         [onetimecorrection setHidden:NO];
     }
-    else{
+    else {
         [deleteoncorrection setState:0];
     }
     [super windowDidLoad];
@@ -61,21 +61,21 @@
         if ([alert runModal]== NSAlertFirstButtonReturn) {
             [self finish:d];
         }
-        else{
+        else {
             return;
         }
     }
-    else{
+    else {
         [self finish:d];
     }   
 }
 -(void)finish:(NSDictionary *)d{
     selectedtitle = d[@"title"];
     selectedaniid = [d[@"id"] stringValue];
-	if (d[@"episodes"]){
+	if (d[@"episodes"]) {
     	selectedtotalepisodes = [(NSNumber *)d[@"episodes"] intValue];
 	}
-	else{
+	else {
 		// No episode total yet, set to set
 		selectedtotalepisodes = @(0);
 	}
@@ -109,7 +109,7 @@
         });
         });
     }
-    else{
+    else {
         //Remove all existing Data
         [[arraycontroller mutableArrayValueForKey:@"content"] removeAllObjects];
     }
@@ -141,7 +141,7 @@
         NSDictionary * d = [arraycontroller selectedObjects][0];
         [selectedsynopsis setString:[[NSString stringWithFormat:@"%@", d[@"synopsis"]] stripHtml]];
     }
-    else{
+    else {
         [selectedsynopsis setString:@""];
     }
 
