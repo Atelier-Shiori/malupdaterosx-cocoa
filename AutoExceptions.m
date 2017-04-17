@@ -49,8 +49,6 @@
         }
         //Save
         [moc save:&error];
-        // Clear Core Data Objects from Memory
-        [moc reset];
         // Erase exceptions data from preferences
         [[NSUserDefaults standardUserDefaults] setObject:[[NSMutableArray alloc] init] forKey:@"exceptions"];
     }
@@ -77,8 +75,8 @@
             NSError *error = nil;
             NSArray * a = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:&error];
             MAL_Updater_OS_XAppDelegate * delegate = (MAL_Updater_OS_XAppDelegate *)[NSApplication sharedApplication].delegate;
-            dispatch_async(dispatch_get_main_queue(), ^{
-                NSManagedObjectContext *moc = [delegate getObjectContext];
+            NSManagedObjectContext *moc = [delegate getObjectContext];
+            [moc performBlockAndWait:^{
                 for (NSDictionary *d in a) {
                     NSString * detectedtitle = d[@"detectedtitle"];
                     NSString * group = d[@"group"];
@@ -109,8 +107,7 @@
                     //Save
                     [moc save:&error];
                 }
-                [moc reset];
-            });
+            }];
             // Set the last updated date
             [[NSUserDefaults standardUserDefaults] setValue:[NSDate date] forKey:@"ExceptionsLastUpdated"];
             break;
@@ -135,8 +132,6 @@
     }
     error = nil;
     [moc save:&error];
-    // Clear Core Data Objects from Memory
-    [moc reset];
 }
 +(NSManagedObject *)checkAutoExceptionsEntry:(NSString *)ctitle
                                        group:(NSString *)group

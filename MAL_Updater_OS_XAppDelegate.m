@@ -131,7 +131,7 @@
         [[NSApplication sharedApplication] presentError:error];
         return nil;
     }
-    managedObjectContext = [[NSManagedObjectContext alloc] init];
+    managedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
     [managedObjectContext setPersistentStoreCoordinator: coordinator];
 	
     return managedObjectContext;

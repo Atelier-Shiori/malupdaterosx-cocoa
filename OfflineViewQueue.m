@@ -63,8 +63,6 @@
             [moc deleteObject:item];
         }
         [moc save:&error];
-        // Clear Core Data Objects from Memory
-        [moc reset];
     }
     
 }
