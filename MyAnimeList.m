@@ -142,13 +142,11 @@
  */
 
 - (int)startscrobbling {
-
-    // 0 - nothing playing; 1 - same episode playing; 2 - No Update Needed; 3 - Confirm title before updating  21 - Add Title Successful; 22 - Update Title Successful;  51 - Can't find Title; 52 - Add Failed; 53 - Update Failed; 54 - Scrobble Failed - 23 - Offline Queue;
     int detectstatus;
 	//Set up Delegate
 	
     detectstatus = [self detectmedia];
-	if (detectstatus == 2) { // Detects Title
+	if (detectstatus == ScrobblerDetectedMedia) { // Detects Title
         if (online) {
             int result = [self scrobble];
             // Empty out Detected Title/Episode to prevent same title detection
@@ -199,7 +197,7 @@
             DetectedType = nil;
             DetectedSeason = 0;
             Success = true;
-            return 23;
+            return ScrobblerOfflineQueued;
         }
 	}
 
@@ -235,16 +233,15 @@
             NSManagedObject * record = [self checkifexistinqueue];
             // Record Results
             [record setValue:@(result) forKey:@"status"];
-                // 0 - nothing playing; 1 - same episode playing; 2 - No Update Needed; 3 - Confirm title before updating  21 - Add Title Successful; 22 - Update Title Successful;  51 - Can't find Title; 52 - Add Failed; 53 - Update Failed; 54 - Scrobble Failed - 23 - Offline Queue;
             switch (result) {
-                case 51:
-                case 52:
-                case 53:
-                case 54:
+                case ScrobblerTitleNotFound:
+                case ScrobblerAddTitleFailed:
+                case ScrobblerUpdateFailed:
+                case ScrobblerFailed:
                     fail++;
                     scrobbled = false;
                     break;
-                case 3:
+                case ScrobblerConfirmNeeded:
                     successc++;
                     scrobbled = true;
                     break;
@@ -259,7 +256,7 @@
             }];
             
             //Save
-            if (result == 3) {
+            if (result == ScrobblerConfirmNeeded) {
                 confirmneeded = true;
                 break;
             }
@@ -310,14 +307,14 @@
                 int result = [self populatevalues:detectioninfo];
                 // Start Stream
                 [detector startStream];
-                if (result == 2) {
+                if (result == ScrobblerDetectedMedia) {
                     // Perform the update
                     return [self scrobble];
                 }
             }
         }
     }
-    return 0;
+    return ScrobblerNothingPlaying;
 }
 -(int)scrobble{
     NSLog(@"=============");
@@ -357,7 +354,7 @@
             if (LastScrobbledTitleNew) {
                 //Title is not on list. Add Title
                 int s = [self addtitle:AniID confirming:confirmed];
-                if (s == 21 || s == 3) {
+                if (s == ScrobblerAddTitleSuccessful || s == ScrobblerConfirmNeeded) {
                     Success = true;}
                 else {
 					Success = false;}
@@ -366,11 +363,12 @@
             else {
                 // Update Title as Usual
                 int s = [self updatetitle:AniID confirming:confirmed];
-                if (s == 2 || s == 3 ||s == 22 ) {
+                if (s == ScrobblerUpdateNotNeeded || s == ScrobblerConfirmNeeded ||s == ScrobblerUpdateSuccessful ) {
                     Success = true;
                 }
                 else {
-                    Success = false;}
+                    Success = false;
+                }
                 status = s;
                 
             }
@@ -378,12 +376,12 @@
         else {
             if (online) {
                 NSLog(@"Error: Invalid Credentials.");
-                status = 54;
+                status = ScrobblerFailed;
             }
             else {
                 NSLog(@"Error: User is offline.");
                 //Ofline
-                status = 55;
+                status = ScrobblerFailed;
             }
         }
     }
@@ -395,11 +393,11 @@
             FailedTitle = DetectedTitle;
             FailedEpisode = DetectedEpisode;
             FailedSource = DetectedSource;
-            status = 51;
+            status = ScrobblerTitleNotFound;
         }
         else {
             //Offline
-            status = 55;
+            status = ScrobblerFailed;
         }
         
     }
@@ -437,11 +435,11 @@
         }
         else {
             // Not Scrobbled Yet or Unsuccessful
-            return 2;
+            return ScrobblerDetectedMedia;
         }
     }
     else {
-        return 0;
+        return ScrobblerNothingPlaying;
     }
 }
 -(int)populatevalues:(NSDictionary *) result{
@@ -464,15 +462,15 @@
         [self checkExceptions];
         if ([DetectedTitle isEqualToString:LastScrobbledTitle] && ([DetectedEpisode isEqualToString: LastScrobbledEpisode]||[self checkBlankDetectedEpisode]) && Success == 1) {
             // Do Nothing
-            return 1;
+            return ScrobblerSameEpisodePlaying;
         }
         else {
             // Not Scrobbled Yet or Unsuccessful
-            return 2;
+            return ScrobblerDetectedMedia;
         }
     }
     else {
-        return 0;
+        return ScrobblerNothingPlaying;
     }
     
 }

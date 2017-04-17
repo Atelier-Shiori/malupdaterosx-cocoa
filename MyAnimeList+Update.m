@@ -99,12 +99,12 @@
         // Store Scrobbled Title and Episode
         confirmed = true;
         [self storeLastScrobbled];
-        return 2;
+        return ScrobblerUpdateNotNeeded;
     }
     else if (!LastScrobbledTitleNew && [[NSUserDefaults standardUserDefaults] boolForKey:@"ConfirmUpdates"] && !confirmed && !correcting && !confirming) {
         // Confirm before updating title
         [self storeLastScrobbled];
-        return 3;
+        return ScrobblerConfirmNeeded;
     }
     else {
         // Update the title
@@ -147,10 +147,10 @@
                 }
                 confirmed = true;
                 // Update Successful
-                return 22;
+                return ScrobblerUpdateSuccessful;
             default:
                 // Update Unsuccessful
-                return 53;
+                return ScrobblerUpdateFailed;
         }
         
     }
@@ -161,7 +161,7 @@
     if (LastScrobbledTitleNew && [[NSUserDefaults standardUserDefaults] boolForKey:@"ConfirmNewTitle"] && !confirmed && !correcting && !confirming) {
         // Confirm before updating title
         [self storeLastScrobbled];
-        return 3;
+        return ScrobblerConfirmNeeded;
     }
     // Add the title
     //Set library/scrobble API
@@ -206,10 +206,10 @@
                 LastScrobbledActualTitle = (NSString *)LastScrobbledInfo[@"title"];
             }
             confirmed = true;
-            return 21;
+            return ScrobblerAddTitleSuccessful;
         default:
             // Update Unsuccessful
-            return 52;
+            return ScrobblerAddTitleFailed;
     }
 }
 -(bool)removetitle:(NSString *)titleid{
