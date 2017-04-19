@@ -11,7 +11,7 @@
 #import "MAL_Updater_OS_XAppDelegate.h"
 #import "AutoExceptions.h"
 #import "Utility.h"
-#import "LoginItems.h"
+#import "NSBundle+LoginItem.h"
 
 
 @implementation GeneralPrefController
@@ -21,9 +21,16 @@
 }
 
 -(IBAction)toggleLaunchAtStartup:(id)sender{
-    [LoginItems toggleLaunchAtStartup];
+    [self toggleLaunchAtStartup];
 }
-
+- (void)toggleLaunchAtStartup{
+    if ([[NSBundle mainBundle] isLoginItem]){
+        [[NSBundle mainBundle] removeFromLoginItems];
+    }
+    else{
+        [[NSBundle mainBundle] addToLoginItems];
+    }
+}
 #pragma mark -
 #pragma mark MASPreferencesViewController
 -(void)loadView{
@@ -33,7 +40,7 @@
         [disablenewtitlebar setEnabled:NO];
         [disablevibarency setEnabled: NO];
     }
-    [startatlogin setState:[LoginItems isLaunchAtStartup]]; // Set Launch at Startup State
+    startatlogin.state = [NSBundle.mainBundle isLoginItem]; // Set Launch at Startup State
 }
 - (NSString *)identifier
 {
