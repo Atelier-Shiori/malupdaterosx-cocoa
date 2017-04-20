@@ -73,7 +73,8 @@
                 NSString *filename = d[@"filename"];
                 NSString *expectedtitle = d[@"expected-title"];
                 NSString *detectedepisode = d[@"detectedepisode"];
-                int status = [_MALEngine performscrobbletest:filename];
+                NSNumber *deletetitle = d[@"deletetitle"];
+                int status = [_MALEngine performscrobbletest:filename delete:deletetitle.boolValue];
                 switch (status) {
                     case ScrobblerUpdateSuccessful:
                     case ScrobblerAddTitleSuccessful:

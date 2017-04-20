@@ -5,6 +5,16 @@
   "group":"HorribleSubs",
   "zeroepisode":0,
   "detectedepisode":"1",
-  "detectedseason":0
+  "detectedseason":0,
+  "deletetitle":0
+  },
+  {
+  "filename":"[HorribleSubs] Re-Creators - 02 [1080p].mkv",
+  "expected-title":"Re:Creators",
+  "group":"HorribleSubs",
+  "zeroepisode":0,
+  "detectedepisode":"2",
+  "detectedseason":0,
+  "deletetitle":1
   }
 ]

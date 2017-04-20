@@ -320,7 +320,7 @@
     }
     return ScrobblerNothingPlaying;
 }
--(int)performscrobbletest:(NSString *)filename{
+- (int)performscrobbletest:(NSString *)filename delete:(bool)deletetitle{
     NSDictionary *result = [[Recognition alloc] recognize:filename];
     //Populate Data
     DetectedTitle = result[@"title"];
@@ -340,7 +340,9 @@
     [self checkExceptions];
 
     int status = [self scrobble];
-    [self removetitle:AniID];
+    if (deletetitle){
+        [self removetitle:AniID];
+    }
     return status;
 }
 -(int)scrobble{

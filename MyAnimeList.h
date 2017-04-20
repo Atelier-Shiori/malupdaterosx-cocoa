@@ -65,7 +65,7 @@ typedef NS_ENUM(unsigned int, ScrobbleStatus) {
 - (int)startscrobbling;
 -(int)scrobbleagain:(NSString *)showtitle Episode:(NSString *)episode correctonce:(BOOL)correctonce;
 -(int)scrobblefromstreamlink:(NSString *)url withStream:(NSString *)stream;
--(int)performscrobbletest:(NSString *)filename;
+- (int)performscrobbletest:(NSString *)filename delete:(bool)deletetitle;
 -(int)scrobble;
 -(NSDictionary *)scrobblefromqueue;
 -(BOOL)confirmupdate;
