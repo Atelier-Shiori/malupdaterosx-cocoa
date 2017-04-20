@@ -96,6 +96,8 @@
     NSDictionary * titlematch1;
     NSDictionary * titlematch2;
     int mstatus = 0;
+    // Remove Colons
+    term = [term stringByReplacingOccurrencesOfString:@":" withString:@""];
     // Search
     for (int i = 0; i < 2; i++) {
         switch (i) {
@@ -152,10 +154,10 @@
                 }
             }
             else {alttitle = @"";}
-            int matchstatus = [Utility checkMatch:theshowtitle alttitle:alttitle regex:regex option:i];
             // Remove colons as they are invalid characters for filenames and to improve accuracy
             theshowtitle = [theshowtitle stringByReplacingOccurrencesOfString:@":" withString:@""];
             alttitle = [alttitle stringByReplacingOccurrencesOfString:@":" withString:@""];
+            int matchstatus = [Utility checkMatch:theshowtitle alttitle:alttitle regex:regex option:i];
             if (matchstatus == 1 || matchstatus == 2) {
                 if ([[NSString stringWithFormat:@"%@", searchentry[@"type"]] isEqualToString:@"TV"]) { // Check Seasons if the title is a TV show type
                     // Used for Season Checking

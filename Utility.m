@@ -76,12 +76,7 @@
                         contextInfo:NULL];
 }
 +(NSString *)urlEncodeString:(NSString *)string{
-	return (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(
-                                                                                                  NULL,
-                                                                                                  (CFStringRef)string,
-                                                                                                  NULL,
-                                                                                                  (CFStringRef)@"!*'();:@&=+$,/?%#[]",
-                                                                                                  kCFStringEncodingUTF8 ));
+    return [string stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLHostAllowedCharacterSet]];
 }
 +(void)donateCheck:(MAL_Updater_OS_XAppDelegate*)delegate{
     if (![[NSUserDefaults standardUserDefaults] objectForKey:@"donatereminderdate"]) {
