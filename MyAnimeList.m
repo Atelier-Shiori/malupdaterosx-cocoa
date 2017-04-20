@@ -12,6 +12,8 @@
 #import "MyAnimeList+Update.h"
 #import "MyAnimeList+HummingbirdSearch.h"
 #import "Reachability.h"
+#import "Recognition.h"
+#import <streamlinkdetect/streamlinkdetect.h>
 
 @interface MyAnimeList ()
 -(int)detectmedia; // 0 - Nothing, 1 - Same, 2 - Update
@@ -305,6 +307,8 @@
             NSDictionary * detectioninfo = [Detection checksstreamlinkinfo:d];
             if (detectioninfo) {
                 int result = [self populatevalues:detectioninfo];
+                // Check Exceptions
+                [self checkExceptions];
                 // Start Stream
                 [detector startStream];
                 if (result == ScrobblerDetectedMedia) {
@@ -315,6 +319,29 @@
         }
     }
     return ScrobblerNothingPlaying;
+}
+-(int)performscrobbletest:(NSString *)filename{
+    NSDictionary *result = [[Recognition alloc] recognize:filename];
+    //Populate Data
+    DetectedTitle = result[@"title"];
+    DetectedEpisode = result[@"episode"];
+    DetectedSeason = [(NSNumber *)result[@"season"] intValue];
+    DetectedGroup = result[@"group"];
+    DetectedSource = @"Test";
+    if ([(NSArray *)result[@"types"] count] > 0) {
+        DetectedType = [result[@"types"] objectAtIndex:0];
+    }
+    else {
+        DetectedType = @"";
+    }
+    // Check for Episode 0 titles
+    [self checkzeroEpisode];
+    // Check Exceptions
+    [self checkExceptions];
+
+    int status = [self scrobble];
+    [self removetitle:AniID];
+    return status;
 }
 -(int)scrobble{
     NSLog(@"=============");

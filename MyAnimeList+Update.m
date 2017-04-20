@@ -170,7 +170,7 @@
     //Ignore Cookies
     [request setUseCookies:NO];
     //Set Token
-            [request addHeader:[NSString stringWithFormat:@"Basic %@",[self getBase64]]  forKey:@"Authorization"];
+    [request addHeader:[NSString stringWithFormat:@"Basic %@",[self getBase64]]  forKey:@"Authorization"];
     [request addFormData:titleid forKey:@"anime_id"];
     [request addFormData:DetectedEpisode forKey:@"episodes"];
     // Check if the detected episode is equal to total episodes. If so, set it as complete (mostly for specials and movies)
@@ -189,9 +189,6 @@
     // Do Update
     [request startFormRequest];
     
-    
-    //Set Title State for Title
-    WatchStatus = @"watching";
     switch ([request getStatusCode]) {
         case 200:
         case 201:

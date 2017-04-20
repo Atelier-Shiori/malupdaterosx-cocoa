@@ -7,11 +7,9 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import <CocoaOniguruma/OnigRegexp.h>
-#import <CocoaOniguruma/OnigRegexpUtility.h>
 #import "MAL_Updater_OS_XAppDelegate.h"
 #import "Reachability.h"
-#import <streamlinkdetect/streamlinkdetect.h>
+@class streamlinkdetector;
 
 @interface MyAnimeList : NSObject {
 	NSString * MALApiUrl;
@@ -67,6 +65,7 @@ typedef NS_ENUM(unsigned int, ScrobbleStatus) {
 - (int)startscrobbling;
 -(int)scrobbleagain:(NSString *)showtitle Episode:(NSString *)episode correctonce:(BOOL)correctonce;
 -(int)scrobblefromstreamlink:(NSString *)url withStream:(NSString *)stream;
+-(int)performscrobbletest:(NSString *)filename;
 -(int)scrobble;
 -(NSDictionary *)scrobblefromqueue;
 -(BOOL)confirmupdate;
