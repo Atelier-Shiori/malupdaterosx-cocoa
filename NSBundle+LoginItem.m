@@ -7,8 +7,8 @@
 //
 
 #import "NSBundle+LoginItem.h"
-
 #import <CoreServices/CoreServices.h>
+#import <CocoaOniguruma/OnigRegexp.h>
 
 @interface NSBundle (LoginItemPrivate)
 - (LSSharedFileListItemRef)itemRefWithListRef:(LSSharedFileListRef)listRef;
@@ -57,35 +57,17 @@
 
 - (LSSharedFileListItemRef)itemRefWithListRef:(LSSharedFileListRef)listRef {
     NSArray *listItems = (__bridge NSArray *)LSSharedFileListCopySnapshot(listRef, NULL);
-    NSString *bURL = [NSString stringWithFormat:@"%@",[self.bundleURL absoluteString]];
+    
     for (NSInteger i = 0; i < listItems.count; ++i) {
         LSSharedFileListItemRef itemRef = (__bridge LSSharedFileListItemRef)listItems[i];
-        CFErrorRef error;
-        CFURLRef urlRef = LSSharedFileListItemCopyResolvedURL(itemRef, kLSSharedFileListNoUserInteraction|kLSSharedFileListDoNotMountVolumes, &error);
-        if (urlRef){
-            NSString *urlstr = [NSString stringWithFormat:@"%@",[(__bridge NSURL *)urlRef absoluteString]];
-            if ([self checkMatch:urlstr pattern:bURL]){
-                return itemRef;
-            }
-        }
+        CFURLRef urlRef;
+        OSStatus error = LSSharedFileListItemResolve(itemRef, kLSSharedFileListNoUserInteraction|kLSSharedFileListDoNotMountVolumes, &urlRef, NULL);
+        
+        if (error != noErr) continue;
+        
+        if (CFEqual(urlRef, (__bridge CFURLRef)self.bundleURL)) return itemRef;
     }
-
+    
     return NULL;
-}
-
-- (BOOL)checkMatch:(NSString *)string pattern:(NSString *)pattern {
-    NSError *errRegex = NULL;
-    NSRegularExpression *regex = [NSRegularExpression
-                                  regularExpressionWithPattern:pattern
-                                  options:NSRegularExpressionCaseInsensitive
-                                  error:&errRegex];
-    NSRange  searchrange = NSMakeRange(0, [string length]);
-    NSRange matchRange = [regex rangeOfFirstMatchInString:string options:NSMatchingReportProgress range:searchrange];
-    if (matchRange.location != NSNotFound) {
-        return true;
-    }
-    else {
-        return false;
-    }
 }
 @end
