@@ -299,7 +299,7 @@
 -(NSDictionary *)detectStreamLink{
     streamlinkdetector * detect = [streamlinkdetector new];
     NSArray * a = [detect detectAndRetrieveInfo];
-    if (a) {
+    if (a.count > 0) {
         NSDictionary * result = a[0];
         if (!result[@"title"] || !result[@"site"]) {
             return nil;
