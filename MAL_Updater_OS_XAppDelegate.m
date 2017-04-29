@@ -163,6 +163,8 @@
     defaultValues[@"timerinterval"] = @(300);
     defaultValues[@"showcorrection"] = @YES;
     defaultValues[@"NSApplicationCrashOnExceptions"] = @YES;
+    defaultValues[@"donated"] = @NO;
+    defaultValues[@"MacAppStoreMigrated"] = @NO;
 	//Register Dictionary
 	[[NSUserDefaults standardUserDefaults]
 	 registerDefaults:defaultValues];

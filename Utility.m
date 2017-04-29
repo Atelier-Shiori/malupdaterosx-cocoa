@@ -8,6 +8,7 @@
 
 #import "Utility.h"
 #import <EasyNSURLConnection/EasyNSURLConnectionClass.h>
+#import <MALLibraryAppMigrate/MALLibraryAppMigrate.h>
 
 @implementation Utility
 +(bool)checkMatch:(NSString *)title
@@ -82,6 +83,18 @@
     if (![[NSUserDefaults standardUserDefaults] objectForKey:@"donatereminderdate"]) {
         [Utility setReminderDate];
     }
+    if ([(NSNumber *)[[NSUserDefaults standardUserDefaults] objectForKey:@"MacAppStoreMigrated"] boolValue] && [(NSNumber *)[[NSUserDefaults standardUserDefaults] objectForKey:@"donated"] boolValue]){
+        NSString *MALLibraryPath = [[NSUserDefaults standardUserDefaults] valueForKey:@"MALLibraryPath"];
+        bool valid = [MALLibraryAppStoreMigrate validateReciept:MALLibraryPath];
+        if (!valid) {
+            //Invalid Key
+            [Utility showsheetmessage:@"Donation Key Error" explaination:@"This key has been revoked. Please contact the author of this program or enter a valid key." window:nil];
+            [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:NO] forKey:@"donated"];
+            [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:NO] forKey:@"MacAppStoreMigrated"];
+            [Utility showDonateReminder:delegate];
+        }
+        return;
+    }
     if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"donatereminderdate"] timeIntervalSinceNow] < 0) {
         if ([(NSNumber *)[[NSUserDefaults standardUserDefaults] objectForKey:@"donated"] boolValue]) {
             int validkey = [Utility checkDonationKey:[[NSUserDefaults standardUserDefaults] objectForKey:@"donatekey"] name:[[NSUserDefaults standardUserDefaults] objectForKey:@"donor"]];
@@ -96,7 +109,7 @@
                 //Invalid Key
                 [Utility showsheetmessage:@"Donation Key Error" explaination:@"This key has been revoked. Please contact the author of this program or enter a valid key." window:nil];
                 [Utility showDonateReminder:delegate];
-        [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:NO] forKey:@"donated"];
+                [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:NO] forKey:@"donated"];
             }
         }
         else {

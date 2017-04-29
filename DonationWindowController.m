@@ -8,8 +8,10 @@
 
 #import "DonationWindowController.h"
 #import "Utility.h"
+#import <MALLibraryAppMigrate/MALLibraryAppMigrate.h>
 
 @interface DonationWindowController ()
+@property (weak) IBOutlet NSImageView *appstoreicon;
 
 @end
 
@@ -24,6 +26,7 @@
     [super windowDidLoad];
     
     // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
+    _appstoreicon.image = [[NSImage alloc] initByReferencingURL:[NSURL fileURLWithPath:[[NSBundle bundleWithPath:@"/Applications/App Store.app"] pathForResource:@"AppIcon" ofType:@"icns"]]];
 }
 -(IBAction)validate:(id)sender{
     if ([[name stringValue] length] > 0 && [[key stringValue] length]>0) {
@@ -57,5 +60,22 @@
 -(IBAction)donate:(id)sender{
     // Show Donation Page
     [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://malupdaterosx.ateliershiori.moe/donate/"]];
+}
+
+- (IBAction)migrateMALLibrary:(id)sender {
+    [MALLibraryAppStoreMigrate selectAppandValidate:self.window completionHandler:^(bool success, NSString *path) {
+        if (success) {
+            [Utility showsheetmessage:@"Registered" explaination:@"Thank you for purchasing MAL Library from the App Store. The donation reminder will no longer appear and access to weekly builds is now unlocked." window:nil];
+                // Add to the preferences
+            [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:YES] forKey:@"donated"];
+            [[NSUserDefaults standardUserDefaults] setObject:path forKey:@"MALLibraryPath"];
+            [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:YES] forKey:@"MacAppStoreMigrated"];
+                //Close Window
+                [self.window orderOut:self];
+        }
+        else {
+            [Utility showsheetmessage:@"Invalid Copy of MAL Library" explaination:@"Please select a valid copy of MAL Library you downloaded from the App Store." window:[self window]];
+        }
+    }];
 }
 @end
