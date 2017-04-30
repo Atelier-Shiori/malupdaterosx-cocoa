@@ -219,7 +219,7 @@
     }];
     int successc = 0;
     int fail = 0;
-    bool confirmneeded;
+    bool confirmneeded = false;
     if (queue.count > 0) {
         for (NSManagedObject * item in queue) {
             // Restore detected title and episode from coredata

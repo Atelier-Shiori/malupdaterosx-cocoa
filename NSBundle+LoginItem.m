@@ -67,7 +67,6 @@
         
         if (CFEqual(urlRef, (__bridge CFURLRef)self.bundleURL)) return itemRef;
     }
-    
     return NULL;
 }
 @end
