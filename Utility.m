@@ -77,7 +77,7 @@
                         contextInfo:NULL];
 }
 +(NSString *)urlEncodeString:(NSString *)string{
-    return [string stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLHostAllowedCharacterSet]];
+    return [string stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLHostAllowedCharacterSet] ];
 }
 +(void)donateCheck:(MAL_Updater_OS_XAppDelegate*)delegate{
     if (![[NSUserDefaults standardUserDefaults] objectForKey:@"donatereminderdate"]) {
@@ -88,7 +88,7 @@
         bool valid = [MALLibraryAppStoreMigrate validateReciept:MALLibraryPath];
         if (!valid) {
             //Invalid Key
-            [Utility showsheetmessage:@"Donation Key Error" explaination:@"This key has been revoked. Please contact the author of this program or enter a valid key." window:nil];
+            [Utility showsheetmessage:@"Donation Key Error" explaination:@"The registration has been revoked. Make sure your copy of MAL Library is valid." window:nil];
             [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:NO] forKey:@"donated"];
             [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:NO] forKey:@"MacAppStoreMigrated"];
             [Utility showDonateReminder:delegate];
