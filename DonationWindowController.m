@@ -26,7 +26,12 @@
     [super windowDidLoad];
     
     // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
-    _appstoreicon.image = [[NSImage alloc] initByReferencingURL:[NSURL fileURLWithPath:[[NSBundle bundleWithPath:@"/Applications/App Store.app"] pathForResource:@"AppIcon" ofType:@"icns"]]];
+    if (floor(NSAppKitVersionNumber) > NSAppKitVersionNumber10_11) {
+        _appstoreicon.image = [[NSImage alloc] initByReferencingURL:[NSURL fileURLWithPath:[[NSBundle bundleWithPath:@"/Applications/App Store.app"] pathForResource:@"AppIcon" ofType:@"icns"]]];
+    }
+    else {
+            _appstoreicon.image = [[NSImage alloc] initByReferencingURL:[NSURL fileURLWithPath:[[NSBundle bundleWithPath:@"/Applications/App Store.app"] pathForResource:@"appStore" ofType:@"icns"]]];
+    }
 }
 -(IBAction)validate:(id)sender{
     if ([[name stringValue] length] > 0 && [[key stringValue] length]>0) {
