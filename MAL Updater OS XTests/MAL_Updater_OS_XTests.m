@@ -11,6 +11,8 @@
 #import "MyAnimeList+Keychain.h"
 #import "MAL_Updater_OS_XAppDelegate.h"
 #import "AutoExceptions.h"
+#import "DonationKeyConstants.h"
+#import "Utility.h"
 
 @interface MAL_Updater_OS_XTests : XCTestCase
 @property (strong) MyAnimeList *MALEngine;
@@ -106,6 +108,18 @@
     }
     else {
         XCTAssert(NO, @"Test Failed: There is no account stored");
+    }
+}
+
+- (void)testDonationKeyValidation {
+    int status = [Utility checkDonationKey:donorkey name:donorname];
+    if (status == 1) {
+        NSLog(@"Donation key validated successfully");
+        XCTAssert(YES, @"No Errors");
+    }
+    else {
+        NSLog(@"Donation key validated failed");
+        XCTAssert(NO, @"Key validation failed.");
     }
 }
 

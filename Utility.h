@@ -7,11 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <CocoaOniguruma/OnigRegexp.h>
-#import <CocoaOniguruma/OnigRegexpUtility.h>
 #import "NSString_stripHtml.h"
 #import "string_score.h"
 #import "MAL_Updater_OS_XAppDelegate.h"
+
+@class OnigRegexp;
 
 @interface Utility : NSObject
 +(bool)checkMatch:(NSString *)title

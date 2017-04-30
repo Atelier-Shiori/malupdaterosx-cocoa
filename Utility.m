@@ -9,6 +9,8 @@
 #import "Utility.h"
 #import <EasyNSURLConnection/EasyNSURLConnectionClass.h>
 #import <MALLibraryAppMigrate/MALLibraryAppMigrate.h>
+#import <CocoaOniguruma/OnigRegexp.h>
+#import <CocoaOniguruma/OnigRegexpUtility.h>
 
 @implementation Utility
 +(bool)checkMatch:(NSString *)title
