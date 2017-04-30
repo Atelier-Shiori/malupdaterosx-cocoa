@@ -19,11 +19,11 @@
     NSString * LastScrobbledSource;
     NSDictionary * LastScrobbledInfo;
     NSString * username;
-    __weak NSString * DetectedTitle;
-    __weak NSString * DetectedEpisode;
-    __weak NSString * DetectedSource;
-    __weak NSString * DetectedGroup;
-    __weak NSString * DetectedType;
+    NSString * DetectedTitle;
+    NSString * DetectedEpisode;
+    NSString * DetectedSource;
+    NSString * DetectedGroup;
+    NSString * DetectedType;
     NSString * FailedTitle;
     NSString * FailedEpisode;
     NSString * FailedSource;
