@@ -63,19 +63,28 @@
 }
 
 - (IBAction)migrateMALLibrary:(id)sender {
-    [MALLibraryAppStoreMigrate selectAppandValidate:self.window completionHandler:^(bool success, NSString *path) {
-        if (success) {
-            [Utility showsheetmessage:@"Registered" explaination:@"Thank you for purchasing MAL Library from the App Store. The donation reminder will no longer appear and access to weekly builds is now unlocked." window:nil];
-                // Add to the preferences
-            [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:YES] forKey:@"donated"];
-            [[NSUserDefaults standardUserDefaults] setObject:path forKey:@"MALLibraryPath"];
-            [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:YES] forKey:@"MacAppStoreMigrated"];
-                //Close Window
-                [self.window orderOut:self];
-        }
-        else {
-            [Utility showsheetmessage:@"Invalid Copy of MAL Library" explaination:@"Please select a valid copy of MAL Library you downloaded from the App Store." window:[self window]];
-        }
-    }];
+    // Validate in default location first
+    if ([MALLibraryAppStoreMigrate validateReciept:@"/Applications/MAL Library.app"]){
+        [self appStoreRegister:@"/Applications/MAL Library.app"];
+    }
+    else {
+        [MALLibraryAppStoreMigrate selectAppandValidate:self.window completionHandler:^(bool success, NSString *path) {
+            if (success) {
+                [self appStoreRegister:path];
+            }
+            else {
+                [Utility showsheetmessage:@"Invalid Copy of MAL Library" explaination:@"Please select a valid copy of MAL Library you downloaded from the App Store." window:[self window]];
+            }
+        }];
+    }
+}
+- (void)appStoreRegister:(NSString *)path{
+    [Utility showsheetmessage:@"Registered" explaination:@"Thank you for purchasing MAL Library from the App Store. The donation reminder will no longer appear and access to weekly builds is now unlocked." window:nil];
+    // Add to the preferences
+    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:YES] forKey:@"donated"];
+    [[NSUserDefaults standardUserDefaults] setObject:path forKey:@"MALLibraryPath"];
+    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:YES] forKey:@"MacAppStoreMigrated"];
+    //Close Window
+    [self.window orderOut:self];
 }
 @end
