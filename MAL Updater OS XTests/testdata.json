@@ -34,5 +34,14 @@
   "detectedepisode":"2",
   "detectedseason":0,
   "deletetitle":1
+  },
+  {
+  "filename":"Alice & Zoroku - 1",
+  "expected-title":"Alice to Zouroku",
+  "group":"",
+  "zeroepisode":0,
+  "detectedepisode":"1",
+  "detectedseason":0,
+  "deletetitle":1
   }
 ]

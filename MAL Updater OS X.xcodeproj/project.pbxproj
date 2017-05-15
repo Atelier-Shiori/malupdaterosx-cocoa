@@ -14,6 +14,7 @@
 		2D7B152D1EB54E280014D4C7 /* MALLibraryAppMigrate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D7B152C1EB54E280014D4C7 /* MALLibraryAppMigrate.framework */; };
 		2D7B152E1EB5515B0014D4C7 /* MALLibraryAppMigrate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D7B152C1EB54E280014D4C7 /* MALLibraryAppMigrate.framework */; };
 		2D7B152F1EB5515B0014D4C7 /* MALLibraryAppMigrate.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2D7B152C1EB54E280014D4C7 /* MALLibraryAppMigrate.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2D8BF8BD1EC9E2900068856A /* XMLReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D8BF8BC1EC9E2900068856A /* XMLReader.m */; };
 		2D9C3AE11E6A0BC7007D8F68 /* EasyNSURLConnection.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D9C3AE01E6A0BC7007D8F68 /* EasyNSURLConnection.framework */; };
 		2D9C3AE21E6A0C07007D8F68 /* EasyNSURLConnection.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D9C3AE01E6A0BC7007D8F68 /* EasyNSURLConnection.framework */; };
 		2D9C3AE31E6A0C07007D8F68 /* EasyNSURLConnection.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2D9C3AE01E6A0BC7007D8F68 /* EasyNSURLConnection.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -144,6 +145,8 @@
 		2D5D38851EB62E8200689CC4 /* DonationKeyConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DonationKeyConstants.m; sourceTree = "<group>"; };
 		2D60876A1E28239D00D6E583 /* MAL_Updater_OS_X_DataModel 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "MAL_Updater_OS_X_DataModel 3.xcdatamodel"; sourceTree = "<group>"; };
 		2D7B152C1EB54E280014D4C7 /* MALLibraryAppMigrate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MALLibraryAppMigrate.framework; path = Frameworks/MALLibraryAppMigrate.framework; sourceTree = "<group>"; };
+		2D8BF8BB1EC9E2900068856A /* XMLReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLReader.h; sourceTree = "<group>"; };
+		2D8BF8BC1EC9E2900068856A /* XMLReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMLReader.m; sourceTree = "<group>"; };
 		2D9C3AE01E6A0BC7007D8F68 /* EasyNSURLConnection.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EasyNSURLConnection.framework; path = Frameworks/EasyNSURLConnection.framework; sourceTree = "<group>"; };
 		2DAFC1D01E2301ED00FB7A14 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		2DAFC1D11E2301ED00FB7A14 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
@@ -639,6 +642,8 @@
 				6FAA0C1D1A7E938400416079 /* ExceptionsCache.h */,
 				6FAA0C1E1A7E938400416079 /* ExceptionsCache.m */,
 				823D4D1F1A1AB46600392ACB /* Recognition.h */,
+				2D8BF8BB1EC9E2900068856A /* XMLReader.h */,
+				2D8BF8BC1EC9E2900068856A /* XMLReader.m */,
 				823D4D201A1AB46600392ACB /* Recognition.m */,
 				6F1865911A7D79CB00C74A47 /* Detection.h */,
 				6F1865921A7D79CB00C74A47 /* Detection.m */,
@@ -1015,6 +1020,7 @@
 				5967C9341C95AD51005FCBC7 /* string_score.c in Sources */,
 				5C881EFB19F462B400E20425 /* NSString_stripHtml.m in Sources */,
 				829727981A8BB14E004F73AB /* MyAnimeList+Update.m in Sources */,
+				2D8BF8BD1EC9E2900068856A /* XMLReader.m in Sources */,
 				6F1865931A7D79CB00C74A47 /* Detection.m in Sources */,
 				59D99C071CBEDB0000762EA5 /* MyAnimeList+HummingbirdSearch.m in Sources */,
 				5C07DA671A8156420003A827 /* HistoryWindow.m in Sources */,

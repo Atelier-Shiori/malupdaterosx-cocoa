@@ -7,10 +7,12 @@
 //
 
 #import "MyAnimeList+Search.h"
+#import "MyAnimeList+Keychain.h"
 #import <EasyNSURLConnection/EasyNSURLConnectionClass.h>
 #import "Utility.h"
 #import "ExceptionsCache.h"
 #import "Recognition.h"
+#import "XMLReader.h"
 
 @implementation MyAnimeList (Search)
 -(NSString *)searchanime{
@@ -45,8 +47,10 @@
     NSString * searchterm = [Utility urlEncodeString:searchtitle];
     
     //Set Search API
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/2.1/anime/search?q=%@",MALApiUrl, searchterm]];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://myanimelist.net/api/anime/search.xml?q=%@", searchterm]];
     EasyNSURLConnection *request = [[EasyNSURLConnection alloc] initWithURL:url];
+    //Set Token
+    [request addHeader:[NSString stringWithFormat:@"Basic %@",[self getBase64]]  forKey:@"Authorization"];
     //Ignore Cookies
     [request setUseCookies:NO];
     //Perform Search
@@ -61,7 +65,7 @@
             return @"";
         case 200:
             online = true;
-            return [self findaniid:[request getResponseData] searchterm:searchtitle];
+            return [self findaniid:[request getResponseDataString] searchterm:searchtitle];
         default:
             online = true;
             Success = NO;
@@ -69,10 +73,12 @@
     }
     
 }
--(NSString *)findaniid:(NSData *)ResponseData searchterm:(NSString *)term{
-    // Initalize JSON parser and parse data
-    NSError* error;
-    NSArray *searchdata = [NSJSONSerialization JSONObjectWithData:ResponseData options:nil error:&error];
+-(NSString *)findaniid:(NSString *)ResponseData searchterm:(NSString *)term {
+    // Parse XML
+    NSArray *searchdata = [self MALSearchXMLToAtarashiiDataFormat:ResponseData];
+    NSSortDescriptor * descriptor = [[NSSortDescriptor alloc] initWithKey:@"title" ascending:YES];
+    NSSortDescriptor * descriptor2 = [[NSSortDescriptor alloc] initWithKey:@"english_title" ascending:YES];
+    searchdata = [searchdata sortedArrayUsingDescriptors:@[descriptor, descriptor2]];
     //Initalize NSString to dump the title temporarily
     NSString *theshowtitle = @"";
     NSString *alttitle = @"";
@@ -106,58 +112,34 @@
                 break;
             case 1:
                 regex = [OnigRegexp compile:[[NSString stringWithFormat:@"(%@)",term] stringByReplacingOccurrencesOfString:@" " withString:@"|"] options:OnigOptionIgnorecase];
-                //Invalidate Existing Matches
-                titlematch1 = nil;
                 break;
             default:
                 break;
         }
-        if (DetectedTitleisMovie) {
-            //Check movies, specials and OVA
-            for (NSDictionary *searchentry in sortedArray) {
-                theshowtitle = (NSString *)searchentry[@"title"];
-                //Populate Synonyms if any.
-                if ([(NSDictionary *)searchentry[@"other_titles"] count] > 0) {
-                    if (((NSDictionary *)searchentry[@"other_titles"])[@"synonyms"]) {
-                        NSArray * a = ((NSDictionary *)searchentry[@"other_titles"])[@"synonyms"];
-                        for (NSString * synonym in a ) {
-                            alttitle = [NSString stringWithFormat:@"- %@  %@", synonym, alttitle];
-                        }
-                    }
-                }
-                else {alttitle = @"";}
-                
-                // Remove colons as they are invalid characters for filenames and to improve accuracy
-                theshowtitle = [theshowtitle stringByReplacingOccurrencesOfString:@":" withString:@""];
-                alttitle = [alttitle stringByReplacingOccurrencesOfString:@":" withString:@""];
-                
-                if ([Utility checkMatch:theshowtitle alttitle:alttitle regex:regex option:i]) {
-                }
-                DetectedEpisode = @"1"; // Usually, there is one episode in a movie.
-                if ([[NSString stringWithFormat:@"%@", searchentry[@"type"]] isEqualToString:@"Special"]||[[NSString stringWithFormat:@"%@", searchentry[@"type"]] isEqualToString:@"OVA"]) {
-                    DetectedTitleisMovie = false;
-                }
-                //Return titleid
-                return [self foundtitle:[NSString stringWithFormat:@"%@",searchentry[@"id"]] info:searchentry];
-            }
-        }
-        // Check TV, ONA, Special, OVA, Other
         for (NSDictionary *searchentry in sortedArray) {
             theshowtitle = (NSString *)searchentry[@"title"];
+            NSArray * a = @[];
             //Populate Synonyms if any.
-            if ([(NSDictionary *)searchentry[@"other_titles"] count] > 0) {
-                if (((NSDictionary *)searchentry[@"other_titles"])[@"synonyms"]) {
-                    NSArray * a = ((NSDictionary *)searchentry[@"other_titles"])[@"synonyms"];
-                    for (NSString * synonym in a ) {
-                        alttitle = [NSString stringWithFormat:@"- %@  %@", synonym, alttitle];
-                    }
-                }
+            if ([(NSArray *)searchentry[@"synonyms"] count] > 0) {
+                a = searchentry[@"synonyms"];
             }
             else {alttitle = @"";}
             // Remove colons as they are invalid characters for filenames and to improve accuracy
             theshowtitle = [theshowtitle stringByReplacingOccurrencesOfString:@":" withString:@""];
-            alttitle = [alttitle stringByReplacingOccurrencesOfString:@":" withString:@""];
-            int matchstatus = [Utility checkMatch:theshowtitle alttitle:alttitle regex:regex option:i];
+            int matchstatus;
+            if ([(NSArray *)searchentry[@"synonyms"] count] > 0) {
+                for (NSString *syn in a) {
+                    alttitle = syn;
+                    alttitle = [alttitle stringByReplacingOccurrencesOfString:@":" withString:@""];
+                    matchstatus = [Utility checkMatch:theshowtitle alttitle:alttitle regex:regex option:i];
+                    if (matchstatus == 1 || matchstatus == 2) {
+                        break;
+                    }
+                }
+            }
+            else {
+                matchstatus = [Utility checkMatch:theshowtitle alttitle:alttitle regex:regex option:i];
+            }
             if (matchstatus == 1 || matchstatus == 2) {
                 if ([[NSString stringWithFormat:@"%@", searchentry[@"type"]] isEqualToString:@"TV"]) { // Check Seasons if the title is a TV show type
                     // Used for Season Checking
@@ -183,8 +165,14 @@
                         }
                     }
                 }
+                if (DetectedTitleisMovie) {
+                    DetectedEpisode = @"1"; // Usually, there is one episode in a movie.
+                    if ([[NSString stringWithFormat:@"%@", searchentry[@"type"]] isEqualToString:@"Special"]||[[NSString stringWithFormat:@"%@", searchentry[@"type"]] isEqualToString:@"OVA"]) {
+                        DetectedTitleisMovie = false;
+                    }
+                }
                 //Return titleid if episode is valid
-                if ( [[NSString stringWithFormat:@"%@", searchentry[@"episodes"]] intValue] == 0 || ([[NSString stringWithFormat:@"%@",searchentry[@"episodes"]] intValue] >= [DetectedEpisode intValue])) {
+                if ( ([[NSString stringWithFormat:@"%@", searchentry[@"episodes"]] intValue] == 0 || ([[NSString stringWithFormat:@"%@",searchentry[@"episodes"]] intValue] >= [DetectedEpisode intValue]))) {
                     NSLog(@"Valid Episode Count");
                     if (sortedArray.count == 1 || DetectedSeason >= 2) {
                         return [self foundtitle:[NSString stringWithFormat:@"%@",searchentry[@"id"]] info:searchentry];
@@ -276,10 +264,10 @@
     int season2 = ((NSNumber *)[[Recognition alloc] recognize:match2[@"title"]][@"season"]).intValue;
     //Score first title
     score1 = string_fuzzy_score(title.UTF8String, [[NSString stringWithFormat:@"%@", match1[@"title"]] UTF8String], fuzziness);
-    ascore1 = string_fuzzy_score(title.UTF8String, [[NSString stringWithFormat:@"%@", [self generateAltTitles:match1[@"other_titles"]] ] UTF8String], fuzziness);
+    ascore1 = [self gethighestsynonymscore:match1[@"synonyms"] withTitle:title];
     //Score Second Title
     score2 = string_fuzzy_score(title.UTF8String, [[NSString stringWithFormat:@"%@", match2[@"title"]] UTF8String], fuzziness);
-    ascore2 = string_fuzzy_score(title.UTF8String, [[NSString stringWithFormat:@"%@", [self generateAltTitles:match2[@"other_titles"]] ] UTF8String], fuzziness);
+    ascore2 = [self gethighestsynonymscore:match1[@"synonyms"] withTitle:title];
     NSLog(@"%@ score - %f", match1[@"title"], score1);
     NSLog(@"%@ score - %f", match2[@"title"], score2);
     NSLog(@"%@ ascore - %f", match1[@"title"], ascore1);
@@ -336,17 +324,43 @@
         return [self foundtitle:[NSString stringWithFormat:@"%@",match2[@"id"]] info:match2];
     }
 }
--(NSString *)generateAltTitles:(NSDictionary *)otitles{
-    NSString * alttitle;
-    if ([otitles count] > 0) {
-        if (otitles[@"synonyms"]) {
-            NSArray * a = otitles[@"synonyms"];
-            for (NSString * synonym in a ) {
-                alttitle = [NSString stringWithFormat:@"- %@  %@", synonym, alttitle];
-            }
+- (NSArray *)MALSearchXMLToAtarashiiDataFormat:(NSString *)xml {
+    NSError *error = nil;
+    NSDictionary *d = [XMLReader dictionaryForXMLString:xml options:XMLReaderOptionsProcessNamespaces error:&error];
+    NSArray *searchresults;
+    if (d[@"anime"]) {
+        searchresults = d[@"anime"][@"entry"];
+        if (![searchresults isKindOfClass:[NSArray class]]){
+            // Import only contains one object, put it in an array.
+            searchresults = [NSArray arrayWithObject:searchresults];
         }
     }
-    else {alttitle = @"";}
-    return alttitle;
+    else {
+        return @[];
+    }
+    NSMutableArray *output = [NSMutableArray new];
+    for (NSDictionary *d in searchresults) {
+        NSMutableArray *synonyms = [NSMutableArray new];
+        NSString *englishtitle = @"";
+        if (d[@"english"][@"text"]) {
+            [synonyms addObject:d[@"english"][@"text"]];
+            englishtitle = d[@"english"][@"text"];
+        }
+        if (d[@"synonyms"][@"text"]) {
+            [synonyms addObjectsFromArray:[((NSString *)d[@"synonyms"][@"text"]) componentsSeparatedByString:@";"]];
+        }
+        [output addObject:@{@"id":@(((NSString *)d[@"id"][@"text"]).intValue), @"episodes":@(((NSString *)d[@"episodes"][@"text"]).intValue), @"score":@(((NSString *)d[@"score"][@"text"]).floatValue), @"status":d[@"status"][@"text"], @"start_date":[NSString stringWithFormat:@"%@",d[@"start_date"][@"text"]], @"end_date":[NSString stringWithFormat:@"%@",d[@"end_date"][@"text"]], @"synonyms": synonyms, @"synopsis":[NSString stringWithFormat:@"%@",d[@"synopsis"][@"text"]], @"type":d[@"type"][@"text"], @"title":d[@"title"][@"text"], @"english_title":englishtitle}];
+    }
+    return output;
+}
+- (float)gethighestsynonymscore:(NSArray *)synonyms withTitle:(NSString *)title {
+    float score = 0;
+    for (NSString * synonym in synonyms ) {
+        float tmpscore = string_fuzzy_score(title.UTF8String, synonym.UTF8String, 0.3);
+        if (tmpscore > score) {
+            score = tmpscore;
+        }
+    }
+    return score;
 }
 @end
