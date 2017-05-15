@@ -84,8 +84,7 @@
     NSString *alttitle = @"";
     //Create Regular Expressions
     OnigRegexp    *regex;
-    // For Sanity (TV shows and OVAs usually have more than one episode)
-    if(DetectedEpisode.length == 0) {
+    if([DetectedType isEqualToString:@"Movie"]|[DetectedType isEqualToString:@"movie"]) {
         // Title is a movie
         NSLog(@"Title is a movie");
         DetectedTitleisMovie = true;

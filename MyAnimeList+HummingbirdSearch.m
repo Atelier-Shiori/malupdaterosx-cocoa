@@ -93,7 +93,7 @@
     OnigRegexp   *regex;
     //Retrieve the ID. Note that the most matched title will be on the top
     // For Sanity (TV shows and OVAs usually have more than one episode)
-    if(DetectedEpisode.length == 0) {
+    if([DetectedType isEqualToString:@"Movie"] || [DetectedType isEqualToString:@"movie"]) {
         // Title is a movie
         NSLog(@"Title is a movie");
         DetectedTitleisMovie = true;
@@ -118,14 +118,11 @@
                 break;
             case 1:
                 regex = [OnigRegexp compile:[[NSString stringWithFormat:@"(%@)",term] stringByReplacingOccurrencesOfString:@" " withString:@"|"] options:OnigOptionIgnorecase];
-                //Invalidate Existing Matches
-                titlematch1 = nil;
                 break;
             default:
                 break;
         }
         
-        // Check TV, ONA, Special, OVA, Other
         for (NSDictionary *searchentry in sortedArray) {
             NSDictionary * titles = searchentry[@"titles"];
             
@@ -342,8 +339,6 @@
             }
         }
     }
-    
-    
     //Return nothing
     return @"";
 }
