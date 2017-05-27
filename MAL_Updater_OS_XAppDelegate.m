@@ -1112,7 +1112,9 @@
     }
     [self appendToAnimeInfo:[NSString stringWithFormat:@"Episodes: %@", epi]];
     [self appendToAnimeInfo:[NSString stringWithFormat:@"Popularity: %@", d[@"popularity_rank"]]];
-    [self appendToAnimeInfo:[NSString stringWithFormat:@"Favorited: %@", d[@"favorited_count"]]];
+    if (d[@"favorited_count"]) {
+        [self appendToAnimeInfo:[NSString stringWithFormat:@"Favorited: %@", d[@"favorited_count"]]];
+    }
     //Image
     NSImage * dimg = [[NSImage alloc]initByReferencingURL:[NSURL URLWithString: (NSString *)d[@"image_url"]]]; //Downloads Image
     [img setImage:dimg]; //Get the Image for the title
