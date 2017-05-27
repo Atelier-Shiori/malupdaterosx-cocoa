@@ -36,11 +36,13 @@ See readme.md in the MAL-Updater-OS-XTextualPlugin folder.
 All the frameworks are included. Just build! Here are the frameworks that are used in this app:
 
 * anitomy-osx.framework (MPL Licensed, included as a submodule)
+* detectionkit.framework
 * EasyNSURLConnection.framework
 * MASPreferences.framework
 * MASShortcut.framework
 * Sparkle.framework
 * CocoaOniguruma.framework
+* Reachability.framework
 * streamlinkdetect.framework
 
 ## License
