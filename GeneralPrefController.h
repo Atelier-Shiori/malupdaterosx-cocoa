@@ -20,5 +20,5 @@
     IBOutlet NSButton * updateexceptionschk;
 }
 
--(IBAction)clearSearchCache:(id)sender;
+- (IBAction)clearSearchCache:(id)sender;
 @end

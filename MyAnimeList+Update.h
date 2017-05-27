@@ -9,12 +9,12 @@
 #import "MyAnimeList.h"
 
 @interface MyAnimeList (Update)
--(BOOL)checkstatus:(NSString *)titleid;
--(BOOL)updatestatus:(NSString *)titleid
+- (BOOL)checkstatus:(NSString *)titleid;
+- (BOOL)updatestatus:(NSString *)titleid
               score:(int)showscore
         watchstatus:(NSString*)showwatchstatus
             episode:(NSString*)episode;
--(bool)removetitle:(NSString *)titleid;
--(int)updatetitle:(NSString *)titleid confirming:(bool) confirming;
--(int)addtitle:(NSString *)titleid confirming:(bool) confirming;
+- (bool)removetitle:(NSString *)titleid;
+- (int)updatetitle:(NSString *)titleid confirming:(bool) confirming;
+- (int)addtitle:(NSString *)titleid confirming:(bool) confirming;
 @end

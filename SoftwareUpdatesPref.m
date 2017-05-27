@@ -32,13 +32,13 @@
 {
     return NSLocalizedString(@"Software Updates", @"Toolbar item name for the Software Updatespreference pane");
 }
--(void)loadView{
+- (void)loadView{
     [super loadView];
     if([(NSString *)[[NSUserDefaults standardUserDefaults] valueForKey:@"SUFeedURL"] isEqualToString:@"https://updates.ateliershiori.moe/malupdaterosx-beta/profileInfo.php"]) {
         betacheck.state = 1;
     }
 }
--(IBAction)setBetaChannel:(id)sender{
+- (IBAction)setBetaChannel:(id)sender{
     if(betacheck.state == 1) {
         [[NSUserDefaults standardUserDefaults] setObject:@"https://updates.ateliershiori.moe/malupdaterosx-beta/profileInfo.php" forKey:@"SUFeedURL"];
     }

@@ -9,6 +9,7 @@
 #import "AdvancedPrefController.h"
 #import "Utility.h"
 #import <EasyNSURLConnection/EasyNSURLConnectionClass.h>
+#import <DetectionKit/DetectionKit.h>
 
 @interface AdvancedPrefController ()
 
@@ -42,11 +43,11 @@
 {
     return NSLocalizedString(@"Advanced", @"Toolbar item name for the Advanced preference pane");
 }
--(IBAction)getHelp:(id)sender{
+- (IBAction)getHelp:(id)sender{
     //Show Help
     [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"https://github.com/chikorita157/malupdaterosx-cocoa/wiki/Advanced-Options"]];
 }
--(IBAction)testapi:(id)sender
+- (IBAction)testapi:(id)sender
 {
     [testprogressindicator setHidden:NO];
     [testprogressindicator startAnimation:nil];
@@ -81,7 +82,7 @@
         });
     });
 }
--(IBAction)resetapiurl:(id)sender
+- (IBAction)resetapiurl:(id)sender
 {
     //Reset Unofficial MAL API URL
     [APIUrl setStringValue:@"https://malapi.ateliershiori.moe"];
@@ -92,16 +93,18 @@
 }
 - (void)controlTextDidChange:(NSNotification *)notification {
     NSTextField * textfield = [notification object];
-    [[appdelegate getMALEngineInstance] setKodiReachAddress:[textfield stringValue]];
+    MyAnimeList *malengine = [appdelegate getMALEngineInstance];
+    [malengine.detection setKodiReachAddress:[textfield stringValue]];
 }
--(IBAction)setKodiReach:(id)sender{
+- (IBAction)setKodiReach:(id)sender{
+    MyAnimeList *malengine = [appdelegate getMALEngineInstance];
     if ([kodicheck state] == 0) {
         // Turn off reachability notification for Kodi
-        [[appdelegate getMALEngineInstance] setKodiReach:false];
+        [malengine.detection setKodiReach:false];
     }
     else {
         // Turn on reachability notification for Kodi
-        [[appdelegate getMALEngineInstance] setKodiReach:true];
+        [malengine.detection setKodiReach:true];
     }
 }
 

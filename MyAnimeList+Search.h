@@ -9,10 +9,10 @@
 #import "MyAnimeList.h"
 
 @interface MyAnimeList (Search)
--(NSString *)searchanime;
--(NSString *)performSearch:(NSString *)searchtitle;
--(NSString *)findaniid:(NSString *)ResponseData searchterm:(NSString *)term;
--(NSArray *)filterArray:(NSArray *)searchdata;
--(NSString *)foundtitle:(NSString *)titleid info:(NSDictionary *)found;
--(NSString *)comparetitle:(NSString *)title match1:(NSDictionary *)match1 match2:(NSDictionary *)match2 mstatus:(int)a mstatus2:(int)b;
+- (NSString *)searchanime;
+- (NSString *)performSearch:(NSString *)searchtitle;
+- (NSString *)findaniid:(NSString *)ResponseData searchterm:(NSString *)term;
+- (NSArray *)filterArray:(NSArray *)searchdata;
+- (NSString *)foundtitle:(NSString *)titleid info:(NSDictionary *)found;
+- (NSString *)comparetitle:(NSString *)title match1:(NSDictionary *)match1 match2:(NSDictionary *)match2 mstatus:(int)a mstatus2:(int)b;
 @end

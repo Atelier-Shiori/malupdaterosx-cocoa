@@ -16,7 +16,7 @@
 @end
 
 @implementation DonationWindowController
--(id)init{
+- (id)init{
     self = [super initWithWindowNibName:@"DonationWindow"];
     if(!self)
         return nil;
@@ -33,7 +33,7 @@
             _appstoreicon.image = [[NSImage alloc] initByReferencingURL:[NSURL fileURLWithPath:[[NSBundle bundleWithPath:@"/Applications/App Store.app"] pathForResource:@"appStore" ofType:@"icns"]]];
     }
 }
--(IBAction)validate:(id)sender{
+- (IBAction)validate:(id)sender{
     if ([[name stringValue] length] > 0 && [[key stringValue] length]>0) {
         // Check donation key
         int success = [Utility checkDonationKey:[key stringValue] name:[name stringValue]];
@@ -58,18 +58,18 @@
     }
 }
 
--(IBAction)cancel:(id)sender{
+- (IBAction)cancel:(id)sender{
     [self.window orderOut:self];
 }
 
--(IBAction)donate:(id)sender{
+- (IBAction)donate:(id)sender{
     // Show Donation Page
     [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://malupdaterosx.ateliershiori.moe/donate/"]];
 }
 
 - (IBAction)migrateMALLibrary:(id)sender {
     // Validate in default location first
-    if ([MALLibraryAppStoreMigrate validateReciept:@"/Applications/MAL Library.app"]){
+    if ([MALLibraryAppStoreMigrate validateReciept:@"/Applications/MAL Library.app"]) {
         [self appStoreRegister:@"/Applications/MAL Library.app"];
     }
     else {

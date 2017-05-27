@@ -8,44 +8,11 @@
 
 #import <Cocoa/Cocoa.h>
 #import "MAL_Updater_OS_XAppDelegate.h"
-#import "Reachability.h"
+@class Reachability;
 @class streamlinkdetector;
+@class Detection;
 
-@interface MyAnimeList : NSObject {
-	NSString * MALApiUrl;
-    NSString * LastScrobbledTitle;
-	NSString * LastScrobbledEpisode;
-	NSString * LastScrobbledActualTitle;
-    NSString * LastScrobbledSource;
-    NSDictionary * LastScrobbledInfo;
-    NSString * username;
-    NSString * DetectedTitle;
-    NSString * DetectedEpisode;
-    NSString * DetectedSource;
-    NSString * DetectedGroup;
-    NSString * DetectedType;
-    NSString * FailedTitle;
-    NSString * FailedEpisode;
-    NSString * FailedSource;
-    BOOL DetectedTitleisMovie;
-    BOOL DetectedTitleisEpisodeZero;
-    int DetectedSeason;
-	int DetectedCurrentEpisode;
-	int TotalEpisodes;
-	NSString * WatchStatus;
-	int TitleScore;
-    NSString * AniID;
-	BOOL LastScrobbledTitleNew;
-	BOOL confirmed;
-	BOOL Success;
-    BOOL online;
-    BOOL kodionline;
-	BOOL correcting;
-    Reachability* reach;
-    Reachability* kodireach;
-    NSManagedObjectContext *managedObjectContext;
-    streamlinkdetector * detector;
-}
+@interface MyAnimeList : NSObject
 typedef NS_ENUM(unsigned int, ScrobbleStatus) {
     ScrobblerNothingPlaying = 0,
     ScrobblerSameEpisodePlaying = 1,
@@ -60,36 +27,49 @@ typedef NS_ENUM(unsigned int, ScrobbleStatus) {
     ScrobblerUpdateFailed = 53,
     ScrobblerFailed = 54
 };
+@property (strong) NSString *MALApiUrl;
+@property (strong, getter=getLastScrobbledTitle) NSString *LastScrobbledTitle;
+@property (strong, getter=getLastScrobbledEpisode) NSString *LastScrobbledEpisode;
+@property (strong, getter=getLastScrobbledActualTitle) NSString *LastScrobbledActualTitle;
+@property (strong, getter=getLastScrobbledSource) NSString *LastScrobbledSource;
+@property (strong, getter=getLastScrobbledInfo) NSDictionary *LastScrobbledInfo;
+@property (strong) NSString *username;
+@property (strong) NSString *DetectedTitle;
+@property (strong) NSString *DetectedEpisode;
+@property (strong) NSString *DetectedSource;
+@property (strong) NSString *DetectedGroup;
+@property (strong) NSString *DetectedType;
+@property (strong, getter=getFailedTitle) NSString *FailedTitle;
+@property (strong, getter=getFailedEpisode) NSString *FailedEpisode;
+@property (strong, getter=getFailedSource) NSString *FailedSource;
+@property BOOL DetectedTitleisMovie;
+@property BOOL DetectedTitleisEpisodeZero;
+@property int DetectedSeason;
+@property (getter=getCurrentEpisode) int DetectedCurrentEpisode;
+@property (getter=getTotalEpisodes) int TotalEpisodes;
+@property (strong) NSString *WatchStatus;
+@property (getter=getScore) int TitleScore;
+@property (strong, getter=getAniID)NSString *AniID;
+@property (getter=getisNewTitle) BOOL LastScrobbledTitleNew;
+@property (getter=getConfirmed) BOOL confirmed;
+@property (getter=getSuccess) BOOL Success;
+@property (getter=getOnlineStatus) BOOL online;
+@property BOOL correcting;
+@property (strong) Reachability* reach;
+@property (strong, getter=getstreamlinkdetector) streamlinkdetector *detector;
+@property (strong) Detection *detection;
 @property (nonatomic, readonly) NSManagedObjectContext *managedObjectContext;
--(void)setManagedObjectContext:(NSManagedObjectContext *)context;
+
+- (void)setManagedObjectContext:(NSManagedObjectContext *)context;
 - (int)startscrobbling;
--(int)scrobbleagain:(NSString *)showtitle Episode:(NSString *)episode correctonce:(BOOL)correctonce;
--(int)scrobblefromstreamlink:(NSString *)url withStream:(NSString *)stream;
+- (int)scrobbleagain:(NSString *)showtitle Episode:(NSString *)episode correctonce:(BOOL)correctonce;
+- (int)scrobblefromstreamlink:(NSString *)url withStream:(NSString *)stream;
 - (int)performscrobbletest:(NSString *)filename delete:(bool)deletetitle;
--(int)scrobble;
--(NSDictionary *)scrobblefromqueue;
--(BOOL)confirmupdate;
--(NSString *)getLastScrobbledTitle;
--(NSString *)getLastScrobbledEpisode;
--(NSString *)getLastScrobbledActualTitle;
--(NSString *)getLastScrobbledSource;
--(NSString *)getAniID;
--(int)getTotalEpisodes;
--(NSString *)getFailedTitle;
--(NSString *)getFailedEpisode;
--(int)getCurrentEpisode;
--(BOOL)getConfirmed;
--(int)getScore;
--(int)getWatchStatus;
--(BOOL)getSuccess;
--(BOOL)getisNewTitle;
--(BOOL)getOnlineStatus;
--(BOOL)getKodiOnlineStatus;
--(NSDictionary *)getLastScrobbledInfo;
--(int)getQueueCount;
--(streamlinkdetector *)getstreamlinkdetector;
--(void)clearAnimeInfo;
--(NSString *)startSearch;
--(void)setKodiReach:(BOOL)enable;
--(void)setKodiReachAddress:(NSString *)url;
+- (int)scrobble;
+- (NSDictionary *)scrobblefromqueue;
+- (BOOL)confirmupdate;
+- (int)getWatchStatus;
+- (int)getQueueCount;
+- (void)clearAnimeInfo;
+- (NSString *)startSearch;
 @end

@@ -22,7 +22,7 @@
 
 #pragma mark -
 #pragma mark MASPreferencesViewController
--(void)loadView{
+- (void)loadView{
     [super loadView];
     // Set Shortcut Recorder Viewer Defaults Key
     self.confirmupdateshortcutView.associatedUserDefaultsKey = kPreferenceConfirmUpdateShortcut;

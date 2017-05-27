@@ -11,6 +11,12 @@
 		256AC3DA0F4B6AC300CF3369 /* MAL_Updater_OS_XAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 256AC3D90F4B6AC300CF3369 /* MAL_Updater_OS_XAppDelegate.m */; };
 		2D417C1F1E6A378D008D225B /* MSWeakTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D417C1E1E6A378D008D225B /* MSWeakTimer.m */; };
 		2D5D38861EB62E8200689CC4 /* DonationKeyConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5D38851EB62E8200689CC4 /* DonationKeyConstants.m */; };
+		2D63136D1EDA284A00C3CB6B /* DetectionKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D63136C1EDA284A00C3CB6B /* DetectionKit.framework */; };
+		2D63136E1EDA287200C3CB6B /* DetectionKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D63136C1EDA284A00C3CB6B /* DetectionKit.framework */; };
+		2D63136F1EDA287200C3CB6B /* DetectionKit.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2D63136C1EDA284A00C3CB6B /* DetectionKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2D6313711EDA293100C3CB6B /* Reachability.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D6313701EDA293100C3CB6B /* Reachability.framework */; };
+		2D6313721EDA293B00C3CB6B /* Reachability.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D6313701EDA293100C3CB6B /* Reachability.framework */; };
+		2D6313731EDA293B00C3CB6B /* Reachability.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2D6313701EDA293100C3CB6B /* Reachability.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2D7B152D1EB54E280014D4C7 /* MALLibraryAppMigrate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D7B152C1EB54E280014D4C7 /* MALLibraryAppMigrate.framework */; };
 		2D7B152E1EB5515B0014D4C7 /* MALLibraryAppMigrate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D7B152C1EB54E280014D4C7 /* MALLibraryAppMigrate.framework */; };
 		2D7B152F1EB5515B0014D4C7 /* MALLibraryAppMigrate.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2D7B152C1EB54E280014D4C7 /* MALLibraryAppMigrate.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -18,7 +24,6 @@
 		2D9C3AE11E6A0BC7007D8F68 /* EasyNSURLConnection.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D9C3AE01E6A0BC7007D8F68 /* EasyNSURLConnection.framework */; };
 		2D9C3AE21E6A0C07007D8F68 /* EasyNSURLConnection.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D9C3AE01E6A0BC7007D8F68 /* EasyNSURLConnection.framework */; };
 		2D9C3AE31E6A0C07007D8F68 /* EasyNSURLConnection.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2D9C3AE01E6A0BC7007D8F68 /* EasyNSURLConnection.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		2DAFC1D21E2301ED00FB7A14 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DAFC1D11E2301ED00FB7A14 /* Reachability.m */; };
 		2DAFC1DA1E2313B100FB7A14 /* OfflineViewQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DAFC1D81E2313B100FB7A14 /* OfflineViewQueue.m */; };
 		2DAFC1DC1E23143100FB7A14 /* OfflineViewQueue.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2DAFC1DE1E23143100FB7A14 /* OfflineViewQueue.xib */; };
 		2DC900361E257C3300E45570 /* InttoStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DC900351E257C3300E45570 /* InttoStatus.m */; };
@@ -48,7 +53,6 @@
 		5CD36BBA19F2ED88007BB6B6 /* GeneralPrefController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CD36BB919F2ED88007BB6B6 /* GeneralPrefController.m */; };
 		6F0CF36F1A7DBADD00261A43 /* Utility.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F0CF36E1A7DBADD00261A43 /* Utility.m */; };
 		6F12909B1A7D833100B8C3E6 /* AutoExceptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F12909A1A7D833100B8C3E6 /* AutoExceptions.m */; };
-		6F1865931A7D79CB00C74A47 /* Detection.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F1865921A7D79CB00C74A47 /* Detection.m */; };
 		6F1A2C8F1B929B9800D47FE2 /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = 6F1A2C8E1B929B9800D47FE2 /* dsa_pub.pem */; };
 		6F27071E1A69905D0020913A /* FixSearchDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6F2707201A69905D0020913A /* FixSearchDialog.xib */; };
 		6F27CE941A6869E8004E51F8 /* ExceptionsPref.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6F27CE961A6869E8004E51F8 /* ExceptionsPref.xib */; };
@@ -67,11 +71,9 @@
 		8227C1181A1D8D47005F3301 /* anitomy-osx.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8227C1161A1D8D34005F3301 /* anitomy-osx.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		822AEB891A202931003DD682 /* FixSearchDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 822AEB871A202931003DD682 /* FixSearchDialog.m */; };
 		822AEB8D1A202A7B003DD682 /* ExceptionsPref.m in Sources */ = {isa = PBXBuildFile; fileRef = 822AEB8C1A202A7B003DD682 /* ExceptionsPref.m */; };
-		823D4D211A1AB46600392ACB /* Recognition.m in Sources */ = {isa = PBXBuildFile; fileRef = 823D4D201A1AB46600392ACB /* Recognition.m */; };
 		8294C45E19F99B2F009DE98B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8294C45D19F99B2F009DE98B /* Images.xcassets */; };
 		829727951A8BB093004F73AB /* MyAnimeList+Search.m in Sources */ = {isa = PBXBuildFile; fileRef = 829727941A8BB093004F73AB /* MyAnimeList+Search.m */; };
 		829727981A8BB14E004F73AB /* MyAnimeList+Update.m in Sources */ = {isa = PBXBuildFile; fileRef = 829727971A8BB14E004F73AB /* MyAnimeList+Update.m */; };
-		82B9559819FD553500A032FB /* detectstream in Resources */ = {isa = PBXBuildFile; fileRef = 82B9559719FD553500A032FB /* detectstream */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
@@ -121,7 +123,9 @@
 				8227C1181A1D8D47005F3301 /* anitomy-osx.framework in CopyFiles */,
 				2D7B152F1EB5515B0014D4C7 /* MALLibraryAppMigrate.framework in CopyFiles */,
 				91206C1F1E75F5AD0050E9C5 /* MASPreferences.framework in CopyFiles */,
+				2D63136F1EDA287200C3CB6B /* DetectionKit.framework in CopyFiles */,
 				91A609F51EA3E77C00EF40AB /* CocoaOniguruma.framework in CopyFiles */,
+				2D6313731EDA293B00C3CB6B /* Reachability.framework in CopyFiles */,
 				59D503791CB004BA0002532D /* Sparkle.framework in CopyFiles */,
 				2D9C3AE31E6A0C07007D8F68 /* EasyNSURLConnection.framework in CopyFiles */,
 			);
@@ -144,12 +148,12 @@
 		2D5D38841EB62E8200689CC4 /* DonationKeyConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DonationKeyConstants.h; sourceTree = "<group>"; };
 		2D5D38851EB62E8200689CC4 /* DonationKeyConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DonationKeyConstants.m; sourceTree = "<group>"; };
 		2D60876A1E28239D00D6E583 /* MAL_Updater_OS_X_DataModel 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "MAL_Updater_OS_X_DataModel 3.xcdatamodel"; sourceTree = "<group>"; };
+		2D63136C1EDA284A00C3CB6B /* DetectionKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DetectionKit.framework; path = Frameworks/DetectionKit.framework; sourceTree = "<group>"; };
+		2D6313701EDA293100C3CB6B /* Reachability.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Reachability.framework; path = Frameworks/Reachability.framework; sourceTree = "<group>"; };
 		2D7B152C1EB54E280014D4C7 /* MALLibraryAppMigrate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MALLibraryAppMigrate.framework; path = Frameworks/MALLibraryAppMigrate.framework; sourceTree = "<group>"; };
 		2D8BF8BB1EC9E2900068856A /* XMLReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLReader.h; sourceTree = "<group>"; };
 		2D8BF8BC1EC9E2900068856A /* XMLReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMLReader.m; sourceTree = "<group>"; };
 		2D9C3AE01E6A0BC7007D8F68 /* EasyNSURLConnection.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EasyNSURLConnection.framework; path = Frameworks/EasyNSURLConnection.framework; sourceTree = "<group>"; };
-		2DAFC1D01E2301ED00FB7A14 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
-		2DAFC1D11E2301ED00FB7A14 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		2DAFC1D71E2313B100FB7A14 /* OfflineViewQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OfflineViewQueue.h; sourceTree = "<group>"; };
 		2DAFC1D81E2313B100FB7A14 /* OfflineViewQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OfflineViewQueue.m; sourceTree = "<group>"; };
 		2DAFC1DD1E23143100FB7A14 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/OfflineViewQueue.xib; sourceTree = "<group>"; };
@@ -195,8 +199,6 @@
 		6F0CF36E1A7DBADD00261A43 /* Utility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utility.m; sourceTree = "<group>"; };
 		6F1290991A7D833100B8C3E6 /* AutoExceptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AutoExceptions.h; sourceTree = "<group>"; };
 		6F12909A1A7D833100B8C3E6 /* AutoExceptions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AutoExceptions.m; sourceTree = "<group>"; };
-		6F1865911A7D79CB00C74A47 /* Detection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Detection.h; sourceTree = "<group>"; };
-		6F1865921A7D79CB00C74A47 /* Detection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Detection.m; sourceTree = "<group>"; };
 		6F1A2C8E1B929B9800D47FE2 /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = dsa_pub.pem; path = deprecated/dsa_pub.pem; sourceTree = "<group>"; };
 		6F27071F1A69905D0020913A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/FixSearchDialog.xib; sourceTree = "<group>"; };
 		6F27CE951A6869E8004E51F8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/ExceptionsPref.xib; sourceTree = "<group>"; };
@@ -224,8 +226,6 @@
 		822AEB871A202931003DD682 /* FixSearchDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FixSearchDialog.m; sourceTree = "<group>"; };
 		822AEB8B1A202A7B003DD682 /* ExceptionsPref.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExceptionsPref.h; sourceTree = "<group>"; };
 		822AEB8C1A202A7B003DD682 /* ExceptionsPref.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExceptionsPref.m; sourceTree = "<group>"; };
-		823D4D1F1A1AB46600392ACB /* Recognition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Recognition.h; sourceTree = "<group>"; };
-		823D4D201A1AB46600392ACB /* Recognition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Recognition.m; sourceTree = "<group>"; };
 		8294C45D19F99B2F009DE98B /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = "MAL Updater OS X/Images.xcassets"; sourceTree = "<group>"; };
 		829727931A8BB093004F73AB /* MyAnimeList+Search.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MyAnimeList+Search.h"; sourceTree = "<group>"; };
 		829727941A8BB093004F73AB /* MyAnimeList+Search.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MyAnimeList+Search.m"; sourceTree = "<group>"; };
@@ -235,7 +235,6 @@
 		829FB41E19F739700026EAC2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/GeneralPreferenceView.xib; sourceTree = "<group>"; };
 		829FB41F19F739700026EAC2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LoginView.xib; sourceTree = "<group>"; };
 		829FB42019F739700026EAC2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/SoftwareUpdateView.xib; sourceTree = "<group>"; };
-		82B9559719FD553500A032FB /* detectstream */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; name = detectstream; path = detectstream/detectstream; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* MAL_Updater_OS_X-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "MAL_Updater_OS_X-Info.plist"; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* MAL Updater OS X.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MAL Updater OS X.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		910D22661E81DEC200760A08 /* streamlinkopen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = streamlinkopen.h; sourceTree = "<group>"; };
@@ -365,11 +364,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				91206C1D1E75F3F00050E9C5 /* MASPreferences.framework in Frameworks */,
+				2D63136D1EDA284A00C3CB6B /* DetectionKit.framework in Frameworks */,
 				91206C1B1E75F3E50050E9C5 /* MASShortcut.framework in Frameworks */,
 				6F28DC1B1A67092F00AF063F /* Carbon.framework in Frameworks */,
 				91206C1E1E75F5AD0050E9C5 /* MASPreferences.framework in Frameworks */,
 				9149EBE21E75F8A700B1AA22 /* MASShortcut.framework in Frameworks */,
 				910D226A1E81DFD100760A08 /* streamlinkdetect.framework in Frameworks */,
+				2D6313721EDA293B00C3CB6B /* Reachability.framework in Frameworks */,
 				91A609F31EA3E77400EF40AB /* CocoaOniguruma.framework in Frameworks */,
 				2D9C3AE11E6A0BC7007D8F68 /* EasyNSURLConnection.framework in Frameworks */,
 				8227C1171A1D8D34005F3301 /* anitomy-osx.framework in Frameworks */,
@@ -382,7 +383,9 @@
 				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
 				2D9C3AE21E6A0C07007D8F68 /* EasyNSURLConnection.framework in Frameworks */,
 				91A609F41EA3E77C00EF40AB /* CocoaOniguruma.framework in Frameworks */,
+				2D6313711EDA293100C3CB6B /* Reachability.framework in Frameworks */,
 				3A2DCCBE1210B3D900C920F1 /* Security.framework in Frameworks */,
+				2D63136E1EDA287200C3CB6B /* DetectionKit.framework in Frameworks */,
 				9161B2011E90246200FBF52F /* Fabric.framework in Frameworks */,
 				5C2B9DFC1221EB25006DEF0D /* CoreData.framework in Frameworks */,
 			);
@@ -447,6 +450,8 @@
 		1058C7A2FEA54F0111CA2CBB /* Other Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2D6313701EDA293100C3CB6B /* Reachability.framework */,
+				2D63136C1EDA284A00C3CB6B /* DetectionKit.framework */,
 				2D7B152C1EB54E280014D4C7 /* MALLibraryAppMigrate.framework */,
 				91A609F21EA3E77400EF40AB /* CocoaOniguruma.framework */,
 				9161B1FF1E90246200FBF52F /* Fabric.framework */,
@@ -499,7 +504,6 @@
 			isa = PBXGroup;
 			children = (
 				6FD961421B419E4C00DE539C /* MAL Updater OS X.sdef */,
-				82B9559919FD553900A032FB /* DetectStream */,
 				8294C45D19F99B2F009DE98B /* Images.xcassets */,
 				5C8ACEB919F409F90001A101 /* Images */,
 				5C0A2C4A122C7F960096908D /* Credits.rtf */,
@@ -641,16 +645,10 @@
 				6F12909A1A7D833100B8C3E6 /* AutoExceptions.m */,
 				6FAA0C1D1A7E938400416079 /* ExceptionsCache.h */,
 				6FAA0C1E1A7E938400416079 /* ExceptionsCache.m */,
-				823D4D1F1A1AB46600392ACB /* Recognition.h */,
 				2D8BF8BB1EC9E2900068856A /* XMLReader.h */,
 				2D8BF8BC1EC9E2900068856A /* XMLReader.m */,
-				823D4D201A1AB46600392ACB /* Recognition.m */,
-				6F1865911A7D79CB00C74A47 /* Detection.h */,
-				6F1865921A7D79CB00C74A47 /* Detection.m */,
 				6F0CF36D1A7DBADD00261A43 /* Utility.h */,
 				6F0CF36E1A7DBADD00261A43 /* Utility.m */,
-				2DAFC1D01E2301ED00FB7A14 /* Reachability.h */,
-				2DAFC1D11E2301ED00FB7A14 /* Reachability.m */,
 				2D417C1D1E6A378D008D225B /* MSWeakTimer.h */,
 				2D417C1E1E6A378D008D225B /* MSWeakTimer.m */,
 				91A8DD5C1E736814006E3566 /* NSNumberFormatterNumberOnly.m */,
@@ -676,14 +674,6 @@
 				6F2707201A69905D0020913A /* FixSearchDialog.xib */,
 			);
 			name = Exception/Correction;
-			sourceTree = "<group>";
-		};
-		82B9559919FD553900A032FB /* DetectStream */ = {
-			isa = PBXGroup;
-			children = (
-				82B9559719FD553500A032FB /* detectstream */,
-			);
-			name = DetectStream;
 			sourceTree = "<group>";
 		};
 		9143749E1EA4142700ECC683 /* MAL-Updater-OS-XTextualPlugin */ = {
@@ -944,7 +934,6 @@
 				6F27CE941A6869E8004E51F8 /* ExceptionsPref.xib in Resources */,
 				5CBE9FEF19F2F9E500CA3E5D /* GeneralPreferenceView.xib in Resources */,
 				5CBE9FEC19F2F9CA00CA3E5D /* LoginView.xib in Resources */,
-				82B9559819FD553500A032FB /* detectstream in Resources */,
 				5C97491D19F3117D000EC02E /* SoftwareUpdateView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1003,7 +992,6 @@
 				8D11072D0486CEB800E47090 /* main.m in Sources */,
 				916DE6391EA5261A00F870D5 /* NSBundle+LoginItem.m in Sources */,
 				590241201C074A7A00495A2F /* SSKeychainQuery.m in Sources */,
-				823D4D211A1AB46600392ACB /* Recognition.m in Sources */,
 				6F0CF36F1A7DBADD00261A43 /* Utility.m in Sources */,
 				256AC3DA0F4B6AC300CF3369 /* MAL_Updater_OS_XAppDelegate.m in Sources */,
 				6F28DC191A67087300AF063F /* HotKeyConstants.m in Sources */,
@@ -1013,7 +1001,6 @@
 				2D417C1F1E6A378D008D225B /* MSWeakTimer.m in Sources */,
 				2DDBB73D1E1D52100075B0D0 /* DonationWindowController.m in Sources */,
 				2DC900361E257C3300E45570 /* InttoStatus.m in Sources */,
-				2DAFC1D21E2301ED00FB7A14 /* Reachability.m in Sources */,
 				91A8DD5E1E736814006E3566 /* NSNumberFormatterNumberOnly.m in Sources */,
 				6FD961411B419E3F00DE539C /* MALScripting.m in Sources */,
 				6F5F6C701A71696D006D4607 /* MAL_Updater_OS_X_DataModel.xcdatamodeld in Sources */,
@@ -1021,7 +1008,6 @@
 				5C881EFB19F462B400E20425 /* NSString_stripHtml.m in Sources */,
 				829727981A8BB14E004F73AB /* MyAnimeList+Update.m in Sources */,
 				2D8BF8BD1EC9E2900068856A /* XMLReader.m in Sources */,
-				6F1865931A7D79CB00C74A47 /* Detection.m in Sources */,
 				59D99C071CBEDB0000762EA5 /* MyAnimeList+HummingbirdSearch.m in Sources */,
 				5C07DA671A8156420003A827 /* HistoryWindow.m in Sources */,
 				590241261C074AF500495A2F /* MyAnimeList+Keychain.m in Sources */,

@@ -13,7 +13,7 @@
 #import <CocoaOniguruma/OnigRegexpUtility.h>
 
 @implementation Utility
-+(bool)checkMatch:(NSString *)title
++ (bool)checkMatch:(NSString *)title
          alttitle:(NSString *)atitle
             regex:(OnigRegexp *)regex
            option:(int)i{
@@ -23,7 +23,7 @@
     }
     return false;
 }
-+(NSString *)desensitizeSeason:(NSString *)title {
++ (NSString *)desensitizeSeason:(NSString *)title {
     // Get rid of season references
     OnigRegexp * regex = [OnigRegexp compile:@"(s)\\d" options:OnigOptionIgnorecase];
     title = [title replaceByRegexp:regex with:@""];
@@ -31,7 +31,7 @@
     title = [title stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     return title;
 }
-+(NSString *)seasonInWords:(int)season{
++ (NSString *)seasonInWords:(int)season{
     // Translate integer season to word (use for Regex)
     switch (season) {
         case 1:
@@ -56,13 +56,13 @@
             return @"";
 }
 }
-+(BOOL)checkoldAPI{
++ (BOOL)checkoldAPI{
     if ([[NSString stringWithFormat:@"%@", [[NSUserDefaults standardUserDefaults] objectForKey:@"MALAPIURL"]] isEqualToString:@"https://malapi.shioridiary.me"]||[[NSString stringWithFormat:@"%@", [[NSUserDefaults standardUserDefaults] objectForKey:@"MALAPIURL"]] isEqualToString:@"http://mal-api.com"]) {
         return true;
     }
     return false;
 }
-+(void)showsheetmessage:(NSString *)message
++ (void)showsheetmessage:(NSString *)message
             explaination:(NSString *)explaination
                  window:(NSWindow *)w {
     // Set Up Prompt Message Window
@@ -78,14 +78,14 @@
                      didEndSelector:nil
                         contextInfo:NULL];
 }
-+(NSString *)urlEncodeString:(NSString *)string{
++ (NSString *)urlEncodeString:(NSString *)string{
     return [string stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLHostAllowedCharacterSet] ];
 }
-+(void)donateCheck:(MAL_Updater_OS_XAppDelegate*)delegate{
++ (void)donateCheck:(MAL_Updater_OS_XAppDelegate*)delegate{
     if (![[NSUserDefaults standardUserDefaults] objectForKey:@"donatereminderdate"]) {
         [Utility setReminderDate];
     }
-    if ([(NSNumber *)[[NSUserDefaults standardUserDefaults] objectForKey:@"MacAppStoreMigrated"] boolValue] && [(NSNumber *)[[NSUserDefaults standardUserDefaults] objectForKey:@"donated"] boolValue]){
+    if ([(NSNumber *)[[NSUserDefaults standardUserDefaults] objectForKey:@"MacAppStoreMigrated"] boolValue] && [(NSNumber *)[[NSUserDefaults standardUserDefaults] objectForKey:@"donated"] boolValue]) {
         NSString *MALLibraryPath = [[NSUserDefaults standardUserDefaults] valueForKey:@"MALLibraryPath"];
         bool valid = [MALLibraryAppStoreMigrate validateReciept:MALLibraryPath];
         if (!valid) {
@@ -119,7 +119,7 @@
         }
     }
 }
-+(void)showDonateReminder:(MAL_Updater_OS_XAppDelegate*)delegate{
++ (void)showDonateReminder:(MAL_Updater_OS_XAppDelegate*)delegate{
     // Shows Donation Reminder
     NSAlert * alert = [[NSAlert alloc] init] ;
     [alert addButtonWithTitle:@"Donate"];
@@ -147,13 +147,13 @@
     }
 }
 
-+(void)setReminderDate{
++ (void)setReminderDate{
     //Sets Reminder Date
     NSDate *now = [NSDate date];
     NSDate * reminderdate = [now dateByAddingTimeInterval:60*60*24*14];
     [[NSUserDefaults standardUserDefaults] setObject:reminderdate forKey:@"donatereminderdate"];
 }
-+(int)checkDonationKey:(NSString *)key name:(NSString *)name{
++ (int)checkDonationKey:(NSString *)key name:(NSString *)name{
         //Set Search API
         NSURL *url = [NSURL URLWithString:@"https://updates.ateliershiori.moe/keycheck/check.php"];
         EasyNSURLConnection *request = [[EasyNSURLConnection alloc] initWithURL:url];

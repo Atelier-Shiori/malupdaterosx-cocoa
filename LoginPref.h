@@ -29,9 +29,9 @@
 }
 @property (weak) IBOutlet NSWindow *loginpanel;
 - (id)initwithAppDelegate:(MAL_Updater_OS_XAppDelegate *)adelegate;
--(IBAction)startlogin:(id)sender;
--(IBAction)clearlogin:(id)sender;
--(IBAction)registermal:(id)sender;
--(void)login:(NSString *)username password:(NSString *)password;
--(void)loadlogin;
+- (IBAction)startlogin:(id)sender;
+- (IBAction)clearlogin:(id)sender;
+- (IBAction)registermal:(id)sender;
+- (void)login:(NSString *)username password:(NSString *)password;
+- (void)loadlogin;
 @end

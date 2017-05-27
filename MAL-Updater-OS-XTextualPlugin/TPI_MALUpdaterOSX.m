@@ -27,13 +27,13 @@
     }
     if ([commandString isEqualToString:@"MALU"]) {
         message = [self generateMessage:true withClient:client];
-        if (message){
+        if (message) {
             [self sendMessage:message onClient:client toChannel:channel];
         }
     }
     else if ([commandString isEqualToString:@"MALUNOLINK"]) {
         message = [self generateMessage:false withClient:client];
-        if (message){
+        if (message) {
             [self sendMessage:message onClient:client toChannel:channel];
         }
     }
@@ -51,7 +51,7 @@
 
 - (NSString *)generateMessage:(BOOL)sharelink withClient:(IRCClient *)client {
     IRCChannel *channel = mainWindow().selectedChannel;
-    if ([self checkIdentifier:@"com.chikorita157.MAL-Updater-OS-X"]){
+    if ([self checkIdentifier:@"com.chikorita157.MAL-Updater-OS-X"]) {
         NSString *json;
         @try {
             NSTask *task = [[NSTask alloc] init];
@@ -79,7 +79,7 @@
             NSData *data = [json dataUsingEncoding:NSUTF8StringEncoding];
             NSDictionary *nowplaying = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jerror];
             NSString * message;
-            if (sharelink){
+            if (sharelink) {
                 message = [NSString stringWithFormat:@"(MAL Updater OS X) Watching %@ Episode %@ from %@ - https://myanimelist.net/anime/%@", nowplaying[@"scrobbledactualtitle"], nowplaying[@"scrobbledEpisode"], nowplaying[@"source"], nowplaying[@"id"]];
             }
             else {

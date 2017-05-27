@@ -18,7 +18,7 @@
     __weak IBOutlet NSButton *testapibtn;
     __weak IBOutlet NSProgressIndicator *testprogressindicator;
 }
--(id)initwithAppDelegate:(MAL_Updater_OS_XAppDelegate *)adelegate;
--(IBAction)testapi:(id)sender;
--(IBAction)resetapiurl:(id)sender;
+- (id)initwithAppDelegate:(MAL_Updater_OS_XAppDelegate *)adelegate;
+- (IBAction)testapi:(id)sender;
+- (IBAction)resetapiurl:(id)sender;
 @end

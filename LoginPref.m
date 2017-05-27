@@ -25,7 +25,7 @@
     appdelegate = adelegate;
     return [super initWithNibName:@"LoginView" bundle:nil];
 }
--(void)loadView{
+- (void)loadView{
     [super loadView];
     // Retrieve MyAnimeList Engine instance from app delegate
     MALEngine = [appdelegate getMALEngineInstance];
@@ -53,7 +53,7 @@
     return NSLocalizedString(@"Login", @"Toolbar item name for the Login preference pane");
 }
 #pragma mark Login Preferences Functions
--(void)loadlogin
+- (void)loadlogin
 {
 	// Load Username
 	if ([MALEngine checkaccount]) {
@@ -69,7 +69,7 @@
 		[savebut setEnabled: YES];
 	}
 }
--(IBAction)startlogin:(id)sender
+- (IBAction)startlogin:(id)sender
 {
 	{
 		//Start Login Process
@@ -99,7 +99,7 @@
 		}
 	}
 }
--(void)login:(NSString *)username password:(NSString *)password{
+- (void)login:(NSString *)username password:(NSString *)password{
     //Set Login URL
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/1/account/verify_credentials", [defaults objectForKey:@"MALAPIURL"]]];
@@ -139,17 +139,17 @@
         [savebut setEnabled:YES];
     });
 }
--(IBAction)registermal:(id)sender
+- (IBAction)registermal:(id)sender
 {
 	//Show MAL Registration Page
 	[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://myanimelist.net/register.php"]];
 }
--(IBAction) showgettingstartedpage:(id)sender
+- (IBAction) showgettingstartedpage:(id)sender
 {
     //Show Getting Started help page
     [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"https://github.com/chikorita157/malupdaterosx-cocoa/wiki/Getting-Started"]];
 }
--(IBAction)clearlogin:(id)sender
+- (IBAction)clearlogin:(id)sender
 {
     if (![appdelegate getisScrobbling] && ![appdelegate getisScrobblingActive]) {
         // Set Up Prompt Message Window
@@ -182,7 +182,7 @@
 /*
  Reauthorization Panel
  */
--(IBAction)reauthorize:(id)sender{
+- (IBAction)reauthorize:(id)sender{
     if (![appdelegate getisScrobbling] && ![appdelegate getisScrobblingActive]) {
         [NSApp beginSheet:self.loginpanel
            modalForWindow:[[self view] window] modalDelegate:self
@@ -207,12 +207,12 @@
     [invalidinput setHidden:YES];
     [self.loginpanel close];
 }
--(IBAction)cancelreauthorization:(id)sender{
+- (IBAction)cancelreauthorization:(id)sender{
     [self.loginpanel orderOut:self];
     [NSApp endSheet:self.loginpanel returnCode:0];
     
 }
--(IBAction)performreauthorization:(id)sender{
+- (IBAction)performreauthorization:(id)sender{
     if ([[passwordinput stringValue] length] == 0) {
         // No password, indicate it
         NSBeep();

@@ -20,11 +20,11 @@
 	return [super initWithNibName:@"GeneralPreferenceView" bundle:nil];
 }
 
--(IBAction)toggleLaunchAtStartup:(id)sender{
+- (IBAction)toggleLaunchAtStartup:(id)sender{
     [self toggleLaunchAtStartup];
 }
 - (void)toggleLaunchAtStartup{
-    if ([[NSBundle mainBundle] isLoginItem]){
+    if ([[NSBundle mainBundle] isLoginItem]) {
         [[NSBundle mainBundle] removeFromLoginItems];
     }
     else{
@@ -33,7 +33,7 @@
 }
 #pragma mark -
 #pragma mark MASPreferencesViewController
--(void)loadView{
+- (void)loadView{
     [super loadView];
     if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_9) {
         // Disable Yosemite UI options
@@ -57,7 +57,7 @@
     return NSLocalizedString(@"General", @"Toolbar item name for the General preference pane");
 }
 #pragma mark General Preferences Functions
--(IBAction)clearSearchCache:(id)sender{
+- (IBAction)clearSearchCache:(id)sender{
     // Remove All cache data from Core Data Entity
     MAL_Updater_OS_XAppDelegate * delegate = (MAL_Updater_OS_XAppDelegate *)[[NSApplication sharedApplication] delegate];
     NSManagedObjectContext *moc = [delegate getObjectContext];
@@ -73,7 +73,7 @@
     error = nil;
     [moc save:&error];
 }
--(IBAction)updateAutoExceptions:(id)sender{
+- (IBAction)updateAutoExceptions:(id)sender{
     // Updates Auto Exceptions List
     dispatch_queue_t queue = dispatch_get_global_queue(
                                                        DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
@@ -93,7 +93,7 @@
     });
     
 }
--(IBAction)disableAutoExceptions:(id)sender{
+- (IBAction)disableAutoExceptions:(id)sender{
     if ([updateexceptionschk state]) {
         [self updateAutoExceptions:sender];
     }

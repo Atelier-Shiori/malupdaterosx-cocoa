@@ -10,9 +10,9 @@
 #import "SSKeychain.h"
 
 @interface MyAnimeList (Keychain)
--(BOOL)checkaccount;
--(BOOL)storeaccount:(NSString *)uname password:(NSString *)password;
--(BOOL)removeaccount;
--(NSString *)getusername;
--(NSString *)getBase64;
+- (BOOL)checkaccount;
+- (BOOL)storeaccount:(NSString *)uname password:(NSString *)password;
+- (BOOL)removeaccount;
+- (NSString *)getusername;
+- (NSString *)getBase64;
 @end

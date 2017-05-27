@@ -11,10 +11,10 @@
 #import "MyAnimeList+Keychain.h"
 
 @implementation MyAnimeList (Update)
--(BOOL)checkstatus:(NSString *)titleid {
+- (BOOL)checkstatus:(NSString *)titleid {
     NSLog(@"Checking Status");
     //Set Search API
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/1/anime/%@?mine=1",MALApiUrl, titleid]];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/1/anime/%@?mine=1",self.MALApiUrl, titleid]];
     EasyNSURLConnection *request = [[EasyNSURLConnection alloc] initWithURL:url];
     //Ignore Cookies
     [request setUseCookies:NO];
@@ -26,64 +26,64 @@
     int statusCode = [request getStatusCode];
     NSError * error = [request getError]; // Error Detection
     if (statusCode == 200 ) {
-        online = true;
-        if (DetectedEpisode.length == 0) { // Check if there is a DetectedEpisode (needed for checking
+        self.online = true;
+        if (self.DetectedEpisode.length == 0) { // Check if there is a DetectedEpisode (needed for checking
             // Set detected episode to 1
-            DetectedEpisode = @"1";
+            self.DetectedEpisode = @"1";
         }
         NSError* jerror;
         NSDictionary *animeinfo = [NSJSONSerialization JSONObjectWithData:[request getResponseData] options:nil error:&jerror];
         if (animeinfo[@"episodes"] == [NSNull null]) { // To prevent the scrobbler from failing because there is no episode total.
-            TotalEpisodes = 0; // No Episode Total, Set to 0.
+            self.TotalEpisodes = 0; // No Episode Total, Set to 0.
         }
         else { // Episode Total Exists
-            TotalEpisodes = [(NSNumber *)animeinfo[@"episodes"] intValue];
+            self.TotalEpisodes = [(NSNumber *)animeinfo[@"episodes"] intValue];
         }
         // Watch Status
         if (animeinfo[@"watched_status"] == [NSNull null]) {
             NSLog(@"Not on List");
-            LastScrobbledTitleNew = true;
-            DetectedCurrentEpisode = 0;
-            TitleScore = 0;
+            self.LastScrobbledTitleNew = true;
+            self.DetectedCurrentEpisode = 0;
+            self.TitleScore = 0;
         }
         else {
             NSLog(@"Title on List");
-            LastScrobbledTitleNew = false;
-            WatchStatus = animeinfo[@"watched_status"];
-            DetectedCurrentEpisode = [(NSNumber *)animeinfo[@"watched_episodes"] intValue];
+            self.LastScrobbledTitleNew = false;
+            self.WatchStatus = animeinfo[@"watched_status"];
+            self.DetectedCurrentEpisode = [(NSNumber *)animeinfo[@"watched_episodes"] intValue];
             if (animeinfo[@"score"] == [NSNull null]) {
                 // Score is null, set to 0
-                TitleScore = 0;
+                self.TitleScore = 0;
             }
             else {
-                TitleScore = [(NSNumber *)animeinfo[@"score"] intValue];
+                self.TitleScore = [(NSNumber *)animeinfo[@"score"] intValue];
             }
         }
         // New Update Confirmation
-        if (([[NSUserDefaults standardUserDefaults] boolForKey:@"ConfirmNewTitle"] && LastScrobbledTitleNew && !correcting)|| ([[NSUserDefaults standardUserDefaults] boolForKey:@"ConfirmUpdates"] && !LastScrobbledTitleNew && !correcting)) {
+        if (([[NSUserDefaults standardUserDefaults] boolForKey:@"ConfirmNewTitle"] && self.LastScrobbledTitleNew && !self.correcting)|| ([[NSUserDefaults standardUserDefaults] boolForKey:@"ConfirmUpdates"] && !self.LastScrobbledTitleNew && !self.correcting)) {
             // Manually confirm updates
-            confirmed = false;
+            self.confirmed = false;
         }
         else {
             // Automatically confirm updates
-            confirmed = true;
+            self.confirmed = true;
         }
-        LastScrobbledInfo = animeinfo;
+        self.LastScrobbledInfo = animeinfo;
         // Makes sure the values don't get released
         return YES;
     }
     else if (error !=nil) {
         if (error.code == NSURLErrorNotConnectedToInternet) {
-            online = false;
+            self.online = false;
             return NO;
         }
         else {
-            online = true;
+            self.online = true;
             return NO;
         }
     }
     else {
-        online = true;
+        self.online = true;
         // Some Error. Abort
         return NO;
     }
@@ -91,17 +91,17 @@
     return NO;
 }
 
--(int)updatetitle:(NSString *)titleid confirming:(bool)confirming{
+- (int)updatetitle:(NSString *)titleid confirming:(bool)confirming{
     NSLog(@"Updating Title");
     
-    if ([DetectedEpisode intValue] <= DetectedCurrentEpisode ) {
+    if ([self.DetectedEpisode intValue] <= self.DetectedCurrentEpisode ) {
         // Already Watched, no need to scrobble
         // Store Scrobbled Title and Episode
-        confirmed = true;
+        self.confirmed = true;
         [self storeLastScrobbled];
         return ScrobblerUpdateNotNeeded;
     }
-    else if (!LastScrobbledTitleNew && [[NSUserDefaults standardUserDefaults] boolForKey:@"ConfirmUpdates"] && !confirmed && !correcting && !confirming) {
+    else if (!self.LastScrobbledTitleNew && [[NSUserDefaults standardUserDefaults] boolForKey:@"ConfirmUpdates"] && !self.confirmed && !self.correcting && !confirming) {
         // Confirm before updating title
         [self storeLastScrobbled];
         return ScrobblerConfirmNeeded;
@@ -109,43 +109,43 @@
     else {
         // Update the title
         //Set library/scrobble API
-        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/1/animelist/anime/%@", MALApiUrl, titleid]];
+        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/1/animelist/anime/%@", self.MALApiUrl, titleid]];
         EasyNSURLConnection *request = [[EasyNSURLConnection alloc] initWithURL:url];
         //Ignore Cookies
         [request setUseCookies:NO];
         //Set Token
         [request addHeader:[NSString stringWithFormat:@"Basic %@",[self getBase64]]  forKey:@"Authorization"];
         [request setPostMethod:@"PUT"];
-        [request addFormData:DetectedEpisode forKey:@"episodes"];
+        [request addFormData:self.DetectedEpisode forKey:@"episodes"];
         //Set Status
-        if([DetectedEpisode intValue] == TotalEpisodes) {
+        if ([self.DetectedEpisode intValue] == self.TotalEpisodes) {
             //Set Title State for Title (use for Twitter feature)
-            WatchStatus = @"completed";
+            self.WatchStatus = @"completed";
             // Since Detected Episode = Total Episode, set the status as "Complete"
-            [request addFormData:WatchStatus forKey:@"status"];
+            [request addFormData:self.WatchStatus forKey:@"status"];
         }
         else {
             //Set Title State for Title (use for Twitter feature)
-            WatchStatus = @"watching";
+            self.WatchStatus = @"watching";
             // Still Watching
-            [request addFormData:WatchStatus forKey:@"status"];
+            [request addFormData:self.WatchStatus forKey:@"status"];
         }
         // Set existing score to prevent the score from being erased.
-        [request addFormData:[[NSNumber numberWithInt:TitleScore] stringValue] forKey:@"score"];
+        [request addFormData:[[NSNumber numberWithInt:self.TitleScore] stringValue] forKey:@"score"];
         // Do Update
         [request startFormRequest];
         
         switch ([request getStatusCode]) {
             case 200:
                 // Store Last Scrobbled Title
-                LastScrobbledTitle = DetectedTitle;
-                LastScrobbledEpisode = DetectedEpisode;
-                DetectedCurrentEpisode = [DetectedEpisode intValue];
-                LastScrobbledSource = DetectedSource;
-                if (confirmed) {
-                    LastScrobbledActualTitle = (NSString *)LastScrobbledInfo[@"title"];
+                self.LastScrobbledTitle = self.DetectedTitle;
+                self.LastScrobbledEpisode = self.DetectedEpisode;
+                self.DetectedCurrentEpisode = [self.DetectedEpisode intValue];
+                self.LastScrobbledSource = self.DetectedSource;
+                if (self.confirmed) {
+                    self.LastScrobbledActualTitle = (NSString *)self.LastScrobbledInfo[@"title"];
                 }
-                confirmed = true;
+                self.confirmed = true;
                 // Update Successful
                 return ScrobblerUpdateSuccessful;
             default:
@@ -155,36 +155,36 @@
         
     }
 }
--(int)addtitle:(NSString *)titleid confirming:(bool)confirming{
+- (int)addtitle:(NSString *)titleid confirming:(bool)confirming{
     NSLog(@"Adding Title");
     //Check Confirm
-    if (LastScrobbledTitleNew && [[NSUserDefaults standardUserDefaults] boolForKey:@"ConfirmNewTitle"] && !confirmed && !correcting && !confirming) {
+    if (self.LastScrobbledTitleNew && [[NSUserDefaults standardUserDefaults] boolForKey:@"ConfirmNewTitle"] && !self.confirmed && !self.correcting && !confirming) {
         // Confirm before updating title
         [self storeLastScrobbled];
         return ScrobblerConfirmNeeded;
     }
     // Add the title
     //Set library/scrobble API
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/1/animelist/anime", MALApiUrl]];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/1/animelist/anime", self.MALApiUrl]];
     EasyNSURLConnection *request = [[EasyNSURLConnection alloc] initWithURL:url];
     //Ignore Cookies
     [request setUseCookies:NO];
     //Set Token
     [request addHeader:[NSString stringWithFormat:@"Basic %@",[self getBase64]]  forKey:@"Authorization"];
     [request addFormData:titleid forKey:@"anime_id"];
-    [request addFormData:DetectedEpisode forKey:@"episodes"];
+    [request addFormData:self.DetectedEpisode forKey:@"episodes"];
     // Check if the detected episode is equal to total episodes. If so, set it as complete (mostly for specials and movies)
-    if([DetectedEpisode intValue] == TotalEpisodes) {
+    if([self.DetectedEpisode intValue] == self.TotalEpisodes) {
         //Set Title State for Title (use for Twitter feature)
-        WatchStatus = @"completed";
+        self.WatchStatus = @"completed";
         // Since Detected Episode = Total Episode, set the status as "Complete"
-        [request addFormData:WatchStatus forKey:@"status"];
+        [request addFormData:self.WatchStatus forKey:@"status"];
     }
     else {
         //Set Title State for Title (use for Twitter feature)
-        WatchStatus = @"watching";
+        self.WatchStatus = @"watching";
         // Still Watching
-        [request addFormData:WatchStatus forKey:@"status"];
+        [request addFormData:self.WatchStatus forKey:@"status"];
     }
     // Do Update
     [request startFormRequest];
@@ -195,27 +195,27 @@
             // Update Successful
             
             //Store last scrobbled information
-            LastScrobbledTitle = DetectedTitle;
-            LastScrobbledEpisode = DetectedEpisode;
-            DetectedCurrentEpisode = [DetectedEpisode intValue];
-            LastScrobbledSource = DetectedSource;
-            if (confirmed) {
-                LastScrobbledActualTitle = (NSString *)LastScrobbledInfo[@"title"];
+            self.LastScrobbledTitle = self.DetectedTitle;
+            self.LastScrobbledEpisode = self.DetectedEpisode;
+            self.DetectedCurrentEpisode = [self.DetectedEpisode intValue];
+            self.LastScrobbledSource = self.DetectedSource;
+            if (self.confirmed) {
+                self.LastScrobbledActualTitle = (NSString *)self.LastScrobbledInfo[@"title"];
             }
-            confirmed = true;
+            self.confirmed = true;
             return ScrobblerAddTitleSuccessful;
         default:
             // Update Unsuccessful
             return ScrobblerAddTitleFailed;
     }
 }
--(bool)removetitle:(NSString *)titleid{
+- (bool)removetitle:(NSString *)titleid{
     NSLog(@"Removing %@", titleid);
     //Set up Delegate
     
     // Update the title
     //Set library/scrobble API
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/1/animelist/anime/%@", MALApiUrl, titleid]];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/1/animelist/anime/%@", self.MALApiUrl, titleid]];
     EasyNSURLConnection *request = [[EasyNSURLConnection alloc] initWithURL:url];
     //Ignore Cookies
     [request setUseCookies:NO];
@@ -235,7 +235,7 @@
     }
     return false;
 }
--(BOOL)updatestatus:(NSString *)titleid
+- (BOOL)updatestatus:(NSString *)titleid
               score:(int)showscore
         watchstatus:(NSString*)showwatchstatus
             episode:(NSString*)episode
@@ -243,7 +243,7 @@
     NSLog(@"Updating Status for %@", titleid);
     // Update the title
     //Set library/scrobble API
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/1/animelist/anime/%@", MALApiUrl, titleid]];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/1/animelist/anime/%@", self.MALApiUrl, titleid]];
     EasyNSURLConnection *request = [[EasyNSURLConnection alloc] initWithURL:url];
     //Ignore Cookies
     [request setUseCookies:NO];
@@ -262,21 +262,21 @@
         case 200:
             // Update Successful
             //Set New Values
-            TitleScore = showscore;
-            WatchStatus = showwatchstatus;
-            LastScrobbledEpisode = episode;
-            DetectedCurrentEpisode = [episode intValue];
-            confirmed = true;
+            self.TitleScore = showscore;
+            self.WatchStatus = showwatchstatus;
+            self.LastScrobbledEpisode = episode;
+            self.DetectedCurrentEpisode = [episode intValue];
+            self.confirmed = true;
             return true;
         default:
             // Update Unsuccessful
             return false;
     }
 }
--(void)storeLastScrobbled{
-    LastScrobbledTitle = DetectedTitle;
-    LastScrobbledEpisode = DetectedEpisode;
-    LastScrobbledActualTitle = (NSString *)LastScrobbledInfo[@"title"];
-    LastScrobbledSource = DetectedSource;
+- (void)storeLastScrobbled{
+    self.LastScrobbledTitle = self.DetectedTitle;
+    self.LastScrobbledEpisode = self.DetectedEpisode;
+    self.LastScrobbledActualTitle = (NSString *)self.LastScrobbledInfo[@"title"];
+    self.LastScrobbledSource = self.DetectedSource;
 }
 @end
