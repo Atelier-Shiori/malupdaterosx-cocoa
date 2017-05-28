@@ -57,14 +57,11 @@
     long statusCode = [request getStatusCode];
     switch (statusCode) {
         case 0:
-            self.online = false;
             self.Success = NO;
             return @"";
         case 200:
-            self.online = true;
             return [self hfindaniid:[request getResponseData] searchterm:searchtitle];
-        default:
-            self.online = true;
+        default:;
             self.Success = NO;
             return @"";
     }

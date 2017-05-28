@@ -26,7 +26,6 @@
     int statusCode = [request getStatusCode];
     NSError * error = [request getError]; // Error Detection
     if (statusCode == 200 ) {
-        self.online = true;
         if (self.DetectedEpisode.length == 0) { // Check if there is a DetectedEpisode (needed for checking
             // Set detected episode to 1
             self.DetectedEpisode = @"1";
@@ -73,17 +72,9 @@
         return YES;
     }
     else if (error !=nil) {
-        if (error.code == NSURLErrorNotConnectedToInternet) {
-            self.online = false;
-            return NO;
-        }
-        else {
-            self.online = true;
-            return NO;
-        }
+        return NO;
     }
     else {
-        self.online = true;
         // Some Error. Abort
         return NO;
     }
