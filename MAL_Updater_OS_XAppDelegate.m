@@ -201,12 +201,12 @@
     [MALEngine setManagedObjectContext:managedObjectContext];
     #ifdef DEBUG
     #else
+        // Check if build is prerelease. Notify user if user is not registered
+        [MALLibraryAppStoreMigrate checkPreRelease];
         // Check if Application is in the /Applications Folder
         // Only Activate in OS X/macOS is 10.11 or earlier due to Gatekeeper changes in macOS Sierra
         // Note: Sierra Appkit Version is 1485
         PFMoveToApplicationsFolderIfNecessary();
-        // Check if build is prerelease. Notify user if user is not registered
-        [MALLibraryAppStoreMigrate checkPreRelease];
     #endif
 	//Since LSUIElement is set to 1 to hide the dock icon, it causes unattended behavior of having the program windows not show to the front.
 	[NSApp activateIgnoringOtherApps:YES];
