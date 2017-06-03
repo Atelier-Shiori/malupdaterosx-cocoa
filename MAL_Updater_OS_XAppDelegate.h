@@ -83,6 +83,8 @@
 @property (strong) HistoryWindow * historywindowcontroller;
 @property (strong) DonationWindowController * dwindow;
 @property (strong) OfflineViewQueue * owindow;
+@property (strong) IBOutlet NSView *nowplayingview;
+@property (strong) IBOutlet NSView *nothingplayingview;
 
 - (void)showhistory:(id)sender;
 - (IBAction)togglescrobblewindow:(id)sender;
@@ -112,4 +114,5 @@
 - (NSDictionary *)getNowPlaying;
 - (NSManagedObjectContext *)getObjectContext;
 - (MyAnimeList *)getMALEngineInstance;
+- (void)resetUI;
 @end

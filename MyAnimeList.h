@@ -72,4 +72,5 @@ typedef NS_ENUM(unsigned int, ScrobbleStatus) {
 - (int)getQueueCount;
 - (void)clearAnimeInfo;
 - (NSString *)startSearch;
+- (void)resetinfo;
 @end

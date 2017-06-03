@@ -513,6 +513,7 @@
         }
     });
 }
+
 - (void)performRefreshUI:(int)status{
     dispatch_async(dispatch_get_main_queue(), ^{
         if ([MALEngine getSuccess] == 1) {
@@ -575,6 +576,35 @@
         [self toggleScrobblingUIEnable:true];
     });
 }
+
+- (void)resetUI {
+    // Resets the UI when the user logs out
+    [shareMenu removeAllItems];
+    // Workaround for Share Toolbar Item
+    NSMenuItem *shareIcon = [[NSMenuItem alloc] init];
+    shareIcon.image = [NSImage imageNamed:NSImageNameShareTemplate];
+    [shareIcon setHidden:YES];
+    shareIcon.title = @"";
+    [shareMenu addItem:shareIcon];
+    [updatecorrect setAutoenablesItems:NO];
+    [self EnableStatusUpdating:NO];
+    [sharetoolbaritem setEnabled:NO];
+    [correcttoolbaritem setEnabled:NO];
+    [openAnimePage setEnabled:NO];
+    [findtitle setHidden:YES];
+    [confirmupdate setHidden:YES];
+    lastupdateheader.hidden = YES;
+    updatedtitle.hidden = YES;
+    updatedepisode.hidden = YES;
+    seperator2.hidden = YES;
+    updatecorrectmenu.hidden = YES;
+    shareMenuItem.hidden = YES;
+    [MALEngine resetinfo];
+    _nowplayingview.hidden = YES;
+    _nothingplayingview.hidden = NO;
+    [self setStatusToolTip:@"Hachidori"];
+}
+
 
 #pragma mark Timer Functions
 
@@ -1120,6 +1150,9 @@
     [img setImage:dimg]; //Get the Image for the title
     // Clear Anime Info so that MAL Updater OS X won't attempt to retrieve it if the same episode and title is playing
     [MALEngine clearAnimeInfo];
+    // Show now playing view
+    _nowplayingview.hidden = NO;
+    _nothingplayingview.hidden = YES;
 }
 - (void)appendToAnimeInfo:(NSString*)text
 {

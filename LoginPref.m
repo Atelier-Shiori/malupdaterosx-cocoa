@@ -172,6 +172,7 @@
                 [loginview setHidden:NO];
                 [fieldusername setStringValue:@""];
                 [fieldpassword setStringValue:@""];
+                [appdelegate resetUI];
             }
         }];
     }

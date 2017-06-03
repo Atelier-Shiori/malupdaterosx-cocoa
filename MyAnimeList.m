@@ -638,4 +638,15 @@
     }
     return nil;
 }
+
+- (void)resetinfo {
+    // Resets MAL Engine when user logs out
+    _LastScrobbledInfo = nil;
+    _LastScrobbledTitle = nil;
+    _LastScrobbledSource = nil;
+    _LastScrobbledEpisode = nil;
+    _LastScrobbledTitleNew = false;
+    _LastScrobbledActualTitle = nil;
+    _AniID = nil;
+}
 @end
