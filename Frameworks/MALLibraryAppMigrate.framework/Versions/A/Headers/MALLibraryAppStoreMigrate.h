@@ -26,4 +26,9 @@
  @return bool Reciept is valid or not
  */
 + (bool)validateReciept:(NSString *)path;
+
+/**
+ This method checks if user is running a prerelease version. If user haven't registered, it will show an alert and quit.
+ */
++ (void)checkPreRelease;
 @end
