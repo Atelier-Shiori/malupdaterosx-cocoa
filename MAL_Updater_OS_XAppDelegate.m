@@ -199,7 +199,6 @@
 	// Initialize MALEngine
 	MALEngine = [[MyAnimeList alloc] init];
     [MALEngine setManagedObjectContext:managedObjectContext];
-    if (floor(NSAppKitVersionNumber) < 1485) {
     #ifdef DEBUG
     #else
         // Check if Application is in the /Applications Folder
@@ -209,7 +208,6 @@
         // Check if build is prerelease. Notify user if user is not registered
         [MALLibraryAppStoreMigrate checkPreRelease];
     #endif
-    }
 	//Since LSUIElement is set to 1 to hide the dock icon, it causes unattended behavior of having the program windows not show to the front.
 	[NSApp activateIgnoringOtherApps:YES];
     
