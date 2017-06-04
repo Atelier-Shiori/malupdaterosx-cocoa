@@ -48,10 +48,10 @@
     [NSApp endSheet:self.window returnCode:0];
 }
 - (IBAction)updatesearch:(id)sender {
-    NSDictionary * d = [arraycontroller selectedObjects][0];
+    NSDictionary *d = [arraycontroller selectedObjects][0];
     if (correction) {
         // Set Up Prompt Message Window
-        NSAlert * alert = [[NSAlert alloc] init] ;
+        NSAlert *alert = [[NSAlert alloc] init] ;
         [alert addButtonWithTitle:@"Yes"];
         [alert addButtonWithTitle:@"No"];
         [alert setMessageText:[NSString stringWithFormat:@"Do you want to correct this title as %@?",d[@"title"]]];
@@ -87,7 +87,7 @@
         dispatch_queue_t queue = dispatch_get_global_queue(
                                                            DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
         dispatch_async(queue, ^{
-        NSString * searchterm = [Utility urlEncodeString:[search stringValue]];
+        NSString *searchterm = [Utility urlEncodeString:[search stringValue]];
         //Set Search API
         NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/1/anime/search?q=%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"MALAPIURL"], searchterm]];
         EasyNSURLConnection *request = [[EasyNSURLConnection alloc] initWithURL:url];
@@ -138,7 +138,7 @@
 - (void)tableViewSelectionDidChange:(NSNotification *)notification{
     if ([[notification object] selectedRow] != -1) {
         // Show synopsis
-        NSDictionary * d = [arraycontroller selectedObjects][0];
+        NSDictionary *d = [arraycontroller selectedObjects][0];
         [selectedsynopsis setString:[[NSString stringWithFormat:@"%@", d[@"synopsis"]] stripHtml]];
     }
     else {

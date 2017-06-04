@@ -92,7 +92,7 @@
     
 }
 - (void)controlTextDidChange:(NSNotification *)notification {
-    NSTextField * textfield = [notification object];
+    NSTextField *textfield = [notification object];
     MyAnimeList *malengine = [appdelegate getMALEngineInstance];
     [malengine.detection setKodiReachAddress:[textfield stringValue]];
 }

@@ -10,6 +10,8 @@
 		1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD58140DA1D0A300B32029 /* MainMenu.xib */; };
 		256AC3DA0F4B6AC300CF3369 /* MAL_Updater_OS_XAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 256AC3D90F4B6AC300CF3369 /* MAL_Updater_OS_XAppDelegate.m */; };
 		2D417C1F1E6A378D008D225B /* MSWeakTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D417C1E1E6A378D008D225B /* MSWeakTimer.m */; };
+		2D4A4D0A1EE4B01D004D3716 /* StatusUpdateWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D4A4D081EE4B01D004D3716 /* StatusUpdateWindow.m */; };
+		2D4A4D0B1EE4B01D004D3716 /* StatusUpdateWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2D4A4D091EE4B01D004D3716 /* StatusUpdateWindow.xib */; };
 		2D5D38861EB62E8200689CC4 /* DonationKeyConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5D38851EB62E8200689CC4 /* DonationKeyConstants.m */; };
 		2D63136D1EDA284A00C3CB6B /* DetectionKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D63136C1EDA284A00C3CB6B /* DetectionKit.framework */; };
 		2D63136E1EDA287200C3CB6B /* DetectionKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D63136C1EDA284A00C3CB6B /* DetectionKit.framework */; };
@@ -145,6 +147,10 @@
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		2D417C1D1E6A378D008D225B /* MSWeakTimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSWeakTimer.h; sourceTree = "<group>"; };
 		2D417C1E1E6A378D008D225B /* MSWeakTimer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSWeakTimer.m; sourceTree = "<group>"; };
+		2D4A4D071EE4B01D004D3716 /* StatusUpdateWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatusUpdateWindow.h; sourceTree = "<group>"; };
+		2D4A4D081EE4B01D004D3716 /* StatusUpdateWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatusUpdateWindow.m; sourceTree = "<group>"; };
+		2D4A4D091EE4B01D004D3716 /* StatusUpdateWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = StatusUpdateWindow.xib; path = Base.lproj/StatusUpdateWindow.xib; sourceTree = "<group>"; };
+		2D4A4D0F1EE4BCDF004D3716 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LoginView.xib; sourceTree = "<group>"; };
 		2D5D38841EB62E8200689CC4 /* DonationKeyConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DonationKeyConstants.h; sourceTree = "<group>"; };
 		2D5D38851EB62E8200689CC4 /* DonationKeyConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DonationKeyConstants.m; sourceTree = "<group>"; };
 		2D60876A1E28239D00D6E583 /* MAL_Updater_OS_X_DataModel 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "MAL_Updater_OS_X_DataModel 3.xcdatamodel"; sourceTree = "<group>"; };
@@ -233,7 +239,6 @@
 		829727971A8BB14E004F73AB /* MyAnimeList+Update.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MyAnimeList+Update.m"; sourceTree = "<group>"; };
 		829FB41D19F739700026EAC2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		829FB41E19F739700026EAC2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/GeneralPreferenceView.xib; sourceTree = "<group>"; };
-		829FB41F19F739700026EAC2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LoginView.xib; sourceTree = "<group>"; };
 		829FB42019F739700026EAC2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/SoftwareUpdateView.xib; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* MAL_Updater_OS_X-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "MAL_Updater_OS_X-Info.plist"; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* MAL Updater OS X.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MAL Updater OS X.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -517,6 +522,7 @@
 				2DAFC1DE1E23143100FB7A14 /* OfflineViewQueue.xib */,
 				1DDD58140DA1D0A300B32029 /* MainMenu.xib */,
 				5CBE9FEE19F2F9E500CA3E5D /* GeneralPreferenceView.xib */,
+				2D4A4D091EE4B01D004D3716 /* StatusUpdateWindow.xib */,
 				5CBE9FEB19F2F9CA00CA3E5D /* LoginView.xib */,
 				5C97491C19F3117D000EC02E /* SoftwareUpdateView.xib */,
 				910D226F1E81DFEE00760A08 /* streamlinkopen.xib */,
@@ -533,6 +539,15 @@
 				1058C7A2FEA54F0111CA2CBB /* Other Frameworks */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		2D4A4D0C1EE4BB02004D3716 /* Status Update Window */ = {
+			isa = PBXGroup;
+			children = (
+				2D4A4D071EE4B01D004D3716 /* StatusUpdateWindow.h */,
+				2D4A4D081EE4B01D004D3716 /* StatusUpdateWindow.m */,
+			);
+			name = "Status Update Window";
 			sourceTree = "<group>";
 		};
 		2DAFC1D31E23135D00FB7A14 /* Offline View Queue */ = {
@@ -558,6 +573,7 @@
 		5C07DA621A8156210003A827 /* Window Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				2D4A4D0C1EE4BB02004D3716 /* Status Update Window */,
 				910D22661E81DEC200760A08 /* streamlinkopen.h */,
 				910D22671E81DEC200760A08 /* streamlinkopen.m */,
 				2DAFC1D31E23135D00FB7A14 /* Offline View Queue */,
@@ -900,6 +916,7 @@
 				French,
 				German,
 				Base,
+				en,
 			);
 			mainGroup = 29B97314FDCFA39411CA2CEA /* MAL Updater OS X */;
 			projectDirPath = "";
@@ -929,6 +946,7 @@
 				2DAFC1DC1E23143100FB7A14 /* OfflineViewQueue.xib in Resources */,
 				1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */,
 				6F27071E1A69905D0020913A /* FixSearchDialog.xib in Resources */,
+				2D4A4D0B1EE4B01D004D3716 /* StatusUpdateWindow.xib in Resources */,
 				5C0A2C4B122C7F960096908D /* Credits.rtf in Resources */,
 				2DDBB7401E1D521D0075B0D0 /* DonationWindow.xib in Resources */,
 				6F27CE941A6869E8004E51F8 /* ExceptionsPref.xib in Resources */,
@@ -1023,6 +1041,7 @@
 				6FBA5A081ABE460600B6DB79 /* AdvancedPrefController.m in Sources */,
 				5CBE9EC319F2F0E300CA3E5D /* LoginPref.m in Sources */,
 				6F28DC041A67082400AF063F /* HotkeysPrefs.m in Sources */,
+				2D4A4D0A1EE4B01D004D3716 /* StatusUpdateWindow.m in Sources */,
 				5C000E4419F30EA50026F350 /* SoftwareUpdatesPref.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1106,7 +1125,7 @@
 		5CBE9FEB19F2F9CA00CA3E5D /* LoginView.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				829FB41F19F739700026EAC2 /* Base */,
+				2D4A4D0F1EE4BCDF004D3716 /* Base */,
 			);
 			name = LoginView.xib;
 			sourceTree = "<group>";

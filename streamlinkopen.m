@@ -38,7 +38,7 @@
         
         dispatch_async(queue, ^{
             [detector setStreamURL:_streamurl.stringValue];
-            NSArray * a = [detector getAvailableStreams];
+            NSArray *a = [detector getAvailableStreams];
             dispatch_async(dispatch_get_main_queue(), ^{
                 [_streams removeAllItems];
                 [_streams addItemsWithTitles:a];
@@ -65,4 +65,5 @@
     [self.window orderOut:self];
     [NSApp endSheet:self.window returnCode:0];
 }
+
 @end

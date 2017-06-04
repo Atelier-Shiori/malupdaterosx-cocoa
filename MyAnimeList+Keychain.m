@@ -13,10 +13,10 @@
 @implementation MyAnimeList (Keychain)
 - (BOOL)checkaccount{
     // This method checks for any accounts that Hachidori can use
-    NSArray * accounts = [SSKeychain accountsForService:@"MAL Updater OS X"];
+    NSArray *accounts = [SSKeychain accountsForService:@"MAL Updater OS X"];
     if (accounts > 0) {
         //retrieve first valid account
-        for (NSDictionary * account in accounts) {
+        for (NSDictionary *account in accounts) {
                 self.username = (NSString *)account[@"acct"];
                 return true;
         }
@@ -31,7 +31,7 @@
 }
 - (BOOL)storeaccount:(NSString *)uname password:(NSString *)password{
     //Clear Account Information in the plist file if it hasn't been done already
-    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setObject:@"" forKey:@"Base64Token"];
     [defaults setObject:@"" forKey:@"Username"];
     return [SSKeychain setPassword:password forService:@"MAL Updater OS X" account:uname];

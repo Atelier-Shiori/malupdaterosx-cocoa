@@ -73,14 +73,14 @@
 }
 - (int)getQueueCount{
     __block int count = 0;
-    NSManagedObjectContext * moc = self.managedObjectContext;
+    NSManagedObjectContext *moc = self.managedObjectContext;
     [moc performBlockAndWait:^{
-        NSError * error;
-        NSPredicate * predicate = [NSPredicate predicateWithFormat: @"(scrobbled == %i) AND (status == %i)", false, 23];
-        NSFetchRequest * queuefetch = [[NSFetchRequest alloc] init];
+        NSError *error;
+        NSPredicate *predicate = [NSPredicate predicateWithFormat: @"(scrobbled == %i) AND (status == %i)", false, 23];
+        NSFetchRequest *queuefetch = [[NSFetchRequest alloc] init];
         queuefetch.entity = [NSEntityDescription entityForName:@"OfflineQueue" inManagedObjectContext:moc];
         [queuefetch setPredicate: predicate];
-        NSArray * queue = [moc executeFetchRequest:queuefetch error:&error];
+        NSArray *queue = [moc executeFetchRequest:queuefetch error:&error];
         count = (int)queue.count;
     }];
     return count;
@@ -111,7 +111,7 @@
             return result;
         }
         else {
-            __block NSError * error;
+            __block NSError *error;
             if (![self checkifexistinqueue]) {
                 // Store in offline queue
                 [managedObjectContext performBlockAndWait:^{
@@ -155,11 +155,11 @@
 }
 - (NSDictionary *)scrobblefromqueue{
     // Restore Detected Media
-    __block NSError * error;
-    NSManagedObjectContext * moc = self.managedObjectContext;
-    __block NSArray * queue;
-    NSPredicate * predicate = [NSPredicate predicateWithFormat: @"(scrobbled == %i) AND ((status == %i) OR (status == %i))", false, 23, 3];
-    NSFetchRequest * queuefetch = [[NSFetchRequest alloc] init];
+    __block NSError *error;
+    NSManagedObjectContext *moc = self.managedObjectContext;
+    __block NSArray *queue;
+    NSPredicate *predicate = [NSPredicate predicateWithFormat: @"(scrobbled == %i) AND ((status == %i) OR (status == %i))", false, 23, 3];
+    NSFetchRequest *queuefetch = [[NSFetchRequest alloc] init];
     queuefetch.entity = [NSEntityDescription entityForName:@"OfflineQueue" inManagedObjectContext:moc];
     [queuefetch setPredicate: predicate];
     [moc performBlockAndWait:^{
@@ -169,7 +169,7 @@
     int fail = 0;
     bool confirmneeded = false;
     if (queue.count > 0) {
-        for (NSManagedObject * item in queue) {
+        for (NSManagedObject *item in queue) {
             // Restore detected title and episode from coredata
             _DetectedTitle = [item valueForKey:@"detectedtitle"];
             _DetectedEpisode = [item valueForKey:@"detectedepisode"];
@@ -180,7 +180,7 @@
             _DetectedTitleisEpisodeZero = [[item valueForKey:@"iszeroepisode"] boolValue];
             int result = [self scrobble];
             bool scrobbled;
-            NSManagedObject * record = [self checkifexistinqueue];
+            NSManagedObject *record = [self checkifexistinqueue];
             // Record Results
             [record setValue:@(result) forKey:@"status"];
             switch (result) {
@@ -219,7 +219,7 @@
 }
 - (int)scrobbleagain:(NSString *)showtitle Episode:(NSString *)episode correctonce:(BOOL)correctonce{
 	_correcting = true;
-    NSString * lasttitle;
+    NSString *lasttitle;
     if (correctonce) {
         lasttitle = _LastScrobbledTitle;
     }
@@ -250,9 +250,9 @@
     // Get detection information
     if ([_detector getDetectionInfo]) {
         if ([[_detector getdetectinfo] count] > 0) {
-            NSDictionary * d = [[_detector getdetectinfo] objectAtIndex:0];
+            NSDictionary *d = [[_detector getdetectinfo] objectAtIndex:0];
             // Check if title is ignored. Update if not on list.
-            NSDictionary * detectioninfo = [_detection checksstreamlinkinfo:d];
+            NSDictionary *detectioninfo = [_detection checksstreamlinkinfo:d];
             if (detectioninfo) {
                 int result = [self populatevalues:detectioninfo];
                 // Check Exceptions
@@ -387,7 +387,7 @@
 
 }
 - (int)detectmedia {
-    NSDictionary * result = [_detection detectmedia];
+    NSDictionary *result = [_detection detectmedia];
     if (result !=nil) {
         //Populate Data
         _DetectedTitle = result[@"detectedtitle"];
@@ -479,7 +479,7 @@
             _DetectedEpisode = nil;
             _DetectedSource = nil;
             // Record Confirm for Offline Queued Item, if exists
-            NSManagedObject * obj = [self checkifexistinqueue];
+            NSManagedObject *obj = [self checkifexistinqueue];
             if (obj) {
                 [obj setValue:[NSNumber numberWithInt:status] forKey:@"status"];
                 [obj setValue:[NSNumber numberWithBool:false] forKey:@"scrobbled"];
@@ -506,19 +506,19 @@
 }
 - (NSString *)checkCache{
     NSManagedObjectContext *moc = managedObjectContext;
-    NSFetchRequest * allCaches = [[NSFetchRequest alloc] init];
+    NSFetchRequest *allCaches = [[NSFetchRequest alloc] init];
     [allCaches setEntity:[NSEntityDescription entityForName:@"Cache" inManagedObjectContext:moc]];
     NSPredicate *predicate = [NSPredicate predicateWithFormat: @"detectedTitle == %@", _DetectedTitle];
     [allCaches setPredicate:predicate];
-    NSError * error = nil;
-    NSArray * cache = [moc executeFetchRequest:allCaches error:&error];
+    NSError *error = nil;
+    NSArray *cache = [moc executeFetchRequest:allCaches error:&error];
     if (cache.count > 0) {
-        for (NSManagedObject * cacheentry in cache) {
-            NSString * title = [cacheentry valueForKey:@"detectedTitle"];
+        for (NSManagedObject *cacheentry in cache) {
+            NSString *title = [cacheentry valueForKey:@"detectedTitle"];
             if ([title isEqualToString:_DetectedTitle]) {
                 NSLog(@"%@ is found in cache.", title);
                 // Total Episode check
-                NSNumber * totalepisodes = [cacheentry valueForKey:@"totalEpisodes"];
+                NSNumber *totalepisodes = [cacheentry valueForKey:@"totalEpisodes"];
                 if ( [_DetectedEpisode intValue] <= totalepisodes.intValue || totalepisodes.intValue == 0 ) {
                     return [cacheentry valueForKey:@"id"];
                 }
@@ -529,13 +529,13 @@
 }
 - (void)checkExceptions{
     // Check Exceptions
-    NSManagedObjectContext * moc = self.managedObjectContext;
+    NSManagedObjectContext *moc = self.managedObjectContext;
     bool found = false;
     NSPredicate *predicate;
     for (int i = 0; i < 2; i++) {
         
-        NSFetchRequest * allExceptions = [[NSFetchRequest alloc] init];
-        __block NSError * error = nil;
+        NSFetchRequest *allExceptions = [[NSFetchRequest alloc] init];
+        __block NSError *error = nil;
         if (i == 0) {
             NSLog(@"Check Exceptions List");
             allExceptions.entity = [NSEntityDescription entityForName:@"Exceptions" inManagedObjectContext:moc];
@@ -549,13 +549,13 @@
         else {break;}
         // Set Predicate and filter exceiptions array
         [allExceptions setPredicate: predicate];
-        __block NSArray * exceptions;
+        __block NSArray *exceptions;
         [moc performBlockAndWait:^{
             exceptions = [moc executeFetchRequest:allExceptions error:&error];
         }];
         if (exceptions.count > 0) {
-            NSString * correcttitle;
-            for (NSManagedObject * entry in exceptions) {
+            NSString *correcttitle;
+            for (NSManagedObject *entry in exceptions) {
                 NSLog(@"%@",(NSString *)[entry valueForKey:@"detectedTitle"]);
                 if ([_DetectedTitle isEqualToString:(NSString *)[entry valueForKey:@"detectedTitle"]]) {
                     correcttitle = (NSString *)[entry valueForKey:@"correctTitle"];
@@ -610,7 +610,7 @@
 }
 - (NSString *)startSearch{
     // Performs Search
-    NSString * tmpid;
+    NSString *tmpid;
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"useHummingbirdSearch"]) {
         // Search using Hummingbird.me Search API to get malapi_id
         tmpid = [self hsearchanime];
@@ -626,13 +626,13 @@
 }
 - (NSManagedObject *)checkifexistinqueue{
     // Return existing offline queue item
-    NSError * error;
-    NSManagedObjectContext * moc = self.managedObjectContext;
-    NSPredicate * predicate = [NSPredicate predicateWithFormat: @"(detectedtitle ==[c] %@) AND (detectedepisode ==[c] %@) AND (detectedtype ==[c] %@) AND (ismovie == %i) AND (iszeroepisode == %i) AND (detectedseason == %i) AND (source == %@)", _DetectedTitle, _DetectedEpisode, _DetectedType, _DetectedTitleisMovie, _DetectedTitleisEpisodeZero, _DetectedSeason, _DetectedSource];
-    NSFetchRequest * queuefetch = [[NSFetchRequest alloc] init];
+    NSError *error;
+    NSManagedObjectContext *moc = self.managedObjectContext;
+    NSPredicate *predicate = [NSPredicate predicateWithFormat: @"(detectedtitle ==[c] %@) AND (detectedepisode ==[c] %@) AND (detectedtype ==[c] %@) AND (ismovie == %i) AND (iszeroepisode == %i) AND (detectedseason == %i) AND (source == %@)", _DetectedTitle, _DetectedEpisode, _DetectedType, _DetectedTitleisMovie, _DetectedTitleisEpisodeZero, _DetectedSeason, _DetectedSource];
+    NSFetchRequest *queuefetch = [[NSFetchRequest alloc] init];
     queuefetch.entity = [NSEntityDescription entityForName:@"OfflineQueue" inManagedObjectContext:moc];
     [queuefetch setPredicate: predicate];
-    NSArray * queue = [moc executeFetchRequest:queuefetch error:&error];
+    NSArray *queue = [moc executeFetchRequest:queuefetch error:&error];
     if (queue.count > 0) {
         return (NSManagedObject *)queue[0];
     }

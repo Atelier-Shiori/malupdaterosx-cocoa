@@ -9,6 +9,6 @@
 #import <Foundation/Foundation.h>
 
 @interface DonationKeyConstants : NSObject
-extern NSString * const donorname;
-extern NSString * const donorkey;
+extern NSString *const donorname;
+extern NSString *const donorkey;
 @end

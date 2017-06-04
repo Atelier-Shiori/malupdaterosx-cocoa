@@ -25,7 +25,7 @@
 }
 + (NSString *)desensitizeSeason:(NSString *)title {
     // Get rid of season references
-    OnigRegexp * regex = [OnigRegexp compile:@"(s)\\d" options:OnigOptionIgnorecase];
+    OnigRegexp *regex = [OnigRegexp compile:@"(s)\\d" options:OnigOptionIgnorecase];
     title = [title replaceByRegexp:regex with:@""];
     // Remove any Whitespace
     title = [title stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
@@ -66,7 +66,7 @@
             explaination:(NSString *)explaination
                  window:(NSWindow *)w {
     // Set Up Prompt Message Window
-    NSAlert * alert = [[NSAlert alloc] init];
+    NSAlert *alert = [[NSAlert alloc] init];
     [alert addButtonWithTitle:@"OK"];
     [alert setMessageText:message];
     [alert setInformativeText:explaination];
@@ -121,7 +121,7 @@
 }
 + (void)showDonateReminder:(MAL_Updater_OS_XAppDelegate*)delegate{
     // Shows Donation Reminder
-    NSAlert * alert = [[NSAlert alloc] init] ;
+    NSAlert *alert = [[NSAlert alloc] init] ;
     [alert addButtonWithTitle:@"Donate"];
     [alert addButtonWithTitle:@"Enter Key"];
     [alert addButtonWithTitle:@"Remind Me Later"];
@@ -150,7 +150,7 @@
 + (void)setReminderDate{
     //Sets Reminder Date
     NSDate *now = [NSDate date];
-    NSDate * reminderdate = [now dateByAddingTimeInterval:60*60*24*14];
+    NSDate *reminderdate = [now dateByAddingTimeInterval:60*60*24*14];
     [[NSUserDefaults standardUserDefaults] setObject:reminderdate forKey:@"donatereminderdate"];
 }
 + (int)checkDonationKey:(NSString *)key name:(NSString *)name{
@@ -167,7 +167,7 @@
         long statusCode = [request getStatusCode];
     if (statusCode == 200) {
         NSError* jerror;
-        NSDictionary * d = [NSJSONSerialization JSONObjectWithData:[request getResponseData] options:nil error:&jerror];
+        NSDictionary *d = [NSJSONSerialization JSONObjectWithData:[request getResponseData] options:nil error:&jerror];
         int valid = [(NSNumber *)d[@"valid"] intValue];
         if (valid == 1) {
             // Valid Key

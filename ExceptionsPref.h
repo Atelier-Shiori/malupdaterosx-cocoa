@@ -12,11 +12,11 @@
 #import "MAL_Updater_OS_XAppDelegate.h"
 @class FixSearchDialog;
 @interface ExceptionsPref : NSViewController <MASPreferencesViewController>{
-    IBOutlet NSArrayController * arraycontroller;
-    IBOutlet NSArrayController * ignorearraycontroller;
-    IBOutlet NSArrayController * ignorefilenamearraycontroller;
-    IBOutlet NSTableView * tb;
-    IBOutlet NSTableView * iftb;
+    IBOutlet NSArrayController *arraycontroller;
+    IBOutlet NSArrayController *ignorearraycontroller;
+    IBOutlet NSArrayController *ignorefilenamearraycontroller;
+    IBOutlet NSTableView *tb;
+    IBOutlet NSTableView *iftb;
     NSString *detectedtitle;
     NSManagedObjectContext *managedObjectContext;
 }

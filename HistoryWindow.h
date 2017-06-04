@@ -10,8 +10,8 @@
 #import "MAL_Updater_OS_XAppDelegate.h"
 
 @interface HistoryWindow : NSWindowController <NSWindowDelegate>{
-    IBOutlet NSArrayController * arraycontroller;
-    IBOutlet NSTableView * historytable;
+    IBOutlet NSArrayController *arraycontroller;
+    IBOutlet NSTableView *historytable;
 }
 @property (nonatomic, readonly)  NSManagedObjectContext *managedObjectContext;
 + (void)addrecord:(NSString *)title

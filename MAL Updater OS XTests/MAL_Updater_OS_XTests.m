@@ -28,7 +28,7 @@
     // Put setup code here. This method is called before the invocation of each test method in the class.
     // Put setup code here. This method is called before the invocation of each test method in the class.
     _MALEngine = [[MyAnimeList alloc] init];
-    MAL_Updater_OS_XAppDelegate * delegate = (MAL_Updater_OS_XAppDelegate *)[NSApplication sharedApplication].delegate;
+    MAL_Updater_OS_XAppDelegate *delegate = (MAL_Updater_OS_XAppDelegate *)[NSApplication sharedApplication].delegate;
     //Check for latest Auto Exceptions
     if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"ExceptionsLastUpdated"] timeIntervalSinceNow] < -604800 ||![[NSUserDefaults standardUserDefaults] objectForKey:@"ExceptionsLastUpdated"]) {
         // Has been 1 Week, update Auto Exceptions
@@ -41,7 +41,7 @@
     NSData *dataset = [NSData dataWithContentsOfFile:[mainBundle pathForResource: @"testdata" ofType: @"json"]
                                              options:0
                                                error:NULL];
-    NSError * error;
+    NSError *error;
     _testdata = [NSArray alloc];
     _testdata= [NSJSONSerialization JSONObjectWithData:dataset options:kNilOptions error:&error];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];

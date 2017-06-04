@@ -24,7 +24,7 @@
     [request startRequest];
     // Get Status Code
     int statusCode = [request getStatusCode];
-    NSError * error = [request getError]; // Error Detection
+    NSError *error = [request getError]; // Error Detection
     if (statusCode == 200 ) {
         if (self.DetectedEpisode.length == 0) { // Check if there is a DetectedEpisode (needed for checking
             // Set detected episode to 1

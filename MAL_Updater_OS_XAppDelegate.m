@@ -20,6 +20,7 @@
 #import "HistoryWindow.h"
 #import "DonationWindowController.h"
 #import "OfflineViewQueue.h"
+#import "StatusUpdateWindow.h"
 #import "MSWeakTimer.h"
 #import "streamlinkopen.h"
 #import <streamlinkdetect/streamlinkdetect.h>
@@ -140,7 +141,7 @@
 + (void)initialize
 {
 	//Create a Dictionary
-	NSMutableDictionary * defaultValues = [NSMutableDictionary dictionary];
+	NSMutableDictionary *defaultValues = [NSMutableDictionary dictionary];
 	
 	// Defaults
 	defaultValues[@"Base64Token"] = @"";
@@ -260,7 +261,7 @@
     // Fix template images
     // There is a bug where template images are not made even if they are set in XCAssets
     NSArray *images = @[@"update", @"history", @"correct", @"Info", @"clear"];
-    NSImage * image;
+    NSImage *image;
     for (NSString *imagename in images) {
         image = [NSImage imageNamed:imagename];
         [image setTemplate:YES];
@@ -269,7 +270,7 @@
 	// Notify User if there is no Account Info
 	if (![MALEngine checkaccount]) {
         // First time prompt
-        NSAlert * alert = [[NSAlert alloc] init] ;
+        NSAlert *alert = [[NSAlert alloc] init] ;
         [alert addButtonWithTitle:@"Yes"];
         [alert addButtonWithTitle:@"No"];
         [alert setMessageText:@"Welcome to MAL Updater OS X"];
@@ -479,7 +480,7 @@
                 break;
             case ScrobblerConfirmNeeded: {
                 [self setStatusText:@"Scrobble Status: Please confirm update."];
-                NSDictionary * userinfo = @{@"title": [MALEngine getLastScrobbledTitle],  @"episode": [MALEngine getLastScrobbledEpisode]};
+                NSDictionary *userinfo = @{@"title": [MALEngine getLastScrobbledTitle],  @"episode": [MALEngine getLastScrobbledEpisode]};
                 [self showConfirmationNotification:@"Confirm Update" message:[NSString stringWithFormat:@"Click here to confirm update for %@ Episode %@.",[MALEngine getLastScrobbledActualTitle],[MALEngine getLastScrobbledEpisode]] updateData:userinfo];
                 break;
             }
@@ -543,7 +544,7 @@
                 [sharetoolbaritem setEnabled:YES];
                 [correcttoolbaritem setEnabled:YES];
                 [openAnimePage setEnabled:YES];
-                NSDictionary * ainfo = [MALEngine getLastScrobbledInfo];
+                NSDictionary *ainfo = [MALEngine getLastScrobbledInfo];
                 if (ainfo !=nil) { // Checks if MAL Updater OS X already populated info about the just updated title.
                     [self showAnimeInfo:ainfo];
                     [self generateShareMenu];
@@ -672,14 +673,14 @@
         for (int i = 0; i < 2; i++) {
             if (i == 0) {
                 if ([MALEngine getQueueCount] > 0 && [MALEngine getOnlineStatus]) {
-                    NSDictionary * status = [MALEngine scrobblefromqueue];
+                    NSDictionary *status = [MALEngine scrobblefromqueue];
                     int success = [status[@"success"] intValue];
                     int fail = [status[@"fail"] intValue];
                     bool confirmneeded = [status[@"confirmneeded"] boolValue];
                     if (confirmneeded) {
                         dispatch_async(dispatch_get_main_queue(), ^{
                         [self setStatusText:@"Scrobble Status: Please confirm update."];
-                        NSDictionary * userinfo = @{@"title": [MALEngine getLastScrobbledTitle],  @"episode": [MALEngine getLastScrobbledEpisode]};
+                        NSDictionary *userinfo = @{@"title": [MALEngine getLastScrobbledTitle],  @"episode": [MALEngine getLastScrobbledEpisode]};
                         [self showConfirmationNotification:@"Confirm Update" message:[NSString stringWithFormat:@"Click here to confirm update for %@ Episode %@.",[MALEngine getLastScrobbledActualTitle],[MALEngine getLastScrobbledEpisode]] updateData:userinfo];
                             });
                         break;
@@ -818,7 +819,7 @@
                         [openAnimePage setEnabled:YES];
                     }
                     //Show Anime Correct Information
-                    NSDictionary * ainfo = [MALEngine getLastScrobbledInfo];
+                    NSDictionary *ainfo = [MALEngine getLastScrobbledInfo];
                     [self showAnimeInfo:ainfo];
 					[confirmupdate setHidden:true];
                     [findtitle setHidden:true];
@@ -841,13 +842,13 @@
     }
 }
 - (void)addtoExceptions:(NSString *)detectedtitle newtitle:(NSString *)title showid:(NSString *)showid threshold:(int)threshold{
-    NSManagedObjectContext * moc = managedObjectContext;
-    NSFetchRequest * allExceptions = [[NSFetchRequest alloc] init];
+    NSManagedObjectContext *moc = managedObjectContext;
+    NSFetchRequest *allExceptions = [[NSFetchRequest alloc] init];
     [allExceptions setEntity:[NSEntityDescription entityForName:@"Exceptions" inManagedObjectContext:moc]];
-    NSError * error = nil;
-    NSArray * exceptions = [moc executeFetchRequest:allExceptions error:&error];
+    NSError *error = nil;
+    NSArray *exceptions = [moc executeFetchRequest:allExceptions error:&error];
     BOOL exists = false;
-    for (NSManagedObject * entry in exceptions) {
+    for (NSManagedObject *entry in exceptions) {
         int offset = [(NSNumber *)[entry valueForKey:@"episodeOffset"] intValue];
         if ([detectedtitle isEqualToString:(NSString *)[entry valueForKey:@"detectedTitle"]] && offset == 0) {
             exists = true;
@@ -935,31 +936,23 @@
     [self showUpdateDialog:nil];
 }
 - (void)showUpdateDialog:(NSWindow *) w{
-	// Show Sheet
-	[NSApp beginSheet:updatepanel
-	   modalForWindow:w modalDelegate:self
-	   didEndSelector:@selector(updateDidEnd:returnCode:contextInfo:)
-		   contextInfo:(void *)nil];
-	// Set up UI
-	[showtitle setObjectValue:[MALEngine getLastScrobbledTitle]];
-	[showscore selectItemWithTag:[MALEngine getScore]];
-	[showstatus selectItemAtIndex:[MALEngine getWatchStatus]];
-    [episodefield setStringValue:[NSString stringWithFormat:@"%i", [MALEngine getCurrentEpisode]]];
-    if ([MALEngine getTotalEpisodes] !=0) {
-        [epiformatter setMaximum:@([MALEngine getTotalEpisodes])];
+    if (!_updatewindow) {
+        _updatewindow = [StatusUpdateWindow new];
+        // Set completion handler
+        __weak MAL_Updater_OS_XAppDelegate *weakself = self;
+        _updatewindow.completion = ^void(int returnCode){
+            [weakself updateDidEnd:returnCode];
+        };
     }
-	// Stop Timer temporarily if scrobbling is turned on
-	if (scrobbling == TRUE) {
-		[self stoptimer];
-	}
-	
+	// Show Dialog
+    [_updatewindow showUpdateDialog:w withMALEngine:MALEngine];
 }
-- (void)updateDidEnd:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo {
+- (void)updateDidEnd:(int)returnCode {
     dispatch_queue_t queue = dispatch_get_global_queue(
                                                        DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     dispatch_async(queue, ^{
     // Check if Episode field is empty. If so, set it to last scrobbled episode
-    NSString * tmpepisode = [episodefield stringValue];
+    NSString *tmpepisode = _updatewindow.episodefield.stringValue;
     bool episodechanged = false;
     if (tmpepisode.length == 0) {
         tmpepisode = [NSString stringWithFormat:@"%i", [MALEngine getCurrentEpisode]];
@@ -970,7 +963,7 @@
 
     if (returnCode == 1) {
          dispatch_async(dispatch_get_main_queue(), ^{
-        BOOL result = [MALEngine updatestatus:[MALEngine getAniID] score:(int) [showscore selectedTag] watchstatus:[showstatus titleOfSelectedItem] episode:tmpepisode];
+        BOOL result = [MALEngine updatestatus:[MALEngine getAniID] score:(int)_updatewindow.showscore.selectedTag watchstatus:_updatewindow.showstatus.titleOfSelectedItem episode:tmpepisode];
         if (result)
             [self setStatusText:@"Scrobble Status: Updating of Watch Status/Score Successful."];
         if (episodechanged) {
@@ -991,15 +984,6 @@
     [self enableUpdateItems];
     });
     });
-}
-
-- (IBAction)closeupdatestatus:(id)sender {
-	[updatepanel orderOut:self];
-	[NSApp endSheet:updatepanel returnCode:0];
-}
-- (IBAction)updatetitlestatus:(id)sender {
-	[updatepanel orderOut:self];
-	[NSApp endSheet:updatepanel returnCode:1];
 }
 
 #pragma mark Notification Center and Title/Update Confirmation
@@ -1027,8 +1011,8 @@
 - (void) userNotificationCenter:(NSUserNotificationCenter *)center didActivateNotification:(NSUserNotification *)notification
 {
     if ([notification.title isEqualToString:@"Confirm Update"] && !confirmupdate.hidden) {
-        NSString * title = (notification.userInfo)[@"title"];
-        NSString * episode = (notification.userInfo)[@"episode"];
+        NSString *title = (notification.userInfo)[@"title"];
+        NSString *episode = (notification.userInfo)[@"episode"];
         // Only confirm update if the title and episode is the same with the last scrobbled.
         if ([[MALEngine getLastScrobbledTitle] isEqualToString:title] && [episode intValue] == [[MALEngine getLastScrobbledEpisode] intValue]) {
             //Confirm Update
@@ -1118,7 +1102,7 @@
     [self appendToAnimeInfo:[MALEngine getLastScrobbledActualTitle]];
     [self appendToAnimeInfo:@""];
     //Description
-    NSString * anidescription = d[@"synopsis"];
+    NSString *anidescription = d[@"synopsis"];
     if (d[@"synopsis"] != [NSNull null]) {
         anidescription = [anidescription stripHtml]; //Removes HTML tags
         [self appendToAnimeInfo:@"Description"];
@@ -1134,7 +1118,7 @@
     [self appendToAnimeInfo:[NSString stringWithFormat:@"Classification: %@", d[@"classification"]]];
     [self appendToAnimeInfo:[NSString stringWithFormat:@"Start Date: %@", d[@"start_date"]]];
     [self appendToAnimeInfo:[NSString stringWithFormat:@"Airing Status: %@", d[@"status"]]];
-    NSString * epi;
+    NSString *epi;
     if (d[@"episodes"] == [NSNull null]) {
         epi = @"Unknown";
     }
@@ -1147,7 +1131,7 @@
         [self appendToAnimeInfo:[NSString stringWithFormat:@"Favorited: %@", d[@"favorited_count"]]];
     }
     //Image
-    NSImage * dimg = [[NSImage alloc]initByReferencingURL:[NSURL URLWithString: (NSString *)d[@"image_url"]]]; //Downloads Image
+    NSImage *dimg = [[NSImage alloc]initByReferencingURL:[NSURL URLWithString: (NSString *)d[@"image_url"]]]; //Downloads Image
     [img setImage:dimg]; //Get the Image for the title
     // Clear Anime Info so that MAL Updater OS X won't attempt to retrieve it if the same episode and title is playing
     [MALEngine clearAnimeInfo];
@@ -1163,7 +1147,7 @@
 }
 - (NSDictionary *)getNowPlaying{
     // Outputs Currently Playing information into JSON
-    NSMutableDictionary * output = [NSMutableDictionary new];
+    NSMutableDictionary *output = [NSMutableDictionary new];
     if ([MALEngine.getLastScrobbledTitle length] > 0) {
         [output setObject:[MALEngine getAniID] forKey:@"id"];
         [output setObject:[MALEngine getLastScrobbledTitle] forKey:@"scrobbledtitle"];
@@ -1188,8 +1172,8 @@
     //Get Share Services for Items
     NSArray *shareServiceforItems = [NSSharingService sharingServicesForItems:shareItems];
     //Generate Share Items and populate Share Menu
-    for (NSSharingService * cservice in shareServiceforItems) {
-        NSMenuItem * item = [[NSMenuItem alloc] initWithTitle:[cservice title] action:@selector(shareFromService:) keyEquivalent:@""];
+    for (NSSharingService *cservice in shareServiceforItems) {
+        NSMenuItem *item = [[NSMenuItem alloc] initWithTitle:[cservice title] action:@selector(shareFromService:) keyEquivalent:@""];
         [item setRepresentedObject:cservice];
         [item setImage:[cservice image]];
         [item setTarget:self];
@@ -1207,7 +1191,7 @@
 #pragma mark Streamlink
 - (IBAction)openstream:(id)sender {
     if ([MALEngine checkaccount]) {
-        streamlinkdetector * detector = [streamlinkdetector new];
+        streamlinkdetector *detector = [streamlinkdetector new];
         if ([detector checkifStreamLinkExists]) {
             // Shows the Open Stream dialog
             [NSApp activateIgnoringOtherApps:YES];
@@ -1249,8 +1233,8 @@
     }
     else {
         [self toggleScrobblingUIEnable:false];
-        NSString * streamurl = streamlinkopenw.streamurl.stringValue;
-        NSString * stream = streamlinkopenw.streams.title;
+        NSString *streamurl = streamlinkopenw.streamurl.stringValue;
+        NSString *stream = streamlinkopenw.streams.title;
         dispatch_queue_t queue = dispatch_get_global_queue(
                                                            DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
         

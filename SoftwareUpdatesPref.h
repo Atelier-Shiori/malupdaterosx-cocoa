@@ -10,6 +10,6 @@
 #import <MASPreferences/MASPreferences.h>
 
 @interface SoftwareUpdatesPref : NSViewController <MASPreferencesViewController>  {
-    IBOutlet NSButton * betacheck;
+    IBOutlet NSButton *betacheck;
 }
 @end

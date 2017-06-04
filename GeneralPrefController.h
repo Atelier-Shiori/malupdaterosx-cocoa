@@ -12,12 +12,12 @@
 
 @interface GeneralPrefController : NSViewController <MASPreferencesViewController> {
 	//General
-    IBOutlet NSButton * disablenewtitlebar;
-    IBOutlet NSButton * disablevibarency;
-    IBOutlet NSButton * startatlogin;
-    IBOutlet NSProgressIndicator * indicator;
-    IBOutlet NSButton * updateexceptionsbtn;
-    IBOutlet NSButton * updateexceptionschk;
+    IBOutlet NSButton *disablenewtitlebar;
+    IBOutlet NSButton *disablevibarency;
+    IBOutlet NSButton *startatlogin;
+    IBOutlet NSProgressIndicator *indicator;
+    IBOutlet NSButton *updateexceptionsbtn;
+    IBOutlet NSButton *updateexceptionschk;
 }
 
 - (IBAction)clearSearchCache:(id)sender;

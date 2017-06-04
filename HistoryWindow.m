@@ -57,7 +57,7 @@
 }
 - (IBAction)clearhistory:(id)sender {
     // Set Up Prompt Message Window
-    NSAlert * alert = [[NSAlert alloc] init];
+    NSAlert *alert = [[NSAlert alloc] init];
     [alert addButtonWithTitle:@"Yes"];
     [alert addButtonWithTitle:@"No"];
     [alert setMessageText:@"Are you sure you want to clear the Scrobble History?"];
@@ -78,13 +78,13 @@
     if (echoice == 1000) {
         // Remove All Data
         NSManagedObjectContext *moc = [self managedObjectContext];
-        NSFetchRequest * allHistory = [[NSFetchRequest alloc] init];
+        NSFetchRequest *allHistory = [[NSFetchRequest alloc] init];
         [allHistory setEntity:[NSEntityDescription entityForName:@"History" inManagedObjectContext:moc]];
         
-        NSError * error = nil;
-        NSArray * histories = [moc executeFetchRequest:allHistory error:&error];
+        NSError *error = nil;
+        NSArray *histories = [moc executeFetchRequest:allHistory error:&error];
         //error handling goes here
-        for (NSManagedObject * history in histories) {
+        for (NSManagedObject *history in histories) {
             [moc deleteObject:history];
         }
     }

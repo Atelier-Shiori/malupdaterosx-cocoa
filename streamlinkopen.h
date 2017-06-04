@@ -10,7 +10,7 @@
 @class streamlinkdetector;
 
 @interface streamlinkopen : NSWindowController{
-    streamlinkdetector * detector;
+    streamlinkdetector *detector;
 }
 @property (strong) IBOutlet NSTextField *streamurl;
 @property (strong) IBOutlet NSButton *openstreambtn;

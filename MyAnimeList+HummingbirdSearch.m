@@ -15,11 +15,11 @@
 @implementation MyAnimeList (HummingbirdSearch)
 - (NSString *)hsearchanime{
     // Searches for ID of associated title
-    NSString * searchtitle = self.DetectedTitle;
+    NSString *searchtitle = self.DetectedTitle;
     if (self.DetectedSeason > 1) {
         // Specifically search for season
         for (int i = 0; i < 2; i++) {
-            NSString * tmpid;
+            NSString *tmpid;
             switch (i) {
                 case 0:
                     tmpid = [self hperformSearch:[NSString stringWithFormat:@"%@ %i", [Utility desensitizeSeason:searchtitle], self.DetectedSeason]];
@@ -44,7 +44,7 @@
     NSLog(@"Searching For Title");
     // Set Season for Search Term if any detected.
     //Escape Search Term
-    NSString * searchterm = [Utility urlEncodeString:searchtitle];
+    NSString *searchterm = [Utility urlEncodeString:searchtitle];
     //Set Search API
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://kitsu.io/api/edge/anime?filter[text]=%@", searchterm]];
     EasyNSURLConnection *request = [[EasyNSURLConnection alloc] initWithURL:url];
@@ -71,11 +71,11 @@
     // Initalize JSON parser
     NSError* error;
     NSDictionary *data = [NSJSONSerialization JSONObjectWithData:ResponseData options:kNilOptions error:&error];
-    NSArray * tmpa = data[@"data"];
+    NSArray *tmpa = data[@"data"];
     tmpa = [NSArray arrayWithArray:[tmpa filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"(type == %@)" , @"anime"]]];
-    NSMutableArray * searchdata = [NSMutableArray new];
-    for (NSDictionary * a in tmpa) {
-        NSMutableDictionary * tmpd = [NSMutableDictionary new];
+    NSMutableArray *searchdata = [NSMutableArray new];
+    for (NSDictionary *a in tmpa) {
+        NSMutableDictionary *tmpd = [NSMutableDictionary new];
         [tmpd addEntriesFromDictionary:a[@"attributes"]];
         tmpd[@"id"] = a[@"id"];
         [searchdata addObject:tmpd];
@@ -101,11 +101,11 @@
         self.DetectedTitleisMovie = false;
     }
     // Populate Sorted Array
-    NSArray * sortedArray = [self hfilterArray:searchdata];
+    NSArray *sortedArray = [self hfilterArray:searchdata];
     searchdata = nil;
     // Used for String Comparison
-    NSDictionary * titlematch1;
-    NSDictionary * titlematch2;
+    NSDictionary *titlematch1;
+    NSDictionary *titlematch2;
     int mstatus = 0;
     // Search
     for (int i = 0; i < 2; i++) {
@@ -121,7 +121,7 @@
         }
         
         for (NSDictionary *searchentry in sortedArray) {
-            NSDictionary * titles = searchentry[@"titles"];
+            NSDictionary *titles = searchentry[@"titles"];
             
             theshowtitle = [NSString stringWithFormat:@"%@",titles[@"en_jp"]];
             alttitle = [NSString stringWithFormat:@"%@", titles[@"en"]];
@@ -141,7 +141,7 @@
                     if ([[NSString stringWithFormat:@"%@", searchentry[@"showType"]] isEqualToString:@"TV"]||[[NSString stringWithFormat:@"%@", searchentry[@"showType"]] isEqualToString:@"ONA"]) { // Check Seasons if the title is a TV show type
                         // Used for Season Checking
                         OnigRegexp   *regex2 = [OnigRegexp compile:[NSString stringWithFormat:@"(%i(st|nd|rd|th) season|\\W%i)", self.DetectedSeason, self.DetectedSeason] options:OnigOptionIgnorecase];
-                        OnigResult * smatch = [regex2 match:[NSString stringWithFormat:@"%@ - %@ - %@", theshowtitle, alttitle, searchentry[@"slug"]]];
+                        OnigResult *smatch = [regex2 match:[NSString stringWithFormat:@"%@ - %@ - %@", theshowtitle, alttitle, searchentry[@"slug"]]];
                         if (self.DetectedSeason >= 2) { // Season detected, check to see if there is a matcch. If not, continue.
                             if (!smatch) {
                                 continue;
@@ -207,7 +207,7 @@
     return @"";
 }
 - (NSArray *)hfilterArray:(NSArray *)searchdata{
-    NSMutableArray * sortedArray;
+    NSMutableArray *sortedArray;
     // Filter array based on if the title is a movie or if there is a season detected
     if (self.DetectedTitleisMovie) {
         sortedArray = [NSMutableArray arrayWithArray:[searchdata filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"(showType == %@)" , @"movie"]]];
@@ -239,8 +239,8 @@
     // Perform string score between two titles to see if one is the correct match or not
     float score1, score2, ascore1, ascore2;
     double fuzziness = 0.3;
-    NSDictionary * mtitle1 = match1[@"titles"];
-    NSDictionary * mtitle2 = match2[@"titles"];
+    NSDictionary *mtitle1 = match1[@"titles"];
+    NSDictionary *mtitle2 = match2[@"titles"];
     int season1 = ((NSNumber *)[[Recognition alloc] recognize:mtitle1[@"en_jp"]][@"season"]).intValue;
     int season2 = ((NSNumber *)[[Recognition alloc] recognize:mtitle2[@"en_jp"]][@"season"]).intValue;
     //Score first title
@@ -315,13 +315,13 @@
     long statusCode = [request getStatusCode];
     if (statusCode == 200) {
         NSError* error;
-        NSDictionary * d = [NSJSONSerialization JSONObjectWithData:[request getResponseData] options:kNilOptions error:&error];
-        NSArray * mappings = d[@"data"];
-        for (NSDictionary * m in mappings) {
+        NSDictionary *d = [NSJSONSerialization JSONObjectWithData:[request getResponseData] options:kNilOptions error:&error];
+        NSArray *mappings = d[@"data"];
+        for (NSDictionary *m in mappings) {
             if ([[NSString stringWithFormat:@"%@",[m[@"attributes"] valueForKey:@"externalSite"]] isEqualToString:@"myanimelist/anime"]) {
-                NSString * MALID = [NSString stringWithFormat:@"%@",[m[@"attributes"] valueForKey:@"externalId"]];
+                NSString *MALID = [NSString stringWithFormat:@"%@",[m[@"attributes"] valueForKey:@"externalId"]];
                 if ([[NSUserDefaults standardUserDefaults] boolForKey:@"useSearchCache"] && titleid.length > 0) {
-                    NSNumber * totalepisodes;
+                    NSNumber *totalepisodes;
                     if (found[@"episode_count"]) {
                         totalepisodes = (NSNumber *)found[@"episodeCount"];
                     }
@@ -329,7 +329,7 @@
                         totalepisodes = @(0);
                     }
                     //Save AniID
-                    NSDictionary * title = found[@"titles"];
+                    NSDictionary *title = found[@"titles"];
                     [ExceptionsCache addtoCache:self.DetectedTitle showid:MALID actualtitle:(NSString *)title[@"en_jp"] totalepisodes: totalepisodes.intValue];
                 }
                 return MALID;

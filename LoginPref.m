@@ -111,7 +111,7 @@
 	//Verify Username/Password
 	[request startRequest];
 	// Check for errors
-    NSError * error = [request getError];
+    NSError *error = [request getError];
     dispatch_async(dispatch_get_main_queue(), ^{
         if ([request getStatusCode] == 200 && !error) {
                 //Login successful
@@ -153,7 +153,7 @@
 {
     if (![appdelegate getisScrobbling] && ![appdelegate getisScrobblingActive]) {
         // Set Up Prompt Message Window
-        NSAlert * alert = [[NSAlert alloc] init] ;
+        NSAlert *alert = [[NSAlert alloc] init] ;
         [alert addButtonWithTitle:@"Yes"];
         [alert addButtonWithTitle:@"No"];
         [alert setMessageText:@"Do you want to log out?"];

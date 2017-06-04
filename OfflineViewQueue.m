@@ -32,7 +32,7 @@
 - (IBAction)clearqueue:(id)sender
 {
     // Set Up Prompt Message Window
-    NSAlert * alert = [[NSAlert alloc] init];
+    NSAlert *alert = [[NSAlert alloc] init];
     [alert addButtonWithTitle:@"Yes"];
     [alert addButtonWithTitle:@"No"];
     [alert setMessageText:@"Are you sure you want to clear the Offline Queue?"];
@@ -53,13 +53,13 @@
     if (echoice == 1000) {
         // Remove All Data
         NSManagedObjectContext *moc = [self managedObjectContext];
-        NSFetchRequest * allQueue = [[NSFetchRequest alloc] init];
+        NSFetchRequest *allQueue = [[NSFetchRequest alloc] init];
         [allQueue setEntity:[NSEntityDescription entityForName:@"OfflineQueue" inManagedObjectContext:moc]];
         
-        NSError * error = nil;
-        NSArray * queue = [moc executeFetchRequest:allQueue error:&error];
+        NSError *error = nil;
+        NSArray *queue = [moc executeFetchRequest:allQueue error:&error];
         //error handling goes here
-        for (NSManagedObject * item in queue) {
+        for (NSManagedObject *item in queue) {
             [moc deleteObject:item];
         }
         [moc save:&error];

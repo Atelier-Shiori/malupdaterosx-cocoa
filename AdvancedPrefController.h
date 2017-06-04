@@ -12,9 +12,9 @@
 #import "MyAnimeList.h"
 
 @interface AdvancedPrefController : NSViewController <MASPreferencesViewController>{
-    	IBOutlet NSTextField * APIUrl;
+    	IBOutlet NSTextField *APIUrl;
         MAL_Updater_OS_XAppDelegate* appdelegate;
-        IBOutlet NSButton * kodicheck;
+        IBOutlet NSButton *kodicheck;
     __weak IBOutlet NSButton *testapibtn;
     __weak IBOutlet NSProgressIndicator *testprogressindicator;
 }

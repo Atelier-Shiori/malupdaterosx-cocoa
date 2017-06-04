@@ -59,15 +59,15 @@
 #pragma mark General Preferences Functions
 - (IBAction)clearSearchCache:(id)sender{
     // Remove All cache data from Core Data Entity
-    MAL_Updater_OS_XAppDelegate * delegate = (MAL_Updater_OS_XAppDelegate *)[[NSApplication sharedApplication] delegate];
+    MAL_Updater_OS_XAppDelegate *delegate = (MAL_Updater_OS_XAppDelegate *)[[NSApplication sharedApplication] delegate];
     NSManagedObjectContext *moc = [delegate getObjectContext];
-    NSFetchRequest * allCaches = [[NSFetchRequest alloc] init];
+    NSFetchRequest *allCaches = [[NSFetchRequest alloc] init];
     [allCaches setEntity:[NSEntityDescription entityForName:@"Cache" inManagedObjectContext:moc]];
     
-    NSError * error = nil;
-    NSArray * caches = [moc executeFetchRequest:allCaches error:&error];
+    NSError *error = nil;
+    NSArray *caches = [moc executeFetchRequest:allCaches error:&error];
     //error handling goes here
-    for (NSManagedObject * cachentry in caches) {
+    for (NSManagedObject *cachentry in caches) {
         [moc deleteObject:cachentry];
     }
     error = nil;
@@ -100,7 +100,7 @@
     else {
         // Clears Exceptions if User chooses
         // Set Up Prompt Message Window
-        NSAlert * alert = [[NSAlert alloc] init] ;
+        NSAlert *alert = [[NSAlert alloc] init] ;
         [alert addButtonWithTitle:@"Yes"];
         [alert addButtonWithTitle:@"No"];
         [alert setMessageText:@"Do you want to remove all Auto Exceptions Data?"];
@@ -116,7 +116,7 @@
 }
 - (IBAction)changetimerinterval:(id)sender {
     // Sets new time for the timer, if running
-    MAL_Updater_OS_XAppDelegate * delegate = (MAL_Updater_OS_XAppDelegate *)[NSApplication sharedApplication].delegate;
+    MAL_Updater_OS_XAppDelegate *delegate = (MAL_Updater_OS_XAppDelegate *)[NSApplication sharedApplication].delegate;
     if ([delegate getisScrobbling]) {
         [delegate stoptimer];
         [delegate starttimer];

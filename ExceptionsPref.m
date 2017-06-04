@@ -46,7 +46,7 @@
 #pragma mark Anime Exceptions List Functions
 - (IBAction)addTitle:(id)sender{
     //Obtain Detected Title from Media File
-    NSOpenPanel * op = [NSOpenPanel openPanel];
+    NSOpenPanel *op = [NSOpenPanel openPanel];
     [op setAllowedFileTypes:@[@"mkv", @"mp4", @"avi", @"ogm", @"rm", @"rmvb", @"wmv", @"divx", @"mov", @"flv", @"mpg", @"3gp"]];
     [op setMessage:@"Please select a media file you want to create an exception for."];
     [op beginSheetModalForWindow:[[self view] window] completionHandler:^(NSInteger result) {
@@ -55,7 +55,7 @@
         }
         //Close Open Window
         [op orderOut:nil];
-        NSDictionary * d = [[Recognition alloc] recognize:[[op URL] path]];
+        NSDictionary *d = [[Recognition alloc] recognize:[[op URL] path]];
         detectedtitle = d[@"title"];
         if ([self checkifexists:detectedtitle offset:0 correcttitle:nil]) {
             // Exists, don't do anything
@@ -93,7 +93,7 @@
 }
 - (IBAction)importList:(id)sender{
     // Set Open Dialog to get json file.
-    NSOpenPanel * op = [NSOpenPanel openPanel];
+    NSOpenPanel *op = [NSOpenPanel openPanel];
     [op setAllowedFileTypes:@[@"json", @"JSON file"]];
     [op setMessage:@"Please select an exceptions list to import."];
     [op beginSheetModalForWindow:[[self view] window] completionHandler:^(NSInteger result) {
@@ -103,16 +103,16 @@
         NSURL *Url = [op URL];
         
         // read the file
-        NSString * str = [NSString stringWithContentsOfURL:Url
+        NSString *str = [NSString stringWithContentsOfURL:Url
                                                   encoding:NSUTF8StringEncoding
                                                      error:NULL];
         
         NSData *jsonData = [str dataUsingEncoding:NSUTF8StringEncoding];
         
         NSError *error = nil;
-        NSArray * a = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:&error];
+        NSArray *a = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:&error];
         for (NSDictionary *d in a) {
-            NSString * detectedtitlea = d[@"detectedtitle"];
+            NSString *detectedtitlea = d[@"detectedtitle"];
             int doffset;
             if (d[@"offset"]) {
                 doffset = [(NSNumber *)d[@"offset"] intValue];
@@ -146,7 +146,7 @@
 }
 - (IBAction)exportList:(id)sender{
     // Save the json file containing titles
-    NSSavePanel * sp = [NSSavePanel savePanel];
+    NSSavePanel *sp = [NSSavePanel savePanel];
     [sp setAllowedFileTypes:@[@"json", @"JSON file"]];
     [sp setMessage:@"Where do you want to save your exception list?"];
     [sp setNameFieldStringValue:@"Exceptions List.json"];
@@ -157,10 +157,10 @@
         NSURL *url = [sp URL];
         //Create JSON string from array controller
         NSError *error;
-        NSMutableArray * jsonOutput = [[NSMutableArray alloc] init];
-        for (NSManagedObject * o in arraycontroller.arrangedObjects) {
+        NSMutableArray *jsonOutput = [[NSMutableArray alloc] init];
+        for (NSManagedObject *o in arraycontroller.arrangedObjects) {
             @autoreleasepool {
-            NSDictionary * d = @{@"detectedtitle": [o valueForKey:@"detectedTitle"], @"correcttitle": [o valueForKey:@"correctTitle"], @"showid": [o valueForKey:@"id"], @"offset": [o valueForKey:@"episodeOffset"], @"threshold": [o valueForKey:@"episodethreshold"]};
+            NSDictionary *d = @{@"detectedtitle": [o valueForKey:@"detectedTitle"], @"correcttitle": [o valueForKey:@"correctTitle"], @"showid": [o valueForKey:@"id"], @"offset": [o valueForKey:@"episodeOffset"], @"threshold": [o valueForKey:@"episodethreshold"]};
             [jsonOutput addObject:d];
             }
         }
@@ -191,8 +191,8 @@
 }
 - (BOOL)checkifexists:(NSString *) title offset:(int)offset correcttitle:(NSString *)ctitle{
     // Checks if a title is already on the exception list
-    NSArray * a = [arraycontroller arrangedObjects];
-    for (NSManagedObject * entry in a) {
+    NSArray *a = [arraycontroller arrangedObjects];
+    for (NSManagedObject *entry in a) {
         int eoffset = [(NSNumber *)[entry valueForKey:@"episodeOffset"] intValue];
         if ([title isEqualToString:(NSString *)[entry valueForKey:@"detectedTitle"]] && eoffset == offset) {
             if (!ctitle) {
@@ -208,7 +208,7 @@
 #pragma mark Ignore List
 - (IBAction)addDirectory:(id)sender{
     //Selects directory to ignore
-    NSOpenPanel * op = [NSOpenPanel openPanel];
+    NSOpenPanel *op = [NSOpenPanel openPanel];
     [op setCanChooseDirectories:YES];
     [op setCanCreateDirectories:NO];
     [op setCanChooseFiles:NO];
@@ -217,7 +217,7 @@
         if (result == NSFileHandlingPanelCancelButton) {
             return;
         }
-        NSDictionary * entry = @{@"directory": [[op URL] path]};
+        NSDictionary *entry = @{@"directory": [[op URL] path]};
         [ignorearraycontroller addObject:entry];
     }];
 }
@@ -227,7 +227,7 @@
 }
 #pragma mark Title Ignore
 - (IBAction)addFifleNameIgnoreRule:(id)sender{
-    NSDictionary * entry = @{@"rule": @"", @"rulesource": @"All Sources"};
+    NSDictionary *entry = @{@"rule": @"", @"rulesource": @"All Sources"};
     [ignorefilenamearraycontroller addObject:entry];
     // Selection Workaround
     int c = (int) [[NSArray arrayWithArray:[ignorefilenamearraycontroller arrangedObjects]] count];

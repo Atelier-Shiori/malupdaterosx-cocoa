@@ -78,7 +78,7 @@
             NSError *jerror;
             NSData *data = [json dataUsingEncoding:NSUTF8StringEncoding];
             NSDictionary *nowplaying = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jerror];
-            NSString * message;
+            NSString *message;
             if (sharelink) {
                 message = [NSString stringWithFormat:@"(MAL Updater OS X) Watching %@ Episode %@ from %@ - https://myanimelist.net/anime/%@", nowplaying[@"scrobbledactualtitle"], nowplaying[@"scrobbledEpisode"], nowplaying[@"source"], nowplaying[@"id"]];
             }
@@ -93,7 +93,7 @@
 }
 
 - (BOOL)checkIdentifier:(NSString*)identifier {
-    NSWorkspace * ws = [NSWorkspace sharedWorkspace];
+    NSWorkspace *ws = [NSWorkspace sharedWorkspace];
     NSArray *runningApps = [ws runningApplications];
     NSRunningApplication *a;
     for (a in runningApps) {
