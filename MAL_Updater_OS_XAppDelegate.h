@@ -16,6 +16,7 @@
 @class MSWeakTimer;
 @class streamlinkopen;
 @class StatusUpdateWindow;
+@class ShareMenu;
 
 @interface MAL_Updater_OS_XAppDelegate : NSObject <NSApplicationDelegate, NSUserNotificationCenterDelegate, NSSharingServiceDelegate> {
 	/* Windows */
@@ -44,7 +45,6 @@
     IBOutlet NSMenuItem *updatedcorrecttitle;
     IBOutlet NSMenuItem *updatedupdatestatus;
     IBOutlet NSMenuItem *shareMenuItem;
-    IBOutlet NSMenu *shareMenu;
     /* Status Window */
 	IBOutlet NSTextField *ScrobblerStatus;
 	IBOutlet NSTextField *LastScrobbled;
@@ -56,7 +56,6 @@
 	BOOL scrobbling;
     BOOL scrobbleractive;
     bool panelactive;
-	NSArray *shareItems;
 	/* MAL Scrobbling/Updating Class */
 	MyAnimeList *MALEngine;
 	/* Update Status Sheet Window IBOutlets */
@@ -81,6 +80,7 @@
 @property (strong) IBOutlet NSView *nowplayingview;
 @property (strong) IBOutlet NSView *nothingplayingview;
 @property (strong) StatusUpdateWindow *updatewindow;
+@property (strong) IBOutlet ShareMenu *shareMenu;
 
 - (void)showhistory:(id)sender;
 - (IBAction)togglescrobblewindow:(id)sender;

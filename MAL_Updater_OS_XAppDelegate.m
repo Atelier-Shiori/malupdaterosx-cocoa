@@ -27,6 +27,7 @@
 #import <Fabric/Fabric.h>
 #import <Crashlytics/Crashlytics.h>
 #import <MALLibraryAppMigrate/MALLibraryAppMigrate.h>
+#import "sharemenu.h"
 
 @implementation MAL_Updater_OS_XAppDelegate
 
@@ -547,7 +548,7 @@
                 NSDictionary *ainfo = [MALEngine getLastScrobbledInfo];
                 if (ainfo !=nil) { // Checks if MAL Updater OS X already populated info about the just updated title.
                     [self showAnimeInfo:ainfo];
-                    [self generateShareMenu];
+                    [_shareMenu generateShareMenu:@[[NSString stringWithFormat:@"%@ - %@", [MALEngine getLastScrobbledTitle], [MALEngine getLastScrobbledEpisode] ], [NSURL URLWithString:[NSString stringWithFormat:@"http://myanimelist.net/anime/%@", [MALEngine getAniID]]]]];
                     [shareMenuItem setHidden:NO];
                 }
             }
@@ -581,13 +582,7 @@
 
 - (void)resetUI {
     // Resets the UI when the user logs out
-    [shareMenu removeAllItems];
-    // Workaround for Share Toolbar Item
-    NSMenuItem *shareIcon = [[NSMenuItem alloc] init];
-    shareIcon.image = [NSImage imageNamed:NSImageNameShareTemplate];
-    [shareIcon setHidden:YES];
-    shareIcon.title = @"";
-    [shareMenu addItem:shareIcon];
+    [_shareMenu resetShareMenu];
     [updatecorrect setAutoenablesItems:NO];
     [self EnableStatusUpdating:NO];
     [sharetoolbaritem setEnabled:NO];
@@ -824,7 +819,7 @@
 					[confirmupdate setHidden:true];
                     [findtitle setHidden:true];
 					//Regenerate Share Items
-					[self generateShareMenu];
+                    [_shareMenu generateShareMenu:@[[NSString stringWithFormat:@"%@ - %@", [MALEngine getLastScrobbledTitle], [MALEngine getLastScrobbledEpisode] ], [NSURL URLWithString:[NSString stringWithFormat:@"http://myanimelist.net/anime/%@", [MALEngine getAniID]]]]];
                     break;
                 }
                 default:
@@ -1157,33 +1152,7 @@
     }
     return output;
 }
-#pragma mark Share Services
-- (void)generateShareMenu{
-    //Clear Share Menu
-    [shareMenu removeAllItems];
-    // Workaround for Share Toolbar Item
-    NSMenuItem *shareIcon = [[NSMenuItem alloc] init];
-    [shareIcon setImage:[NSImage imageNamed:NSImageNameShareTemplate]];
-    [shareIcon setHidden:YES];
-    [shareIcon setTitle:@""];
-    [shareMenu addItem:shareIcon];
-    //Generate Items to Share
-    shareItems = @[[NSString stringWithFormat:@"%@ - %@", [MALEngine getLastScrobbledTitle], [MALEngine getLastScrobbledEpisode] ], [NSURL URLWithString:[NSString stringWithFormat:@"http://myanimelist.net/anime/%@", [MALEngine getAniID]]]];
-    //Get Share Services for Items
-    NSArray *shareServiceforItems = [NSSharingService sharingServicesForItems:shareItems];
-    //Generate Share Items and populate Share Menu
-    for (NSSharingService *cservice in shareServiceforItems) {
-        NSMenuItem *item = [[NSMenuItem alloc] initWithTitle:[cservice title] action:@selector(shareFromService:) keyEquivalent:@""];
-        [item setRepresentedObject:cservice];
-        [item setImage:[cservice image]];
-        [item setTarget:self];
-        [shareMenu addItem:item];
-    }
-}
-- (IBAction)shareFromService:(id)sender{
-    // Share Item
-    [[sender representedObject] performWithItems:shareItems];
-}
+
 - (IBAction)showLastScrobbledInformation:(id)sender{
     //Open the anime's page on MyAnimeList in the default web browser
     [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://myanimelist.net/anime/%@", [MALEngine getAniID]]]];

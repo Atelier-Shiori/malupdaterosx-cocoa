@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="11762" systemVersion="16G12b" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="11762" systemVersion="16G16b" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
         <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11762"/>
@@ -319,7 +319,7 @@
                 <outlet property="openstream" destination="LmD-Sb-XbD" id="4LR-cQ-YkD"/>
                 <outlet property="seperator" destination="egk-cQ-duZ" id="JnP-Yt-mVt"/>
                 <outlet property="seperator2" destination="ZEo-hm-rcH" id="g9l-WQ-yu2"/>
-                <outlet property="shareMenu" destination="ltR-rE-E7c" id="k8c-iR-Onz"/>
+                <outlet property="shareMenu" destination="M2G-Mh-0oi" id="y0d-LK-zxP"/>
                 <outlet property="shareMenuItem" destination="4x0-G3-pYv" id="RFZ-gE-DzM"/>
                 <outlet property="sharetoolbaritem" destination="vKI-CB-Acb" id="o8P-m2-Etr"/>
                 <outlet property="statusMenu" destination="543" id="561"/>
@@ -432,7 +432,7 @@
                         <size key="minSize" width="32" height="25"/>
                         <size key="maxSize" width="32" height="32"/>
                         <button key="view" verticalHuggingPriority="750" id="Meq-3s-3x5">
-                            <rect key="frame" x="12" y="14" width="32" height="25"/>
+                            <rect key="frame" x="17" y="14" width="32" height="25"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="update" imagePosition="below" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="bg1-7y-pBr">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -447,7 +447,7 @@
                         <size key="minSize" width="32" height="25"/>
                         <size key="maxSize" width="32" height="32"/>
                         <button key="view" verticalHuggingPriority="750" id="sGW-w2-kC0">
-                            <rect key="frame" x="22" y="14" width="32" height="25"/>
+                            <rect key="frame" x="28" y="14" width="32" height="25"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="history" imagePosition="below" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Z3h-uy-9hi">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -470,7 +470,7 @@
                         <size key="minSize" width="32" height="25"/>
                         <size key="maxSize" width="32" height="32"/>
                         <button key="view" verticalHuggingPriority="750" id="uu4-Ct-6q9">
-                            <rect key="frame" x="16" y="14" width="32" height="25"/>
+                            <rect key="frame" x="21" y="14" width="32" height="25"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="correct" imagePosition="below" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="kSD-gp-80T">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -496,17 +496,17 @@
                                         <menuItem state="on" image="NSShareTemplate" hidden="YES" id="Zpr-kY-u33"/>
                                     </items>
                                 </menu>
+                                <connections>
+                                    <outlet property="menu" destination="ltR-rE-E7c" id="9OB-TE-fsw"/>
+                                </connections>
                             </popUpButtonCell>
-                            <connections>
-                                <outlet property="menu" destination="ltR-rE-E7c" id="IvZ-kr-UeR"/>
-                            </connections>
                         </popUpButton>
                     </toolbarItem>
                     <toolbarItem implicitItemIdentifier="DBB7A4EC-2BC9-443C-A50F-D5C55F12B236" label="View on MyAnimeList" paletteLabel="View on MyAnimeList" toolTip="View on MyAnimeList" image="Info" id="GWr-5m-lgQ">
                         <size key="minSize" width="32" height="25"/>
                         <size key="maxSize" width="32" height="32"/>
                         <button key="view" verticalHuggingPriority="750" id="KFJ-iS-Wdx">
-                            <rect key="frame" x="37" y="14" width="32" height="25"/>
+                            <rect key="frame" x="44" y="14" width="32" height="25"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="Info" imagePosition="below" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="dZI-lo-iNp">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -533,6 +533,11 @@
             <point key="canvasLocation" x="440" y="168.5"/>
         </window>
         <userDefaultsController representsSharedInstance="YES" id="RrG-fz-WPF"/>
+        <customObject id="M2G-Mh-0oi" customClass="ShareMenu">
+            <connections>
+                <outlet property="shareMenu" destination="ltR-rE-E7c" id="Fu9-l7-hcw"/>
+            </connections>
+        </customObject>
     </objects>
     <resources>
         <image name="Info" width="32" height="32"/>
