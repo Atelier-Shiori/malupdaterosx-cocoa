@@ -16,12 +16,17 @@
 @end
 
 @implementation DonationWindowController
+
+@synthesize name;
+@synthesize key;
+
 - (id)init{
     self = [super initWithWindowNibName:@"DonationWindow"];
     if(!self)
         return nil;
     return self;
 }
+
 - (void)windowDidLoad {
     [super windowDidLoad];
     
@@ -33,6 +38,7 @@
             _appstoreicon.image = [[NSImage alloc] initByReferencingURL:[NSURL fileURLWithPath:[[NSBundle bundleWithPath:@"/Applications/App Store.app"] pathForResource:@"appStore" ofType:@"icns"]]];
     }
 }
+
 - (IBAction)validate:(id)sender{
     if ([[name stringValue] length] > 0 && [[key stringValue] length]>0) {
         // Check donation key
@@ -83,6 +89,7 @@
         }];
     }
 }
+
 - (void)appStoreRegister:(NSString *)path{
     [Utility showsheetmessage:@"Registered" explaination:@"Thank you for purchasing MAL Library from the App Store. The donation reminder will no longer appear and access to weekly builds is now unlocked." window:nil];
     // Add to the preferences

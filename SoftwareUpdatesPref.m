@@ -10,6 +10,8 @@
 
 
 @implementation SoftwareUpdatesPref
+@synthesize betacheck;
+
 - (id)init
 {
 	return [super initWithNibName:@"SoftwareUpdateView" bundle:nil];
@@ -39,7 +41,7 @@
     }
 }
 - (IBAction)setBetaChannel:(id)sender{
-    if(betacheck.state == 1) {
+    if (betacheck.state == 1) {
         [[NSUserDefaults standardUserDefaults] setObject:@"https://updates.ateliershiori.moe/malupdaterosx-beta/profileInfo.php" forKey:@"SUFeedURL"];
     }
     else {

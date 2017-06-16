@@ -32,10 +32,46 @@
 @implementation MAL_Updater_OS_XAppDelegate
 
 @synthesize window;
-@synthesize updatepanel;
 @synthesize fsdialog;
 @synthesize historywindowcontroller;
 @synthesize managedObjectContext;
+@synthesize statusMenu;
+@synthesize statusItem;
+@synthesize statusImage;
+@synthesize timer;
+@synthesize openstream;
+@synthesize togglescrobbler;
+@synthesize updatenow;
+@synthesize confirmupdate;
+@synthesize findtitle;
+@synthesize seperator;
+@synthesize lastupdateheader;
+@synthesize updatecorrectmenu;
+@synthesize updatecorrect;
+@synthesize updatedtitle;
+@synthesize updatedepisode;
+@synthesize seperator2;
+@synthesize updatedcorrecttitle;
+@synthesize updatedupdatestatus;
+@synthesize shareMenuItem;
+@synthesize ScrobblerStatus;
+@synthesize LastScrobbled;
+@synthesize animeinfo;
+@synthesize img;
+@synthesize windowcontent;
+@synthesize animeinfooutside;
+@synthesize choice;
+@synthesize scrobbling;
+@synthesize scrobbleractive;
+@synthesize panelactive;
+@synthesize MALEngine;
+@synthesize updatetoolbaritem;
+@synthesize correcttoolbaritem;
+@synthesize sharetoolbaritem;
+@synthesize openAnimePage;
+@synthesize _preferencesWindowController;
+@synthesize streamlinkopenw;
+
 #pragma mark -
 #pragma mark Initalization
 /**

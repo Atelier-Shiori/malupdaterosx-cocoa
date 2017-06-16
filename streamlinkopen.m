@@ -15,6 +15,9 @@
 @end
 
 @implementation streamlinkopen
+
+@synthesize detector;
+
 - (instancetype)init{
     self = [super initWithWindowNibName:@"streamlinkopen"];
     if(!self)
@@ -26,11 +29,12 @@
     
     // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
     detector = [streamlinkdetector new];
-    
 }
+
 - (void)controlTextDidChange:(NSNotification *)notification {
     [self refreshstreams:nil];
 }
+
 - (IBAction)refreshstreams:(id)sender {
     if (_streamurl.stringValue.length > 0) {
         dispatch_queue_t queue = dispatch_get_global_queue(

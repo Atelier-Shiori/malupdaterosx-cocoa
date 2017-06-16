@@ -17,6 +17,19 @@
 
 @implementation FixSearchDialog
 
+@synthesize arraycontroller;
+@synthesize search;
+@synthesize deleteoncorrection;
+@synthesize onetimecorrection;
+@synthesize tb;
+@synthesize selectedsynopsis;
+@synthesize selectedtitle;
+@synthesize selectedaniid;
+@synthesize selectedtotalepisodes;
+@synthesize searchquery;
+@synthesize correction;
+@synthesize allowdelete;
+
 - (id)init{
     self = [super initWithWindowNibName:@"FixSearchDialog"];
      if(!self)
@@ -145,12 +158,6 @@
         [selectedsynopsis setString:@""];
     }
 
-}
-- (void)setCorrection:(BOOL)correct{
-    correction = correct;
-}
-- (void)setAllowDelete:(BOOL)deleteallowed{
-    allowdelete = deleteallowed;
 }
 - (void)setSearchField:(NSString *)term{
     searchquery = term;

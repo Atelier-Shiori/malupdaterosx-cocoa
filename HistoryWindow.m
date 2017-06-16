@@ -14,6 +14,9 @@
 @end
 
 @implementation HistoryWindow
+
+@synthesize arraycontroller;
+@synthesize historytable;
 @dynamic managedObjectContext;
 
 - (NSManagedObjectContext *)managedObjectContext {
@@ -26,18 +29,21 @@
         return nil;
     return self;
 }
+
 - (void)awakeFromNib{
     [arraycontroller setManagedObjectContext:self.managedObjectContext];
     [arraycontroller prepareContent];
     [historytable setSortDescriptors:@[[[NSSortDescriptor alloc] initWithKey:@"Date" ascending:NO]]];
     [arraycontroller setSortDescriptors:[historytable sortDescriptors]];
 }
+
 - (void)windowDidLoad {
     [super windowDidLoad];
     
     // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
 
 }
+
 + (void)addrecord:(NSString *)title
          Episode:(NSString *)episode
             Date:(NSDate *)date {
@@ -55,6 +61,7 @@
         [moc save:nil];
     });
 }
+
 - (IBAction)clearhistory:(id)sender {
     // Set Up Prompt Message Window
     NSAlert *alert = [[NSAlert alloc] init];
@@ -69,8 +76,8 @@
                       modalDelegate:self
                      didEndSelector:@selector(clearhistoryended:code:conext:)
                         contextInfo:NULL];
-    
 }
+
 - (void)clearhistoryended:(NSAlert *)alert
                     code:(int)echoice
                   conext:(void *)v
@@ -88,7 +95,6 @@
             [moc deleteObject:history];
         }
     }
-    
 }	
 
 @end

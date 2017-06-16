@@ -15,16 +15,30 @@
 
 
 @implementation LoginPref
+@synthesize logo;
+@synthesize fieldusername;
+@synthesize fieldpassword;
+@synthesize savebut;
+@synthesize clearbut;
+@synthesize loggedinuser;
+@synthesize appdelegate;
+@synthesize MALEngine;
+@synthesize loginview;
+@synthesize loggedinview;
+@synthesize passwordinput;
+@synthesize invalidinput;
 @synthesize loginpanel;
 
 - (id)init
 {
 	return [super initWithNibName:@"LoginView" bundle:nil];
 }
+
 - (id)initwithAppDelegate:(MAL_Updater_OS_XAppDelegate *)adelegate{
     appdelegate = adelegate;
     return [super initWithNibName:@"LoginView" bundle:nil];
 }
+
 - (void)loadView{
     [super loadView];
     // Retrieve MyAnimeList Engine instance from app delegate
@@ -52,6 +66,7 @@
 {
     return NSLocalizedString(@"Login", @"Toolbar item name for the Login preference pane");
 }
+
 #pragma mark Login Preferences Functions
 - (void)loadlogin
 {
@@ -69,6 +84,7 @@
 		[savebut setEnabled: YES];
 	}
 }
+
 - (IBAction)startlogin:(id)sender
 {
 	{
@@ -99,6 +115,7 @@
 		}
 	}
 }
+
 - (void)login:(NSString *)username password:(NSString *)password{
     //Set Login URL
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -139,16 +156,19 @@
         [savebut setEnabled:YES];
     });
 }
+
 - (IBAction)registermal:(id)sender
 {
 	//Show MAL Registration Page
 	[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://myanimelist.net/register.php"]];
 }
+
 - (IBAction) showgettingstartedpage:(id)sender
 {
     //Show Getting Started help page
     [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"https://github.com/chikorita157/malupdaterosx-cocoa/wiki/Getting-Started"]];
 }
+
 - (IBAction)clearlogin:(id)sender
 {
     if (![appdelegate getisScrobbling] && ![appdelegate getisScrobblingActive]) {
@@ -180,6 +200,7 @@
         [Utility showsheetmessage:@"Cannot Logout" explaination:@"Please turn off automatic scrobbling before logging out." window:[[self view] window]];
     }
 }
+
 /*
  Reauthorization Panel
  */
@@ -194,6 +215,7 @@
         [Utility showsheetmessage:@"Cannot Logout" explaination:@"Please turn off automatic scrobbling before reauthorizing." window:[[self view] window]];
     }
 }
+
 - (void)reAuthPanelDidEnd:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo {
     if (returnCode == 1) {
         dispatch_queue_t queue = dispatch_get_global_queue(
@@ -208,11 +230,12 @@
     [invalidinput setHidden:YES];
     [self.loginpanel close];
 }
+
 - (IBAction)cancelreauthorization:(id)sender{
     [self.loginpanel orderOut:self];
     [NSApp endSheet:self.loginpanel returnCode:0];
-    
 }
+
 - (IBAction)performreauthorization:(id)sender{
     if ([[passwordinput stringValue] length] == 0) {
         // No password, indicate it

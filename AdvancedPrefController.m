@@ -17,6 +17,12 @@
 
 @implementation AdvancedPrefController
 
+@synthesize APIUrl;
+@synthesize appdelegate;
+@synthesize kodicheck;
+@synthesize testapibtn;
+@synthesize testprogressindicator;
+
 - (id)init
 {
     return [super initWithNibName:@"AdvancedPrefController" bundle:nil];

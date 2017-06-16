@@ -15,7 +15,15 @@
 @end
 
 @implementation ExceptionsPref
+
 @synthesize fsdialog;
+@synthesize arraycontroller;
+@synthesize ignorearraycontroller;
+@synthesize ignorefilenamearraycontroller;
+@synthesize tb;
+@synthesize iftb;
+@synthesize detectedtitle;
+
 @dynamic managedObjectContext;
 
 - (NSManagedObjectContext *)managedObjectContext {

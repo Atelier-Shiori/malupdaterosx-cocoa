@@ -15,6 +15,14 @@
 
 
 @implementation GeneralPrefController
+
+@synthesize disablenewtitlebar;
+@synthesize disablevibarency;
+@synthesize startatlogin;
+@synthesize indicator;
+@synthesize updateexceptionsbtn;
+@synthesize updateexceptionschk;
+
 - (id)init
 {
 	return [super initWithNibName:@"GeneralPreferenceView" bundle:nil];

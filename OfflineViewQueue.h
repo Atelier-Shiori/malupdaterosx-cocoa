@@ -10,8 +10,8 @@
 #import "MAL_Updater_OS_XAppDelegate.h"
 
 @interface OfflineViewQueue : NSWindowController{
-    	NSManagedObjectContext *managedObjectContext;
-    MAL_Updater_OS_XAppDelegate * delegate;
+    NSManagedObjectContext *managedObjectContext;
 }
+@property (strong) MAL_Updater_OS_XAppDelegate * delegate;
 @property (nonatomic, readonly) NSManagedObjectContext *managedObjectContext;
 @end

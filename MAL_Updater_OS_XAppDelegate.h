@@ -19,61 +19,60 @@
 @class ShareMenu;
 
 @interface MAL_Updater_OS_XAppDelegate : NSObject <NSApplicationDelegate, NSUserNotificationCenterDelegate, NSSharingServiceDelegate> {
-	/* Windows */
-    __unsafe_unretained NSWindow *window;
-	/* General Stuff */
-	IBOutlet NSMenu *statusMenu;
-    NSStatusItem                *statusItem;
-    NSImage                        *statusImage;
     NSManagedObjectModel *managedObjectModel;
 	NSManagedObjectContext *managedObjectContext;
 	NSPersistentStoreCoordinator *persistentStoreCoordinator;
-    MSWeakTimer *timer;
-    IBOutlet NSMenuItem *openstream;
-	IBOutlet NSMenuItem *togglescrobbler;
-    IBOutlet NSMenuItem *updatenow;
-	IBOutlet NSMenuItem *confirmupdate;
-    IBOutlet NSMenuItem *findtitle;
-    /* Updated Title Display and Operations */
-    IBOutlet NSMenuItem *seperator;
-    IBOutlet NSMenuItem *lastupdateheader;
-    IBOutlet NSMenuItem *updatecorrectmenu;
-    IBOutlet NSMenu *updatecorrect;
-    IBOutlet NSMenuItem *updatedtitle;
-    IBOutlet NSMenuItem *updatedepisode;
-    IBOutlet NSMenuItem *seperator2;
-    IBOutlet NSMenuItem *updatedcorrecttitle;
-    IBOutlet NSMenuItem *updatedupdatestatus;
-    IBOutlet NSMenuItem *shareMenuItem;
-    /* Status Window */
-	IBOutlet NSTextField *ScrobblerStatus;
-	IBOutlet NSTextField *LastScrobbled;
-    IBOutlet NSTextView *animeinfo;
-    IBOutlet NSImageView *img;
-    IBOutlet NSVisualEffectView *windowcontent;
-    IBOutlet NSScrollView *animeinfooutside;
-	int choice;
-	BOOL scrobbling;
-    BOOL scrobbleractive;
-    bool panelactive;
-	/* MAL Scrobbling/Updating Class */
-	MyAnimeList *MALEngine;
-	/* Update Status Sheet Window IBOutlets */
-	IBOutlet NSToolbarItem *updatetoolbaritem;
-    IBOutlet NSToolbarItem *correcttoolbaritem;
-    IBOutlet NSToolbarItem *sharetoolbaritem;
-    IBOutlet NSToolbarItem *openAnimePage;
-	NSWindowController *_preferencesWindowController;
-    streamlinkopen *streamlinkopenw;
+    
 }
+/* Windows */
+@property (strong) NSWindow *window;
+/* General Stuff */
+@property (strong) IBOutlet NSMenu *statusMenu;
+@property (strong) NSStatusItem *statusItem;
+@property (strong) NSImage *statusImage;
+@property (strong) MSWeakTimer *timer;
+@property (strong) IBOutlet NSMenuItem *openstream;
+@property (strong) IBOutlet NSMenuItem *togglescrobbler;
+@property (strong) IBOutlet NSMenuItem *updatenow;
+@property (strong) IBOutlet NSMenuItem *confirmupdate;
+@property (strong) IBOutlet NSMenuItem *findtitle;
+/* Updated Title Display and Operations */
+@property (strong) IBOutlet NSMenuItem *seperator;
+@property (strong) IBOutlet NSMenuItem *lastupdateheader;
+@property (strong) IBOutlet NSMenuItem *updatecorrectmenu;
+@property (strong) IBOutlet NSMenu *updatecorrect;
+@property (strong) IBOutlet NSMenuItem *updatedtitle;
+@property (strong) IBOutlet NSMenuItem *updatedepisode;
+@property (strong) IBOutlet NSMenuItem *seperator2;
+@property (strong) IBOutlet NSMenuItem *updatedcorrecttitle;
+@property (strong) IBOutlet NSMenuItem *updatedupdatestatus;
+@property (strong) IBOutlet NSMenuItem *shareMenuItem;
+/* Status Window */
+@property (strong) IBOutlet NSTextField *ScrobblerStatus;
+@property (strong) IBOutlet NSTextField *LastScrobbled;
+@property (strong) IBOutlet NSTextView *animeinfo;
+@property (strong) IBOutlet NSImageView *img;
+@property (strong) IBOutlet NSVisualEffectView *windowcontent;
+@property (strong) IBOutlet NSScrollView *animeinfooutside;
+@property int choice;
+@property (getter=getisScrobbling) BOOL scrobbling;
+@property (getter=getisScrobblingActive) BOOL scrobbleractive;
+@property BOOL panelactive;
+/* MAL Scrobbling/Updating Class */
+@property (strong,getter=getMALEngineInstance) MyAnimeList *MALEngine;
+/* Update Status Sheet Window IBOutlets */
+@property (strong) IBOutlet NSToolbarItem *updatetoolbaritem;
+@property (strong) IBOutlet NSToolbarItem *correcttoolbaritem;
+@property (strong) IBOutlet NSToolbarItem *sharetoolbaritem;
+@property (strong) IBOutlet NSToolbarItem *openAnimePage;
+@property (strong) NSWindowController *_preferencesWindowController;
+@property (strong) streamlinkopen *streamlinkopenw;
 @property (strong, nonatomic) dispatch_queue_t privateQueue;
 @property (nonatomic, readonly) NSWindowController *preferencesWindowController;
-@property (assign) IBOutlet NSWindow *window;
-@property (assign) IBOutlet NSWindow *updatepanel;
 @property (nonatomic, retain, readonly) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 @property (nonatomic, retain, readonly) NSManagedObjectModel *managedObjectModel;
-@property (nonatomic, retain, readonly) NSManagedObjectContext *managedObjectContext;
-@property(strong) FixSearchDialog *fsdialog;
+@property (nonatomic, retain, readonly, getter=getObjectContext) NSManagedObjectContext *managedObjectContext;
+@property (strong) FixSearchDialog *fsdialog;
 @property (strong) HistoryWindow *historywindowcontroller;
 @property (strong) DonationWindowController *dwindow;
 @property (strong) OfflineViewQueue *owindow;
@@ -103,10 +102,6 @@
 - (void)showNotification:(NSString *)title message:(NSString *) message;
 - (IBAction)showAboutWindow:(id)sender;
 - (IBAction)enterDonationKey:(id)sender;
-- (bool)getisScrobbling;
-- (bool)getisScrobblingActive;
 - (NSDictionary *)getNowPlaying;
-- (NSManagedObjectContext *)getObjectContext;
-- (MyAnimeList *)getMALEngineInstance;
 - (void)resetUI;
 @end

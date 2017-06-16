@@ -13,7 +13,9 @@
 @end
 
 @implementation OfflineViewQueue
+@synthesize delegate;
 @dynamic managedObjectContext;
+
 - (NSManagedObjectContext *)managedObjectContext {
     MAL_Updater_OS_XAppDelegate *appDelegate = (MAL_Updater_OS_XAppDelegate *)[NSApplication sharedApplication].delegate;
     return appDelegate.managedObjectContext;

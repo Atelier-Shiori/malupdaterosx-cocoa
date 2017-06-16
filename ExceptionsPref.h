@@ -11,15 +11,15 @@
 #import "FixSearchDialog.h"
 #import "MAL_Updater_OS_XAppDelegate.h"
 @class FixSearchDialog;
-@interface ExceptionsPref : NSViewController <MASPreferencesViewController>{
-    IBOutlet NSArrayController *arraycontroller;
-    IBOutlet NSArrayController *ignorearraycontroller;
-    IBOutlet NSArrayController *ignorefilenamearraycontroller;
-    IBOutlet NSTableView *tb;
-    IBOutlet NSTableView *iftb;
-    NSString *detectedtitle;
+@interface ExceptionsPref : NSViewController <MASPreferencesViewController> {
     NSManagedObjectContext *managedObjectContext;
 }
+@property (strong) IBOutlet NSArrayController *arraycontroller;
+@property (strong) IBOutlet NSArrayController *ignorearraycontroller;
+@property (strong) IBOutlet NSArrayController *ignorefilenamearraycontroller;
+@property (strong) IBOutlet NSTableView *tb;
+@property (strong) IBOutlet NSTableView *iftb;
+@property (strong) NSString *detectedtitle;
 @property(strong) FixSearchDialog *fsdialog;
 @property (nonatomic, readonly) NSManagedObjectContext *managedObjectContext;
 @end
