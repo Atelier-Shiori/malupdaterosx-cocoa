@@ -73,6 +73,15 @@
     [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://malupdaterosx.ateliershiori.moe/donate/"]];
 }
 
+- (IBAction)purchasedonationlicense:(id)sender {
+    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"https://softwareateliershiori.onfastspring.com/mal-library-mal-updater-os-x-donation-license"]];
+    
+}
+
+- (IBAction)lookupkey:(id)sender {
+    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"https://malupdaterosx.ateliershiori.moe/lostkey.php"]];
+}
+
 - (IBAction)migrateMALLibrary:(id)sender {
     // Validate in default location first
     if ([MALLibraryAppStoreMigrate validateReciept:@"/Applications/MAL Library.app"]) {
