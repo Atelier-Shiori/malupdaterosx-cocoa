@@ -15,17 +15,15 @@
 @property (strong) IBOutlet NSButton *onetimecorrection;
 @property (strong) IBOutlet NSTableView *tb;
 @property (strong) IBOutlet NSTextView *selectedsynopsis;
-@property (strong) NSString *selectedtitle;
-@property (strong) NSString *selectedaniid;
-@property int selectedtotalepisodes;
-@property (strong) NSString *searchquery;
+@property (strong, getter=getSelectedTitle) NSString *selectedtitle;
+@property (strong, getter=getSelectedAniID) NSString *selectedaniid;
+@property (getter=getSelectedTotalEpisodes) int selectedtotalepisodes;
+@property (strong, setter=setSearchField:) NSString *searchquery;
 @property (setter=setCorrection:) bool correction;
 @property (setter=setAllowDelete:) bool allowdelete;
+
 - (id)init;
-- (NSString *)getSelectedTitle;
-- (NSString *)getSelectedAniID;
-- (int)getSelectedTotalEpisodes;
 - (bool)getdeleteTitleonCorrection;
 - (bool)getcorrectonce;
-- (void)setSearchField:(NSString *)term;
+
 @end
