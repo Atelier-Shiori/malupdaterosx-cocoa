@@ -945,19 +945,6 @@
     }
 }
 
-#pragma mark Getters
-- (bool)getisScrobbling{
-    return scrobbling;
-}
-- (bool)getisScrobblingActive{
-    return scrobbleractive;
-}
-- (NSManagedObjectContext *)getObjectContext{
-    return managedObjectContext;
-}
-- (MyAnimeList *)getMALEngineInstance{
-    return MALEngine;
-}
 #pragma mark Update Status functions
 - (IBAction)updatestatus:(id)sender {
     [self showUpdateDialog:[self window]];
@@ -1047,7 +1034,7 @@
         // Only confirm update if the title and episode is the same with the last scrobbled.
         if ([[MALEngine getLastScrobbledTitle] isEqualToString:title] && [episode intValue] == [[MALEngine getLastScrobbledEpisode] intValue]) {
             //Confirm Update
-            [self confirmupdate];
+            [self performconfirmupdate];
         }
         else {
             return;
@@ -1059,9 +1046,9 @@
     }
 }
 - (IBAction)confirmupdate:(id)sender{
-    [self confirmupdate];
+    [self performconfirmupdate];
 }
-- (void)confirmupdate{
+- (void)performconfirmupdate{
     dispatch_queue_t queue = dispatch_get_global_queue(
                                                        DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     
@@ -1120,7 +1107,7 @@
      bindShortcutWithDefaultsKey:kPreferenceConfirmUpdateShortcut toAction:^{
         // Confirm Update Hotkey
         if (!confirmupdate.hidden) {
-            [self confirmupdate];
+            [self performconfirmupdate];
         }
     }];
 }

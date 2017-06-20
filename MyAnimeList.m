@@ -58,18 +58,24 @@
  */
 - (int)getWatchStatus
 {
-	if ([_WatchStatus isEqualToString:@"watching"])
+    if ([_WatchStatus isEqualToString:@"watching"]) {
 		return 0;
-	else if ([_WatchStatus isEqualToString:@"completed"])
+    }
+    else if ([_WatchStatus isEqualToString:@"completed"]) {
 		return 1;
-	else if ([_WatchStatus isEqualToString:@"on-hold"])
+    }
+    else if ([_WatchStatus isEqualToString:@"on-hold"]) {
 		return 2;
-	else if ([_WatchStatus isEqualToString:@"dropped"])
+    }
+    else if ([_WatchStatus isEqualToString:@"dropped"]) {
 		return 3;
-    else if ([_WatchStatus isEqualToString:@"plan-to-watch"])
+    }
+    else if ([_WatchStatus isEqualToString:@"plan-to-watch"]) {
         return 4;
-	else
+    }
+    else {
 		return 0; //fallback
+    }
 }
 - (int)getQueueCount{
     __block int count = 0;
