@@ -848,6 +848,7 @@
                         [sharetoolbaritem setEnabled:YES];
                         [correcttoolbaritem setEnabled:YES];
                         [openAnimePage setEnabled:YES];
+                        shareMenuItem.hidden = NO;
                     }
                     //Show Anime Correct Information
                     NSDictionary *ainfo = [MALEngine getLastScrobbledInfo];
