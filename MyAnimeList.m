@@ -505,7 +505,7 @@
         _DetectedEpisode = @"1";
         _DetectedTitleisEpisodeZero = true;
     }
-    else if ([_DetectedType isLike:@"Movie"] && ([_DetectedEpisode isEqualToString:@"0"] || _DetectedEpisode.length == 0)) {
+    else if (([_DetectedType isLike:@"Movie"] || [_DetectedType isLike:@"OVA"] || [_DetectedType isLike:@"Special"]) && ([_DetectedEpisode isEqualToString:@"0"] || _DetectedEpisode.length == 0)) {
         _DetectedEpisode = @"1";
     }
     else {_DetectedTitleisEpisodeZero = false;}
@@ -603,6 +603,7 @@
                         if (tmpepisode > 0) {
                             _DetectedEpisode = [NSString stringWithFormat:@"%i", tmpepisode];
                         }
+                        _DetectedType = @"";
                         _DetectedSeason = 0;
                         _DetectedTitleisEpisodeZero = false;
                         found = true;
