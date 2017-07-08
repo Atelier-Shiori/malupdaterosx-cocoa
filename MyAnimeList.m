@@ -11,6 +11,7 @@
 #import "MyAnimeList+Search.h"
 #import "MyAnimeList+Update.h"
 #import "MyAnimeList+HummingbirdSearch.h"
+#import "MyAnimeList+Keychain.h"
 #import <Reachability/Reachability.h>
 #import <streamlinkdetect/streamlinkdetect.h>
 
@@ -98,9 +99,8 @@
  */
 
 - (int)startscrobbling {
+    // Detect media
     int detectstatus;
-	//Set up Delegate
-	
     detectstatus = [self detectmedia];
 	if (detectstatus == ScrobblerDetectedMedia) { // Detects Title
         if (_online) {
@@ -194,6 +194,8 @@
                 case ScrobblerAddTitleFailed:
                 case ScrobblerUpdateFailed:
                 case ScrobblerFailed:
+                case ScrobblerMALUpdaterOSXNeedsUpdate:
+                case ScrobblerInvalidCredentials:
                     fail++;
                     scrobbled = false;
                     break;
@@ -302,6 +304,10 @@
 - (int)scrobble{
     NSLog(@"=============");
     NSLog(@"Scrobbling...");
+    // Check Credentials
+    if ([self checkMALCredentials] == 0) {
+        return ScrobblerInvalidCredentials;
+    }
     // Set MAL API URL
     _MALApiUrl = [[NSUserDefaults standardUserDefaults] objectForKey:@"MALAPIURL"];
     int status;
@@ -358,8 +364,8 @@
         }
         else {
             if (_online) {
-                NSLog(@"Error: Invalid Credentials.");
-                status = ScrobblerFailed;
+                NSLog(@"Error: User needs to update MAL Updater OS X");
+                status = ScrobblerMALUpdaterOSXNeedsUpdate;
             }
             else {
                 NSLog(@"Error: User is offline.");
@@ -469,6 +475,10 @@
     _DetectedSource  = _LastScrobbledSource;
     NSLog(@"=============");
     NSLog(@"Confirming: %@ - %@",_LastScrobbledActualTitle, _LastScrobbledEpisode);
+    // Check Credentials
+    if ([self checkMALCredentials] == 0) {
+        return false;
+    }
     int status;
 	if (_LastScrobbledTitleNew)
 	{
@@ -656,4 +666,6 @@
     _LastScrobbledActualTitle = nil;
     _AniID = nil;
 }
+
+
 @end

@@ -138,6 +138,8 @@
                 [loggedinuser setStringValue:username];
                 [loggedinview setHidden:NO];
                 [loginview setHidden:YES];
+                [[NSUserDefaults standardUserDefaults] setObject:[NSDate dateWithTimeIntervalSinceNow:60*60*24] forKey:@"credentialscheckdate"];
+                [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"credentialsvalid"];
         }
         else {
             if (error.code == NSURLErrorNotConnectedToInternet) {

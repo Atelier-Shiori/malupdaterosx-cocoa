@@ -321,6 +321,13 @@
             [(MASPreferencesWindowController *)self.preferencesWindowController selectControllerAtIndex:1];
         }
 	}
+    else {
+        if (![[NSUserDefaults standardUserDefaults] objectForKey:@"credentialscheckdate"]){
+            // Check credentials now if user has an account and these values are not set
+            [[NSUserDefaults standardUserDefaults] setObject:[NSDate new] forKey:@"credentialscheckdate"];
+            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"credentialsvalid"];
+        }
+    }
     if ([Utility checkoldAPI]) {
         [self showNotification:@"MAL Updater OS X" message:@"The API URL has been automatically updated."];
         [[NSUserDefaults standardUserDefaults] setObject:@"https://malapi.ateliershiori.moe" forKey:@"MALAPIURL"];
@@ -543,9 +550,13 @@
                 [self showNotification:@"Scrobble Unsuccessful." message:@"Retrying in 5 mins..."];
                 [self setStatusText:@"Scrobble Status: Scrobble Failed. Retrying in 5 mins..."];
                 break;
-            case ScrobblerFailed:
-                [self showNotification:@"Scrobble Unsuccessful." message:@"Check user credentials in Preferences. You may need to login again."];
-                [self setStatusText:@"Scrobble Status: Scrobble Failed. User credentials might have expired or MAL Updater OS X needs to be updated."];
+            case ScrobblerMALUpdaterOSXNeedsUpdate:
+                [self showNotification:@"Update Required." message:@"An update is required to use MAL Updater OS X."];
+                [self setStatusText:@"Scrobble Status: Update required."];
+                break;
+            case ScrobblerInvalidCredentials:
+                [self showNotification:@"Invalid Credentials" message:@"Your credentials may be incorrect. Please log in again."];
+                [self setStatusText:@"Scrobble Status: Invalid credentials."];
                 break;
             default:
                 break;

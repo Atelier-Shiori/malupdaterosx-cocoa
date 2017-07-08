@@ -232,6 +232,10 @@
             episode:(NSString*)episode
 {
     NSLog(@"Updating Status for %@", titleid);
+    // Check Credentials
+    if ([self checkMALCredentials] == 0) {
+        return false;
+    }
     // Update the title
     //Set library/scrobble API
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/1/animelist/anime/%@", self.MALApiUrl, titleid]];
