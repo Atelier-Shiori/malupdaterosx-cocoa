@@ -9,7 +9,6 @@
 #import "LoginPref.h"
 #import "Base64Category.h"
 #import "MAL_Updater_OS_XAppDelegate.h"
-
 #import <EasyNSURLConnection/EasyNSURLConnectionClass.h>
 #import "Utility.h"
 
@@ -223,7 +222,8 @@
                                                            DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
         
         dispatch_async(queue, ^{
-        [self login: (NSString *)[[NSUserDefaults standardUserDefaults] objectForKey:@"Username"] password:[passwordinput stringValue]];
+            
+        [self login: [MALEngine getusername] password:[passwordinput stringValue]];
         });
     }
     //Reset and Close
