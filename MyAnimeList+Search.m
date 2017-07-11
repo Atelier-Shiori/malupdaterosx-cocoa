@@ -12,7 +12,7 @@
 #import "Utility.h"
 #import "ExceptionsCache.h"
 #import "Recognition.h"
-#import "XMLReader.h"
+#import <XMLReader/XMLReader.h>
 
 @implementation MyAnimeList (Search)
 - (NSString *)searchanime{
@@ -50,7 +50,7 @@
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://myanimelist.net/api/anime/search.xml?q=%@", searchterm]];
     EasyNSURLConnection *request = [[EasyNSURLConnection alloc] initWithURL:url];
     //Set Token
-    [request addHeader:[NSString stringWithFormat:@"Basic %@",[self getBase64]]  forKey:@"Authorization"];
+    request.headers = @{@"Authorization": [NSString stringWithFormat:@"Basic %@", [self getBase64]]};
     //Ignore Cookies
     [request setUseCookies:NO];
     //Perform Search

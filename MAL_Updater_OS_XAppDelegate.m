@@ -204,6 +204,10 @@
     defaultValues[@"NSApplicationCrashOnExceptions"] = @YES;
     defaultValues[@"donated"] = @NO;
     defaultValues[@"MacAppStoreMigrated"] = @NO;
+    defaultValues[@"enableplexapi"] = @NO;
+    defaultValues[@"plexaddress"] = @"localhost";
+    defaultValues[@"plexport"] = @"32400";
+    defaultValues[@"plexidentifier"] = @"MAL_Updater_OS_X_Plex_Client";
 	//Register Dictionary
 	[[NSUserDefaults standardUserDefaults]
 	 registerDefaults:defaultValues];
@@ -350,12 +354,13 @@
     {
         NSViewController *generalViewController = [[GeneralPrefController alloc] init];
         NSViewController *loginViewController = [[LoginPref alloc] initwithAppDelegate:self];
-		NSViewController *suViewController = [[SoftwareUpdatesPref alloc] init];
+        NSViewController *suViewController = [[SoftwareUpdatesPref alloc] init];
         NSViewController *exceptionsViewController = [[ExceptionsPref alloc] init];
         NSViewController *hotkeyViewController = [[HotkeysPrefs alloc] init];
+        NSViewController *plexviewcontroller = [PlexPrefs new];
         NSViewController *advancedViewController = [[AdvancedPrefController alloc] initwithAppDelegate:self];
-        NSArray *controllers = @[generalViewController, loginViewController, hotkeyViewController, exceptionsViewController, suViewController, advancedViewController];
-            _preferencesWindowController = [[MASPreferencesWindowController alloc] initWithViewControllers:controllers];
+        NSArray *controllers = @[generalViewController, loginViewController, hotkeyViewController, plexviewcontroller, exceptionsViewController, suViewController, advancedViewController];
+        _preferencesWindowController = [[MASPreferencesWindowController alloc] initWithViewControllers:controllers];
     }
     return _preferencesWindowController;
 }

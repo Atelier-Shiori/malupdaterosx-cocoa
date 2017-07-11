@@ -19,7 +19,7 @@
     //Ignore Cookies
     [request setUseCookies:NO];
     //Set Token
-    [request addHeader:[NSString stringWithFormat:@"Basic %@",[self getBase64]]  forKey:@"Authorization"];
+    request.headers = @{@"Authorization": [NSString stringWithFormat:@"Basic %@", [self getBase64]]};
     //Perform Search
     [request startRequest];
     // Get Status Code
@@ -105,7 +105,7 @@
         //Ignore Cookies
         [request setUseCookies:NO];
         //Set Token
-        [request addHeader:[NSString stringWithFormat:@"Basic %@",[self getBase64]]  forKey:@"Authorization"];
+        request.headers = @{@"Authorization": [NSString stringWithFormat:@"Basic %@", [self getBase64]]};
         [request setPostMethod:@"PUT"];
         [request addFormData:self.DetectedEpisode forKey:@"episodes"];
         //Set Status
@@ -161,7 +161,7 @@
     //Ignore Cookies
     [request setUseCookies:NO];
     //Set Token
-    [request addHeader:[NSString stringWithFormat:@"Basic %@",[self getBase64]]  forKey:@"Authorization"];
+    request.headers = @{@"Authorization": [NSString stringWithFormat:@"Basic %@", [self getBase64]]};
     [request addFormData:titleid forKey:@"anime_id"];
     [request addFormData:self.DetectedEpisode forKey:@"episodes"];
     // Check if the detected episode is equal to total episodes. If so, set it as complete (mostly for specials and movies)
@@ -211,7 +211,7 @@
     //Ignore Cookies
     [request setUseCookies:NO];
     //Set Token
-            [request addHeader:[NSString stringWithFormat:@"Basic %@",[self getBase64]]  forKey:@"Authorization"];
+    request.headers = @{@"Authorization": [NSString stringWithFormat:@"Basic %@", [self getBase64]]};
     //Set method to Delete
     [request setPostMethod:@"DELETE"];
     // Do Update
@@ -243,7 +243,7 @@
     //Ignore Cookies
     [request setUseCookies:NO];
     //Set Token
-            [request addHeader:[NSString stringWithFormat:@"Basic %@",[self getBase64]]  forKey:@"Authorization"];
+    request.headers = @{@"Authorization": [NSString stringWithFormat:@"Basic %@", [self getBase64]]};
     [request setPostMethod:@"PUT"];
     //Set current episode
     [request addFormData:episode forKey:@"episodes"];

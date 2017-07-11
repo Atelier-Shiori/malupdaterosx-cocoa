@@ -10,6 +10,16 @@
 		1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD58140DA1D0A300B32029 /* MainMenu.xib */; };
 		256AC3DA0F4B6AC300CF3369 /* MAL_Updater_OS_XAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 256AC3D90F4B6AC300CF3369 /* MAL_Updater_OS_XAppDelegate.m */; };
 		2D226B291EF30DFB0030E9C5 /* ShareMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D226B281EF30DFB0030E9C5 /* ShareMenu.m */; };
+		2D3CBE3C1F1531210085888D /* XMLReader.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D3CBE3B1F1531210085888D /* XMLReader.framework */; };
+		2D3CBE3E1F15312E0085888D /* SAMKeychain.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D3CBE3D1F15312E0085888D /* SAMKeychain.framework */; };
+		2D3CBE451F1531D40085888D /* PlexPrefs.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D3CBE441F1531D40085888D /* PlexPrefs.m */; };
+		2D3CBE481F1531DF0085888D /* PlexLogin.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D3CBE471F1531DF0085888D /* PlexLogin.m */; };
+		2D3CBE491F1532950085888D /* XMLReader.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D3CBE3B1F1531210085888D /* XMLReader.framework */; };
+		2D3CBE4A1F1532950085888D /* XMLReader.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2D3CBE3B1F1531210085888D /* XMLReader.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2D3CBE4B1F1532A20085888D /* SAMKeychain.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D3CBE3D1F15312E0085888D /* SAMKeychain.framework */; };
+		2D3CBE4C1F1532A20085888D /* SAMKeychain.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2D3CBE3D1F15312E0085888D /* SAMKeychain.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2D3CBE4D1F1533660085888D /* PlexPrefs.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2D3CBE4F1F1533660085888D /* PlexPrefs.xib */; };
+		2D3CBE501F15336B0085888D /* PlexLogin.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2D3CBE521F15336B0085888D /* PlexLogin.xib */; };
 		2D417C1F1E6A378D008D225B /* MSWeakTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D417C1E1E6A378D008D225B /* MSWeakTimer.m */; };
 		2D4A4D0A1EE4B01D004D3716 /* StatusUpdateWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D4A4D081EE4B01D004D3716 /* StatusUpdateWindow.m */; };
 		2D4A4D0B1EE4B01D004D3716 /* StatusUpdateWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2D4A4D091EE4B01D004D3716 /* StatusUpdateWindow.xib */; };
@@ -23,7 +33,6 @@
 		2D7B152D1EB54E280014D4C7 /* MALLibraryAppMigrate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D7B152C1EB54E280014D4C7 /* MALLibraryAppMigrate.framework */; };
 		2D7B152E1EB5515B0014D4C7 /* MALLibraryAppMigrate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D7B152C1EB54E280014D4C7 /* MALLibraryAppMigrate.framework */; };
 		2D7B152F1EB5515B0014D4C7 /* MALLibraryAppMigrate.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2D7B152C1EB54E280014D4C7 /* MALLibraryAppMigrate.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		2D8BF8BD1EC9E2900068856A /* XMLReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D8BF8BC1EC9E2900068856A /* XMLReader.m */; };
 		2D9C3AE11E6A0BC7007D8F68 /* EasyNSURLConnection.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D9C3AE01E6A0BC7007D8F68 /* EasyNSURLConnection.framework */; };
 		2D9C3AE21E6A0C07007D8F68 /* EasyNSURLConnection.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D9C3AE01E6A0BC7007D8F68 /* EasyNSURLConnection.framework */; };
 		2D9C3AE31E6A0C07007D8F68 /* EasyNSURLConnection.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2D9C3AE01E6A0BC7007D8F68 /* EasyNSURLConnection.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -36,8 +45,6 @@
 		3A2DCCBE1210B3D900C920F1 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A2DCCBD1210B3D900C920F1 /* Security.framework */; };
 		3A6AB37F120F313E00D51D2C /* Base64Category.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A6AB37E120F313E00D51D2C /* Base64Category.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		3AFEF129120DF8CE0098B59D /* MyAnimeList.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AFEF128120DF8CE0098B59D /* MyAnimeList.m */; };
-		5902411F1C074A7A00495A2F /* SSKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 5902411C1C074A7A00495A2F /* SSKeychain.m */; };
-		590241201C074A7A00495A2F /* SSKeychainQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 5902411E1C074A7A00495A2F /* SSKeychainQuery.m */; };
 		590241261C074AF500495A2F /* MyAnimeList+Keychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 590241251C074AF500495A2F /* MyAnimeList+Keychain.m */; };
 		5967C9341C95AD51005FCBC7 /* string_score.c in Sources */ = {isa = PBXBuildFile; fileRef = 5967C9321C95AD51005FCBC7 /* string_score.c */; };
 		59D503781CB004B10002532D /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59D503771CB004B10002532D /* Sparkle.framework */; };
@@ -126,10 +133,12 @@
 				8227C1181A1D8D47005F3301 /* anitomy-osx.framework in CopyFiles */,
 				2D7B152F1EB5515B0014D4C7 /* MALLibraryAppMigrate.framework in CopyFiles */,
 				91206C1F1E75F5AD0050E9C5 /* MASPreferences.framework in CopyFiles */,
+				2D3CBE4A1F1532950085888D /* XMLReader.framework in CopyFiles */,
 				2D63136F1EDA287200C3CB6B /* DetectionKit.framework in CopyFiles */,
 				91A609F51EA3E77C00EF40AB /* CocoaOniguruma.framework in CopyFiles */,
 				2D6313731EDA293B00C3CB6B /* Reachability.framework in CopyFiles */,
 				59D503791CB004BA0002532D /* Sparkle.framework in CopyFiles */,
+				2D3CBE4C1F1532A20085888D /* SAMKeychain.framework in CopyFiles */,
 				2D9C3AE31E6A0C07007D8F68 /* EasyNSURLConnection.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -148,6 +157,14 @@
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		2D226B271EF30DFB0030E9C5 /* ShareMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShareMenu.h; sourceTree = "<group>"; };
 		2D226B281EF30DFB0030E9C5 /* ShareMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShareMenu.m; sourceTree = "<group>"; };
+		2D3CBE3B1F1531210085888D /* XMLReader.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XMLReader.framework; path = Frameworks/XMLReader.framework; sourceTree = "<group>"; };
+		2D3CBE3D1F15312E0085888D /* SAMKeychain.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SAMKeychain.framework; path = Frameworks/SAMKeychain.framework; sourceTree = "<group>"; };
+		2D3CBE431F1531D40085888D /* PlexPrefs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlexPrefs.h; sourceTree = "<group>"; };
+		2D3CBE441F1531D40085888D /* PlexPrefs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlexPrefs.m; sourceTree = "<group>"; };
+		2D3CBE461F1531DF0085888D /* PlexLogin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlexLogin.h; sourceTree = "<group>"; };
+		2D3CBE471F1531DF0085888D /* PlexLogin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlexLogin.m; sourceTree = "<group>"; };
+		2D3CBE4E1F1533660085888D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/PlexPrefs.xib; sourceTree = "<group>"; };
+		2D3CBE511F15336B0085888D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/PlexLogin.xib; sourceTree = "<group>"; };
 		2D417C1D1E6A378D008D225B /* MSWeakTimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSWeakTimer.h; sourceTree = "<group>"; };
 		2D417C1E1E6A378D008D225B /* MSWeakTimer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSWeakTimer.m; sourceTree = "<group>"; };
 		2D4A4D071EE4B01D004D3716 /* StatusUpdateWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatusUpdateWindow.h; sourceTree = "<group>"; };
@@ -160,8 +177,6 @@
 		2D63136C1EDA284A00C3CB6B /* DetectionKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DetectionKit.framework; path = Frameworks/DetectionKit.framework; sourceTree = "<group>"; };
 		2D6313701EDA293100C3CB6B /* Reachability.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Reachability.framework; path = Frameworks/Reachability.framework; sourceTree = "<group>"; };
 		2D7B152C1EB54E280014D4C7 /* MALLibraryAppMigrate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MALLibraryAppMigrate.framework; path = Frameworks/MALLibraryAppMigrate.framework; sourceTree = "<group>"; };
-		2D8BF8BB1EC9E2900068856A /* XMLReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLReader.h; sourceTree = "<group>"; };
-		2D8BF8BC1EC9E2900068856A /* XMLReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMLReader.m; sourceTree = "<group>"; };
 		2D9C3AE01E6A0BC7007D8F68 /* EasyNSURLConnection.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EasyNSURLConnection.framework; path = Frameworks/EasyNSURLConnection.framework; sourceTree = "<group>"; };
 		2DAFC1D71E2313B100FB7A14 /* OfflineViewQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OfflineViewQueue.h; sourceTree = "<group>"; };
 		2DAFC1D81E2313B100FB7A14 /* OfflineViewQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OfflineViewQueue.m; sourceTree = "<group>"; };
@@ -180,10 +195,6 @@
 		3A6AB37E120F313E00D51D2C /* Base64Category.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Base64Category.m; sourceTree = "<group>"; };
 		3AFEF127120DF8CE0098B59D /* MyAnimeList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyAnimeList.h; sourceTree = "<group>"; };
 		3AFEF128120DF8CE0098B59D /* MyAnimeList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyAnimeList.m; sourceTree = "<group>"; };
-		5902411B1C074A7A00495A2F /* SSKeychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSKeychain.h; sourceTree = "<group>"; };
-		5902411C1C074A7A00495A2F /* SSKeychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSKeychain.m; sourceTree = "<group>"; };
-		5902411D1C074A7A00495A2F /* SSKeychainQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSKeychainQuery.h; sourceTree = "<group>"; };
-		5902411E1C074A7A00495A2F /* SSKeychainQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSKeychainQuery.m; sourceTree = "<group>"; };
 		590241241C074AF500495A2F /* MyAnimeList+Keychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MyAnimeList+Keychain.h"; sourceTree = "<group>"; };
 		590241251C074AF500495A2F /* MyAnimeList+Keychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MyAnimeList+Keychain.m"; sourceTree = "<group>"; };
 		5967C9321C95AD51005FCBC7 /* string_score.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = string_score.c; sourceTree = "<group>"; };
@@ -372,6 +383,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				91206C1D1E75F3F00050E9C5 /* MASPreferences.framework in Frameworks */,
+				2D3CBE3E1F15312E0085888D /* SAMKeychain.framework in Frameworks */,
 				2D63136D1EDA284A00C3CB6B /* DetectionKit.framework in Frameworks */,
 				91206C1B1E75F3E50050E9C5 /* MASShortcut.framework in Frameworks */,
 				6F28DC1B1A67092F00AF063F /* Carbon.framework in Frameworks */,
@@ -390,8 +402,11 @@
 				2D7B152E1EB5515B0014D4C7 /* MALLibraryAppMigrate.framework in Frameworks */,
 				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
 				2D9C3AE21E6A0C07007D8F68 /* EasyNSURLConnection.framework in Frameworks */,
+				2D3CBE4B1F1532A20085888D /* SAMKeychain.framework in Frameworks */,
 				91A609F41EA3E77C00EF40AB /* CocoaOniguruma.framework in Frameworks */,
 				2D6313711EDA293100C3CB6B /* Reachability.framework in Frameworks */,
+				2D3CBE3C1F1531210085888D /* XMLReader.framework in Frameworks */,
+				2D3CBE491F1532950085888D /* XMLReader.framework in Frameworks */,
 				3A2DCCBE1210B3D900C920F1 /* Security.framework in Frameworks */,
 				2D63136E1EDA287200C3CB6B /* DetectionKit.framework in Frameworks */,
 				9161B2011E90246200FBF52F /* Fabric.framework in Frameworks */,
@@ -460,6 +475,8 @@
 		1058C7A2FEA54F0111CA2CBB /* Other Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2D3CBE3D1F15312E0085888D /* SAMKeychain.framework */,
+				2D3CBE3B1F1531210085888D /* XMLReader.framework */,
 				2D6313701EDA293100C3CB6B /* Reachability.framework */,
 				2D63136C1EDA284A00C3CB6B /* DetectionKit.framework */,
 				2D7B152C1EB54E280014D4C7 /* MALLibraryAppMigrate.framework */,
@@ -520,6 +537,8 @@
 				6F1A2C8E1B929B9800D47FE2 /* dsa_pub.pem */,
 				8D1107310486CEB800E47090 /* MAL_Updater_OS_X-Info.plist */,
 				089C165CFE840E0CC02AAC07 /* InfoPlist.strings */,
+				2D3CBE521F15336B0085888D /* PlexLogin.xib */,
+				2D3CBE4F1F1533660085888D /* PlexPrefs.xib */,
 				6FBA5A0C1ABE484B00B6DB79 /* AdvancedPrefController.xib */,
 				2DDBB73E1E1D521D0075B0D0 /* DonationWindow.xib */,
 				6F27CE961A6869E8004E51F8 /* ExceptionsPref.xib */,
@@ -578,6 +597,8 @@
 		5C07DA621A8156210003A827 /* Window Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				2D3CBE461F1531DF0085888D /* PlexLogin.h */,
+				2D3CBE471F1531DF0085888D /* PlexLogin.m */,
 				2D4A4D0C1EE4BB02004D3716 /* Status Update Window */,
 				910D22661E81DEC200760A08 /* streamlinkopen.h */,
 				910D22671E81DEC200760A08 /* streamlinkopen.m */,
@@ -604,12 +625,8 @@
 			children = (
 				5967C9321C95AD51005FCBC7 /* string_score.c */,
 				5967C9331C95AD51005FCBC7 /* string_score.h */,
-				5902411B1C074A7A00495A2F /* SSKeychain.h */,
-				5902411C1C074A7A00495A2F /* SSKeychain.m */,
 				916DE6371EA5261A00F870D5 /* NSBundle+LoginItem.h */,
 				916DE6381EA5261A00F870D5 /* NSBundle+LoginItem.m */,
-				5902411D1C074A7A00495A2F /* SSKeychainQuery.h */,
-				5902411E1C074A7A00495A2F /* SSKeychainQuery.m */,
 				6F28DC071A67084B00AF063F /* Hotkey */,
 				3A2DCCB41210B3BF00C920F1 /* PFMoveApplication.h */,
 				3A2DCCB51210B3BF00C920F1 /* PFMoveApplication.m */,
@@ -633,6 +650,8 @@
 			isa = PBXGroup;
 			children = (
 				6FAA877D1A7EB22100EFFAC1 /* Preferences.h */,
+				2D3CBE431F1531D40085888D /* PlexPrefs.h */,
+				2D3CBE441F1531D40085888D /* PlexPrefs.m */,
 				6FBA5A051ABE460600B6DB79 /* AdvancedPrefController.h */,
 				6FBA5A061ABE460600B6DB79 /* AdvancedPrefController.m */,
 				6F28DC021A67082400AF063F /* HotkeysPrefs.h */,
@@ -666,8 +685,6 @@
 				6F12909A1A7D833100B8C3E6 /* AutoExceptions.m */,
 				6FAA0C1D1A7E938400416079 /* ExceptionsCache.h */,
 				6FAA0C1E1A7E938400416079 /* ExceptionsCache.m */,
-				2D8BF8BB1EC9E2900068856A /* XMLReader.h */,
-				2D8BF8BC1EC9E2900068856A /* XMLReader.m */,
 				6F0CF36D1A7DBADD00261A43 /* Utility.h */,
 				6F0CF36E1A7DBADD00261A43 /* Utility.m */,
 				2D417C1D1E6A378D008D225B /* MSWeakTimer.h */,
@@ -939,6 +956,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2D3CBE501F15336B0085888D /* PlexLogin.xib in Resources */,
 				8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */,
 				6F1A2C8F1B929B9800D47FE2 /* dsa_pub.pem in Resources */,
 				910D226D1E81DFEE00760A08 /* streamlinkopen.xib in Resources */,
@@ -956,6 +974,7 @@
 				2DDBB7401E1D521D0075B0D0 /* DonationWindow.xib in Resources */,
 				6F27CE941A6869E8004E51F8 /* ExceptionsPref.xib in Resources */,
 				5CBE9FEF19F2F9E500CA3E5D /* GeneralPreferenceView.xib in Resources */,
+				2D3CBE4D1F1533660085888D /* PlexPrefs.xib in Resources */,
 				5CBE9FEC19F2F9CA00CA3E5D /* LoginView.xib in Resources */,
 				5C97491D19F3117D000EC02E /* SoftwareUpdateView.xib in Resources */,
 			);
@@ -1014,7 +1033,6 @@
 			files = (
 				8D11072D0486CEB800E47090 /* main.m in Sources */,
 				916DE6391EA5261A00F870D5 /* NSBundle+LoginItem.m in Sources */,
-				590241201C074A7A00495A2F /* SSKeychainQuery.m in Sources */,
 				6F0CF36F1A7DBADD00261A43 /* Utility.m in Sources */,
 				256AC3DA0F4B6AC300CF3369 /* MAL_Updater_OS_XAppDelegate.m in Sources */,
 				6F28DC191A67087300AF063F /* HotKeyConstants.m in Sources */,
@@ -1031,7 +1049,6 @@
 				5967C9341C95AD51005FCBC7 /* string_score.c in Sources */,
 				5C881EFB19F462B400E20425 /* NSString_stripHtml.m in Sources */,
 				829727981A8BB14E004F73AB /* MyAnimeList+Update.m in Sources */,
-				2D8BF8BD1EC9E2900068856A /* XMLReader.m in Sources */,
 				59D99C071CBEDB0000762EA5 /* MyAnimeList+HummingbirdSearch.m in Sources */,
 				5C07DA671A8156420003A827 /* HistoryWindow.m in Sources */,
 				590241261C074AF500495A2F /* MyAnimeList+Keychain.m in Sources */,
@@ -1039,10 +1056,11 @@
 				2DAFC1DA1E2313B100FB7A14 /* OfflineViewQueue.m in Sources */,
 				3A2DCCB61210B3BF00C920F1 /* PFMoveApplication.m in Sources */,
 				822AEB891A202931003DD682 /* FixSearchDialog.m in Sources */,
+				2D3CBE451F1531D40085888D /* PlexPrefs.m in Sources */,
 				910D22681E81DEC200760A08 /* streamlinkopen.m in Sources */,
 				5CD36BBA19F2ED88007BB6B6 /* GeneralPrefController.m in Sources */,
-				5902411F1C074A7A00495A2F /* SSKeychain.m in Sources */,
 				6FAA0C1F1A7E938400416079 /* ExceptionsCache.m in Sources */,
+				2D3CBE481F1531DF0085888D /* PlexLogin.m in Sources */,
 				829727951A8BB093004F73AB /* MyAnimeList+Search.m in Sources */,
 				6FBA5A081ABE460600B6DB79 /* AdvancedPrefController.m in Sources */,
 				5CBE9EC319F2F0E300CA3E5D /* LoginPref.m in Sources */,
@@ -1094,6 +1112,22 @@
 				829FB41D19F739700026EAC2 /* Base */,
 			);
 			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+		2D3CBE4F1F1533660085888D /* PlexPrefs.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2D3CBE4E1F1533660085888D /* Base */,
+			);
+			name = PlexPrefs.xib;
+			sourceTree = "<group>";
+		};
+		2D3CBE521F15336B0085888D /* PlexLogin.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2D3CBE511F15336B0085888D /* Base */,
+			);
+			name = PlexLogin.xib;
 			sourceTree = "<group>";
 		};
 		2DAFC1DE1E23143100FB7A14 /* OfflineViewQueue.xib */ = {

@@ -7,17 +7,19 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleExecutable</key>
-	<string>DetectionKit</string>
+	<string>SAMKeychain</string>
 	<key>CFBundleIdentifier</key>
-	<string>moe.ateliershiori.DetectionKit</string>
+	<string>com.samsoffes.SAMKeychain</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>DetectionKit</string>
+	<string>SAMKeychain</string>
 	<key>CFBundlePackageType</key>
 	<string>FMWK</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0</string>
+	<string>1.5.2</string>
+	<key>CFBundleSignature</key>
+	<string>????</string>
 	<key>CFBundleSupportedPlatforms</key>
 	<array>
 		<string>MacOSX</string>
@@ -38,7 +40,10 @@
 	<string>0821</string>
 	<key>DTXcodeBuild</key>
 	<string>8C1002</string>
-	<key>NSHumanReadableCopyright</key>
-	<string>Copyright © 2017 Atelier Shiori. All rights reserved.</string>
+	<key>UIDeviceFamily</key>
+	<array>
+		<integer>1</integer>
+		<integer>2</integer>
+	</array>
 </dict>
 </plist>
