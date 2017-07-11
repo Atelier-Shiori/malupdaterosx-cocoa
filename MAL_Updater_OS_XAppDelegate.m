@@ -575,7 +575,12 @@
         if ([MALEngine getSuccess] == 1) {
             [findtitle setHidden:true];
             if ([MALEngine getOnlineStatus]) {
-                [self setStatusMenuTitleEpisode:[MALEngine getLastScrobbledActualTitle] episode:[MALEngine getLastScrobbledEpisode]];
+                if ([MALEngine getLastScrobbledActualTitle]) {
+                    [self setStatusMenuTitleEpisode:[MALEngine getLastScrobbledActualTitle] episode:[MALEngine getLastScrobbledEpisode]];
+                }
+                else {
+                    [self setStatusMenuTitleEpisode:[MALEngine getLastScrobbledTitle] episode:[MALEngine getLastScrobbledEpisode]];
+                }
                 if (status != 3 && [MALEngine getConfirmed]) {
                     // Show normal info
                     [self updateLastScrobbledTitleStatus:false];
