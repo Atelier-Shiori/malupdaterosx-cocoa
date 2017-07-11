@@ -28,6 +28,7 @@
 #import <Crashlytics/Crashlytics.h>
 #import <MALLibraryAppMigrate/MALLibraryAppMigrate.h>
 #import "sharemenu.h"
+#import "PFAboutWindowController.h"
 
 @implementation MAL_Updater_OS_XAppDelegate
 
@@ -654,6 +655,33 @@
     [self setStatusToolTip:@"Hachidori"];
 }
 
+- (IBAction)showaboutwindow:(id)sender{
+    if (!_aboutWindowController) {
+        _aboutWindowController = [PFAboutWindowController new];
+    }
+    (self.aboutWindowController).appURL = [[NSURL alloc] initWithString:@"https://malupdaterosx.ateliershiori.moe/"];
+    NSMutableString *copyrightstr = [NSMutableString new];
+    NSDictionary *bundleDict = [NSBundle mainBundle].infoDictionary;
+    [copyrightstr appendFormat:@"%@ \r\r",bundleDict[@"NSHumanReadableCopyright"]];
+    if (((NSNumber *)[[NSUserDefaults standardUserDefaults] objectForKey:@"donated"]).boolValue) {
+        if ([[NSUserDefaults standardUserDefaults] boolForKey:@"MacAppStoreMigrated"]){
+            [copyrightstr appendFormat:@"This copy is registered to: MAL Library User"];
+        }
+        else {
+            [copyrightstr appendFormat:@"This copy is registered to: %@", [[NSUserDefaults standardUserDefaults] objectForKey:@"donor"]];
+        }
+    }
+    else {
+        [copyrightstr appendString:@"UNREGISTERED COPY"];
+    }
+    (self.aboutWindowController).appCopyright = [[NSAttributedString alloc] initWithString:copyrightstr
+                                                                                attributes:@{
+                                                                                             NSForegroundColorAttributeName:[NSColor labelColor],
+                                                                                             NSFontAttributeName:[NSFont fontWithName:[NSFont systemFontOfSize:12.0f].familyName size:11]}];
+    
+    [self.aboutWindowController showWindow:nil];
+    
+}
 
 #pragma mark Timer Functions
 

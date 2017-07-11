@@ -17,6 +17,7 @@
 @class streamlinkopen;
 @class StatusUpdateWindow;
 @class ShareMenu;
+@class PFAboutWindowController;
 
 @interface MAL_Updater_OS_XAppDelegate : NSObject <NSApplicationDelegate, NSUserNotificationCenterDelegate, NSSharingServiceDelegate> {
     NSManagedObjectModel *managedObjectModel;
@@ -80,6 +81,7 @@
 @property (strong) IBOutlet NSView *nothingplayingview;
 @property (strong) StatusUpdateWindow *updatewindow;
 @property (strong) IBOutlet ShareMenu *shareMenu;
+@property PFAboutWindowController *aboutWindowController;
 
 - (void)showhistory:(id)sender;
 - (IBAction)togglescrobblewindow:(id)sender;

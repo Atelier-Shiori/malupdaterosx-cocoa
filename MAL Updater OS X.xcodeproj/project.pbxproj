@@ -10,6 +10,9 @@
 		1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD58140DA1D0A300B32029 /* MainMenu.xib */; };
 		256AC3DA0F4B6AC300CF3369 /* MAL_Updater_OS_XAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 256AC3D90F4B6AC300CF3369 /* MAL_Updater_OS_XAppDelegate.m */; };
 		2D226B291EF30DFB0030E9C5 /* ShareMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D226B281EF30DFB0030E9C5 /* ShareMenu.m */; };
+		2D36F0E51F153F5C00CAC1F5 /* PFAboutWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D36F0E41F153F5C00CAC1F5 /* PFAboutWindowController.m */; };
+		2D36F0E81F153FED00CAC1F5 /* PFAboutWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2D36F0EA1F153FED00CAC1F5 /* PFAboutWindow.xib */; };
+		2D36F0EC1F15412500CAC1F5 /* EULA.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 2D36F0EB1F15412500CAC1F5 /* EULA.rtf */; };
 		2D3CBE3C1F1531210085888D /* XMLReader.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D3CBE3B1F1531210085888D /* XMLReader.framework */; };
 		2D3CBE3E1F15312E0085888D /* SAMKeychain.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D3CBE3D1F15312E0085888D /* SAMKeychain.framework */; };
 		2D3CBE451F1531D40085888D /* PlexPrefs.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D3CBE441F1531D40085888D /* PlexPrefs.m */; };
@@ -157,6 +160,10 @@
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		2D226B271EF30DFB0030E9C5 /* ShareMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShareMenu.h; sourceTree = "<group>"; };
 		2D226B281EF30DFB0030E9C5 /* ShareMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShareMenu.m; sourceTree = "<group>"; };
+		2D36F0E31F153F5C00CAC1F5 /* PFAboutWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PFAboutWindowController.h; sourceTree = "<group>"; };
+		2D36F0E41F153F5C00CAC1F5 /* PFAboutWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PFAboutWindowController.m; sourceTree = "<group>"; };
+		2D36F0E91F153FED00CAC1F5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/PFAboutWindow.xib; sourceTree = "<group>"; };
+		2D36F0EB1F15412500CAC1F5 /* EULA.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = EULA.rtf; sourceTree = "<group>"; };
 		2D3CBE3B1F1531210085888D /* XMLReader.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XMLReader.framework; path = Frameworks/XMLReader.framework; sourceTree = "<group>"; };
 		2D3CBE3D1F15312E0085888D /* SAMKeychain.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SAMKeychain.framework; path = Frameworks/SAMKeychain.framework; sourceTree = "<group>"; };
 		2D3CBE431F1531D40085888D /* PlexPrefs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlexPrefs.h; sourceTree = "<group>"; };
@@ -534,9 +541,11 @@
 				8294C45D19F99B2F009DE98B /* Images.xcassets */,
 				5C8ACEB919F409F90001A101 /* Images */,
 				5C0A2C4A122C7F960096908D /* Credits.rtf */,
+				2D36F0EB1F15412500CAC1F5 /* EULA.rtf */,
 				6F1A2C8E1B929B9800D47FE2 /* dsa_pub.pem */,
 				8D1107310486CEB800E47090 /* MAL_Updater_OS_X-Info.plist */,
 				089C165CFE840E0CC02AAC07 /* InfoPlist.strings */,
+				2D36F0EA1F153FED00CAC1F5 /* PFAboutWindow.xib */,
 				2D3CBE521F15336B0085888D /* PlexLogin.xib */,
 				2D3CBE4F1F1533660085888D /* PlexPrefs.xib */,
 				6FBA5A0C1ABE484B00B6DB79 /* AdvancedPrefController.xib */,
@@ -563,6 +572,15 @@
 				1058C7A2FEA54F0111CA2CBB /* Other Frameworks */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		2D36F0E21F153F3B00CAC1F5 /* About */ = {
+			isa = PBXGroup;
+			children = (
+				2D36F0E31F153F5C00CAC1F5 /* PFAboutWindowController.h */,
+				2D36F0E41F153F5C00CAC1F5 /* PFAboutWindowController.m */,
+			);
+			name = About;
 			sourceTree = "<group>";
 		};
 		2D4A4D0C1EE4BB02004D3716 /* Status Update Window */ = {
@@ -597,6 +615,7 @@
 		5C07DA621A8156210003A827 /* Window Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				2D36F0E21F153F3B00CAC1F5 /* About */,
 				2D3CBE461F1531DF0085888D /* PlexLogin.h */,
 				2D3CBE471F1531DF0085888D /* PlexLogin.m */,
 				2D4A4D0C1EE4BB02004D3716 /* Status Update Window */,
@@ -965,6 +984,7 @@
 				6FBA5A0A1ABE484B00B6DB79 /* AdvancedPrefController.xib in Resources */,
 				6F27CE971A6869ED004E51F8 /* HotkeysPrefs.xib in Resources */,
 				6FF033301A73F2C70096FC69 /* rules.png in Resources */,
+				2D36F0E81F153FED00CAC1F5 /* PFAboutWindow.xib in Resources */,
 				5C07DA751A815F580003A827 /* HistoryWindow.xib in Resources */,
 				2DAFC1DC1E23143100FB7A14 /* OfflineViewQueue.xib in Resources */,
 				1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */,
@@ -974,6 +994,7 @@
 				2DDBB7401E1D521D0075B0D0 /* DonationWindow.xib in Resources */,
 				6F27CE941A6869E8004E51F8 /* ExceptionsPref.xib in Resources */,
 				5CBE9FEF19F2F9E500CA3E5D /* GeneralPreferenceView.xib in Resources */,
+				2D36F0EC1F15412500CAC1F5 /* EULA.rtf in Resources */,
 				2D3CBE4D1F1533660085888D /* PlexPrefs.xib in Resources */,
 				5CBE9FEC19F2F9CA00CA3E5D /* LoginView.xib in Resources */,
 				5C97491D19F3117D000EC02E /* SoftwareUpdateView.xib in Resources */,
@@ -1056,6 +1077,7 @@
 				2DAFC1DA1E2313B100FB7A14 /* OfflineViewQueue.m in Sources */,
 				3A2DCCB61210B3BF00C920F1 /* PFMoveApplication.m in Sources */,
 				822AEB891A202931003DD682 /* FixSearchDialog.m in Sources */,
+				2D36F0E51F153F5C00CAC1F5 /* PFAboutWindowController.m in Sources */,
 				2D3CBE451F1531D40085888D /* PlexPrefs.m in Sources */,
 				910D22681E81DEC200760A08 /* streamlinkopen.m in Sources */,
 				5CD36BBA19F2ED88007BB6B6 /* GeneralPrefController.m in Sources */,
@@ -1112,6 +1134,14 @@
 				829FB41D19F739700026EAC2 /* Base */,
 			);
 			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+		2D36F0EA1F153FED00CAC1F5 /* PFAboutWindow.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2D36F0E91F153FED00CAC1F5 /* Base */,
+			);
+			name = PFAboutWindow.xib;
 			sourceTree = "<group>";
 		};
 		2D3CBE4F1F1533660085888D /* PlexPrefs.xib */ = {
