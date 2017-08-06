@@ -81,7 +81,7 @@
 @property (strong) IBOutlet NSView *nothingplayingview;
 @property (strong) StatusUpdateWindow *updatewindow;
 @property (strong) IBOutlet ShareMenu *shareMenu;
-@property PFAboutWindowController *aboutWindowController;
+@property (strong) PFAboutWindowController *aboutWindowController;
 
 - (void)showhistory:(id)sender;
 - (IBAction)togglescrobblewindow:(id)sender;
