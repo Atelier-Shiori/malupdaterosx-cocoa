@@ -73,7 +73,14 @@
             //Parse and Import
             NSData *jsonData = [request getResponseData];
             NSError *error = nil;
-            NSArray *a = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:&error];
+            NSArray *a;
+            @try {
+                a = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:&error];
+            }
+            @catch (NSException *e) {
+                NSLog(@"Unable to refresh auto exceptions database: %@", e);
+                return;
+            }
             MAL_Updater_OS_XAppDelegate *delegate = (MAL_Updater_OS_XAppDelegate *)[NSApplication sharedApplication].delegate;
             NSManagedObjectContext *moc = [delegate getObjectContext];
             [moc performBlockAndWait:^{
