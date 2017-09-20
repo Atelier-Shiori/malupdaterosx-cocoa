@@ -35,16 +35,16 @@
        didEndSelector:@selector(updateDidEnd:returnCode:contextInfo:)
           contextInfo:(void *)nil];
     // Set up UI
-    [_showtitle setObjectValue:[MALEngine getLastScrobbledTitle]];
-    [_showscore selectItemWithTag:[MALEngine getScore]];
+    _showtitle.objectValue = MALEngine.LastScrobbledTitle;
+    [_showscore selectItemWithTag:MALEngine.TitleScore];
     [_showstatus selectItemAtIndex:[MALEngine getWatchStatus]];
-    [_episodefield setStringValue:[NSString stringWithFormat:@"%i", [MALEngine getCurrentEpisode]]];
-    if ([MALEngine getTotalEpisodes] !=0) {
-        [_epiformatter setMaximum:@([MALEngine getTotalEpisodes])];
+    _episodefield.stringValue = [NSString stringWithFormat:@"%i", MALEngine.DetectedCurrentEpisode];
+    if (MALEngine.TotalEpisodes !=0) {
+        _epiformatter.maximum = @(MALEngine.TotalEpisodes);
     }
     // Stop Timer temporarily if scrobbling is turned on
     MAL_Updater_OS_XAppDelegate *appdel = (MAL_Updater_OS_XAppDelegate *)[NSApplication sharedApplication].delegate;
-    if ([appdel getisScrobbling]) {
+    if (appdel.scrobbling) {
         [appdel stoptimer];
     }
     

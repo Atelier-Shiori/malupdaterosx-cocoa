@@ -31,10 +31,10 @@
 }
 
 - (void)awakeFromNib{
-    [arraycontroller setManagedObjectContext:self.managedObjectContext];
+    arraycontroller.managedObjectContext = self.managedObjectContext;
     [arraycontroller prepareContent];
-    [historytable setSortDescriptors:@[[[NSSortDescriptor alloc] initWithKey:@"Date" ascending:NO]]];
-    [arraycontroller setSortDescriptors:[historytable sortDescriptors]];
+    historytable.sortDescriptors = @[[[NSSortDescriptor alloc] initWithKey:@"Date" ascending:NO]];
+    arraycontroller.sortDescriptors = historytable.sortDescriptors;
 }
 
 - (void)windowDidLoad {
@@ -50,7 +50,7 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         // Add scrobble history record to the SQLite Database via Core Data
         MAL_Updater_OS_XAppDelegate *appDelegate = (MAL_Updater_OS_XAppDelegate *)[NSApplication sharedApplication].delegate;
-        NSManagedObjectContext *moc = [appDelegate getObjectContext];
+        NSManagedObjectContext *moc = appDelegate.managedObjectContext;
         NSManagedObject *obj = [NSEntityDescription
                                 insertNewObjectForEntityForName :@"History"
                                 inManagedObjectContext: moc];
@@ -67,10 +67,10 @@
     NSAlert *alert = [[NSAlert alloc] init];
     [alert addButtonWithTitle:@"Yes"];
     [alert addButtonWithTitle:@"No"];
-    [alert setMessageText:@"Are you sure you want to clear the Scrobble History?"];
-    [alert setInformativeText:@"Once done, this action cannot be undone."];
+    alert.messageText = @"Are you sure you want to clear the Scrobble History?";
+    alert.informativeText = @"Once done, this action cannot be undone.";
     // Set Message type to Warning
-    [alert setAlertStyle:NSWarningAlertStyle];
+    alert.alertStyle = NSWarningAlertStyle;
     // Show as Sheet on historywindow
     [alert beginSheetModalForWindow:self.window
                       modalDelegate:self
@@ -84,9 +84,9 @@
 {
     if (echoice == 1000) {
         // Remove All Data
-        NSManagedObjectContext *moc = [self managedObjectContext];
+        NSManagedObjectContext *moc = self.managedObjectContext;
         NSFetchRequest *allHistory = [[NSFetchRequest alloc] init];
-        [allHistory setEntity:[NSEntityDescription entityForName:@"History" inManagedObjectContext:moc]];
+        allHistory.entity = [NSEntityDescription entityForName:@"History" inManagedObjectContext:moc];
         
         NSError *error = nil;
         NSArray *histories = [moc executeFetchRequest:allHistory error:&error];

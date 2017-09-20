@@ -109,14 +109,14 @@
             theshowtitle = (NSString *)searchentry[@"title"];
             NSArray *a = @[];
             //Populate Synonyms if any.
-            if ([(NSArray *)searchentry[@"synonyms"] count] > 0) {
+            if (((NSArray *)searchentry[@"synonyms"]).count > 0) {
                 a = searchentry[@"synonyms"];
             }
             else {alttitle = @"";}
             // Remove colons as they are invalid characters for filenames and to improve accuracy
             theshowtitle = [theshowtitle stringByReplacingOccurrencesOfString:@":" withString:@""];
             int matchstatus;
-            if ([(NSArray *)searchentry[@"synonyms"] count] > 0) {
+            if (((NSArray *)searchentry[@"synonyms"]).count > 0) {
                 for (NSString *syn in a) {
                     alttitle = syn;
                     alttitle = [alttitle stringByReplacingOccurrencesOfString:@":" withString:@""];
@@ -138,7 +138,7 @@
                     NSString *description = searchentry[@"synopsis"] ? (NSString *)searchentry[@"synopsis"] : @"";
                     OnigResult *smatch2 = [regex2 match:description];
                     if (self.DetectedSeason >= 2) { // Season detected, check to see if there is a match. If not, continue.
-                        if (!smatch && !smatch2 && [[sortedArray filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"(type == %@)", @"TV"]] count] > 1) { // If there is a second season match, in most cases, it would be the only entry
+                        if (!smatch && !smatch2 && [sortedArray filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"(type == %@)", @"TV"]].count > 1) { // If there is a second season match, in most cases, it would be the only entry
                             continue;
                         }
                     }
@@ -155,7 +155,7 @@
                     }
                 }
                 //Return titleid if episode is valid
-                if ( ([[NSString stringWithFormat:@"%@", searchentry[@"episodes"]] intValue] == 0 || ([[NSString stringWithFormat:@"%@",searchentry[@"episodes"]] intValue] >= [self.DetectedEpisode intValue]))) {
+                if ( ([NSString stringWithFormat:@"%@", searchentry[@"episodes"]].intValue == 0 || ([NSString stringWithFormat:@"%@",searchentry[@"episodes"]].intValue >= (self.DetectedEpisode).intValue))) {
                     NSLog(@"Valid Episode Count");
                     if (sortedArray.count == 1 || self.DetectedSeason >= 2) {
                         return [self foundtitle:[NSString stringWithFormat:@"%@",searchentry[@"id"]] info:searchentry];
@@ -220,7 +220,7 @@
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"useSearchCache"] && titleid.length > 0) {
         NSNumber *episodes = found[@"episodes"] == [NSNull null] ? @(0) : (NSNumber *)found[@"episodes"];
         //Save AniID
-        [ExceptionsCache addtoCache:self.DetectedTitle showid:titleid actualtitle:(NSString *)found[@"title"] totalepisodes:[episodes intValue]];
+        [ExceptionsCache addtoCache:self.DetectedTitle showid:titleid actualtitle:(NSString *)found[@"title"] totalepisodes:episodes.intValue];
     }
     //Return the AniID
     return titleid;
@@ -233,10 +233,10 @@
     int season1 = ((NSNumber *)[[Recognition alloc] recognize:match1[@"title"]][@"season"]).intValue;
     int season2 = ((NSNumber *)[[Recognition alloc] recognize:match2[@"title"]][@"season"]).intValue;
     //Score first title
-    score1 = string_fuzzy_score(title.UTF8String, [[NSString stringWithFormat:@"%@", match1[@"title"]] UTF8String], fuzziness);
+    score1 = string_fuzzy_score(title.UTF8String, [NSString stringWithFormat:@"%@", match1[@"title"]].UTF8String, fuzziness);
     ascore1 = [self gethighestsynonymscore:match1[@"synonyms"] withTitle:title];
     //Score Second Title
-    score2 = string_fuzzy_score(title.UTF8String, [[NSString stringWithFormat:@"%@", match2[@"title"]] UTF8String], fuzziness);
+    score2 = string_fuzzy_score(title.UTF8String, [NSString stringWithFormat:@"%@", match2[@"title"]].UTF8String, fuzziness);
     ascore2 = [self gethighestsynonymscore:match1[@"synonyms"] withTitle:title];
     NSLog(@"%@ score - %f", match1[@"title"], score1);
     NSLog(@"%@ score - %f", match2[@"title"], score2);
@@ -290,7 +290,7 @@
         searchresults = d[@"anime"][@"entry"];
         if (![searchresults isKindOfClass:[NSArray class]]) {
             // Import only contains one object, put it in an array.
-            searchresults = [NSArray arrayWithObject:searchresults];
+            searchresults = @[searchresults];
         }
     }
     else {

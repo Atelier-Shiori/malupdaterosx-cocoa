@@ -44,7 +44,7 @@
             NSLog(@"Title on List");
             self.LastScrobbledTitleNew = false;
             self.WatchStatus = animeinfo[@"watched_status"];
-            self.DetectedCurrentEpisode = [(NSNumber *)animeinfo[@"watched_episodes"] intValue];
+            self.DetectedCurrentEpisode = ((NSNumber *)animeinfo[@"watched_episodes"]).intValue;
             self.TitleScore = animeinfo[@"score"] == [NSNull null] ? 0 : ((NSNumber *)animeinfo[@"score"]).intValue;
         }
         // New Update Confirmation
@@ -74,7 +74,7 @@
 - (int)updatetitle:(NSString *)titleid confirming:(bool)confirming{
     NSLog(@"Updating Title");
     
-    if ([self.DetectedEpisode intValue] <= self.DetectedCurrentEpisode ) {
+    if ((self.DetectedEpisode).intValue <= self.DetectedCurrentEpisode ) {
         // Already Watched, no need to scrobble
         // Store Scrobbled Title and Episode
         self.confirmed = true;
@@ -98,7 +98,7 @@
         [request setPostMethod:@"PUT"];
         [request addFormData:self.DetectedEpisode forKey:@"episodes"];
         //Set Status
-        self.WatchStatus = [self.DetectedEpisode intValue] == self.TotalEpisodes ? @"completed" : @"watching";
+        self.WatchStatus = (self.DetectedEpisode).intValue == self.TotalEpisodes ? @"completed" : @"watching";
         [request addFormData:self.WatchStatus forKey:@"status"];
         // Set existing score to prevent the score from being erased.
         [request addFormData:@(self.TitleScore).stringValue forKey:@"score"];
@@ -110,7 +110,7 @@
                 // Store Last Scrobbled Title
                 self.LastScrobbledTitle = self.DetectedTitle;
                 self.LastScrobbledEpisode = self.DetectedEpisode;
-                self.DetectedCurrentEpisode = [self.DetectedEpisode intValue];
+                self.DetectedCurrentEpisode = (self.DetectedEpisode).intValue;
                 self.LastScrobbledSource = self.DetectedSource;
                 if (self.confirmed) {
                     self.LastScrobbledActualTitle = (NSString *)self.LastScrobbledInfo[@"title"];
@@ -145,7 +145,7 @@
     [request addFormData:self.DetectedEpisode forKey:@"episodes"];
     // Check if the detected episode is equal to total episodes. If so, set it as complete (mostly for specials and movies)
     //Set Status
-    self.WatchStatus = [self.DetectedEpisode intValue] == self.TotalEpisodes ? @"completed" : @"watching";
+    self.WatchStatus = (self.DetectedEpisode).intValue == self.TotalEpisodes ? @"completed" : @"watching";
     [request addFormData:self.WatchStatus forKey:@"status"];
     // Do Update
     [request startFormRequest];
@@ -158,7 +158,7 @@
             //Store last scrobbled information
             self.LastScrobbledTitle = self.DetectedTitle;
             self.LastScrobbledEpisode = self.DetectedEpisode;
-            self.DetectedCurrentEpisode = [self.DetectedEpisode intValue];
+            self.DetectedCurrentEpisode = (self.DetectedEpisode).intValue;
             self.LastScrobbledSource = self.DetectedSource;
             if (self.confirmed) {
                 self.LastScrobbledActualTitle = (NSString *)self.LastScrobbledInfo[@"title"];
@@ -230,7 +230,7 @@
             self.TitleScore = showscore;
             self.WatchStatus = showwatchstatus;
             self.LastScrobbledEpisode = episode;
-            self.DetectedCurrentEpisode = [episode intValue];
+            self.DetectedCurrentEpisode = episode.intValue;
             self.confirmed = true;
             return true;
         default:

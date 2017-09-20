@@ -13,14 +13,14 @@
 @implementation AutoExceptions
 #pragma mark Importing Exceptions and Auto Exceptions
 + (void)importToCoreData{
-    MAL_Updater_OS_XAppDelegate *delegate = (MAL_Updater_OS_XAppDelegate *)[[NSApplication sharedApplication] delegate];
-    NSManagedObjectContext *moc = [delegate getObjectContext];
+    MAL_Updater_OS_XAppDelegate *delegate = (MAL_Updater_OS_XAppDelegate *)[NSApplication sharedApplication].delegate;
+    NSManagedObjectContext *moc = delegate.managedObjectContext;
     // Check Exceptions
     NSArray *oexceptions = [[NSUserDefaults standardUserDefaults] objectForKey:@"exceptions"];
     if (oexceptions.count > 0) {
         NSLog(@"Importing Exception List");
         NSFetchRequest *allExceptions = [[NSFetchRequest alloc] init];
-        [allExceptions setEntity:[NSEntityDescription entityForName:@"Exceptions" inManagedObjectContext:moc]];
+        allExceptions.entity = [NSEntityDescription entityForName:@"Exceptions" inManagedObjectContext:moc];
         NSError *error = nil;
         NSArray *exceptions = [moc executeFetchRequest:allExceptions error:&error];
         for (NSDictionary *d in oexceptions) {
@@ -68,7 +68,7 @@
             NSLog(@"Updating Auto Exceptions!");
             if (![[NSUserDefaults standardUserDefaults] valueForKey:@"updatedaexceptions"]) {
                 [AutoExceptions clearAutoExceptions];
-                [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:true]forKey:@"updatedaexceptions"];
+                [[NSUserDefaults standardUserDefaults] setObject:@(true)forKey:@"updatedaexceptions"];
             }
             //Parse and Import
             NSData *jsonData = [request getResponseData];
@@ -82,14 +82,14 @@
                 return;
             }
             MAL_Updater_OS_XAppDelegate *delegate = (MAL_Updater_OS_XAppDelegate *)[NSApplication sharedApplication].delegate;
-            NSManagedObjectContext *moc = [delegate getObjectContext];
+            NSManagedObjectContext *moc = delegate.managedObjectContext;
             [moc performBlockAndWait:^{
                 for (NSDictionary *d in a) {
                     NSString *detectedtitle = d[@"detectedtitle"];
                     NSString *group = d[@"group"];
                     NSString *correcttitle = d[@"correcttitle"];
-                    bool iszeroepisode = [(NSNumber *)d[@"iszeroepisode"] boolValue];
-                    int offset = [(NSNumber *)d[@"offset"] intValue];
+                    bool iszeroepisode = ((NSNumber *)d[@"iszeroepisode"]).boolValue;
+                    int offset = ((NSNumber *)d[@"offset"]).intValue;
                     NSError *error = nil;
                     NSManagedObject *obj = [self checkAutoExceptionsEntry:detectedtitle group:group correcttitle:correcttitle zeroepisode:iszeroepisode offset:offset];
                     if (obj) {
@@ -108,7 +108,7 @@
                         [obj setValue:d[@"offset"] forKey:@"episodeOffset"];
                         [obj setValue:d[@"threshold"] forKey:@"episodethreshold"];
                         [obj setValue:group forKey:@"group"];
-                        [obj setValue:[NSNumber numberWithBool:iszeroepisode] forKey:@"iszeroepisode"];
+                        [obj setValue:@(iszeroepisode) forKey:@"iszeroepisode"];
                         [obj setValue:d[@"mappedepisode"] forKey:@"mappedepisode"];
                     }
                     //Save
@@ -126,10 +126,10 @@
 }
 + (void)clearAutoExceptions{
     // Remove All cache data from Auto Exceptions
-    MAL_Updater_OS_XAppDelegate *delegate = (MAL_Updater_OS_XAppDelegate *)[[NSApplication sharedApplication] delegate];
-    NSManagedObjectContext *moc = [delegate getObjectContext];
+    MAL_Updater_OS_XAppDelegate *delegate = (MAL_Updater_OS_XAppDelegate *)[NSApplication sharedApplication].delegate;
+    NSManagedObjectContext *moc = delegate.managedObjectContext;
     NSFetchRequest *allExceptions = [[NSFetchRequest alloc] init];
-    [allExceptions setEntity:[NSEntityDescription entityForName:@"AutoExceptions" inManagedObjectContext:moc]];
+    allExceptions.entity = [NSEntityDescription entityForName:@"AutoExceptions" inManagedObjectContext:moc];
     
     NSError *error = nil;
     NSArray *exceptions = [moc executeFetchRequest:allExceptions error:&error];
@@ -148,11 +148,11 @@
     // Return existing offline queue item
     NSError *error;
     MAL_Updater_OS_XAppDelegate *delegate = (MAL_Updater_OS_XAppDelegate *)[NSApplication sharedApplication].delegate;
-    NSManagedObjectContext *moc = [delegate getObjectContext];
+    NSManagedObjectContext *moc = delegate.managedObjectContext;
     NSPredicate *predicate = [NSPredicate predicateWithFormat: @"(detectedTitle ==[c] %@) AND (correctTitle == %@) AND (group ==[c] %@) AND (iszeroepisode == %i) AND (episodeOffset == %i)", ctitle,correcttitle, group, zeroepisode, offset] ;
     NSFetchRequest *exfetch = [[NSFetchRequest alloc] init];
     exfetch.entity = [NSEntityDescription entityForName:@"AutoExceptions" inManagedObjectContext:moc];
-    [exfetch setPredicate: predicate];
+    exfetch.predicate = predicate;
     NSArray *exceptions = [moc executeFetchRequest:exfetch error:&error];
     if (exceptions.count > 0) {
         return (NSManagedObject *)exceptions[0];

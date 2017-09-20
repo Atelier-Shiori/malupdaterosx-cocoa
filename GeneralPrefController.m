@@ -67,10 +67,10 @@
 #pragma mark General Preferences Functions
 - (IBAction)clearSearchCache:(id)sender{
     // Remove All cache data from Core Data Entity
-    MAL_Updater_OS_XAppDelegate *delegate = (MAL_Updater_OS_XAppDelegate *)[[NSApplication sharedApplication] delegate];
-    NSManagedObjectContext *moc = [delegate getObjectContext];
+    MAL_Updater_OS_XAppDelegate *delegate = (MAL_Updater_OS_XAppDelegate *)[NSApplication sharedApplication].delegate;
+    NSManagedObjectContext *moc = delegate.managedObjectContext;
     NSFetchRequest *allCaches = [[NSFetchRequest alloc] init];
-    [allCaches setEntity:[NSEntityDescription entityForName:@"Cache" inManagedObjectContext:moc]];
+    allCaches.entity = [NSEntityDescription entityForName:@"Cache" inManagedObjectContext:moc];
     
     NSError *error = nil;
     NSArray *caches = [moc executeFetchRequest:allCaches error:&error];
@@ -102,7 +102,7 @@
     
 }
 - (IBAction)disableAutoExceptions:(id)sender{
-    if ([updateexceptionschk state]) {
+    if (updateexceptionschk.state) {
         [self updateAutoExceptions:sender];
     }
     else {
@@ -111,11 +111,11 @@
         NSAlert *alert = [[NSAlert alloc] init] ;
         [alert addButtonWithTitle:@"Yes"];
         [alert addButtonWithTitle:@"No"];
-        [alert setMessageText:@"Do you want to remove all Auto Exceptions Data?"];
-        [alert setInformativeText:@"Since you are disabling Auto Exceptions, you can delete the Auto Exceptions Data. You will be able to download it again."];
+        alert.messageText = @"Do you want to remove all Auto Exceptions Data?";
+        alert.informativeText = @"Since you are disabling Auto Exceptions, you can delete the Auto Exceptions Data. You will be able to download it again.";
         // Set Message type to Warning
-        [alert setAlertStyle:NSWarningAlertStyle];
-        [alert beginSheetModalForWindow:[[self view] window] completionHandler:^(NSModalResponse returnCode) {
+        alert.alertStyle = NSWarningAlertStyle;
+        [alert beginSheetModalForWindow:self.view.window completionHandler:^(NSModalResponse returnCode) {
                 if (returnCode== NSAlertFirstButtonReturn) {
                     [AutoExceptions clearAutoExceptions];
                 }
@@ -125,7 +125,7 @@
 - (IBAction)changetimerinterval:(id)sender {
     // Sets new time for the timer, if running
     MAL_Updater_OS_XAppDelegate *delegate = (MAL_Updater_OS_XAppDelegate *)[NSApplication sharedApplication].delegate;
-    if ([delegate getisScrobbling]) {
+    if (delegate.scrobbling) {
         [delegate stoptimer];
         [delegate starttimer];
     }

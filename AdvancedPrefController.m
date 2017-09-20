@@ -76,10 +76,10 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             switch (statusCode) {
                 case 200:
-                    [Utility showsheetmessage:@"API Test Successful" explaination:[NSString stringWithFormat:@"HTTP Code: %li", statusCode] window: [[self view] window]];
+                    [Utility showsheetmessage:@"API Test Successful" explaination:[NSString stringWithFormat:@"HTTP Code: %li", statusCode] window: self.view.window];
                     break;
                 default:
-                    [Utility showsheetmessage:@"API Test Unsuccessful" explaination:[NSString stringWithFormat:@"HTTP Code: %li", statusCode] window:[[self view] window]];
+                    [Utility showsheetmessage:@"API Test Unsuccessful" explaination:[NSString stringWithFormat:@"HTTP Code: %li", statusCode] window:self.view.window];
                     break;
             }
             [testprogressindicator setHidden:YES];
@@ -91,20 +91,20 @@
 - (IBAction)resetapiurl:(id)sender
 {
     //Reset Unofficial MAL API URL
-    [APIUrl setStringValue:@"https://malapi.ateliershiori.moe"];
+    APIUrl.stringValue = @"https://malapi.ateliershiori.moe";
     // Generate API Key
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults] ;
-    [defaults setObject:[APIUrl stringValue] forKey:@"MALAPIURL"];
+    [defaults setObject:APIUrl.stringValue forKey:@"MALAPIURL"];
     
 }
 - (void)controlTextDidChange:(NSNotification *)notification {
-    NSTextField *textfield = [notification object];
-    MyAnimeList *malengine = [appdelegate getMALEngineInstance];
-    [malengine.detection setKodiReachAddress:[textfield stringValue]];
+    NSTextField *textfield = notification.object;
+    MyAnimeList *malengine = appdelegate.MALEngine;
+    [malengine.detection setKodiReachAddress:textfield.stringValue];
 }
 - (IBAction)setKodiReach:(id)sender{
-    MyAnimeList *malengine = [appdelegate getMALEngineInstance];
-    if ([kodicheck state] == 0) {
+    MyAnimeList *malengine = appdelegate.MALEngine;
+    if (kodicheck.state == 0) {
         // Turn off reachability notification for Kodi
         [malengine.detection setKodiReach:false];
     }

@@ -41,9 +41,9 @@
 - (void)loadView{
     [super loadView];
     // Retrieve MyAnimeList Engine instance from app delegate
-    MALEngine = [appdelegate getMALEngineInstance];
+    MALEngine = appdelegate.MALEngine;
     // Set Logo
-    [logo setImage:[NSApp applicationIconImage]];
+    logo.image = NSApp.applicationIconImage;
     // Load Login State
 	[self loadlogin];
 }
@@ -75,7 +75,7 @@
 		[savebut setEnabled: NO];
         [loggedinview setHidden:NO];
         [loginview setHidden:YES];
-        [loggedinuser setStringValue:[MALEngine getusername]];
+        loggedinuser.stringValue = [MALEngine getusername];
 	}
 	else {
 		//Disable Clearbut
@@ -91,15 +91,15 @@
 		//Disable Login Button
 		[savebut setEnabled: NO];
 		[savebut displayIfNeeded];
-		if ( [[fieldusername stringValue] length] == 0) {
+		if ( fieldusername.stringValue.length == 0) {
 			//No Username Entered! Show error message
-			[Utility showsheetmessage:@"MAL Updater OS X was unable to log you in since you didn't enter a username" explaination:@"Enter a valid username and try logging in again" window:[[self view] window]];
+			[Utility showsheetmessage:@"MAL Updater OS X was unable to log you in since you didn't enter a username" explaination:@"Enter a valid username and try logging in again" window:self.view.window];
 			[savebut setEnabled: YES];
 		}
 		else {
-			if ( [[fieldpassword stringValue] length] == 0 ) {
+			if ( fieldpassword.stringValue.length == 0 ) {
 				//No Password Entered! Show error message.
-				[Utility showsheetmessage:@"MAL Updater OS X was unable to log you in since you didn't enter a password" explaination:@"Enter a valid password and try logging in again." window:[[self view] window]];
+				[Utility showsheetmessage:@"MAL Updater OS X was unable to log you in since you didn't enter a password" explaination:@"Enter a valid password and try logging in again." window:self.view.window];
 				[savebut setEnabled: YES];
 			}
 			else {
@@ -108,7 +108,7 @@
                                                                    DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
                 
                 dispatch_async(queue, ^{
-                    [self login:[fieldusername stringValue] password:[fieldpassword stringValue]];
+                    [self login:fieldusername.stringValue password:fieldpassword.stringValue];
                 });
                 }
 		}
@@ -130,11 +130,11 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         if ([request getStatusCode] == 200 && !error) {
                 //Login successful
-                [Utility showsheetmessage:@"Login Successful" explaination: @"Login is successful." window:[[self view] window]];
+                [Utility showsheetmessage:@"Login Successful" explaination: @"Login is successful." window:self.view.window];
                 // Store account in login keychain
-                [MALEngine storeaccount:[fieldusername stringValue] password:[fieldpassword stringValue]];
+                [MALEngine storeaccount:fieldusername.stringValue password:fieldpassword.stringValue];
                 [clearbut setEnabled: YES];
-                [loggedinuser setStringValue:username];
+                loggedinuser.stringValue = username;
                 [loggedinview setHidden:NO];
                 [loginview setHidden:YES];
                 [[NSUserDefaults standardUserDefaults] setObject:[NSDate dateWithTimeIntervalSinceNow:60*60*24] forKey:@"credentialscheckdate"];
@@ -142,15 +142,15 @@
         }
         else {
             if (error.code == NSURLErrorNotConnectedToInternet) {
-                [Utility showsheetmessage:@"MAL Updater OS X was unable to log you in since you are not connected to the internet" explaination:@"Check your internet connection and try again." window:[[self view] window]];
+                [Utility showsheetmessage:@"MAL Updater OS X was unable to log you in since you are not connected to the internet" explaination:@"Check your internet connection and try again." window:self.view.window];
                 [savebut setEnabled: YES];
-                [savebut setKeyEquivalent:@"\r"];
+                savebut.keyEquivalent = @"\r";
             }
             else {
                 //Login Failed, show error message
-                [Utility showsheetmessage:@"MAL Updater OS X was unable to log you in since you don't have the correct username and/or password." explaination:@"Check your username and password and try logging in again. If you recently changed your password, enter your new password and try again." window:[[self view] window]];
+                [Utility showsheetmessage:@"MAL Updater OS X was unable to log you in since you don't have the correct username and/or password." explaination:@"Check your username and password and try logging in again. If you recently changed your password, enter your new password and try again." window:self.view.window];
                 [savebut setEnabled: YES];
-                [savebut setKeyEquivalent:@"\r"];
+                savebut.keyEquivalent = @"\r";
             }
         }
         [savebut setEnabled:YES];
@@ -171,33 +171,33 @@
 
 - (IBAction)clearlogin:(id)sender
 {
-    if (![appdelegate getisScrobbling] && ![appdelegate getisScrobblingActive]) {
+    if (!appdelegate.scrobbling && !appdelegate.scrobbleractive) {
         // Set Up Prompt Message Window
         NSAlert *alert = [[NSAlert alloc] init] ;
         [alert addButtonWithTitle:@"Yes"];
         [alert addButtonWithTitle:@"No"];
-        [alert setMessageText:@"Do you want to log out?"];
-        [alert setInformativeText:@"Once you logged out, you need to log back in before you can use this application."];
+        alert.messageText = @"Do you want to log out?";
+        alert.informativeText = @"Once you logged out, you need to log back in before you can use this application.";
         // Set Message type to Warning
-        [alert setAlertStyle:NSWarningAlertStyle];
-        [alert beginSheetModalForWindow:[[self view] window] completionHandler:^(NSModalResponse returnCode) {
+        alert.alertStyle = NSWarningAlertStyle;
+        [alert beginSheetModalForWindow:self.view.window completionHandler:^(NSModalResponse returnCode) {
             if (returnCode== NSAlertFirstButtonReturn) {
                 //Remove account from keychain
                 [MALEngine removeaccount];
                 //Disable Clearbut
                 [clearbut setEnabled: NO];
                 [savebut setEnabled: YES];
-                [loggedinuser setStringValue:@""];
+                loggedinuser.stringValue = @"";
                 [loggedinview setHidden:YES];
                 [loginview setHidden:NO];
-                [fieldusername setStringValue:@""];
-                [fieldpassword setStringValue:@""];
+                fieldusername.stringValue = @"";
+                fieldpassword.stringValue = @"";
                 [appdelegate resetUI];
             }
         }];
     }
     else {
-        [Utility showsheetmessage:@"Cannot Logout" explaination:@"Please turn off automatic scrobbling before logging out." window:[[self view] window]];
+        [Utility showsheetmessage:@"Cannot Logout" explaination:@"Please turn off automatic scrobbling before logging out." window:self.view.window];
     }
 }
 
@@ -205,14 +205,14 @@
  Reauthorization Panel
  */
 - (IBAction)reauthorize:(id)sender{
-    if (![appdelegate getisScrobbling] && ![appdelegate getisScrobblingActive]) {
+    if (!appdelegate.scrobbling && !appdelegate.scrobbleractive) {
         [NSApp beginSheet:self.loginpanel
-           modalForWindow:[[self view] window] modalDelegate:self
+           modalForWindow:self.view.window modalDelegate:self
            didEndSelector:@selector(reAuthPanelDidEnd:returnCode:contextInfo:)
               contextInfo:(void *)nil];
     }
     else {
-        [Utility showsheetmessage:@"Cannot Logout" explaination:@"Please turn off automatic scrobbling before reauthorizing." window:[[self view] window]];
+        [Utility showsheetmessage:@"Cannot Logout" explaination:@"Please turn off automatic scrobbling before reauthorizing." window:self.view.window];
     }
 }
 
@@ -223,11 +223,11 @@
         
         dispatch_async(queue, ^{
             
-        [self login: [MALEngine getusername] password:[passwordinput stringValue]];
+        [self login: [MALEngine getusername] password:passwordinput.stringValue];
         });
     }
     //Reset and Close
-    [passwordinput setStringValue:@""];
+    passwordinput.stringValue = @"";
     [invalidinput setHidden:YES];
     [self.loginpanel close];
 }
@@ -238,7 +238,7 @@
 }
 
 - (IBAction)performreauthorization:(id)sender{
-    if ([[passwordinput stringValue] length] == 0) {
+    if (passwordinput.stringValue.length == 0) {
         // No password, indicate it
         NSBeep();
         [invalidinput setHidden:NO];

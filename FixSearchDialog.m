@@ -41,16 +41,16 @@
     if (correction) {
         if (allowdelete) {
             [deleteoncorrection setHidden:NO];
-            [deleteoncorrection setState:NSOnState];
+            deleteoncorrection.state = NSOnState;
         }
         [onetimecorrection setHidden:NO];
     }
     else {
-        [deleteoncorrection setState:0];
+        deleteoncorrection.state = 0;
     }
     [super windowDidLoad];
-    if ([searchquery length]>0) {
-        [search setStringValue:searchquery];
+    if (searchquery.length>0) {
+        search.stringValue = searchquery;
         [self search:nil];
     }
 }
@@ -61,16 +61,16 @@
 }
 
 - (IBAction)updatesearch:(id)sender {
-    NSDictionary *d = [arraycontroller selectedObjects][0];
+    NSDictionary *d = arraycontroller.selectedObjects[0];
     if (correction) {
         // Set Up Prompt Message Window
         NSAlert *alert = [[NSAlert alloc] init] ;
         [alert addButtonWithTitle:@"Yes"];
         [alert addButtonWithTitle:@"No"];
-        [alert setMessageText:[NSString stringWithFormat:@"Do you want to correct this title as %@?",d[@"title"]]];
-        [alert setInformativeText:@"Once done, you cannot undo this action."];
+        alert.messageText = [NSString stringWithFormat:@"Do you want to correct this title as %@?",d[@"title"]];
+        alert.informativeText = @"Once done, you cannot undo this action.";
         // Set Message type to Warning
-        [alert setAlertStyle:NSWarningAlertStyle];
+        alert.alertStyle = NSWarningAlertStyle;
         if ([alert runModal]== NSAlertFirstButtonReturn) {
             [self finish:d];
         }
@@ -87,7 +87,7 @@
     selectedtitle = d[@"title"];
     selectedaniid = [d[@"id"] stringValue];
 	if (d[@"episodes"]) {
-    	selectedtotalepisodes = [(NSNumber *)d[@"episodes"] intValue];
+    	selectedtotalepisodes = ((NSNumber *)d[@"episodes"]).intValue;
 	}
 	else {
 		// No episode total yet, set to set
@@ -98,11 +98,11 @@
 }
 
 - (IBAction)search:(id)sender{
-    if ([[search stringValue] length]> 0) {
+    if (search.stringValue.length> 0) {
         dispatch_queue_t queue = dispatch_get_global_queue(
                                                            DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
         dispatch_async(queue, ^{
-        NSString *searchterm = [Utility urlEncodeString:[search stringValue]];
+        NSString *searchterm = [Utility urlEncodeString:search.stringValue];
         //Set Search API
         NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/1/anime/search?q=%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"MALAPIURL"], searchterm]];
         EasyNSURLConnection *request = [[EasyNSURLConnection alloc] initWithURL:url];
@@ -154,23 +154,23 @@
 }
 
 - (void)tableViewSelectionDidChange:(NSNotification *)notification{
-    if ([[notification object] selectedRow] != -1) {
+    if ([notification.object selectedRow] != -1) {
         // Show synopsis
-        NSDictionary *d = [arraycontroller selectedObjects][0];
-        [selectedsynopsis setString:[[NSString stringWithFormat:@"%@", d[@"synopsis"]] stripHtml]];
+        NSDictionary *d = arraycontroller.selectedObjects[0];
+        selectedsynopsis.string = [[NSString stringWithFormat:@"%@", d[@"synopsis"]] stripHtml];
     }
     else {
-        [selectedsynopsis setString:@""];
+        selectedsynopsis.string = @"";
     }
 
 }
 
 - (bool)getdeleteTitleonCorrection{
-    return (bool) [deleteoncorrection state];
+    return (bool) deleteoncorrection.state;
 }
 
 - (bool)getcorrectonce{
-    return (bool) [onetimecorrection state];
+    return (bool) onetimecorrection.state;
 }
 
 @end

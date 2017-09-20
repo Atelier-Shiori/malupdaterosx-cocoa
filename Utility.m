@@ -18,7 +18,7 @@
             regex:(OnigRegexp *)regex
            option:(int)i{
     //Checks for matches
-    if ([regex search:title] || ([regex search:atitle] && [atitle length] >0 && i==0)) {
+    if ([regex search:title] || ([regex search:atitle] && atitle.length >0 && i==0)) {
         return true;
     }
     return false;
@@ -68,10 +68,10 @@
     // Set Up Prompt Message Window
     NSAlert *alert = [[NSAlert alloc] init];
     [alert addButtonWithTitle:@"OK"];
-    [alert setMessageText:message];
-    [alert setInformativeText:explaination];
+    alert.messageText = message;
+    alert.informativeText = explaination;
     // Set Message type to Warning
-    [alert setAlertStyle:NSInformationalAlertStyle];
+    alert.alertStyle = NSInformationalAlertStyle;
     // Show as Sheet on Preference Window
     [alert beginSheetModalForWindow:w
                       modalDelegate:self
@@ -85,20 +85,20 @@
     if (![[NSUserDefaults standardUserDefaults] objectForKey:@"donatereminderdate"]) {
         [Utility setReminderDate];
     }
-    if ([(NSNumber *)[[NSUserDefaults standardUserDefaults] objectForKey:@"MacAppStoreMigrated"] boolValue] && [(NSNumber *)[[NSUserDefaults standardUserDefaults] objectForKey:@"donated"] boolValue]) {
+    if (((NSNumber *)[[NSUserDefaults standardUserDefaults] objectForKey:@"MacAppStoreMigrated"]).boolValue && ((NSNumber *)[[NSUserDefaults standardUserDefaults] objectForKey:@"donated"]).boolValue) {
         NSString *MALLibraryPath = [[NSUserDefaults standardUserDefaults] valueForKey:@"MALLibraryPath"];
         bool valid = [MALLibraryAppStoreMigrate validateReciept:MALLibraryPath];
         if (!valid) {
             //Invalid Key
             [Utility showsheetmessage:@"Donation Key Error" explaination:@"The registration has been revoked. Make sure your copy of MAL Library is valid." window:nil];
-            [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:NO] forKey:@"donated"];
-            [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:NO] forKey:@"MacAppStoreMigrated"];
+            [[NSUserDefaults standardUserDefaults] setObject:@NO forKey:@"donated"];
+            [[NSUserDefaults standardUserDefaults] setObject:@NO forKey:@"MacAppStoreMigrated"];
             [Utility showDonateReminder:delegate];
         }
         return;
     }
     if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"donatereminderdate"] timeIntervalSinceNow] < 0) {
-        if ([(NSNumber *)[[NSUserDefaults standardUserDefaults] objectForKey:@"donated"] boolValue]) {
+        if (((NSNumber *)[[NSUserDefaults standardUserDefaults] objectForKey:@"donated"]).boolValue) {
             int validkey = [Utility checkDonationKey:[[NSUserDefaults standardUserDefaults] objectForKey:@"donatekey"] name:[[NSUserDefaults standardUserDefaults] objectForKey:@"donor"]];
             if (validkey == 1) {
                 //Reset check
@@ -111,7 +111,7 @@
                 //Invalid Key
                 [Utility showsheetmessage:@"Donation Key Error" explaination:@"This key has been revoked. Please contact the author of this program or enter a valid key." window:nil];
                 [Utility showDonateReminder:delegate];
-                [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:NO] forKey:@"donated"];
+                [[NSUserDefaults standardUserDefaults] setObject:@NO forKey:@"donated"];
             }
         }
         else {
@@ -125,11 +125,11 @@
     [alert addButtonWithTitle:@"Donate"];
     [alert addButtonWithTitle:@"Enter Key"];
     [alert addButtonWithTitle:@"Remind Me Later"];
-    [alert setMessageText:@"Please Support MAL Updater OS X"];
-    [alert setInformativeText:@"We noticed that you have been using MAL Updater OS X for a while. Although MAL Updater OS X is free and open source software, it cost us money and time to develop this program. \r\rIf you find this program helpful, please consider making a donation. You will recieve a key to remove this message and enable weekly builds update channel."];
+    alert.messageText = @"Please Support MAL Updater OS X";
+    alert.informativeText = @"We noticed that you have been using MAL Updater OS X for a while. Although MAL Updater OS X is free and open source software, it cost us money and time to develop this program. \r\rIf you find this program helpful, please consider making a donation. You will recieve a key to remove this message and enable weekly builds update channel.";
     [alert setShowsSuppressionButton:NO];
     // Set Message type to Warning
-    [alert setAlertStyle:NSInformationalAlertStyle];
+    alert.alertStyle = NSInformationalAlertStyle;
     long choice = [alert runModal];
     if (choice == NSAlertFirstButtonReturn) {
         // Open Donation Page
@@ -168,7 +168,7 @@
     if (statusCode == 200) {
         NSError* jerror;
         NSDictionary *d = [NSJSONSerialization JSONObjectWithData:[request getResponseData] options:nil error:&jerror];
-        int valid = [(NSNumber *)d[@"valid"] intValue];
+        int valid = ((NSNumber *)d[@"valid"]).intValue;
         if (valid == 1) {
             // Valid Key
             return 1;

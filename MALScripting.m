@@ -12,12 +12,12 @@
 @implementation ScriptingGetStatus
 // AppleScript command for GetStatus
 - (id)performDefaultImplementation {
-    MAL_Updater_OS_XAppDelegate *delegate = (MAL_Updater_OS_XAppDelegate *)[[NSApplication sharedApplication] delegate];
+    MAL_Updater_OS_XAppDelegate *delegate = (MAL_Updater_OS_XAppDelegate *)[NSApplication sharedApplication].delegate;
     NSError *error;
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:[delegate getNowPlaying] options:0 error:&error];
     if (!jsonData) {}
     else {
-        NSString *JSONString = [[NSString alloc] initWithBytes:[jsonData bytes] length:[jsonData length] encoding:NSUTF8StringEncoding];
+        NSString *JSONString = [[NSString alloc] initWithBytes:jsonData.bytes length:jsonData.length encoding:NSUTF8StringEncoding];
         // Output JSON
         return JSONString;
     }
@@ -28,7 +28,7 @@
 @implementation ScriptingScrobbleNow
 // AppleScript command for ScrobbleNow
 - (id)performDefaultImplementation {
-    MAL_Updater_OS_XAppDelegate *delegate = (MAL_Updater_OS_XAppDelegate *)[[NSApplication sharedApplication] delegate];
+    MAL_Updater_OS_XAppDelegate *delegate = (MAL_Updater_OS_XAppDelegate *)[NSApplication sharedApplication].delegate;
     [delegate updatenow:nil];
     return nil;
 }
@@ -37,7 +37,7 @@
 @implementation ScriptingToggleAutoScrobble
 // AppleScript command for ToggleAutoScrobble
 - (id)performDefaultImplementation{
-     MAL_Updater_OS_XAppDelegate *delegate = (MAL_Updater_OS_XAppDelegate *)[[NSApplication sharedApplication] delegate];
+     MAL_Updater_OS_XAppDelegate *delegate = (MAL_Updater_OS_XAppDelegate *)[NSApplication sharedApplication].delegate;
     [delegate toggletimer:nil];
     return nil;
 }
