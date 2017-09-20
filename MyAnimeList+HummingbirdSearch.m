@@ -147,15 +147,8 @@
                     }
                 }
                 //Return titleid if episode is valid
-                int episodecount;
-                if (!searchentry[@"episodeCount"]) {
-                    // No episode Count, set episode count to zero
-                    episodecount = 0;
-                }
-                else {
-                    //Set Episode Count
-                    episodecount = [NSString stringWithFormat:@"%@", searchentry[@"episode_count"]].intValue;
-                }
+                // If episode total is null, set to 0, otherwise to actual value.
+                int episodecount = !searchentry[@"episodeCount"] ? 0 : [NSString stringWithFormat:@"%@", searchentry[@"episode_count"]].intValue;
                 if (episodecount == 0 || (episodecount >= self.DetectedEpisode.intValue)) {
                     NSLog(@"Valid Episode Count");
                     if (sortedArray.count == 1 || self.DetectedSeason >= 2) {
@@ -185,12 +178,7 @@
         }
     }
     // If one match is found and not null, then return the id.
-    if (titlematch1) {
-        // Only Result, return
-        return [self hfoundtitle:[NSString stringWithFormat:@"%@",titlematch1[@"id"]] info:titlematch1];
-    }
-    // Nothing found, return empty string
-    return @"";
+    return titlematch1 ? [self hfoundtitle:[NSString stringWithFormat:@"%@",titlematch1[@"id"]] info:titlematch1] : @"";
 }
 - (NSArray *)hfilterArray:(NSArray *)searchdata{
     NSMutableArray *sortedArray;
@@ -296,13 +284,7 @@
             if ([[NSString stringWithFormat:@"%@",[m[@"attributes"] valueForKey:@"externalSite"]] isEqualToString:@"myanimelist/anime"]) {
                 NSString *MALID = [NSString stringWithFormat:@"%@",[m[@"attributes"] valueForKey:@"externalId"]];
                 if ([[NSUserDefaults standardUserDefaults] boolForKey:@"useSearchCache"] && titleid.length > 0) {
-                    NSNumber *totalepisodes;
-                    if (found[@"episode_count"]) {
-                        totalepisodes = (NSNumber *)found[@"episodeCount"];
-                    }
-                    else {
-                        totalepisodes = @(0);
-                    }
+                    NSNumber *totalepisodes = found[@"episode_count"] ? (NSNumber *)found[@"episodeCount"] : @(0);
                     //Save AniID
                     NSDictionary *title = found[@"titles"];
                     [ExceptionsCache addtoCache:self.DetectedTitle showid:MALID actualtitle:(NSString *)title[@"en_jp"] totalepisodes: totalepisodes.intValue];

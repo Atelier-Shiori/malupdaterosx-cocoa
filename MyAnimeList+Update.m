@@ -32,12 +32,7 @@
         }
         NSError* jerror;
         NSDictionary *animeinfo = [NSJSONSerialization JSONObjectWithData:[request getResponseData] options:nil error:&jerror];
-        if (animeinfo[@"episodes"] == [NSNull null]) { // To prevent the scrobbler from failing because there is no episode total.
-            self.TotalEpisodes = 0; // No Episode Total, Set to 0.
-        }
-        else { // Episode Total Exists
-            self.TotalEpisodes = [(NSNumber *)animeinfo[@"episodes"] intValue];
-        }
+        self.TotalEpisodes = animeinfo[@"episodes"] == [NSNull null] ? 0 : ((NSNumber *)animeinfo[@"episodes"]).intValue;
         // Watch Status
         if (animeinfo[@"watched_status"] == [NSNull null]) {
             NSLog(@"Not on List");
@@ -50,13 +45,7 @@
             self.LastScrobbledTitleNew = false;
             self.WatchStatus = animeinfo[@"watched_status"];
             self.DetectedCurrentEpisode = [(NSNumber *)animeinfo[@"watched_episodes"] intValue];
-            if (animeinfo[@"score"] == [NSNull null]) {
-                // Score is null, set to 0
-                self.TitleScore = 0;
-            }
-            else {
-                self.TitleScore = [(NSNumber *)animeinfo[@"score"] intValue];
-            }
+            self.TitleScore = animeinfo[@"score"] == [NSNull null] ? 0 : ((NSNumber *)animeinfo[@"score"]).intValue;
         }
         // New Update Confirmation
         if (([[NSUserDefaults standardUserDefaults] boolForKey:@"ConfirmNewTitle"] && self.LastScrobbledTitleNew && !self.correcting)|| ([[NSUserDefaults standardUserDefaults] boolForKey:@"ConfirmUpdates"] && !self.LastScrobbledTitleNew && !self.correcting)) {
@@ -109,20 +98,10 @@
         [request setPostMethod:@"PUT"];
         [request addFormData:self.DetectedEpisode forKey:@"episodes"];
         //Set Status
-        if ([self.DetectedEpisode intValue] == self.TotalEpisodes) {
-            //Set Title State for Title (use for Twitter feature)
-            self.WatchStatus = @"completed";
-            // Since Detected Episode = Total Episode, set the status as "Complete"
-            [request addFormData:self.WatchStatus forKey:@"status"];
-        }
-        else {
-            //Set Title State for Title (use for Twitter feature)
-            self.WatchStatus = @"watching";
-            // Still Watching
-            [request addFormData:self.WatchStatus forKey:@"status"];
-        }
+        self.WatchStatus = [self.DetectedEpisode intValue] == self.TotalEpisodes ? @"completed" : @"watching";
+        [request addFormData:self.WatchStatus forKey:@"status"];
         // Set existing score to prevent the score from being erased.
-        [request addFormData:[[NSNumber numberWithInt:self.TitleScore] stringValue] forKey:@"score"];
+        [request addFormData:@(self.TitleScore).stringValue forKey:@"score"];
         // Do Update
         [request startFormRequest];
         
@@ -165,18 +144,9 @@
     [request addFormData:titleid forKey:@"anime_id"];
     [request addFormData:self.DetectedEpisode forKey:@"episodes"];
     // Check if the detected episode is equal to total episodes. If so, set it as complete (mostly for specials and movies)
-    if([self.DetectedEpisode intValue] == self.TotalEpisodes) {
-        //Set Title State for Title (use for Twitter feature)
-        self.WatchStatus = @"completed";
-        // Since Detected Episode = Total Episode, set the status as "Complete"
-        [request addFormData:self.WatchStatus forKey:@"status"];
-    }
-    else {
-        //Set Title State for Title (use for Twitter feature)
-        self.WatchStatus = @"watching";
-        // Still Watching
-        [request addFormData:self.WatchStatus forKey:@"status"];
-    }
+    //Set Status
+    self.WatchStatus = [self.DetectedEpisode intValue] == self.TotalEpisodes ? @"completed" : @"watching";
+    [request addFormData:self.WatchStatus forKey:@"status"];
     // Do Update
     [request startFormRequest];
     

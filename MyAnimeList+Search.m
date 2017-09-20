@@ -135,13 +135,7 @@
                     OnigRegexp    *regex2 = [OnigRegexp compile:[NSString stringWithFormat:@"((%i(st|nd|rd|th)|%@) season|\\W%i)", self.DetectedSeason, [Utility seasonInWords:self.DetectedSeason],self.DetectedSeason] options:OnigOptionIgnorecase];
                     OnigResult *smatch = [regex2 match:[NSString stringWithFormat:@"%@ - %@",theshowtitle, alttitle]];
                     // Description checking
-					NSString *description;
-					if (searchentry[@"synopsis"]) {
-						description = (NSString *)searchentry[@"synopsis"];
-					}
-					else {
-						description = @"";
-					}
+                    NSString *description = searchentry[@"synopsis"] ? (NSString *)searchentry[@"synopsis"] : @"";
                     OnigResult *smatch2 = [regex2 match:description];
                     if (self.DetectedSeason >= 2) { // Season detected, check to see if there is a match. If not, continue.
                         if (!smatch && !smatch2 && [[sortedArray filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"(type == %@)", @"TV"]] count] > 1) { // If there is a second season match, in most cases, it would be the only entry
@@ -224,14 +218,7 @@
 - (NSString *)foundtitle:(NSString *)titleid info:(NSDictionary *)found{
     //Check to see if Seach Cache is enabled. If so, add it to the cache.
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"useSearchCache"] && titleid.length > 0) {
-        NSNumber *episodes;
-        if (found[@"episodes"] == [NSNull null]) {
-            // Set no total episodes
-            episodes = [NSNumber numberWithInt:0];
-        }
-        else {
-            episodes = (NSNumber *)found[@"episodes"];
-        }
+        NSNumber *episodes = found[@"episodes"] == [NSNull null] ? @(0) : (NSNumber *)found[@"episodes"];
         //Save AniID
         [ExceptionsCache addtoCache:self.DetectedTitle showid:titleid actualtitle:(NSString *)found[@"title"] totalepisodes:[episodes intValue]];
     }
