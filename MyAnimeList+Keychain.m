@@ -8,6 +8,7 @@
 
 #import "MyAnimeList+Keychain.h"
 #import <EasyNSURLConnection/EasyNSURLConnectionClass.h>
+#import <SAMKeychain/SAMKeychain.h>
 #import "Base64Category.h"
 
 @implementation MyAnimeList (Keychain)

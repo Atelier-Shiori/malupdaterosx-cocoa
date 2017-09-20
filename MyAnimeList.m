@@ -268,10 +268,8 @@
                 [self checkExceptions];
                 // Start Stream
                 [_detector startStream];
-                if (result == ScrobblerDetectedMedia) {
-                    // Perform the update
-                    return [self scrobble];
-                }
+                // Perform the update
+                return result == ScrobblerDetectedMedia ? [self scrobble] : ScrobblerNothingPlaying;
             }
         }
     }
@@ -344,21 +342,13 @@
             if (_LastScrobbledTitleNew) {
                 //Title is not on list. Add Title
                 int s = [self addtitle:_AniID confirming:_confirmed];
-                if (s == ScrobblerAddTitleSuccessful || s == ScrobblerConfirmNeeded) {
-                    _Success = true;}
-                else {
-					_Success = false;}
+                _Success = s == ScrobblerAddTitleSuccessful || s == ScrobblerConfirmNeeded ? true : false;
 				status = s;
             }
             else {
                 // Update Title as Usual
                 int s = [self updatetitle:_AniID confirming:_confirmed];
-                if (s == ScrobblerUpdateNotNeeded || s == ScrobblerConfirmNeeded ||s == ScrobblerUpdateSuccessful ) {
-                    _Success = true;
-                }
-                else {
-                    _Success = false;
-                }
+                _Success = s == ScrobblerUpdateNotNeeded || s == ScrobblerConfirmNeeded ||s == ScrobblerUpdateSuccessful ? true : false;
                 status = s;
                 
             }

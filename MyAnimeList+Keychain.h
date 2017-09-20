@@ -7,7 +7,6 @@
 //
 
 #import "MyAnimeList.h"
-#import <SAMKeychain/SAMKeychain.h>
 
 @interface MyAnimeList (Keychain)
 - (BOOL)checkaccount;

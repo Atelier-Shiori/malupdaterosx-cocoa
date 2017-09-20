@@ -81,16 +81,9 @@
     NSString *alttitle = @"";
     //Create Regular Expressions
     OnigRegexp    *regex;
-    if([self.DetectedType isEqualToString:@"Movie"]|[self.DetectedType isEqualToString:@"movie"]) {
-        // Title is a movie
-        NSLog(@"Title is a movie");
-        self.DetectedTitleisMovie = true;
-    }
-    else {
-        // Is TV Show
-        NSLog(@"Title is not a movie.");
-        self.DetectedTitleisMovie = false;
-    }
+    // Check if title is a movie or not.
+    self.DetectedTitleisMovie = [self.DetectedType isEqualToString:@"Movie"] || [self.DetectedType isEqualToString:@"movie"] ? true : false;
+    NSLog(@"%@", [self.DetectedType isEqualToString:@"Movie"] || [self.DetectedType isEqualToString:@"movie"] ? @"Title is a movie" : @"Title is not a movie.");
     // Create a filtered Arrays
     NSArray *sortedArray = [self filterArray:searchdata];
     searchdata = nil;
@@ -180,13 +173,7 @@
                     }
                     else if (titlematch1) {
                         titlematch2 = searchentry;
-                        if (titlematch1 != titlematch2) {
-                            return [self comparetitle:term match1:titlematch1 match2:titlematch2 mstatus:mstatus mstatus2:matchstatus];
-                        }
-                        else {
-                            // Only Result, return
-                            return [self foundtitle:[NSString stringWithFormat:@"%@",searchentry[@"id"]] info:searchentry];
-                        }
+                        return titlematch1 != titlematch2 ? [self comparetitle:term match1:titlematch1 match2:titlematch2 mstatus:mstatus mstatus2:matchstatus] : [self foundtitle:[NSString stringWithFormat:@"%@",searchentry[@"id"]] info:searchentry];
                     }
                 }
                 else {
@@ -291,20 +278,8 @@
     }
     
     // Take the highest of both matches scores
-    float finalscore1;
-    float finalscore2;
-    if(score1 > ascore1) {
-        finalscore1 = score1;
-    }
-    else {
-        finalscore1 = ascore1;
-    }
-    if(score2 > ascore2) {
-        finalscore2 = score2;
-    }
-    else {
-        finalscore2 = ascore2;
-    }
+    float finalscore1 = score1 > ascore1 ? score1 : ascore1;
+    float finalscore2 = score2 > ascore2 ? score2 : ascore2;
     // Compare Scores
     if (finalscore1 == finalscore2 || finalscore1 == INFINITY) {
         //Scores can't be reliably compared, just return the first match
