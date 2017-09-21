@@ -520,6 +520,7 @@
 				91A9B6671EA918FB00645690 /* MAL Updater OS XTests */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
+				2DEFEBF21F7430C10032DDC0 /* Recovered References */,
 			);
 			name = "MAL Updater OS X";
 			sourceTree = "<group>";
@@ -610,6 +611,14 @@
 				2DDBB73C1E1D52100075B0D0 /* DonationWindowController.m */,
 			);
 			name = Donation;
+			sourceTree = "<group>";
+		};
+		2DEFEBF21F7430C10032DDC0 /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				91206C1A1E75F3E50050E9C5 /* MASShortcut.framework */,
+			);
+			name = "Recovered References";
 			sourceTree = "<group>";
 		};
 		5C07DA621A8156210003A827 /* Window Controllers */ = {
