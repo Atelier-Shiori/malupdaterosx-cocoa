@@ -23,7 +23,6 @@
 		2D3CBE4C1F1532A20085888D /* SAMKeychain.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2D3CBE3D1F15312E0085888D /* SAMKeychain.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2D3CBE4D1F1533660085888D /* PlexPrefs.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2D3CBE4F1F1533660085888D /* PlexPrefs.xib */; };
 		2D3CBE501F15336B0085888D /* PlexLogin.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2D3CBE521F15336B0085888D /* PlexLogin.xib */; };
-		2D417C1F1E6A378D008D225B /* MSWeakTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D417C1E1E6A378D008D225B /* MSWeakTimer.m */; };
 		2D4A4D0A1EE4B01D004D3716 /* StatusUpdateWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D4A4D081EE4B01D004D3716 /* StatusUpdateWindow.m */; };
 		2D4A4D0B1EE4B01D004D3716 /* StatusUpdateWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2D4A4D091EE4B01D004D3716 /* StatusUpdateWindow.xib */; };
 		2D5D38861EB62E8200689CC4 /* DonationKeyConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5D38851EB62E8200689CC4 /* DonationKeyConstants.m */; };
@@ -175,8 +174,6 @@
 		2D3CBE471F1531DF0085888D /* PlexLogin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlexLogin.m; sourceTree = "<group>"; };
 		2D3CBE4E1F1533660085888D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/PlexPrefs.xib; sourceTree = "<group>"; };
 		2D3CBE511F15336B0085888D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/PlexLogin.xib; sourceTree = "<group>"; };
-		2D417C1D1E6A378D008D225B /* MSWeakTimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSWeakTimer.h; sourceTree = "<group>"; };
-		2D417C1E1E6A378D008D225B /* MSWeakTimer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSWeakTimer.m; sourceTree = "<group>"; };
 		2D4A4D071EE4B01D004D3716 /* StatusUpdateWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatusUpdateWindow.h; sourceTree = "<group>"; };
 		2D4A4D081EE4B01D004D3716 /* StatusUpdateWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatusUpdateWindow.m; sourceTree = "<group>"; };
 		2D4A4D091EE4B01D004D3716 /* StatusUpdateWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = StatusUpdateWindow.xib; path = Base.lproj/StatusUpdateWindow.xib; sourceTree = "<group>"; };
@@ -717,8 +714,6 @@
 				6FAA0C1E1A7E938400416079 /* ExceptionsCache.m */,
 				6F0CF36D1A7DBADD00261A43 /* Utility.h */,
 				6F0CF36E1A7DBADD00261A43 /* Utility.m */,
-				2D417C1D1E6A378D008D225B /* MSWeakTimer.h */,
-				2D417C1E1E6A378D008D225B /* MSWeakTimer.m */,
 				91A8DD5C1E736814006E3566 /* NSNumberFormatterNumberOnly.m */,
 				91A8DD5D1E736814006E3566 /* NSNumberFormatterNumberOnly.h */,
 			);
@@ -1071,7 +1066,6 @@
 				3A6AB37F120F313E00D51D2C /* Base64Category.m in Sources */,
 				2D226B291EF30DFB0030E9C5 /* ShareMenu.m in Sources */,
 				6F12909B1A7D833100B8C3E6 /* AutoExceptions.m in Sources */,
-				2D417C1F1E6A378D008D225B /* MSWeakTimer.m in Sources */,
 				2DDBB73D1E1D52100075B0D0 /* DonationWindowController.m in Sources */,
 				2DC900361E257C3300E45570 /* InttoStatus.m in Sources */,
 				91A8DD5E1E736814006E3566 /* NSNumberFormatterNumberOnly.m in Sources */,
