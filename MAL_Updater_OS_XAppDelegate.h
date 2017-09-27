@@ -14,7 +14,6 @@
 @class DonationWindowController;
 @class OfflineViewQueue;
 @class MSWeakTimer;
-@class streamlinkopen;
 @class StatusUpdateWindow;
 @class ShareMenu;
 @class PFAboutWindowController;
@@ -67,7 +66,6 @@
 @property (strong) IBOutlet NSToolbarItem *sharetoolbaritem;
 @property (strong) IBOutlet NSToolbarItem *openAnimePage;
 @property (strong) NSWindowController *_preferencesWindowController;
-@property (strong) streamlinkopen *streamlinkopenw;
 @property (strong, nonatomic) dispatch_queue_t privateQueue;
 @property (nonatomic, readonly) NSWindowController *preferencesWindowController;
 @property (nonatomic, retain, readonly) NSPersistentStoreCoordinator *persistentStoreCoordinator;

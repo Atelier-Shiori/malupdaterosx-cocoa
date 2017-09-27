@@ -94,7 +94,7 @@
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="LbT-yv-2eV">
                         <font key="font" metaFont="smallSystem"/>
-                        <string key="title">This is usually an host name that is running Plex Media Server. If you are running Plex Media Server on the same machine, please specify localhost as the host. IP addresses are currently not supported.</string>
+                        <string key="title">This is usually an host name or IP address that is running Plex Media Server. If you are running Plex Media Server on the same machine, please specify localhost as the host.</string>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>

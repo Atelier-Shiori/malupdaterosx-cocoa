@@ -33,6 +33,12 @@
 		2D6313711EDA293100C3CB6B /* Reachability.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D6313701EDA293100C3CB6B /* Reachability.framework */; };
 		2D6313721EDA293B00C3CB6B /* Reachability.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D6313701EDA293100C3CB6B /* Reachability.framework */; };
 		2D6313731EDA293B00C3CB6B /* Reachability.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2D6313701EDA293100C3CB6B /* Reachability.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2D6522701F7B50CD00A65BF8 /* GBPing.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D65226F1F7B50C700A65BF8 /* GBPing.framework */; };
+		2D6522711F7B50CD00A65BF8 /* GBPing.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2D65226F1F7B50C700A65BF8 /* GBPing.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2D6522721F7B50CD00A65BF8 /* PingNotifier.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D65226E1F7B50C600A65BF8 /* PingNotifier.framework */; };
+		2D6522731F7B50CD00A65BF8 /* PingNotifier.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2D65226E1F7B50C600A65BF8 /* PingNotifier.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2D6522751F7B50FC00A65BF8 /* MSWeakTimer_macOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D6522741F7B50F700A65BF8 /* MSWeakTimer_macOS.framework */; };
+		2D6522761F7B50FC00A65BF8 /* MSWeakTimer_macOS.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2D6522741F7B50F700A65BF8 /* MSWeakTimer_macOS.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2D7B152D1EB54E280014D4C7 /* MALLibraryAppMigrate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D7B152C1EB54E280014D4C7 /* MALLibraryAppMigrate.framework */; };
 		2D7B152E1EB5515B0014D4C7 /* MALLibraryAppMigrate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D7B152C1EB54E280014D4C7 /* MALLibraryAppMigrate.framework */; };
 		2D7B152F1EB5515B0014D4C7 /* MALLibraryAppMigrate.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2D7B152C1EB54E280014D4C7 /* MALLibraryAppMigrate.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -90,11 +96,6 @@
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
-		910D22681E81DEC200760A08 /* streamlinkopen.m in Sources */ = {isa = PBXBuildFile; fileRef = 910D22671E81DEC200760A08 /* streamlinkopen.m */; };
-		910D226A1E81DFD100760A08 /* streamlinkdetect.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 910D22691E81DFD100760A08 /* streamlinkdetect.framework */; };
-		910D226D1E81DFEE00760A08 /* streamlinkopen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 910D226F1E81DFEE00760A08 /* streamlinkopen.xib */; };
-		910D22701E81E05300760A08 /* streamlinkdetect.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 910D22691E81DFD100760A08 /* streamlinkdetect.framework */; };
-		910D22711E81E05300760A08 /* streamlinkdetect.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 910D22691E81DFD100760A08 /* streamlinkdetect.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		91206C1B1E75F3E50050E9C5 /* MASShortcut.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91206C1A1E75F3E50050E9C5 /* MASShortcut.framework */; };
 		91206C1D1E75F3F00050E9C5 /* MASPreferences.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91206C1C1E75F3F00050E9C5 /* MASPreferences.framework */; };
 		91206C1E1E75F5AD0050E9C5 /* MASPreferences.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91206C1C1E75F3F00050E9C5 /* MASPreferences.framework */; };
@@ -131,14 +132,16 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				910D22711E81E05300760A08 /* streamlinkdetect.framework in CopyFiles */,
+				2D6522731F7B50CD00A65BF8 /* PingNotifier.framework in CopyFiles */,
 				9149EBE31E75F8A700B1AA22 /* MASShortcut.framework in CopyFiles */,
 				8227C1181A1D8D47005F3301 /* anitomy-osx.framework in CopyFiles */,
 				2D7B152F1EB5515B0014D4C7 /* MALLibraryAppMigrate.framework in CopyFiles */,
+				2D6522761F7B50FC00A65BF8 /* MSWeakTimer_macOS.framework in CopyFiles */,
 				91206C1F1E75F5AD0050E9C5 /* MASPreferences.framework in CopyFiles */,
 				2D3CBE4A1F1532950085888D /* XMLReader.framework in CopyFiles */,
 				2D63136F1EDA287200C3CB6B /* DetectionKit.framework in CopyFiles */,
 				91A609F51EA3E77C00EF40AB /* CocoaOniguruma.framework in CopyFiles */,
+				2D6522711F7B50CD00A65BF8 /* GBPing.framework in CopyFiles */,
 				2D6313731EDA293B00C3CB6B /* Reachability.framework in CopyFiles */,
 				59D503791CB004BA0002532D /* Sparkle.framework in CopyFiles */,
 				2D3CBE4C1F1532A20085888D /* SAMKeychain.framework in CopyFiles */,
@@ -183,6 +186,9 @@
 		2D60876A1E28239D00D6E583 /* MAL_Updater_OS_X_DataModel 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "MAL_Updater_OS_X_DataModel 3.xcdatamodel"; sourceTree = "<group>"; };
 		2D63136C1EDA284A00C3CB6B /* DetectionKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DetectionKit.framework; path = Frameworks/DetectionKit.framework; sourceTree = "<group>"; };
 		2D6313701EDA293100C3CB6B /* Reachability.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Reachability.framework; path = Frameworks/Reachability.framework; sourceTree = "<group>"; };
+		2D65226E1F7B50C600A65BF8 /* PingNotifier.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PingNotifier.framework; path = Frameworks/PingNotifier.framework; sourceTree = "<group>"; };
+		2D65226F1F7B50C700A65BF8 /* GBPing.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GBPing.framework; path = Frameworks/GBPing.framework; sourceTree = "<group>"; };
+		2D6522741F7B50F700A65BF8 /* MSWeakTimer_macOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MSWeakTimer_macOS.framework; path = Frameworks/MSWeakTimer_macOS.framework; sourceTree = "<group>"; };
 		2D7B152C1EB54E280014D4C7 /* MALLibraryAppMigrate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MALLibraryAppMigrate.framework; path = Frameworks/MALLibraryAppMigrate.framework; sourceTree = "<group>"; };
 		2D9C3AE01E6A0BC7007D8F68 /* EasyNSURLConnection.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EasyNSURLConnection.framework; path = Frameworks/EasyNSURLConnection.framework; sourceTree = "<group>"; };
 		2DAFC1D71E2313B100FB7A14 /* OfflineViewQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OfflineViewQueue.h; sourceTree = "<group>"; };
@@ -263,10 +269,6 @@
 		829FB42019F739700026EAC2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/SoftwareUpdateView.xib; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* MAL_Updater_OS_X-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "MAL_Updater_OS_X-Info.plist"; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* MAL Updater OS X.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MAL Updater OS X.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		910D22661E81DEC200760A08 /* streamlinkopen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = streamlinkopen.h; sourceTree = "<group>"; };
-		910D22671E81DEC200760A08 /* streamlinkopen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = streamlinkopen.m; sourceTree = "<group>"; };
-		910D22691E81DFD100760A08 /* streamlinkdetect.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = streamlinkdetect.framework; path = Frameworks/streamlinkdetect.framework; sourceTree = "<group>"; };
-		910D226E1E81DFEE00760A08 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/streamlinkopen.xib; sourceTree = "<group>"; };
 		9115DA401EA911A300CAEF4E /* testdata.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = testdata.json; sourceTree = "<group>"; };
 		91206C1A1E75F3E50050E9C5 /* MASShortcut.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MASShortcut.framework; path = "/Volumes/MacStorage/malupdaterosx-cocoa/Frameworks/MASShortcut.framework"; sourceTree = "<absolute>"; };
 		91206C1C1E75F3F00050E9C5 /* MASPreferences.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MASPreferences.framework; path = Frameworks/MASPreferences.framework; sourceTree = "<group>"; };
@@ -396,20 +398,21 @@
 				6F28DC1B1A67092F00AF063F /* Carbon.framework in Frameworks */,
 				91206C1E1E75F5AD0050E9C5 /* MASPreferences.framework in Frameworks */,
 				9149EBE21E75F8A700B1AA22 /* MASShortcut.framework in Frameworks */,
-				910D226A1E81DFD100760A08 /* streamlinkdetect.framework in Frameworks */,
 				2D6313721EDA293B00C3CB6B /* Reachability.framework in Frameworks */,
+				2D6522751F7B50FC00A65BF8 /* MSWeakTimer_macOS.framework in Frameworks */,
 				91A609F31EA3E77400EF40AB /* CocoaOniguruma.framework in Frameworks */,
 				2D9C3AE11E6A0BC7007D8F68 /* EasyNSURLConnection.framework in Frameworks */,
 				8227C1171A1D8D34005F3301 /* anitomy-osx.framework in Frameworks */,
 				59D503781CB004B10002532D /* Sparkle.framework in Frameworks */,
-				910D22701E81E05300760A08 /* streamlinkdetect.framework in Frameworks */,
 				2D7B152D1EB54E280014D4C7 /* MALLibraryAppMigrate.framework in Frameworks */,
 				9161B2021E90246200FBF52F /* Crashlytics.framework in Frameworks */,
 				91206C231E75F8920050E9C5 /* MASShortcut.framework in Frameworks */,
 				2D7B152E1EB5515B0014D4C7 /* MALLibraryAppMigrate.framework in Frameworks */,
 				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
 				2D9C3AE21E6A0C07007D8F68 /* EasyNSURLConnection.framework in Frameworks */,
+				2D6522721F7B50CD00A65BF8 /* PingNotifier.framework in Frameworks */,
 				2D3CBE4B1F1532A20085888D /* SAMKeychain.framework in Frameworks */,
+				2D6522701F7B50CD00A65BF8 /* GBPing.framework in Frameworks */,
 				91A609F41EA3E77C00EF40AB /* CocoaOniguruma.framework in Frameworks */,
 				2D6313711EDA293100C3CB6B /* Reachability.framework in Frameworks */,
 				2D3CBE3C1F1531210085888D /* XMLReader.framework in Frameworks */,
@@ -482,6 +485,9 @@
 		1058C7A2FEA54F0111CA2CBB /* Other Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2D6522741F7B50F700A65BF8 /* MSWeakTimer_macOS.framework */,
+				2D65226F1F7B50C700A65BF8 /* GBPing.framework */,
+				2D65226E1F7B50C600A65BF8 /* PingNotifier.framework */,
 				2D3CBE3D1F15312E0085888D /* SAMKeychain.framework */,
 				2D3CBE3B1F1531210085888D /* XMLReader.framework */,
 				2D6313701EDA293100C3CB6B /* Reachability.framework */,
@@ -490,7 +496,6 @@
 				91A609F21EA3E77400EF40AB /* CocoaOniguruma.framework */,
 				9161B1FF1E90246200FBF52F /* Fabric.framework */,
 				9161B2001E90246200FBF52F /* Crashlytics.framework */,
-				910D22691E81DFD100760A08 /* streamlinkdetect.framework */,
 				91206C221E75F8920050E9C5 /* MASShortcut.framework */,
 				91206C1C1E75F3F00050E9C5 /* MASPreferences.framework */,
 				2D9C3AE01E6A0BC7007D8F68 /* EasyNSURLConnection.framework */,
@@ -559,7 +564,6 @@
 				2D4A4D091EE4B01D004D3716 /* StatusUpdateWindow.xib */,
 				5CBE9FEB19F2F9CA00CA3E5D /* LoginView.xib */,
 				5C97491C19F3117D000EC02E /* SoftwareUpdateView.xib */,
-				910D226F1E81DFEE00760A08 /* streamlinkopen.xib */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -628,8 +632,6 @@
 				2D3CBE461F1531DF0085888D /* PlexLogin.h */,
 				2D3CBE471F1531DF0085888D /* PlexLogin.m */,
 				2D4A4D0C1EE4BB02004D3716 /* Status Update Window */,
-				910D22661E81DEC200760A08 /* streamlinkopen.h */,
-				910D22671E81DEC200760A08 /* streamlinkopen.m */,
 				2DAFC1D31E23135D00FB7A14 /* Offline View Queue */,
 				2DDBB73A1E1D52040075B0D0 /* Donation */,
 				5C07DA631A8156380003A827 /* History */,
@@ -987,7 +989,6 @@
 				2D3CBE501F15336B0085888D /* PlexLogin.xib in Resources */,
 				8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */,
 				6F1A2C8F1B929B9800D47FE2 /* dsa_pub.pem in Resources */,
-				910D226D1E81DFEE00760A08 /* streamlinkopen.xib in Resources */,
 				8294C45E19F99B2F009DE98B /* Images.xcassets in Resources */,
 				6FD961431B419E4C00DE539C /* MAL Updater OS X.sdef in Resources */,
 				6FBA5A0A1ABE484B00B6DB79 /* AdvancedPrefController.xib in Resources */,
@@ -1088,7 +1089,6 @@
 				822AEB891A202931003DD682 /* FixSearchDialog.m in Sources */,
 				2D36F0E51F153F5C00CAC1F5 /* PFAboutWindowController.m in Sources */,
 				2D3CBE451F1531D40085888D /* PlexPrefs.m in Sources */,
-				910D22681E81DEC200760A08 /* streamlinkopen.m in Sources */,
 				5CD36BBA19F2ED88007BB6B6 /* GeneralPrefController.m in Sources */,
 				6FAA0C1F1A7E938400416079 /* ExceptionsCache.m in Sources */,
 				2D3CBE481F1531DF0085888D /* PlexLogin.m in Sources */,
@@ -1247,14 +1247,6 @@
 				6FBA5A0B1ABE484B00B6DB79 /* Base */,
 			);
 			name = AdvancedPrefController.xib;
-			sourceTree = "<group>";
-		};
-		910D226F1E81DFEE00760A08 /* streamlinkopen.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				910D226E1E81DFEE00760A08 /* Base */,
-			);
-			name = streamlinkopen.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

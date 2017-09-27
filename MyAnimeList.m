@@ -13,7 +13,6 @@
 #import "MyAnimeList+HummingbirdSearch.h"
 #import "MyAnimeList+Keychain.h"
 #import <Reachability/Reachability.h>
-#import <streamlinkdetect/streamlinkdetect.h>
 
 @interface MyAnimeList ()
 - (int)detectmedia; // 0 - Nothing, 1 - Same, 2 - Update
@@ -248,32 +247,6 @@
         _LastScrobbledTitle = lasttitle; //Set the Last Scrobbled Title to exact title.
     }
     return status;
-}
-- (int)scrobblefromstreamlink:(NSString *)url withStream:(NSString *)stream {
-    if (!_detector) {
-        _detector = [streamlinkdetector new];
-    }
-    // Set stream URL and stream
-    _detector.streamurl = url;
-    _detector.stream = stream;
-    // Get detection information
-    if ([_detector getDetectionInfo]) {
-        if (_detector.detectioninfo.count > 0) {
-            NSDictionary *d = _detector.detectioninfo[0];
-            // Check if title is ignored. Update if not on list.
-            NSDictionary *detectioninfo = [_detection checksstreamlinkinfo:d];
-            if (detectioninfo) {
-                int result = [self populatevalues:detectioninfo];
-                // Check Exceptions
-                [self checkExceptions];
-                // Start Stream
-                [_detector startStream];
-                // Perform the update
-                return result == ScrobblerDetectedMedia ? [self scrobble] : ScrobblerNothingPlaying;
-            }
-        }
-    }
-    return ScrobblerNothingPlaying;
 }
 - (int)performscrobbletest:(NSString *)filename delete:(bool)deletetitle{
     NSDictionary *result = [[Recognition alloc] recognize:filename];

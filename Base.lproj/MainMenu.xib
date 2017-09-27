@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="11201" systemVersion="16F73" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13196" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11201"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13196"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
@@ -240,12 +241,6 @@
                 <menuItem isSeparatorItem="YES" id="555">
                     <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                 </menuItem>
-                <menuItem title="Open Stream and Update…" id="LmD-Sb-XbD">
-                    <modifierMask key="keyEquivalentModifierMask"/>
-                    <connections>
-                        <action selector="openstream:" target="560" id="qv4-fO-HeJ"/>
-                    </connections>
-                </menuItem>
                 <menuItem title="Start Scrobbling" id="557">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
@@ -315,7 +310,6 @@
                 <outlet property="nothingplayingview" destination="qr1-fa-MXn" id="JBg-XA-spj"/>
                 <outlet property="nowplayingview" destination="8tC-w2-5c1" id="u6u-p2-yfF"/>
                 <outlet property="openAnimePage" destination="GWr-5m-lgQ" id="h6z-S7-zGA"/>
-                <outlet property="openstream" destination="LmD-Sb-XbD" id="4LR-cQ-YkD"/>
                 <outlet property="seperator" destination="egk-cQ-duZ" id="JnP-Yt-mVt"/>
                 <outlet property="seperator2" destination="ZEo-hm-rcH" id="g9l-WQ-yu2"/>
                 <outlet property="shareMenu" destination="M2G-Mh-0oi" id="y0d-LK-zxP"/>
@@ -379,9 +373,9 @@
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                         <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="ypk-hd-jNn">
                                             <rect key="frame" x="1" y="1" width="269" height="188"/>
-                                            <autoresizingMask key="autoresizingMask"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
-                                                <textView editable="NO" importsGraphics="NO" findStyle="panel" continuousSpellChecking="YES" allowsNonContiguousLayout="YES" quoteSubstitution="YES" dashSubstitution="YES" smartInsertDelete="YES" id="bGm-dl-hOF">
+                                                <textView editable="NO" importsGraphics="NO" verticallyResizable="YES" findStyle="panel" continuousSpellChecking="YES" allowsNonContiguousLayout="YES" quoteSubstitution="YES" dashSubstitution="YES" smartInsertDelete="YES" id="bGm-dl-hOF">
                                                     <rect key="frame" x="0.0" y="0.0" width="269" height="188"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <color key="backgroundColor" name="windowBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -431,7 +425,7 @@
                         <size key="minSize" width="32" height="25"/>
                         <size key="maxSize" width="32" height="32"/>
                         <button key="view" verticalHuggingPriority="750" id="Meq-3s-3x5">
-                            <rect key="frame" x="17" y="14" width="32" height="25"/>
+                            <rect key="frame" x="12" y="14" width="32" height="25"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="update" imagePosition="below" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="bg1-7y-pBr">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -446,7 +440,7 @@
                         <size key="minSize" width="32" height="25"/>
                         <size key="maxSize" width="32" height="32"/>
                         <button key="view" verticalHuggingPriority="750" id="sGW-w2-kC0">
-                            <rect key="frame" x="28" y="14" width="32" height="25"/>
+                            <rect key="frame" x="22" y="14" width="32" height="25"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="history" imagePosition="below" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Z3h-uy-9hi">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -469,7 +463,7 @@
                         <size key="minSize" width="32" height="25"/>
                         <size key="maxSize" width="32" height="32"/>
                         <button key="view" verticalHuggingPriority="750" id="uu4-Ct-6q9">
-                            <rect key="frame" x="21" y="14" width="32" height="25"/>
+                            <rect key="frame" x="16" y="14" width="32" height="25"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="correct" imagePosition="below" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="kSD-gp-80T">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -505,7 +499,7 @@
                         <size key="minSize" width="32" height="25"/>
                         <size key="maxSize" width="32" height="32"/>
                         <button key="view" verticalHuggingPriority="750" id="KFJ-iS-Wdx">
-                            <rect key="frame" x="44" y="14" width="32" height="25"/>
+                            <rect key="frame" x="37" y="14" width="32" height="25"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="Info" imagePosition="below" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="dZI-lo-iNp">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>

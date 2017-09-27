@@ -21,9 +21,7 @@
 #import "DonationWindowController.h"
 #import "OfflineViewQueue.h"
 #import "StatusUpdateWindow.h"
-#import "MSWeakTimer.h"
-#import "streamlinkopen.h"
-#import <streamlinkdetect/streamlinkdetect.h>
+#import <MSWeakTimer_macOS/MSWeakTimer.h>
 #import <Fabric/Fabric.h>
 #import <Crashlytics/Crashlytics.h>
 #import <MALLibraryAppMigrate/MALLibraryAppMigrate.h>
@@ -71,7 +69,6 @@
 @synthesize sharetoolbaritem;
 @synthesize openAnimePage;
 @synthesize _preferencesWindowController;
-@synthesize streamlinkopenw;
 
 #pragma mark -
 #pragma mark Initalization
@@ -1229,66 +1226,6 @@
 - (IBAction)showLastScrobbledInformation:(id)sender{
     //Open the anime's page on MyAnimeList in the default web browser
     [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://myanimelist.net/anime/%@", MALEngine.AniID]]];
-}
-#pragma mark Streamlink
-- (IBAction)openstream:(id)sender {
-    if ([MALEngine checkaccount]) {
-        streamlinkdetector *detector = [streamlinkdetector new];
-        if ([detector checkifStreamLinkExists]) {
-            // Shows the Open Stream dialog
-            [NSApp activateIgnoringOtherApps:YES];
-            if (MALEngine.online) {
-                if (!streamlinkopenw)
-                    streamlinkopenw = [streamlinkopen new];
-                
-                bool isVisible = window.visible;
-                if (isVisible) {
-                    [self disableUpdateItems]; //Prevent user from opening up another modal window if access from Status Window
-                    [NSApp beginSheet:streamlinkopenw.window
-                       modalForWindow:window modalDelegate:self
-                       didEndSelector:@selector(streamopenDidEnd:returnCode:contextInfo:)
-                          contextInfo:(void *)nil];
-                }
-                else {
-                    [NSApp beginSheet:streamlinkopenw.window
-                       modalForWindow:nil modalDelegate:self
-                       didEndSelector:@selector(streamopenDidEnd:returnCode:contextInfo:)
-                          contextInfo:(void *)nil];
-                }
-            }
-            else {
-                [self showNotification:NSLocalizedString(@"MAL Updater OS X",nil) message:NSLocalizedString(@"You need to be online to use this feature.",nil)];
-            }
-        }
-        else {
-            [detector checkStreamLink:nil];
-        }
-    }
-    else {
-        [self showNotification:@"MAL Updater OS X" message:@"Add a login before you use this feature."];
-    }
-}
-- (void)streamopenDidEnd:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo {
-    if (returnCode == 0) {
-        [self enableUpdateItems];
-        streamlinkopenw = nil;
-    }
-    else {
-        [self toggleScrobblingUIEnable:false];
-        NSString *streamurl = streamlinkopenw.streamurl.stringValue;
-        NSString *stream = streamlinkopenw.streams.title;
-        dispatch_queue_t queue = dispatch_get_global_queue(
-                                                           DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-        
-        dispatch_async(queue, ^{
-            int status = [MALEngine scrobblefromstreamlink:streamurl withStream:stream];
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self performsendupdatenotification:status];
-                [self performRefreshUI:status];
-                streamlinkopenw = nil;
-            });
-        });
-    }
 }
 
 @end
