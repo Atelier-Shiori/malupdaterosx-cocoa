@@ -25,7 +25,7 @@
 #import <Fabric/Fabric.h>
 #import <Crashlytics/Crashlytics.h>
 #import <MALLibraryAppMigrate/MALLibraryAppMigrate.h>
-#import "sharemenu.h"
+#import "ShareMenu.h"
 #import "PFAboutWindowController.h"
 
 @implementation MAL_Updater_OS_XAppDelegate

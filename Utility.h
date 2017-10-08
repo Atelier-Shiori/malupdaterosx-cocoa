@@ -29,4 +29,5 @@
 + (void)showDonateReminder:(MAL_Updater_OS_XAppDelegate*)delegate;
 + (void)setReminderDate;
 + (int)checkDonationKey:(NSString *)key name:(NSString *)name;
++ (NSString *)numbertoordinal:(int)number;
 @end

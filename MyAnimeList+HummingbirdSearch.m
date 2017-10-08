@@ -25,7 +25,7 @@
                     tmpid = [self hperformSearch:[NSString stringWithFormat:@"%@ %i", [Utility desensitizeSeason:searchtitle], self.DetectedSeason]];
                     break;
                 case 1:
-                    tmpid = [self hperformSearch:[NSString stringWithFormat:@"%@ %i season", [Utility desensitizeSeason:searchtitle], self.DetectedSeason]];
+                    tmpid = [self hperformSearch:[NSString stringWithFormat:@"%@ %@ Season", [Utility desensitizeSeason:searchtitle], [Utility numbertoordinal:self.DetectedSeason]]];
                 default:
                     break;
             }
@@ -133,14 +133,14 @@
                     if ([[NSString stringWithFormat:@"%@", searchentry[@"showType"]] isEqualToString:@"TV"]||[[NSString stringWithFormat:@"%@", searchentry[@"showType"]] isEqualToString:@"ONA"]) { // Check Seasons if the title is a TV show type
                         // Used for Season Checking
                         OnigRegexp   *regex2 = [OnigRegexp compile:[NSString stringWithFormat:@"(%i(st|nd|rd|th) season|\\W%i)", self.DetectedSeason, self.DetectedSeason] options:OnigOptionIgnorecase];
-                        OnigResult *smatch = [regex2 match:[NSString stringWithFormat:@"%@ - %@ - %@", theshowtitle, alttitle, searchentry[@"slug"]]];
+                        OnigResult *smatch = [regex2 search:[NSString stringWithFormat:@"%@ - %@ - %@", theshowtitle, alttitle, searchentry[@"slug"]]];
                         if (self.DetectedSeason >= 2) { // Season detected, check to see if there is a matcch. If not, continue.
-                            if (!smatch) {
+                            if (smatch.count == 0) {
                                 continue;
                             }
                         }
                         else {
-                            if (smatch && self.DetectedSeason >= 2) { // No Season, check to see if there is a season or not. If so, continue.
+                            if (smatch.count > 0 && self.DetectedSeason >= 2) { // No Season, check to see if there is a season or not. If so, continue.
                                 continue;
                             }
                         }
@@ -287,7 +287,7 @@
                     NSNumber *totalepisodes = found[@"episode_count"] ? (NSNumber *)found[@"episodeCount"] : @(0);
                     //Save AniID
                     NSDictionary *title = found[@"titles"];
-                    [ExceptionsCache addtoCache:self.DetectedTitle showid:MALID actualtitle:(NSString *)title[@"en_jp"] totalepisodes: totalepisodes.intValue];
+                    [ExceptionsCache addtoCache:self.DetectedTitle showid:MALID actualtitle:(NSString *)title[@"en_jp"] totalepisodes: totalepisodes.intValue detectedSeason:self.DetectedSeason];
                 }
                 return MALID;
             }

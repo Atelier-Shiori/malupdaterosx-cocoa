@@ -495,8 +495,9 @@
     if (cache.count > 0) {
         for (NSManagedObject *cacheentry in cache) {
             NSString *title = [cacheentry valueForKey:@"detectedTitle"];
-            if ([title isEqualToString:_DetectedTitle]) {
-                NSLog(@"%@ is found in cache.", title);
+            NSNumber *season = [cacheentry valueForKey:@"detectedSeason"];
+            if ([title isEqualToString:_DetectedTitle] && _DetectedSeason == season.intValue) {
+                NSLog(@"%@", season.intValue > 1 ? [NSString stringWithFormat:@"%@ Season %i is found in cache.", title, season.intValue] : [NSString stringWithFormat:@"%@ is found in cache.", title]);
                 // Total Episode check
                 NSNumber *totalepisodes = [cacheentry valueForKey:@"totalEpisodes"];
                 if ( _DetectedEpisode.intValue <= totalepisodes.intValue || totalepisodes.intValue == 0 ) {

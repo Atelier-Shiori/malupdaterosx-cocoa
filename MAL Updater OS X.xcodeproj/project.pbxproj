@@ -187,6 +187,8 @@
 		2D65226F1F7B50C700A65BF8 /* GBPing.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GBPing.framework; path = Frameworks/GBPing.framework; sourceTree = "<group>"; };
 		2D6522741F7B50F700A65BF8 /* MSWeakTimer_macOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MSWeakTimer_macOS.framework; path = Frameworks/MSWeakTimer_macOS.framework; sourceTree = "<group>"; };
 		2D7B152C1EB54E280014D4C7 /* MALLibraryAppMigrate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MALLibraryAppMigrate.framework; path = Frameworks/MALLibraryAppMigrate.framework; sourceTree = "<group>"; };
+		2D907A361F8ABFB500DF47A5 /* MAL_Updater_OS_X_DataModel 4.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "MAL_Updater_OS_X_DataModel 4.xcdatamodel"; sourceTree = "<group>"; };
+		2D907A371F8AC27A00DF47A5 /* MAL_Updater_OS_X_DataModel 4.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "MAL_Updater_OS_X_DataModel 4.xcdatamodel"; sourceTree = "<group>"; };
 		2D9C3AE01E6A0BC7007D8F68 /* EasyNSURLConnection.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EasyNSURLConnection.framework; path = Frameworks/EasyNSURLConnection.framework; sourceTree = "<group>"; };
 		2DAFC1D71E2313B100FB7A14 /* OfflineViewQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OfflineViewQueue.h; sourceTree = "<group>"; };
 		2DAFC1D81E2313B100FB7A14 /* OfflineViewQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OfflineViewQueue.m; sourceTree = "<group>"; };
@@ -1607,11 +1609,13 @@
 		6F5F6C6D1A71696D006D4607 /* MAL_Updater_OS_X_DataModel.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				2D907A371F8AC27A00DF47A5 /* MAL_Updater_OS_X_DataModel 4.xcdatamodel */,
+				2D907A361F8ABFB500DF47A5 /* MAL_Updater_OS_X_DataModel 4.xcdatamodel */,
 				2D60876A1E28239D00D6E583 /* MAL_Updater_OS_X_DataModel 3.xcdatamodel */,
 				6F5F6C6E1A71696D006D4607 /* MAL_Updater_OS_X_DataModel 2.xcdatamodel */,
 				6F5F6C6F1A71696D006D4607 /* MAL_Updater_OS_X_DataModel.xcdatamodel */,
 			);
-			currentVersion = 2D60876A1E28239D00D6E583 /* MAL_Updater_OS_X_DataModel 3.xcdatamodel */;
+			currentVersion = 2D907A361F8ABFB500DF47A5 /* MAL_Updater_OS_X_DataModel 4.xcdatamodel */;
 			path = MAL_Updater_OS_X_DataModel.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

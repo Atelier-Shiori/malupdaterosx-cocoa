@@ -27,7 +27,7 @@
                     tmpid = [self performSearch:[NSString stringWithFormat:@"%@ %i", [Utility desensitizeSeason:searchtitle], self.DetectedSeason]];
                     break;
                 case 1:
-                    tmpid = [self performSearch:[NSString stringWithFormat:@"%@ %i season", [Utility desensitizeSeason:searchtitle], self.DetectedSeason]];
+                    tmpid = [self performSearch:[NSString stringWithFormat:@"%@ %@ Season", [Utility desensitizeSeason:searchtitle], [Utility numbertoordinal:self.DetectedSeason]]];
                 default:
                     break;
             }
@@ -133,17 +133,17 @@
                 if ([[NSString stringWithFormat:@"%@", searchentry[@"type"]] isEqualToString:@"TV"]) { // Check Seasons if the title is a TV show type
                     // Used for Season Checking
                     OnigRegexp    *regex2 = [OnigRegexp compile:[NSString stringWithFormat:@"((%i(st|nd|rd|th)|%@) season|\\W%i)", self.DetectedSeason, [Utility seasonInWords:self.DetectedSeason],self.DetectedSeason] options:OnigOptionIgnorecase];
-                    OnigResult *smatch = [regex2 match:[NSString stringWithFormat:@"%@ - %@",theshowtitle, alttitle]];
+                    OnigResult *smatch = [regex2 search:[NSString stringWithFormat:@"%@ - %@",theshowtitle, alttitle]];
                     // Description checking
                     NSString *description = searchentry[@"synopsis"] ? (NSString *)searchentry[@"synopsis"] : @"";
-                    OnigResult *smatch2 = [regex2 match:description];
+                    OnigResult *smatch2 = [regex2 search:description];
                     if (self.DetectedSeason >= 2) { // Season detected, check to see if there is a match. If not, continue.
-                        if (!smatch && !smatch2 && [sortedArray filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"(type == %@)", @"TV"]].count > 1) { // If there is a second season match, in most cases, it would be the only entry
+                        if (smatch.count == 0 && smatch2.count == 0 && [sortedArray filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"(type == %@)", @"TV"]].count > 1) { // If there is a second season match, in most cases, it would be the only entry
                             continue;
                         }
                     }
                     else {
-                        if (smatch && smatch2 && self.DetectedSeason >= 2) { // No Season, check to see if there is a season or not. If so, continue.
+                        if (smatch.count > 0 && smatch2.count > 0 && self.DetectedSeason >= 2) { // No Season, check to see if there is a season or not. If so, continue.
                             continue;
                         }
                     }
@@ -220,7 +220,7 @@
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"useSearchCache"] && titleid.length > 0) {
         NSNumber *episodes = found[@"episodes"] == [NSNull null] ? @(0) : (NSNumber *)found[@"episodes"];
         //Save AniID
-        [ExceptionsCache addtoCache:self.DetectedTitle showid:titleid actualtitle:(NSString *)found[@"title"] totalepisodes:episodes.intValue];
+        [ExceptionsCache addtoCache:self.DetectedTitle showid:titleid actualtitle:(NSString *)found[@"title"] totalepisodes:episodes.intValue detectedSeason:self.DetectedSeason];
     }
     //Return the AniID
     return titleid;

@@ -50,7 +50,7 @@
         [moc save:&error];
     }
 }
-+ (void)addtoCache:(NSString *)title showid:(NSString *)showid actualtitle:(NSString *) atitle totalepisodes:(int)totalepisodes {
++ (void)addtoCache:(NSString *)title showid:(NSString *)showid actualtitle:(NSString *) atitle totalepisodes:(int)totalepisodes detectedSeason:(int)season {
     //Adds ID to cache
     MAL_Updater_OS_XAppDelegate *delegate = (MAL_Updater_OS_XAppDelegate *)[NSApplication sharedApplication].delegate;
     NSManagedObjectContext *moc = delegate.managedObjectContext;
@@ -63,6 +63,7 @@
     [obj setValue:showid forKey:@"id"];
     [obj setValue:atitle forKey:@"actualTitle"];
     [obj setValue:@(totalepisodes) forKey:@"totalEpisodes"];
+    [obj setValue:@(season) forKey:@"detectedSeason"];
     NSError *error = nil;
     // Save
     [moc save:&error];
