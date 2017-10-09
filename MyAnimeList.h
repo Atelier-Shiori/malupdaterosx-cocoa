@@ -44,6 +44,7 @@ typedef NS_ENUM(unsigned int, ScrobbleStatus) {
 @property (strong, getter=getFailedTitle) NSString *FailedTitle;
 @property (strong, getter=getFailedEpisode) NSString *FailedEpisode;
 @property (strong, getter=getFailedSource) NSString *FailedSource;
+@property (getter=getFailedSeason) int FailedSeason;
 @property BOOL DetectedTitleisMovie;
 @property BOOL DetectedTitleisEpisodeZero;
 @property int DetectedSeason;

@@ -43,5 +43,23 @@
   "detectedepisode":"1",
   "detectedseason":0,
   "deletetitle":1
+  },
+  {
+  "filename":"[FFF] Love Live! S2 - 01 [954C4CE1].mkv",
+  "expected-title":"Love Live! School Idol Project 2nd Season",
+  "group":"FFF",
+  "zeroepisode":0,
+  "detectedepisode":"1",
+  "detectedseason":2,
+  "deletetitle":0
+  },
+  {
+  "filename":"[FFF] Love Live! S2 - 02 [DD19054D].mkv",
+  "expected-title":"Love Live! School Idol Project 2nd Season",
+  "group":"FFF",
+  "zeroepisode":0,
+  "detectedepisode":"2",
+  "detectedseason":2,
+  "deletetitle":1
   }
 ]

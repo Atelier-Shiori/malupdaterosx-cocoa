@@ -853,7 +853,7 @@
         else {
             BOOL correctonce = [fsdialog getcorrectonce];
             if (!findtitle.hidden) {
-                [self addtoExceptions:MALEngine.FailedTitle newtitle:fsdialog.selectedtitle showid:fsdialog.selectedaniid threshold:fsdialog.selectedtotalepisodes];
+                [self addtoExceptions:MALEngine.FailedTitle newtitle:fsdialog.selectedtitle showid:fsdialog.selectedaniid threshold:fsdialog.selectedtotalepisodes season:MALEngine.FailedSeason];
             }
             else if (MALEngine.LastScrobbledEpisode.intValue == fsdialog.selectedtotalepisodes) {
                 // Detected episode equals the total episodes, do not add a rule and only do a correction just once.
@@ -861,7 +861,7 @@
             }
             else if (!correctonce) {
                 //Add to Exceptions
-                [self addtoExceptions:MALEngine.LastScrobbledTitle newtitle:fsdialog.selectedtitle showid:fsdialog.selectedaniid threshold:fsdialog.selectedtotalepisodes];
+                [self addtoExceptions:MALEngine.LastScrobbledTitle newtitle:fsdialog.selectedtitle showid:fsdialog.selectedaniid threshold:fsdialog.selectedtotalepisodes season:MALEngine.DetectedSeason];
             }
             if([fsdialog getdeleteTitleonCorrection]) {
                 if([MALEngine removetitle:MALEngine.AniID]) {
@@ -919,7 +919,7 @@
         [self starttimer];
     }
 }
-- (void)addtoExceptions:(NSString *)detectedtitle newtitle:(NSString *)title showid:(NSString *)showid threshold:(int)threshold{
+- (void)addtoExceptions:(NSString *)detectedtitle newtitle:(NSString *)title showid:(NSString *)showid threshold:(int)threshold season:(int)season {
     NSManagedObjectContext *moc = managedObjectContext;
     NSFetchRequest *allExceptions = [[NSFetchRequest alloc] init];
     allExceptions.entity = [NSEntityDescription entityForName:@"Exceptions" inManagedObjectContext:moc];
@@ -935,10 +935,10 @@
     }
     if (!exists) {
         // Add exceptions to Exceptions Entity
-        [ExceptionsCache addtoExceptions:detectedtitle correcttitle:title aniid:showid threshold:threshold offset:0];
+        [ExceptionsCache addtoExceptions:detectedtitle correcttitle:title aniid:showid threshold:threshold offset:0 detectedSeason:season];
     }
     //Check if title exists in cache and then remove it
-    [ExceptionsCache checkandRemovefromCache:detectedtitle];
+    [ExceptionsCache checkandRemovefromCache:detectedtitle detectedSeason:season];
     
 }
 #pragma mark History Window functions

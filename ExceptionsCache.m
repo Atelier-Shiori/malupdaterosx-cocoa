@@ -12,7 +12,7 @@
 #import "MAL_Updater_OS_XAppDelegate.h"
 
 @implementation ExceptionsCache
-+ (void)addtoExceptions:(NSString *)detectedtitle correcttitle:(NSString *)title aniid:(NSString *)showid threshold:(int)threshold offset:(int)offset{
++ (void)addtoExceptions:(NSString *)detectedtitle correcttitle:(NSString *)title aniid:(NSString *)showid threshold:(int)threshold offset:(int)offset detectedSeason:(int)season {
     MAL_Updater_OS_XAppDelegate *delegate = (MAL_Updater_OS_XAppDelegate *)[NSApplication sharedApplication].delegate;
     NSManagedObjectContext *moc = delegate.managedObjectContext;
     NSError *error = nil;
@@ -26,10 +26,11 @@
     [obj setValue:showid forKey:@"id"];
     [obj setValue:@(threshold) forKey:@"episodethreshold"];
     [obj setValue:@(offset) forKey:@"episodeOffset"];
+    [obj setValue:@(season) forKey:@"detectedSeason"];
     //Save
     [moc save:&error];
 }
-+ (void)checkandRemovefromCache:(NSString *)detectedtitle{
++ (void)checkandRemovefromCache:(NSString *)detectedtitle detectedSeason:(int)season {
     // Checks for cache entry. If exists, it will remove that entry.
     MAL_Updater_OS_XAppDelegate *delegate = (MAL_Updater_OS_XAppDelegate *)[NSApplication sharedApplication].delegate;
     NSManagedObjectContext *moc = delegate.managedObjectContext;
@@ -38,7 +39,7 @@
     allCache.entity = [NSEntityDescription entityForName:@"Cache" inManagedObjectContext:moc];
     NSError *error = nil;
     NSArray *caches = [moc executeFetchRequest:allCache error:&error];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat: @"detectedTitle == %@", detectedtitle];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat: @"(detectedTitle == %@) AND (detectedSeason == %i)", detectedtitle, season];
     allCache.predicate = predicate;
     if (caches.count > 0) {
         //Check Cache to remove conflicts
