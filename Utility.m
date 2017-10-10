@@ -209,4 +209,10 @@
     }
     return [NSString stringWithFormat:@"%i%@", number, ordinal];
 }
++ (NSString *)todaydatestring {
+    NSDate *today = [NSDate date];
+    NSDateFormatter *df = [NSDateFormatter new];
+    df.dateFormat = @"yyyy-MM-dd";
+    return [df stringFromDate:today];
+}
 @end

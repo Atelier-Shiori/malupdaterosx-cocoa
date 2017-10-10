@@ -65,7 +65,7 @@
         //Load API URL
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         //Set URL
-        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/1/animelist/chikorita157", [defaults objectForKey:@"MALAPIURL"]]];
+        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/2.1/animelist/chikorita157", [defaults objectForKey:@"MALAPIURL"]]];
         EasyNSURLConnection *request = [[EasyNSURLConnection alloc] initWithURL:url];
         //Ignore Cookies
         [request setUseCookies:NO];

@@ -30,4 +30,5 @@
 + (void)setReminderDate;
 + (int)checkDonationKey:(NSString *)key name:(NSString *)name;
 + (NSString *)numbertoordinal:(int)number;
++ (NSString *)todaydatestring;
 @end

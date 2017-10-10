@@ -9,6 +9,7 @@
 #import "MyAnimeList+Update.h"
 #import <EasyNSURLConnection/EasyNSURLConnectionClass.h>
 #import "MyAnimeList+Keychain.h"
+#import "Utility.h"
 
 @implementation MyAnimeList (Update)
 - (BOOL)checkstatus:(NSString *)titleid {
@@ -89,7 +90,7 @@
     else {
         // Update the title
         //Set library/scrobble API
-        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/1/animelist/anime/%@", self.MALApiUrl, titleid]];
+        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/2.1/animelist/anime/%@", self.MALApiUrl, titleid]];
         EasyNSURLConnection *request = [[EasyNSURLConnection alloc] initWithURL:url];
         //Ignore Cookies
         [request setUseCookies:NO];
@@ -99,6 +100,9 @@
         [request addFormData:self.DetectedEpisode forKey:@"episodes"];
         //Set Status
         self.WatchStatus = (self.DetectedEpisode).intValue == self.TotalEpisodes ? @"completed" : @"watching";
+        if ([self.WatchStatus isEqualToString:@"completed"]) {
+            [request addFormData:[Utility todaydatestring] forKey:@"end"];
+        }
         [request addFormData:self.WatchStatus forKey:@"status"];
         // Set existing score to prevent the score from being erased.
         [request addFormData:@(self.TitleScore).stringValue forKey:@"score"];
@@ -135,7 +139,7 @@
     }
     // Add the title
     //Set library/scrobble API
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/1/animelist/anime", self.MALApiUrl]];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/2.1/animelist/anime", self.MALApiUrl]];
     EasyNSURLConnection *request = [[EasyNSURLConnection alloc] initWithURL:url];
     //Ignore Cookies
     [request setUseCookies:NO];
@@ -164,6 +168,9 @@
                 self.LastScrobbledActualTitle = (NSString *)self.LastScrobbledInfo[@"title"];
             }
             self.confirmed = true;
+            if (![self setStartEndDates:titleid]) {
+                NSLog(@"Can't set start/end dates");
+            }
             return ScrobblerAddTitleSuccessful;
         default:
             // Update Unsuccessful
@@ -176,7 +183,7 @@
     
     // Update the title
     //Set library/scrobble API
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/1/animelist/anime/%@", self.MALApiUrl, titleid]];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/2.1/animelist/anime/%@", self.MALApiUrl, titleid]];
     EasyNSURLConnection *request = [[EasyNSURLConnection alloc] initWithURL:url];
     //Ignore Cookies
     [request setUseCookies:NO];
@@ -208,7 +215,7 @@
     }
     // Update the title
     //Set library/scrobble API
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/1/animelist/anime/%@", self.MALApiUrl, titleid]];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/2.1/animelist/anime/%@", self.MALApiUrl, titleid]];
     EasyNSURLConnection *request = [[EasyNSURLConnection alloc] initWithURL:url];
     //Ignore Cookies
     [request setUseCookies:NO];
@@ -237,6 +244,27 @@
             // Update Unsuccessful
             return false;
     }
+}
+- (bool)setStartEndDates:(NSString *)titleid {
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/2.1/animelist/anime/%@", self.MALApiUrl, titleid]];
+    EasyNSURLConnection *request = [[EasyNSURLConnection alloc] initWithURL:url];
+    [request setUseCookies:NO];
+    request.headers = @{@"Authorization": [NSString stringWithFormat:@"Basic %@", [self getBase64]]};
+    [request setPostMethod:@"PUT"];
+    // Set Date
+    [request addFormData:[Utility todaydatestring] forKey:@"start"];
+    if ([self.WatchStatus isEqualToString:@"completed"]) {
+        [request addFormData:[Utility todaydatestring] forKey:@"end"];
+    }
+    [request startFormRequest];
+    switch ([request getStatusCode]) {
+        case 200:
+        case 201:
+            return true;
+        default:
+            return false;
+    }
+    
 }
 - (void)storeLastScrobbled{
     self.LastScrobbledTitle = self.DetectedTitle;
