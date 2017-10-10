@@ -61,5 +61,14 @@
   "detectedepisode":"2",
   "detectedseason":2,
   "deletetitle":1
+  },
+  {
+  "filename":"[HorribleSubs] Fate Stay Night - Unlimited Blade Works - 00 [720p].mkv",
+  "expected-title":"Fate/stay night: Unlimited Blade Works - Prologue",
+  "group":"HorribleSubs",
+  "zeroepisode":1,
+  "detectedepisode":"1",
+  "detectedseason":1,
+  "deletetitle":1
   }
 ]

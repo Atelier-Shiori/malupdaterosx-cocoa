@@ -552,7 +552,7 @@
             NSString *correcttitle;
             for (NSManagedObject *entry in exceptions) {
                 NSLog(@"%@",(NSString *)[entry valueForKey:@"detectedTitle"]);
-                if ([_DetectedTitle isEqualToString:(NSString *)[entry valueForKey:@"detectedTitle"]]) {
+                if ([_DetectedTitle caseInsensitiveCompare:(NSString *)[entry valueForKey:@"detectedTitle"]] == NSOrderedSame) {
                     correcttitle = (NSString *)[entry valueForKey:@"correctTitle"];
                     // Set Correct Title and Episode offset (if any)
                     int threshold = ((NSNumber *)[entry valueForKey:@"episodethreshold"]).intValue;

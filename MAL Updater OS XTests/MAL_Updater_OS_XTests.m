@@ -82,7 +82,7 @@
                     case ScrobblerAddTitleSuccessful:
                     case ScrobblerConfirmNeeded:
                     case ScrobblerUpdateNotNeeded:
-                        if ([expectedtitle isEqualToString:[_MALEngine getLastScrobbledActualTitle]] && [detectedepisode isEqualToString:[_MALEngine getLastScrobbledEpisode]]) {
+                        if ([expectedtitle caseInsensitiveCompare:[_MALEngine getLastScrobbledActualTitle]] == NSOrderedSame && [detectedepisode isEqualToString:[_MALEngine getLastScrobbledEpisode]]) {
                             NSLog(@"Scrobble of %@ - %@ was sucessful with status: %i",expectedtitle,detectedepisode,status);
                             success++;
                         }
