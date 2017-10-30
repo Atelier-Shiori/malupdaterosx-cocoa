@@ -70,9 +70,13 @@
             NSLog(@"User credentials valid.");
             return 1;
         }
-        else if ([request getStatusCode] == 204) {
+        else if ([request getStatusCode] == 204 || [request getStatusCode] == 401) {
             [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"credentialsvalid"];
             NSLog(@"ERROR: User credentials are invalid. Aborting...");
+            return 0;
+        }
+        else if ([request getStatusCode] == 403) {
+            NSLog(@"Too many login attempts.");
             return 0;
         }
         else {
@@ -81,8 +85,6 @@
         }
     }
     return 1;
-   
-    
 }
 
 

@@ -9,7 +9,7 @@
 #import "LoginPref.h"
 #import "Base64Category.h"
 #import "MAL_Updater_OS_XAppDelegate.h"
-#import <EasyNSURLConnection/EasyNSURLConnectionClass.h>
+#import <EasyNSURLConnection/EasyNSURLConnection.h>
 #import "Utility.h"
 
 
@@ -104,57 +104,46 @@
 			}
 			else {
                 [savebut setEnabled:NO];
-                dispatch_queue_t queue = dispatch_get_global_queue(
-                                                                   DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-                
-                dispatch_async(queue, ^{
-                    [self login:fieldusername.stringValue password:fieldpassword.stringValue];
-                });
-                }
+                [self login:fieldusername.stringValue password:fieldpassword.stringValue];
+            }
 		}
 	}
 }
 
-- (void)login:(NSString *)username password:(NSString *)password{
-    //Set Login URL
-	NSURL *url = [NSURL URLWithString:@"https://myanimelist.net/api/account/verify_credentials.xml"];
-    EasyNSURLConnection *request = [[EasyNSURLConnection alloc] initWithURL:url];
-	//Ignore Cookies
-	[request setUseCookies:NO];
-	//Set Username and Password
-    request.headers = (NSMutableDictionary *)@{@"Authorization": [NSString stringWithFormat:@"Basic %@", [[NSString stringWithFormat:@"%@:%@", username, password] base64Encoding]]};
-	//Verify Username/Password
-	[request startRequest];
-	// Check for errors
-    NSError *error = [request getError];
-    dispatch_async(dispatch_get_main_queue(), ^{
-        if ([request getStatusCode] == 200 && !error) {
-                //Login successful
-                [Utility showsheetmessage:@"Login Successful" explaination: @"Login is successful." window:self.view.window];
-                // Store account in login keychain
-                [MALEngine storeaccount:fieldusername.stringValue password:fieldpassword.stringValue];
-                [clearbut setEnabled: YES];
-                loggedinuser.stringValue = username;
-                [loggedinview setHidden:NO];
-                [loginview setHidden:YES];
-                [[NSUserDefaults standardUserDefaults] setObject:[NSDate dateWithTimeIntervalSinceNow:60*60*24] forKey:@"credentialscheckdate"];
-                [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"credentialsvalid"];
+- (void)login:(NSString *)username password:(NSString *)password {
+    // Verify Account with MyAnimeList
+    EasyNSURLConnection *request = [EasyNSURLConnection new];
+    [request GET:@"https://myanimelist.net/api/account/verify_credentials.xml" headers:@{@"Authorization": [NSString stringWithFormat:@"Basic %@", [[NSString stringWithFormat:@"%@:%@", username, password] base64Encoding]]} completion:^(EasyNSURLResponse *response){
+            //Login successful
+            [Utility showsheetmessage:@"Login Successful" explaination: @"Login is successful." window:self.view.window];
+            // Store account in login keychain
+            [MALEngine storeaccount:fieldusername.stringValue password:fieldpassword.stringValue];
+            [clearbut setEnabled: YES];
+            loggedinuser.stringValue = username;
+            [loggedinview setHidden:NO];
+            [loginview setHidden:YES];
+            [[NSUserDefaults standardUserDefaults] setObject:[NSDate dateWithTimeIntervalSinceNow:60*60*24] forKey:@"credentialscheckdate"];
+            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"credentialsvalid"];
+            [savebut setEnabled:YES];
+    } error:^(NSError *error, int statuscode) {
+        if (error.code == NSURLErrorNotConnectedToInternet) {
+            [Utility showsheetmessage:@"MAL Updater OS X was unable to log you in since you are not connected to the internet" explaination:@"Check your internet connection and try again." window:self.view.window];
+            [savebut setEnabled: YES];
+            savebut.keyEquivalent = @"\r";
         }
         else {
-            if (error.code == NSURLErrorNotConnectedToInternet) {
-                [Utility showsheetmessage:@"MAL Updater OS X was unable to log you in since you are not connected to the internet" explaination:@"Check your internet connection and try again." window:self.view.window];
-                [savebut setEnabled: YES];
-                savebut.keyEquivalent = @"\r";
-            }
-            else {
-                //Login Failed, show error message
+            //Login Failed, show error message
+            if (statuscode == 401) {
                 [Utility showsheetmessage:@"MAL Updater OS X was unable to log you in since you don't have the correct username and/or password." explaination:@"Check your username and password and try logging in again. If you recently changed your password, enter your new password and try again." window:self.view.window];
-                [savebut setEnabled: YES];
-                savebut.keyEquivalent = @"\r";
             }
+            if (statuscode == 403) {
+                [Utility showsheetmessage:@"MAL Updater OS X was unable to log you since you have too many login attempts." explaination:@"Check your username and password and try logging in again after a few hours." window:self.view.window];
+            }
+            [savebut setEnabled: YES];
+            savebut.keyEquivalent = @"\r";
         }
         [savebut setEnabled:YES];
-    });
+     }];
 }
 
 - (IBAction)registermal:(id)sender

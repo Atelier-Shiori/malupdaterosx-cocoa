@@ -7,7 +7,7 @@
 //
 
 #import "MyAnimeList+Update.h"
-#import <EasyNSURLConnection/EasyNSURLConnectionClass.h>
+#import <EasyNSURLConnection/EasyNSURLConnection.h>
 #import "MyAnimeList+Keychain.h"
 #import "Utility.h"
 
@@ -31,8 +31,7 @@
             // Set detected episode to 1
             self.DetectedEpisode = @"1";
         }
-        NSError* jerror;
-        NSDictionary *animeinfo = [NSJSONSerialization JSONObjectWithData:[request getResponseData] options:nil error:&jerror];
+        NSDictionary *animeinfo = [request.response getResponseDataJsonParsed];
         self.TotalEpisodes = animeinfo[@"episodes"] == [NSNull null] ? 0 : ((NSNumber *)animeinfo[@"episodes"]).intValue;
         // Watch Status
         if (animeinfo[@"watched_status"] == [NSNull null]) {

@@ -8,7 +8,7 @@
 
 #import "AdvancedPrefController.h"
 #import "Utility.h"
-#import <EasyNSURLConnection/EasyNSURLConnectionClass.h>
+#import <EasyNSURLConnection/EasyNSURLConnection.h>
 #import <DetectionKit/DetectionKit.h>
 
 @interface AdvancedPrefController ()
@@ -58,35 +58,18 @@
     [testprogressindicator setHidden:NO];
     [testprogressindicator startAnimation:nil];
     [testapibtn setEnabled:NO];
-    dispatch_queue_t queue = dispatch_get_global_queue(
-                                                       DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-    
-    dispatch_async(queue, ^{
-        //Load API URL
-        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        //Set URL
-        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/2.1/animelist/chikorita157", [defaults objectForKey:@"MALAPIURL"]]];
-        EasyNSURLConnection *request = [[EasyNSURLConnection alloc] initWithURL:url];
-        //Ignore Cookies
-        [request setUseCookies:NO];
-        //Test API
-        [request startRequest];
-        // Get Status Code
-        long statusCode = [request getStatusCode];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            switch (statusCode) {
-                case 200:
-                    [Utility showsheetmessage:@"API Test Successful" explaination:[NSString stringWithFormat:@"HTTP Code: %li", statusCode] window: self.view.window];
-                    break;
-                default:
-                    [Utility showsheetmessage:@"API Test Unsuccessful" explaination:[NSString stringWithFormat:@"HTTP Code: %li", statusCode] window:self.view.window];
-                    break;
-            }
-            [testprogressindicator setHidden:YES];
-            [testprogressindicator stopAnimation:nil];
-            [testapibtn setEnabled:YES];
-        });
-    });
+    EasyNSURLConnection *request = [EasyNSURLConnection new];
+    [request GET:[NSString stringWithFormat:@"%@/2.1/animelist/chikorita157", [NSUserDefaults.standardUserDefaults objectForKey:@"MALAPIURL"]] headers:nil completion:^(EasyNSURLResponse *response) {
+         [Utility showsheetmessage:@"API Test Successful" explaination:[NSString stringWithFormat:@"HTTP Code: %li", [response getStatusCode]] window: self.view.window];
+        [testprogressindicator setHidden:YES];
+        [testprogressindicator stopAnimation:nil];
+        [testapibtn setEnabled:YES];
+    } error:^(NSError *error, int statuscode) {
+        [Utility showsheetmessage:@"API Test Unsuccessful" explaination:[NSString stringWithFormat:@"HTTP Code: %i", statuscode] window:self.view.window];
+        [testprogressindicator setHidden:YES];
+        [testprogressindicator stopAnimation:nil];
+        [testapibtn setEnabled:YES];
+    }];
 }
 - (IBAction)resetapiurl:(id)sender
 {

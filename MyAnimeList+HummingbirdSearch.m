@@ -8,7 +8,7 @@
 
 #import "MyAnimeList+HummingbirdSearch.h"
 #import "Utility.h"
-#import <EasyNSURLConnection/EasyNSURLConnectionClass.h>
+#import <EasyNSURLConnection/EasyNSURLConnection.h>
 #import "ExceptionsCache.h"
 #import "Recognition.h"
 
@@ -60,7 +60,7 @@
             self.Success = NO;
             return @"";
         case 200:
-            return [self hfindaniid:[request getResponseData] searchterm:searchtitle];
+            return [self hfindaniid:request.response.responsedata searchterm:searchtitle];
         default:;
             self.Success = NO;
             return @"";
@@ -278,7 +278,7 @@
     long statusCode = [request getStatusCode];
     if (statusCode == 200) {
         NSError* error;
-        NSDictionary *d = [NSJSONSerialization JSONObjectWithData:[request getResponseData] options:kNilOptions error:&error];
+        NSDictionary *d = [request getResponseDataJsonParsed];
         NSArray *mappings = d[@"data"];
         for (NSDictionary *m in mappings) {
             if ([[NSString stringWithFormat:@"%@",[m[@"attributes"] valueForKey:@"externalSite"]] isEqualToString:@"myanimelist/anime"]) {
