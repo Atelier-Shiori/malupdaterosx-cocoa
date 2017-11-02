@@ -192,11 +192,9 @@
     defaultValues[@"enablekodiapi"] = @NO;
     defaultValues[@"kodiaddress"] = @"";
     defaultValues[@"kodiport"] = @"3005";
-    if (floor(NSAppKitVersionNumber) > NSAppKitVersionNumber10_9) {
-        //Yosemite Specific Advanced Options
-        defaultValues[@"DisableYosemiteTitleBar"] = @NO;
-        defaultValues[@"DisableYosemiteVibrance"] = @NO;
-    }
+    //Yosemite Specific Advanced Options
+    defaultValues[@"DisableYosemiteTitleBar"] = @NO;
+    defaultValues[@"DisableYosemiteVibrance"] = @NO;
     defaultValues[@"timerinterval"] = @(300);
     defaultValues[@"showcorrection"] = @YES;
     defaultValues[@"NSApplicationCrashOnExceptions"] = @YES;
@@ -269,33 +267,25 @@
 	[window close];
     
     //Set up Yosemite UI Enhancements
-    if (floor(NSAppKitVersionNumber) > NSAppKitVersionNumber10_9)
-    {
-        if ([defaults boolForKey:@"DisableYosemiteTitleBar"] != 1) {
-            // OS X 10.10 code here.
-            //Hide Title Bar
-            self.window.titleVisibility = NSWindowTitleHidden;
-            // Fix Window Size
-            NSRect frame = window.frame;
-            frame.size = CGSizeMake(440, 291);
-            [window setFrame:frame display:YES];
-        }
-        if ([defaults boolForKey:@"DisableYosemiteVibrance"] != 1) {
-            //Add NSVisualEffectView to Window
-            windowcontent.blendingMode = NSVisualEffectBlendingModeBehindWindow;
-            windowcontent.material = NSVisualEffectMaterialLight;
-            windowcontent.state = NSVisualEffectStateFollowsWindowActiveState;
-            windowcontent.appearance = [NSAppearance appearanceNamed:NSAppearanceNameVibrantLight];
-            //Make Animeinfo textview transparrent
-            [animeinfooutside setDrawsBackground:NO];
-            animeinfo.backgroundColor = [NSColor clearColor];
-        }
-        else {
-            windowcontent.state = NSVisualEffectStateInactive;
-            [animeinfooutside setDrawsBackground:NO];
-            animeinfo.backgroundColor = [NSColor clearColor];
-        }
-        
+    if ([defaults boolForKey:@"DisableYosemiteTitleBar"] != 1) {
+        // OS X 10.10 code here.
+        //Hide Title Bar
+        self.window.titleVisibility = NSWindowTitleHidden;
+        // Fix Window Size
+        NSRect frame = window.frame;
+        frame.size = CGSizeMake(440, 291);
+        [window setFrame:frame display:YES];
+    }
+    if ([defaults boolForKey:@"DisableYosemiteVibrance"] != 1) {
+        //Add NSVisualEffectView to Window
+        //Make Animeinfo textview transparrent
+        [animeinfooutside setDrawsBackground:NO];
+        animeinfo.backgroundColor = [NSColor clearColor];
+    }
+    else {
+        windowcontent.state = NSVisualEffectStateInactive;
+        [animeinfooutside setDrawsBackground:NO];
+        animeinfo.backgroundColor = [NSColor clearColor];
     }
     // Fix template images
     // There is a bug where template images are not made even if they are set in XCAssets
@@ -444,11 +434,7 @@
     //Show Help
     [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"https://github.com/chikorita157/malupdaterosx-cocoa/wiki/Getting-Started"]];
 }
-- (IBAction)showAboutWindow:(id)sender{
-    // Properly show the about window in a menu item application
-    [NSApp activateIgnoringOtherApps:YES];
-    [[NSApplication sharedApplication] orderFrontStandardAboutPanel:self];
-}
+
 - (void)disableUpdateItems{
     // Disables update options to prevent erorrs
     panelactive = true;
@@ -672,9 +658,11 @@
         else {
             [copyrightstr appendFormat:@"This copy is registered to: %@", [[NSUserDefaults standardUserDefaults] objectForKey:@"donor"]];
         }
+        (self.aboutWindowController).appName = @"MAL Updater OS X Pro";
     }
     else {
         [copyrightstr appendString:@"UNREGISTERED COPY"];
+        (self.aboutWindowController).appName = @"MAL Updater OS X";
     }
     (self.aboutWindowController).appCopyright = [[NSAttributedString alloc] initWithString:copyrightstr
                                                                                 attributes:@{

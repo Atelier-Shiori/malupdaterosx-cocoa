@@ -167,6 +167,18 @@
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="showaboutwindow:" target="560" id="OUy-9b-W66"/>
+                        <binding destination="RrG-fz-WPF" name="hidden" keyPath="values.donated" id="hfc-su-Iln"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="About MAL Updater OS X Pro" id="NC0-Hv-rlI">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="showaboutwindow:" target="560" id="AKp-Dq-ajF"/>
+                        <binding destination="RrG-fz-WPF" name="hidden" keyPath="values.donated" id="ZX0-66-GQR">
+                            <dictionary key="options">
+                                <string key="NSValueTransformerName">NSNegateBoolean</string>
+                            </dictionary>
+                        </binding>
                     </connections>
                 </menuItem>
                 <menuItem title="Check for Updates…" id="549">
@@ -291,6 +303,14 @@
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="terminate:" target="-3" id="554"/>
+                        <binding destination="RrG-fz-WPF" name="hidden" keyPath="values.donated" id="Uis-ME-wdx"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Quit MAL Updater OS X Pro" id="yxg-aa-xd5">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="terminate:" target="-3" id="CoB-b7-vXe"/>
+                        <binding destination="RrG-fz-WPF" name="hidden" keyPath="values.NSNegateBoolean" id="IQg-hR-QJ6"/>
                     </connections>
                 </menuItem>
             </items>
@@ -326,7 +346,7 @@
                 <outlet property="updatenow" destination="Swq-JZ-crS" id="wbq-Tb-8xl"/>
                 <outlet property="updatetoolbaritem" destination="k8g-Fn-fps" id="jAk-kU-cCA"/>
                 <outlet property="window" destination="789" id="804"/>
-                <outlet property="windowcontent" destination="AgC-Fy-vW3" id="nPp-Pl-b7x"/>
+                <outlet property="windowcontent" destination="oMQ-LZ-qrh" id="rbr-pK-0ju"/>
             </connections>
         </customObject>
         <window title="MAL Updater OS X" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" frameAutosaveName="StatusWindowPos" animationBehavior="default" id="789" customClass="NSPanel">
@@ -340,9 +360,18 @@
                 <rect key="frame" x="0.0" y="0.0" width="440" height="253"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <customView id="AgC-Fy-vW3" customClass="NSVisualEffectView">
+                    <textField verticalHuggingPriority="750" id="793">
+                        <rect key="frame" x="4" y="4" width="388" height="14"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Scrobble Status: Stopped" id="795">
+                            <font key="font" metaFont="smallSystem"/>
+                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <visualEffectView misplaced="YES" blendingMode="behindWindow" material="appearanceBased" state="followsWindowActiveState" id="oMQ-LZ-qrh">
                         <rect key="frame" x="0.0" y="22" width="440" height="231"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" heightSizable="YES"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <subviews>
                             <customView id="qr1-fa-MXn">
                                 <rect key="frame" x="0.0" y="0.0" width="440" height="232"/>
@@ -359,16 +388,16 @@
                                     </textField>
                                 </subviews>
                             </customView>
-                            <customView hidden="YES" misplaced="YES" id="8tC-w2-5c1">
+                            <customView hidden="YES" id="8tC-w2-5c1">
                                 <rect key="frame" x="0.0" y="0.0" width="440" height="231"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <subviews>
-                                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" id="gfr-73-DLn">
+                                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" id="gfr-73-DLn">
                                         <rect key="frame" x="0.0" y="3" width="137" height="183"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="SDe-v8-QB2"/>
                                     </imageView>
-                                    <scrollView misplaced="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" id="Flw-vm-3Ig">
+                                    <scrollView horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" id="Flw-vm-3Ig">
                                         <rect key="frame" x="154" y="0.0" width="286" height="190"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                         <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="ypk-hd-jNn">
@@ -395,7 +424,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                         </scroller>
                                     </scrollView>
-                                    <textField verticalHuggingPriority="750" misplaced="YES" id="792">
+                                    <textField verticalHuggingPriority="750" id="792">
                                         <rect key="frame" x="4" y="188" width="433" height="36"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Title - Episode" id="796">
@@ -407,16 +436,7 @@
                                 </subviews>
                             </customView>
                         </subviews>
-                    </customView>
-                    <textField verticalHuggingPriority="750" id="793">
-                        <rect key="frame" x="4" y="4" width="388" height="14"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Scrobble Status: Stopped" id="795">
-                            <font key="font" metaFont="smallSystem"/>
-                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
+                    </visualEffectView>
                 </subviews>
             </view>
             <toolbar key="toolbar" implicitIdentifier="DCC0DC7D-FE0D-4AF0-A2AD-D3CF993B3D2A" autosavesConfiguration="NO" allowsUserCustomization="NO" displayMode="iconOnly" sizeMode="regular" id="790">

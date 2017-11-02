@@ -1477,7 +1477,7 @@
 				INFOPLIST_FILE = "MAL_Updater_OS_X-Info.plist";
 				INSTALL_PATH = "$(HOME)/Documents/Build/Debug";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks @executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				PRODUCT_NAME = "MAL Updater OS X";
 				PROVISIONING_PROFILE = "";
 				SDKROOT = macosx;
@@ -1510,7 +1510,7 @@
 				INFOPLIST_FILE = "MAL_Updater_OS_X-Info.plist";
 				INSTALL_PATH = "$(HOME)/Documents/Build/Release";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks @executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				PRODUCT_NAME = "MAL Updater OS X";
 				PROVISIONING_PROFILE = "";
 				SDKROOT = macosx;
@@ -1532,7 +1532,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = "\"${SDKROOT}/usr/include/libxml2\"/**";
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
 				SDKROOT = macosx;
@@ -1555,7 +1555,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = "\"${SDKROOT}/usr/include/libxml2\"/**";
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				ONLY_ACTIVE_ARCH = NO;
 				PREBINDING = NO;
 				SDKROOT = macosx;
