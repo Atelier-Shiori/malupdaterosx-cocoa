@@ -1013,9 +1013,6 @@
     [_updatewindow showUpdateDialog:w withMALEngine:MALEngine];
 }
 - (void)updateDidEnd:(int)returnCode {
-    dispatch_queue_t queue = dispatch_get_global_queue(
-                                                       DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-    dispatch_async(queue, ^{
     // Check if Episode field is empty. If so, set it to last scrobbled episode
     NSString *tmpepisode = _updatewindow.episodefield.stringValue;
     bool episodechanged = false;
@@ -1027,28 +1024,33 @@
     }
 
     if (returnCode == 1) {
-         dispatch_async(dispatch_get_main_queue(), ^{
-        BOOL result = [MALEngine updatestatus:MALEngine.AniID score:(int)_updatewindow.showscore.selectedTag watchstatus:_updatewindow.showstatus.titleOfSelectedItem episode:tmpepisode];
-        if (result)
-            [self setStatusText:@"Scrobble Status: Updating of Watch Status/Score Successful."];
-        if (episodechanged) {
-            // Update the tooltip, menu and last scrobbled title
-            [self setStatusMenuTitleEpisode:MALEngine.LastScrobbledActualTitle episode:MALEngine.LastScrobbledEpisode];
-            [self updateLastScrobbledTitleStatus:false];
-            [confirmupdate setHidden:true];
-        }
-        else
-            [self setStatusText:@"Scrobble Status: Unable to update Watch Status/Score."];
-         });
+         [MALEngine updatestatus:MALEngine.AniID score:(int)_updatewindow.showscore.selectedTag watchstatus:_updatewindow.showstatus.titleOfSelectedItem episode:tmpepisode completion:^(bool success) {
+                 if (success) {
+                     [self setStatusText:@"Scrobble Status: Updating of Watch Status/Score Successful."];
+                 }
+                 else {
+                     [self setStatusText:@"Scrobble Status: Unable to update Watch Status/Score."];
+                 }
+                 if (episodechanged) {
+                     // Update the tooltip, menu and last scrobbled title
+                     [self setStatusMenuTitleEpisode:MALEngine.LastScrobbledActualTitle episode:MALEngine.LastScrobbledEpisode];
+                     [self updateLastScrobbledTitleStatus:false];
+                     [confirmupdate setHidden:true];
+                 }
+              //If scrobbling is on, restart timer
+              if (scrobbling == TRUE) {
+                  [self starttimer];
+              }
+              [self enableUpdateItems];
+         }];
     }
-    dispatch_async(dispatch_get_main_queue(), ^{
-    //If scrobbling is on, restart timer
-	if (scrobbling == TRUE) {
-		[self starttimer];
-	}
-    [self enableUpdateItems];
-    });
-    });
+    else {
+        //If scrobbling is on, restart timer
+        if (scrobbling == TRUE) {
+            [self starttimer];
+        }
+        [self enableUpdateItems];
+    }
 }
 
 #pragma mark Notification Center and Title/Update Confirmation

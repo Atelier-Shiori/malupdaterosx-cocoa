@@ -170,15 +170,6 @@ extern NSString * const EasyNSURLDeleteMethod;
  */
 - (void)HEAD:(NSString *)url parameters:(NSDictionary *)param headers:(NSDictionary *)headers completion:(void (^)(EasyNSURLResponse *response))completion error:(void (^)(NSError *error, int statuscode))error;
 /**
-     Performs a asynchronous POST request.
-     @param url A url of a request.
-     @param param Contains parameters/form data of a request;
-     @param headers The headers to add to a request.
-     @param completion A block object that is executed when a request is successful. Block have an EasyNSURLResponse object as arguments and no return values.
-     @param error A block object that is executed when a request fails. Block have an NSError and integer containing the HTTP status code and no return values;
- */
-- (void)POST:(NSString *)url parameters:(NSDictionary *)param headers:(NSDictionary *)headers completion:(void (^)(EasyNSURLResponse *response))completion error:(void (^)(NSError *error, int statuscode))error;
-/**
      Performs a asynchronous PATCH request.
      @param url A url of a request.
      @param param Contains parameters/form data of a request;
@@ -187,6 +178,24 @@ extern NSString * const EasyNSURLDeleteMethod;
      @param error A block object that is executed when a request fails. Block have an NSError and integer containing the HTTP status code and no return values;
  */
 - (void)PATCH:(NSString *)url parameters:(NSDictionary *)param headers:(NSDictionary *)headers completion:(void (^)(EasyNSURLResponse *response))completion error:(void (^)(NSError *error, int statuscode))error;
+/**
+ Performs a asynchronous POST request.
+ @param url A url of a request.
+ @param param Contains parameters/form data of a request;
+ @param headers The headers to add to a request.
+ @param completion A block object that is executed when a request is successful. Block have an EasyNSURLResponse object as arguments and no return values.
+ @param error A block object that is executed when a request fails. Block have an NSError and integer containing the HTTP status code and no return values;
+ */
+- (void)POST:(NSString *)url parameters:(NSDictionary *)param headers:(NSDictionary *)headers completion:(void (^)(EasyNSURLResponse *response))completion error:(void (^)(NSError *error, int statuscode))error;
+/**
+ Performs a asynchronous PUT request.
+ @param url A url of a request.
+ @param param Contains parameters/form data of a request;
+ @param headers The headers to add to a request.
+ @param completion A block object that is executed when a request is successful. Block have an EasyNSURLResponse object as arguments and no return values.
+ @param error A block object that is executed when a request fails. Block have an NSError and integer containing the HTTP status code and no return values;
+ */
+- (void)PUT:(NSString *)url parameters:(NSDictionary *)param headers:(NSDictionary *)headers completion:(void (^)(EasyNSURLResponse *response))completion error:(void (^)(NSError *error, int statuscode))error;
 /**
      Performs a asynchronous DELETE request.
      @param url A url of a request.
