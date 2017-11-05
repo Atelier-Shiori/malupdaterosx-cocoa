@@ -25,7 +25,7 @@
     [request startRequest];
     // Get Status Code
     int statusCode = [request getStatusCode];
-    NSError *error = [request getError]; // Error Detection
+    NSError *error = request.error; // Error Detection
     if (statusCode == 200 ) {
         if (self.DetectedEpisode.length == 0) { // Check if there is a DetectedEpisode (needed for checking
             // Set detected episode to 1
@@ -95,7 +95,7 @@
         [request setUseCookies:NO];
         //Set Token
         request.headers = (NSMutableDictionary *)@{@"Authorization": [NSString stringWithFormat:@"Basic %@", [self getBase64]]};
-        [request setPostMethod:@"PUT"];
+        request.postmethod = @"PUT";
         [request addFormData:self.DetectedEpisode forKey:@"episodes"];
         //Set Status
         self.WatchStatus = (self.DetectedEpisode).intValue == self.TotalEpisodes ? @"completed" : @"watching";
@@ -189,7 +189,7 @@
     //Set Token
     request.headers = (NSMutableDictionary *)@{@"Authorization": [NSString stringWithFormat:@"Basic %@", [self getBase64]]};
     //Set method to Delete
-    [request setPostMethod:@"DELETE"];
+    request.postmethod = @"DELETE";
     // Do Update
     [request startFormRequest];
     switch ([request getStatusCode]) {
@@ -234,7 +234,7 @@
     EasyNSURLConnection *request = [[EasyNSURLConnection alloc] initWithURL:url];
     [request setUseCookies:NO];
     request.headers = (NSMutableDictionary *)@{@"Authorization": [NSString stringWithFormat:@"Basic %@", [self getBase64]]};
-    [request setPostMethod:@"PUT"];
+    request.postmethod = @"PUT";
     // Set Date
     [request addFormData:[Utility todaydatestring] forKey:@"start"];
     if ([self.WatchStatus isEqualToString:@"completed"]) {

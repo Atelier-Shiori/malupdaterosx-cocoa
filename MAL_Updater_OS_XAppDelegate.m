@@ -38,7 +38,6 @@
 @synthesize statusItem;
 @synthesize statusImage;
 @synthesize timer;
-@synthesize openstream;
 @synthesize togglescrobbler;
 @synthesize updatenow;
 @synthesize confirmupdate;
@@ -446,7 +445,6 @@
     [updatedupdatestatus setEnabled:NO];
     [confirmupdate setEnabled:NO];
     [findtitle setEnabled:NO];
-    [openstream setEnabled:NO];
 }
 - (void)enableUpdateItems{
     // Reenables update options
@@ -464,7 +462,6 @@
     [statusMenu setAutoenablesItems:YES];
     [confirmupdate setEnabled:YES];
     [findtitle setEnabled:YES];
-    [openstream setEnabled:YES];
 }
 - (void)unhideMenus{
     //Show Last Scrobbled Title and operations */
@@ -484,7 +481,6 @@
 	    togglescrobbler.enabled = enable;
 	    confirmupdate.enabled = enable;
 	    findtitle.enabled = enable;
-	    openstream.enabled = enable;
 	    if (!enable) {
 	        updatenow.title = @"Updating...";
 	        [self setStatusText:@"Scrobble Status: Scrobbling..."];

@@ -31,7 +31,6 @@
 @property (strong) NSStatusItem *statusItem;
 @property (strong) NSImage *statusImage;
 @property (strong) MSWeakTimer *timer;
-@property (strong) IBOutlet NSMenuItem *openstream;
 @property (strong) IBOutlet NSMenuItem *togglescrobbler;
 @property (strong) IBOutlet NSMenuItem *updatenow;
 @property (strong) IBOutlet NSMenuItem *confirmupdate;
@@ -100,7 +99,6 @@
 - (IBAction)getHelp:(id)sender;
 - (void)appendToAnimeInfo:(NSString*)text;
 - (void)showNotification:(NSString *)title message:(NSString *) message;
-- (IBAction)showAboutWindow:(id)sender;
 - (IBAction)enterDonationKey:(id)sender;
 - (NSDictionary *)getNowPlaying;
 - (void)resetUI;

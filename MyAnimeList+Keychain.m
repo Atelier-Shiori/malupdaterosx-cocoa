@@ -64,7 +64,7 @@
         //Verify Username/Password
         [request startRequest];
         // Check for errors
-        NSError *error = [request getError];
+        NSError *error = request.error;
         if ([request getStatusCode] == 200 && !error) {
             [[NSUserDefaults standardUserDefaults] setObject:[NSDate dateWithTimeIntervalSinceNow:60*60*24] forKey:@"credentialscheckdate"];
             NSLog(@"User credentials valid.");
