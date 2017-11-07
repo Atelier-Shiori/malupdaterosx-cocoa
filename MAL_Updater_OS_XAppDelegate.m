@@ -179,7 +179,7 @@
 	
 	// Defaults
 	defaultValues[@"Base64Token"] = @"";
-	defaultValues[@"MALAPIURL"] = @"https://malapi.ateliershiori.moe";
+	defaultValues[@"MALAPIURL"] = @"https://malapi.malupdaterosx.moe";
 	defaultValues[@"ScrobbleatStartup"] = @NO;
     defaultValues[@"useSearchCache"] = @YES;
     defaultValues[@"exceptions"] = [[NSMutableArray alloc] init];
@@ -321,7 +321,7 @@
     }
     if ([Utility checkoldAPI]) {
         [self showNotification:@"MAL Updater OS X" message:@"The API URL has been automatically updated."];
-        [[NSUserDefaults standardUserDefaults] setObject:@"https://malapi.ateliershiori.moe" forKey:@"MALAPIURL"];
+        [[NSUserDefaults standardUserDefaults] setObject:@"https://malapi.malupdaterosx.moe" forKey:@"MALAPIURL"];
     }
 	// Autostart Scrobble at Startup
 	if ([defaults boolForKey:@"ScrobbleatStartup"] == 1) {
@@ -643,7 +643,7 @@
     if (!_aboutWindowController) {
         _aboutWindowController = [PFAboutWindowController new];
     }
-    (self.aboutWindowController).appURL = [[NSURL alloc] initWithString:@"https://malupdaterosx.ateliershiori.moe/"];
+    (self.aboutWindowController).appURL = [[NSURL alloc] initWithString:@"https://malupdaterosx.moe/malupdaterosx/"];
     NSMutableString *copyrightstr = [NSMutableString new];
     NSDictionary *bundleDict = [NSBundle mainBundle].infoDictionary;
     [copyrightstr appendFormat:@"%@ \r\r",bundleDict[@"NSHumanReadableCopyright"]];
