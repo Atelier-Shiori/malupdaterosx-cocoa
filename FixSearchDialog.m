@@ -123,15 +123,15 @@
 - (void)populateData:(NSData *)data{
     //Remove all existing Data
     [[arraycontroller mutableArrayValueForKey:@"content"] removeAllObjects];
-    
-    //Parse Data
-    NSError* error;
-    
-    NSArray *searchdata = [NSJSONSerialization JSONObjectWithData:data options:nil error:&error];
-    
-    //Add it to the array controller
-    [arraycontroller addObjects:searchdata];
-    
+    if (data != nil) {
+        //Parse Data
+        NSError* error;
+        
+        NSArray *searchdata = [NSJSONSerialization JSONObjectWithData:data options:nil error:&error];
+        
+        //Add it to the array controller
+        [arraycontroller addObjects:searchdata];
+    }
     //Show on tableview
     [tb reloadData];
     //Deselect Selection
