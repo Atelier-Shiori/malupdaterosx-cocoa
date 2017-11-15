@@ -7,7 +7,7 @@
 //
 
 #import "FixSearchDialog.h"
-#import <EasyNSURLConnection/EasyNSURLConnectionClass.h>
+#import <EasyNSURLConnection/EasyNSURLConnection.h>
 #import "NSString_stripHtml.h"
 #import "Utility.h"
 
@@ -112,7 +112,7 @@
         [request startRequest];
         // Get Status Code
         long statusCode = [request getStatusCode];
-        NSData *response = [request getResponseData];
+        NSData *response = request.response.responsedata;
         dispatch_async(dispatch_get_main_queue(), ^{
         switch (statusCode) {
             case 200:

@@ -7,7 +7,7 @@
 //
 
 #import "Utility.h"
-#import <EasyNSURLConnection/EasyNSURLConnectionClass.h>
+#import <EasyNSURLConnection/EasyNSURLConnection.h>
 #import <MALLibraryAppMigrate/MALLibraryAppMigrate.h>
 #import <CocoaOniguruma/OnigRegexp.h>
 #import <CocoaOniguruma/OnigRegexpUtility.h>
@@ -167,7 +167,7 @@
         long statusCode = [request getStatusCode];
     if (statusCode == 200) {
         NSError* jerror;
-        NSDictionary *d = [NSJSONSerialization JSONObjectWithData:[request getResponseData] options:nil error:&jerror];
+        NSDictionary *d = [NSJSONSerialization JSONObjectWithData:request.response.responsedata options:nil error:&jerror];
         int valid = ((NSNumber *)d[@"valid"]).intValue;
         if (valid == 1) {
             // Valid Key

@@ -9,7 +9,7 @@
 #import "LoginPref.h"
 #import "Base64Category.h"
 #import "MAL_Updater_OS_XAppDelegate.h"
-#import <EasyNSURLConnection/EasyNSURLConnectionClass.h>
+#import <EasyNSURLConnection/EasyNSURLConnection.h>
 #import "Utility.h"
 
 

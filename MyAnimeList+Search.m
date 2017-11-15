@@ -8,7 +8,7 @@
 
 #import "MyAnimeList+Search.h"
 #import "MyAnimeList+Keychain.h"
-#import <EasyNSURLConnection/EasyNSURLConnectionClass.h>
+#import <EasyNSURLConnection/EasyNSURLConnection.h>
 #import "Utility.h"
 #import "ExceptionsCache.h"
 #import "Recognition.h"

@@ -7,7 +7,7 @@
 //
 
 #import "AutoExceptions.h"
-#import <EasyNSURLConnection/EasyNSURLConnectionClass.h>
+#import <EasyNSURLConnection/EasyNSURLConnection.h>
 #import "MAL_Updater_OS_XAppDelegate.h"
 
 @implementation AutoExceptions
@@ -71,7 +71,7 @@
                 [[NSUserDefaults standardUserDefaults] setObject:@(true)forKey:@"updatedaexceptions"];
             }
             //Parse and Import
-            NSData *jsonData = [request getResponseData];
+            NSData *jsonData = request.response.responsedata;
             NSError *error = nil;
             NSArray *a;
             @try {
