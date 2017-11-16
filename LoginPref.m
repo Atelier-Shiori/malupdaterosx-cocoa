@@ -113,6 +113,7 @@
 - (void)login:(NSString *)username password:(NSString *)password {
     // Verify Account with MyAnimeList
     EasyNSURLConnection *request = [EasyNSURLConnection new];
+    [Utility setUserAgent:request];
     [request GET:@"https://myanimelist.net/api/account/verify_credentials.xml" headers:@{@"Authorization": [NSString stringWithFormat:@"Basic %@", [[NSString stringWithFormat:@"%@:%@", username, password] base64Encoding]]} completion:^(EasyNSURLResponse *response){
             //Login successful
             [Utility showsheetmessage:@"Login Successful" explaination: @"Login is successful." window:self.view.window];

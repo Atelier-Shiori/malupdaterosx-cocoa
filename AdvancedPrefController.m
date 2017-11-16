@@ -59,6 +59,7 @@
     [testprogressindicator startAnimation:nil];
     [testapibtn setEnabled:NO];
     EasyNSURLConnection *request = [EasyNSURLConnection new];
+    [Utility setUserAgent:request];
     [request GET:[NSString stringWithFormat:@"%@/2.1/animelist/chikorita157", [NSUserDefaults.standardUserDefaults objectForKey:@"MALAPIURL"]] headers:nil completion:^(EasyNSURLResponse *response) {
          [Utility showsheetmessage:@"API Test Successful" explaination:[NSString stringWithFormat:@"HTTP Code: %li", [response getStatusCode]] window: self.view.window];
         [testprogressindicator setHidden:YES];

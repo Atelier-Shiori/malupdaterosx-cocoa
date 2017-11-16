@@ -12,6 +12,7 @@
 #import "MAL_Updater_OS_XAppDelegate.h"
 
 @class OnigRegexp;
+@class EasyNSURLConnection;
 
 @interface Utility : NSObject
 + (bool)checkMatch:(NSString *)title
@@ -31,4 +32,5 @@
 + (int)checkDonationKey:(NSString *)key name:(NSString *)name;
 + (NSString *)numbertoordinal:(int)number;
 + (NSString *)todaydatestring;
++ (void)setUserAgent:(EasyNSURLConnection *)request ;
 @end

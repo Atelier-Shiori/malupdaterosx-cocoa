@@ -102,6 +102,7 @@
         __block NSString *searchterm = [Utility urlEncodeString:search.stringValue];
         //Set Search API
         EasyNSURLConnection *request = [[EasyNSURLConnection alloc] init];
+        [Utility setUserAgent:request];
         //Ignore Cookies
         [request setUseCookies:NO];
         //Perform Search
