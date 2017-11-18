@@ -678,7 +678,7 @@
     }
     (self.aboutWindowController).appCopyright = [[NSAttributedString alloc] initWithString:copyrightstr
                                                                                 attributes:@{
-                                                                                             NSForegroundColorAttributeName:[NSColor labelColor],
+                                                                                             NSForegroundColorAttributeName:[NSColor colorWithRed:0.0f green:0.0f blue:0.0f alpha:1.0f],
                                                                                              NSFontAttributeName:[NSFont fontWithName:[NSFont systemFontOfSize:12.0f].familyName size:11]}];
     
     [self.aboutWindowController showWindow:nil];
