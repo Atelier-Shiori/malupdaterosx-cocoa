@@ -1,7 +1,7 @@
  [![License](https://img.shields.io/badge/license-BSD-green.svg)](http://opensource.org/licenses/BSD-3-Clause)
 
-# MAL Updater OS X 2.3
-MAL Updater OS X is an open source OS X scrobbler that automatically detects what's playing and updates the user's MyAnimeList.
+# MAL Updater OS X 2.3.X - Legacy
+MAL Updater OS X is an open source OS X scrobbler that automatically detects what's playing and updates the user's MyAnimeList. This is the legacy branch, which will support macOS 10.9, with only minor fixes.
 
 XCode 9 or higher is required to build (Deployment Target is OS X 10.9)
 
