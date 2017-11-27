@@ -57,6 +57,7 @@
         //Set Login URL
         NSURL *url = [NSURL URLWithString:@"https://myanimelist.net/api/account/verify_credentials.xml"];
         EasyNSURLConnection *request = [[EasyNSURLConnection alloc] initWithURL:url];
+        [Utility setUserAgent:request];
         //Ignore Cookies
         [request setUseCookies:NO];
         //Set Username and Password

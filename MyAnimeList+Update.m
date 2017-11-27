@@ -17,6 +17,7 @@
     //Set Search API
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/1/anime/%@?mine=1",self.MALApiUrl, titleid]];
     EasyNSURLConnection *request = [[EasyNSURLConnection alloc] initWithURL:url];
+    [Utility setUserAgent:request];
     //Ignore Cookies
     [request setUseCookies:NO];
     //Set Token
@@ -92,6 +93,7 @@
         //Set library/scrobble API
         NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/2.1/animelist/anime/%@", self.MALApiUrl, titleid]];
         EasyNSURLConnection *request = [[EasyNSURLConnection alloc] initWithURL:url];
+        [Utility setUserAgent:request];
         //Ignore Cookies
         [request setUseCookies:NO];
         //Set Token
@@ -141,6 +143,7 @@
     //Set library/scrobble API
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/2.1/animelist/anime", self.MALApiUrl]];
     EasyNSURLConnection *request = [[EasyNSURLConnection alloc] initWithURL:url];
+    [Utility setUserAgent:request];
     //Ignore Cookies
     [request setUseCookies:NO];
     //Set Token
@@ -185,6 +188,7 @@
     //Set library/scrobble API
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/2.1/animelist/anime/%@", self.MALApiUrl, titleid]];
     EasyNSURLConnection *request = [[EasyNSURLConnection alloc] initWithURL:url];
+    [Utility setUserAgent:request];
     //Ignore Cookies
     [request setUseCookies:NO];
     //Set Token
@@ -217,6 +221,7 @@
     //Set library/scrobble API
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/2.1/animelist/anime/%@", self.MALApiUrl, titleid]];
     EasyNSURLConnection *request = [[EasyNSURLConnection alloc] initWithURL:url];
+    [Utility setUserAgent:request];
     //Ignore Cookies
     [request setUseCookies:NO];
     //Set Token
@@ -248,6 +253,7 @@
 - (bool)setStartEndDates:(NSString *)titleid {
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/2.1/animelist/anime/%@", self.MALApiUrl, titleid]];
     EasyNSURLConnection *request = [[EasyNSURLConnection alloc] initWithURL:url];
+    [Utility setUserAgent:request];
     [request setUseCookies:NO];
     request.headers = (NSMutableDictionary *)@{@"Authorization": [NSString stringWithFormat:@"Basic %@", [self getBase64]]};
     [request setPostMethod:@"PUT"];

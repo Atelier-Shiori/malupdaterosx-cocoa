@@ -67,6 +67,7 @@
         //Set URL
         NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/2.1/animelist/chikorita157", [defaults objectForKey:@"MALAPIURL"]]];
         EasyNSURLConnection *request = [[EasyNSURLConnection alloc] initWithURL:url];
+        [Utility setUserAgent:request];
         //Ignore Cookies
         [request setUseCookies:NO];
         //Test API

@@ -106,6 +106,7 @@
         //Set Search API
         NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/2.1/anime/search?q=%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"MALAPIURL"], searchterm]];
         EasyNSURLConnection *request = [[EasyNSURLConnection alloc] initWithURL:url];
+        [Utility setUserAgent:request];
         //Ignore Cookies
         [request setUseCookies:NO];
         //Perform Search

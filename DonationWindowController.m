@@ -70,7 +70,7 @@
 
 - (IBAction)donate:(id)sender{
     // Show Donation Page
-    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://malupdaterosx.ateliershiori.moe/donate/"]];
+    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://malupdaterosx.moe/donate/"]];
 }
 
 - (IBAction)purchasedonationlicense:(id)sender {
@@ -79,7 +79,7 @@
 }
 
 - (IBAction)lookupkey:(id)sender {
-    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"https://malupdaterosx.ateliershiori.moe/lostkey.php"]];
+    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"https://malupdaterosx.moe/lostkey.php"]];
 }
 
 - (IBAction)migrateMALLibrary:(id)sender {

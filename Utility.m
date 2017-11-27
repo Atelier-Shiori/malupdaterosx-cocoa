@@ -56,8 +56,8 @@
             return @"";
 }
 }
-+ (BOOL)checkoldAPI{
-    if ([[NSString stringWithFormat:@"%@", [[NSUserDefaults standardUserDefaults] objectForKey:@"MALAPIURL"]] isEqualToString:@"https://malapi.shioridiary.me"]||[[NSString stringWithFormat:@"%@", [[NSUserDefaults standardUserDefaults] objectForKey:@"MALAPIURL"]] isEqualToString:@"http://mal-api.com"]) {
++ (BOOL)checkoldAPI {
+    if ([[NSString stringWithFormat:@"%@", [[NSUserDefaults standardUserDefaults] objectForKey:@"MALAPIURL"]] isEqualToString:@"https://malapi.shioridiary.me"]||[[NSString stringWithFormat:@"%@", [[NSUserDefaults standardUserDefaults] objectForKey:@"MALAPIURL"]] isEqualToString:@"http://mal-api.com"]||[[NSString stringWithFormat:@"%@", [[NSUserDefaults standardUserDefaults] objectForKey:@"MALAPIURL"]] isEqualToString:@"https://malapi.ateliershiori.moe"]) {
         return true;
     }
     return false;
@@ -133,7 +133,7 @@
     long choice = [alert runModal];
     if (choice == NSAlertFirstButtonReturn) {
         // Open Donation Page
-        [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://malupdaterosx.ateliershiori.moe/donate/"]];
+        [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://malupdaterosx.moe/donate/"]];
         [Utility setReminderDate];
     }
     else if (choice == NSAlertSecondButtonReturn) {
@@ -214,5 +214,10 @@
     NSDateFormatter *df = [NSDateFormatter new];
     df.dateFormat = @"yyyy-MM-dd";
     return [df stringFromDate:today];
+}
++ (void)setUserAgent:(EasyNSURLConnection *)request {
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"donated"]) {
+        request.useragent = [NSString stringWithFormat:@"%@ %@ (Macintosh; Mac OS X %@; %@)", @"MAL Updater OS X Pro",[NSBundle mainBundle].infoDictionary[@"CFBundleShortVersionString"], [NSDictionary dictionaryWithContentsOfFile:@"/System/Library/CoreServices/SystemVersion.plist"][@"ProductVersion"], [NSLocale currentLocale].localeIdentifier];
+    }
 }
 @end

@@ -49,6 +49,7 @@
     //Set Search API
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://myanimelist.net/api/anime/search.xml?q=%@", searchterm]];
     EasyNSURLConnection *request = [[EasyNSURLConnection alloc] initWithURL:url];
+    [Utility setUserAgent:request];
     //Set Token
     request.headers = (NSMutableDictionary *)@{@"Authorization": [NSString stringWithFormat:@"Basic %@", [self getBase64]]};
     //Ignore Cookies
