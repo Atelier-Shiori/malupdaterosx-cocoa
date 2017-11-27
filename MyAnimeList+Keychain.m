@@ -10,6 +10,7 @@
 #import <EasyNSURLConnection/EasyNSURLConnection.h>
 #import <SAMKeychain/SAMKeychain.h>
 #import "Base64Category.h"
+#import "Utility.h"
 
 @implementation MyAnimeList (Keychain)
 - (BOOL)checkaccount{
