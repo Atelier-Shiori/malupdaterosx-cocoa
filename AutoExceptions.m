@@ -9,6 +9,7 @@
 #import "AutoExceptions.h"
 #import <EasyNSURLConnection/EasyNSURLConnection.h>
 #import "MAL_Updater_OS_XAppDelegate.h"
+#import "Utility.h"
 
 @implementation AutoExceptions
 #pragma mark Importing Exceptions and Auto Exceptions
