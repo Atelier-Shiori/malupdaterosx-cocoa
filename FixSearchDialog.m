@@ -135,18 +135,18 @@
     [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"https://github.com/chikorita157/malupdaterosx-cocoa/wiki/Correction-Exception-Help"]];
 }
 
-- (void)populateData:(NSData *)data{
+- (void)populateData:(NSData *)data {
     //Remove all existing Data
     [[arraycontroller mutableArrayValueForKey:@"content"] removeAllObjects];
-    
-    //Parse Data
-    NSError* error;
-    
-    NSArray *searchdata = [NSJSONSerialization JSONObjectWithData:data options:nil error:&error];
-    
-    //Add it to the array controller
-    [arraycontroller addObjects:searchdata];
-    
+    if (data) {
+        //Parse Data
+        NSError* error;
+        
+        NSArray *searchdata = [NSJSONSerialization JSONObjectWithData:data options:nil error:&error];
+        
+        //Add it to the array controller
+        [arraycontroller addObjects:searchdata];
+    }
     //Show on tableview
     [tb reloadData];
     //Deselect Selection
