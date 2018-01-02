@@ -24,7 +24,6 @@
 #import <MSWeakTimer_macOS/MSWeakTimer.h>
 #import <Fabric/Fabric.h>
 #import <Crashlytics/Crashlytics.h>
-#import <MALLibraryAppMigrate/MALLibraryAppMigrate.h>
 #import "ShareMenu.h"
 #import "PFAboutWindowController.h"
 
@@ -241,8 +240,6 @@
     [MALEngine setManagedObjectContext:managedObjectContext];
     #ifdef DEBUG
     #else
-        // Check if build is prerelease. Notify user if user is not registered
-        [MALLibraryAppStoreMigrate checkPreRelease];
         // Check if Application is in the /Applications Folder
         // Only Activate in OS X/macOS is 10.11 or earlier due to Gatekeeper changes in macOS Sierra
         // Note: Sierra Appkit Version is 1485
@@ -561,6 +558,15 @@
                 [self showNotification:@"Invalid Credentials" message:@"Your credentials may be incorrect. Please log in again."];
                 [self setStatusText:@"Scrobble Status: Invalid credentials."];
                 break;
+            case ScrobblerUnregisteredUpdateLimitReached: {
+                NSDate *resetdate = [NSUserDefaults.standardUserDefaults valueForKey:@"update_reset_date"];
+                NSDateFormatter *df = [NSDateFormatter new];
+                df.dateStyle = NSDateFormatterMediumStyle;
+                df.timeStyle = NSDateFormatterShortStyle;
+                [self showNotification:@"Update/Scrobble Limit Reached" message:[NSString stringWithFormat:@"You reached the update limit for this week. It will reset on %@. Considering registering.", [df stringFromDate:resetdate]]];
+                [self setStatusText:@"Scrobble Status: Update limit reached."];
+                break;
+            }
             default:
                 break;
         }

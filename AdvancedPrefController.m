@@ -92,16 +92,21 @@
 - (IBAction)resetapiurl:(id)sender
 {
     //Reset Unofficial MAL API URL
-    APIUrl.stringValue = @"https://malapi.ateliershiori.moe";
-    // Generate API Key
+    APIUrl.stringValue = @"https://malapi.malupdaterosx.moe";
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults] ;
     [defaults setObject:APIUrl.stringValue forKey:@"MALAPIURL"];
+    [appdelegate.MALEngine changenotifierhostname];
     
 }
 - (void)controlTextDidChange:(NSNotification *)notification {
     NSTextField *textfield = notification.object;
     MyAnimeList *malengine = appdelegate.MALEngine;
-    [malengine.detection setKodiReachAddress:textfield.stringValue];
+    if ([textfield.identifier isEqualToString:@"kodihost"]) {
+        [malengine.detection setKodiReachAddress:textfield.stringValue];
+    }
+    else if ([textfield.identifier isEqualToString:@"apiurl"]) {
+        [malengine changenotifierhostname];
+    }
 }
 - (IBAction)setKodiReach:(id)sender{
     MyAnimeList *malengine = appdelegate.MALEngine;

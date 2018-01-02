@@ -33,4 +33,7 @@
 + (NSString *)numbertoordinal:(int)number;
 + (NSString *)todaydatestring;
 + (void)setUserAgent:(EasyNSURLConnection *)request;
++ (void)incrementupdatecount;
++ (bool)checkupdatelimit;
++ (NSString *)getHostName;
 @end

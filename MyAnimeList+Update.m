@@ -122,6 +122,7 @@
                     self.LastScrobbledActualTitle = (NSString *)self.LastScrobbledInfo[@"title"];
                 }
                 self.confirmed = true;
+                [self incrementupdatelimit];
                 // Update Successful
                 return ScrobblerUpdateSuccessful;
             default:
@@ -174,6 +175,7 @@
             if (![self setStartEndDates:titleid]) {
                 NSLog(@"Can't set start/end dates");
             }
+            [self incrementupdatelimit];
             return ScrobblerAddTitleSuccessful;
         default:
             // Update Unsuccessful
@@ -277,5 +279,10 @@
     self.LastScrobbledEpisode = self.DetectedEpisode;
     self.LastScrobbledActualTitle = (NSString *)self.LastScrobbledInfo[@"title"];
     self.LastScrobbledSource = self.DetectedSource;
+}
+- (void)incrementupdatelimit {
+    if (![NSUserDefaults.standardUserDefaults boolForKey:@"donated"]) {
+        [Utility incrementupdatecount];
+    }
 }
 @end

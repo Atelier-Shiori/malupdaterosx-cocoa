@@ -24,24 +24,7 @@
 @synthesize managedObjectContext;
 - (id)init {
     _confirmed = true;
-    //Create Reachability Object
-    _reach = [Reachability reachabilityWithHostname:@"malapi.malupdaterosx.moe"];
-    // Set up blocks
-    // Set the blocks
-    _reach.reachableBlock = ^(Reachability*reach)
-    {
-        _online = true;
-        dispatch_async(dispatch_get_main_queue(), ^{
-            NSLog(@"Atarashii-API is reachable.");
-        });
-    };
-    _reach.unreachableBlock = ^(Reachability*reach)
-    {
-        _online = false;
-        NSLog(@"Computer not connected to internet or Atarashii-API Server is down");
-    };
-    // Start notifier
-    [_reach startNotifier];
+    [self setupnotifier];
     //Set up Kodi Reachability
     _detection = [Detection new];
     [_detection setKodiReach:[[NSUserDefaults standardUserDefaults] boolForKey:@"enablekodiapi"]];
@@ -102,6 +85,10 @@
 - (int)startscrobbling {
     // Detect media
     int detectstatus;
+    if ([Utility checkupdatelimit]) {
+        NSLog(@"User's Update Limit reached, not performing scrobble.");
+        return ScrobblerUnregisteredUpdateLimitReached;
+    }
     detectstatus = [self detectmedia];
 	if (detectstatus == ScrobblerDetectedMedia) { // Detects Title
         if (_online) {
@@ -161,6 +148,9 @@
     return detectstatus;
 }
 - (NSDictionary *)scrobblefromqueue{
+    if ([Utility checkupdatelimit]) {
+        return @{@"success": @(false), @"fail": @(0), @"confirmneeded" : @(false)};
+    }
     // Restore Detected Media
     __block NSError *error;
     NSManagedObjectContext *moc = self.managedObjectContext;
@@ -226,7 +216,7 @@
     }
     return @{@"success": @(successc), @"fail": @(fail), @"confirmneeded" : @(confirmneeded)};
 }
-- (int)scrobbleagain:(NSString *)showtitle Episode:(NSString *)episode correctonce:(BOOL)correctonce{
+- (int)scrobbleagain:(NSString *)showtitle Episode:(NSString *)episode correctonce:(BOOL)correctonce {
 	_correcting = true;
     NSString *lasttitle;
     if (correctonce) {
@@ -650,5 +640,28 @@
     _AniID = nil;
 }
 
-
+- (void)setupnotifier {
+    //Create Reachability Object
+    _reach = [Reachability reachabilityWithHostname:[Utility getHostName]];
+    // Set up blocks
+    // Set the blocks
+    _reach.reachableBlock = ^(Reachability*reach)
+    {
+        _online = true;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSLog(@"Atarashii-API is reachable.");
+        });
+    };
+    _reach.unreachableBlock = ^(Reachability*reach)
+    {
+        _online = false;
+        NSLog(@"Computer not connected to internet or Atarashii-API Server is down");
+    };
+    // Start notifier
+    [_reach startNotifier];
+}
+- (void)changenotifierhostname {
+    [_reach stopNotifier];
+    [self setupnotifier];
+}
 @end

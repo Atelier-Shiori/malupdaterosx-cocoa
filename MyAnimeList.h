@@ -27,7 +27,8 @@ typedef NS_ENUM(unsigned int, ScrobbleStatus) {
     ScrobblerUpdateFailed = 53,
     ScrobblerFailed = 54,
     ScrobblerInvalidCredentials = 55,
-    ScrobblerMALUpdaterOSXNeedsUpdate = 56
+    ScrobblerMALUpdaterOSXNeedsUpdate = 56,
+    ScrobblerUnregisteredUpdateLimitReached = 57
 };
 @property (strong) NSString *MALApiUrl;
 @property (strong, getter=getLastScrobbledTitle) NSString *LastScrobbledTitle;
@@ -75,4 +76,5 @@ typedef NS_ENUM(unsigned int, ScrobbleStatus) {
 - (void)clearAnimeInfo;
 - (NSString *)startSearch;
 - (void)resetinfo;
+- (void)changenotifierhostname;
 @end

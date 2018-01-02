@@ -8,10 +8,8 @@
 
 #import "DonationWindowController.h"
 #import "Utility.h"
-#import <MALLibraryAppMigrate/MALLibraryAppMigrate.h>
 
 @interface DonationWindowController ()
-@property (weak) IBOutlet NSImageView *appstoreicon;
 
 @end
 
@@ -31,12 +29,6 @@
     [super windowDidLoad];
     
     // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
-    if (floor(NSAppKitVersionNumber) > NSAppKitVersionNumber10_11) {
-        _appstoreicon.image = [[NSImage alloc] initByReferencingURL:[NSURL fileURLWithPath:[[NSBundle bundleWithPath:@"/Applications/App Store.app"] pathForResource:@"AppIcon" ofType:@"icns"]]];
-    }
-    else {
-            _appstoreicon.image = [[NSImage alloc] initByReferencingURL:[NSURL fileURLWithPath:[[NSBundle bundleWithPath:@"/Applications/App Store.app"] pathForResource:@"appStore" ofType:@"icns"]]];
-    }
 }
 
 - (IBAction)validate:(id)sender{
@@ -82,30 +74,4 @@
     [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"https://malupdaterosx.moe/lostkey.php"]];
 }
 
-- (IBAction)migrateMALLibrary:(id)sender {
-    // Validate in default location first
-    if ([MALLibraryAppStoreMigrate validateReciept:@"/Applications/MAL Library.app"]) {
-        [self appStoreRegister:@"/Applications/MAL Library.app"];
-    }
-    else {
-        [MALLibraryAppStoreMigrate selectAppandValidate:self.window completionHandler:^(bool success, NSString *path) {
-            if (success) {
-                [self appStoreRegister:path];
-            }
-            else {
-                [Utility showsheetmessage:@"Invalid Copy of MAL Library" explaination:@"Please select a valid copy of MAL Library you downloaded from the App Store." window:self.window];
-            }
-        }];
-    }
-}
-
-- (void)appStoreRegister:(NSString *)path{
-    [Utility showsheetmessage:@"Registered" explaination:@"Thank you for purchasing MAL Library from the App Store. The donation reminder will no longer appear and access to weekly builds is now unlocked." window:nil];
-    // Add to the preferences
-    [[NSUserDefaults standardUserDefaults] setObject:@YES forKey:@"donated"];
-    [[NSUserDefaults standardUserDefaults] setObject:path forKey:@"MALLibraryPath"];
-    [[NSUserDefaults standardUserDefaults] setObject:@YES forKey:@"MacAppStoreMigrated"];
-    //Close Window
-    [self.window orderOut:self];
-}
 @end

@@ -8,7 +8,6 @@
 
 #import "Utility.h"
 #import <EasyNSURLConnection/EasyNSURLConnection.h>
-#import <MALLibraryAppMigrate/MALLibraryAppMigrate.h>
 #import <CocoaOniguruma/OnigRegexp.h>
 #import <CocoaOniguruma/OnigRegexpUtility.h>
 
@@ -82,20 +81,12 @@
     return [string stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLHostAllowedCharacterSet] ];
 }
 + (void)donateCheck:(MAL_Updater_OS_XAppDelegate*)delegate{
+    if ([NSUserDefaults.standardUserDefaults boolForKey:@"MacAppStoreMigrated"]) {
+        [NSUserDefaults.standardUserDefaults setBool:@NO forKey:@"MacAppStoreMigrated"];
+        [NSUserDefaults.standardUserDefaults setBool:@NO forKey:@"donated"];
+    }
     if (![[NSUserDefaults standardUserDefaults] objectForKey:@"donatereminderdate"]) {
         [Utility setReminderDate];
-    }
-    if (((NSNumber *)[[NSUserDefaults standardUserDefaults] objectForKey:@"MacAppStoreMigrated"]).boolValue && ((NSNumber *)[[NSUserDefaults standardUserDefaults] objectForKey:@"donated"]).boolValue) {
-        NSString *MALLibraryPath = [[NSUserDefaults standardUserDefaults] valueForKey:@"MALLibraryPath"];
-        bool valid = [MALLibraryAppStoreMigrate validateReciept:MALLibraryPath];
-        if (!valid) {
-            //Invalid Key
-            [Utility showsheetmessage:@"Donation Key Error" explaination:@"The registration has been revoked. Make sure your copy of MAL Library is valid." window:nil];
-            [[NSUserDefaults standardUserDefaults] setObject:@NO forKey:@"donated"];
-            [[NSUserDefaults standardUserDefaults] setObject:@NO forKey:@"MacAppStoreMigrated"];
-            [Utility showDonateReminder:delegate];
-        }
-        return;
     }
     if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"donatereminderdate"] timeIntervalSinceNow] < 0) {
         if (((NSNumber *)[[NSUserDefaults standardUserDefaults] objectForKey:@"donated"]).boolValue) {
@@ -122,11 +113,11 @@
 + (void)showDonateReminder:(MAL_Updater_OS_XAppDelegate*)delegate{
     // Shows Donation Reminder
     NSAlert *alert = [[NSAlert alloc] init] ;
-    [alert addButtonWithTitle:@"Donate"];
+    [alert addButtonWithTitle:@"Purchase"];
     [alert addButtonWithTitle:@"Enter Key"];
     [alert addButtonWithTitle:@"Remind Me Later"];
     alert.messageText = @"Please Support MAL Updater OS X";
-    alert.informativeText = @"We noticed that you have been using MAL Updater OS X for a while. Although MAL Updater OS X is free and open source software, it cost us money and time to develop this program. \r\rIf you find this program helpful, please consider making a donation. You will recieve a key to remove this message and enable weekly builds update channel.";
+    alert.informativeText = @"We noticed that you have been using MAL Updater OS X for a while. MAL Updater OS X is shareware and you are limited to 7 list updates per week. \r\rTo remove this limit, consider purchasing a donation license.";
     [alert setShowsSuppressionButton:NO];
     // Set Message type to Warning
     alert.alertStyle = NSInformationalAlertStyle;
@@ -142,7 +133,7 @@
         [Utility setReminderDate];
     }
     else {
-        // Surpress message for 2 weeks.
+        // Surpress message for 1 week.
         [Utility setReminderDate];
     }
 }
@@ -150,12 +141,12 @@
 + (void)setReminderDate{
     //Sets Reminder Date
     NSDate *now = [NSDate date];
-    NSDate *reminderdate = [now dateByAddingTimeInterval:60*60*24*14];
+    NSDate *reminderdate = [now dateByAddingTimeInterval:60*60*24*7];
     [[NSUserDefaults standardUserDefaults] setObject:reminderdate forKey:@"donatereminderdate"];
 }
 + (int)checkDonationKey:(NSString *)key name:(NSString *)name{
         //Set Search API
-        NSURL *url = [NSURL URLWithString:@"https://updates.ateliershiori.moe/keycheck/check.php"];
+        NSURL *url = [NSURL URLWithString:@"http://licensing.malupdaterosx.moe/keycheck.php"];
         EasyNSURLConnection *request = [[EasyNSURLConnection alloc] initWithURL:url];
         [request addFormData:name forKey:@"name"];
         [request addFormData:key forKey:@"key"];
@@ -219,5 +210,39 @@
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"donated"]) {
         request.useragent = [NSString stringWithFormat:@"%@ %@ (Macintosh; Mac OS X %@; %@)", @"MAL Updater OS X Pro",[NSBundle mainBundle].infoDictionary[@"CFBundleShortVersionString"], [NSDictionary dictionaryWithContentsOfFile:@"/System/Library/CoreServices/SystemVersion.plist"][@"ProductVersion"], [NSLocale currentLocale].localeIdentifier];
     }
+}
++ (void)incrementupdatecount {
+    int current_count = ((NSNumber *)[NSUserDefaults.standardUserDefaults valueForKey:@"unregistered_update_count"]).intValue;
+    current_count++;
+    [NSUserDefaults.standardUserDefaults setValue:@(current_count)forKey:@"unregistered_update_count"];
+}
++ (bool)checkupdatelimit {
+    if (![NSUserDefaults.standardUserDefaults integerForKey:@"donated"]) {
+        if (![[NSUserDefaults standardUserDefaults] objectForKey:@"update_reset_date"]) {
+            [self setupdatelimitresetdate];
+        }
+        if ([NSUserDefaults.standardUserDefaults integerForKey:@"unregistered_update_count"] > 7  && [[[NSUserDefaults standardUserDefaults] objectForKey:@"update_reset_date"] timeIntervalSinceNow] >= 0) {
+            return true;
+        }
+        else if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"update_reset_date"] timeIntervalSinceNow] <= 0) {
+            [self setupdatelimitresetdate];
+            [NSUserDefaults.standardUserDefaults setValue:@(0) forKey:@"unregistered_update_count"];
+            return false;
+        }
+    }
+    return false;
+}
++ (void)setupdatelimitresetdate {
+    NSDate *now = [NSDate date];
+    NSDate *reminderdate = [now dateByAddingTimeInterval:60*60*24*7];
+    [[NSUserDefaults standardUserDefaults] setObject:reminderdate forKey:@"update_reset_date"];
+}
++ (NSString *)getHostName {
+    NSString *malapiurl = [NSUserDefaults.standardUserDefaults valueForKey:@"MALAPIURL"];
+    OnigRegexp *regex = [OnigRegexp compile:@"(http|https):\\/\\/" options:OnigOptionIgnorecase];
+    malapiurl = [malapiurl replaceByRegexp:regex with:@""];
+    regex = [OnigRegexp compile:@"\\/.+" options:OnigOptionIgnorecase];
+    malapiurl = [malapiurl replaceByRegexp:regex with:@""];
+    return malapiurl;
 }
 @end
