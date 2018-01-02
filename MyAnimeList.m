@@ -25,7 +25,7 @@
 - (id)init {
     _confirmed = true;
     //Create Reachability Object
-    _reach = [Reachability reachabilityWithHostname:@"malapi.ateliershiori.moe"];
+    _reach = [Reachability reachabilityWithHostname:@"malapi.malupdaterosx.moe"];
     // Set up blocks
     // Set the blocks
     _reach.reachableBlock = ^(Reachability*reach)
@@ -380,6 +380,10 @@
         }
         else {
             _DetectedType = @"";
+        }
+        if (([_DetectedSource rangeOfString:@"Amazon"].location != NSNotFound) && ![NSUserDefaults.standardUserDefaults boolForKey:@"donated"]){
+            // Amazon detection not available for unregistered users
+            return ScrobblerNothingPlaying;
         }
         // Check for Episode 0 titles
         [self checkzeroEpisode];
