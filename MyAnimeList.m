@@ -358,7 +358,7 @@
 }
 - (int)detectmedia {
     NSDictionary *result = [_detection detectmedia];
-    if (result !=nil) {
+    if (result != nil) {
         //Populate Data
         _DetectedTitle = result[@"detectedtitle"];
         _DetectedEpisode = result[@"detectedepisode"];

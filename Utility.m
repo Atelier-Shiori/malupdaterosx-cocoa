@@ -218,7 +218,7 @@
 }
 + (bool)checkupdatelimit {
     NSString *malapiurl = (NSString *)[NSUserDefaults.standardUserDefaults valueForKey:@"MALAPIURL"];
-    if (![malapiurl containsString:@"malupdaterosx.moe"] && ![malapiurl containsString:@"ateliershiori.moe"] ) {
+    if (([malapiurl rangeOfString:@"malupdaterosx.moe"].location == NSNotFound) && ([malapiurl rangeOfString:@"ateliershiori.moe"].location == NSNotFound)) {
         // Do not enforce limit with other MAL API servers
         return false;
     }
