@@ -217,6 +217,11 @@
     [NSUserDefaults.standardUserDefaults setValue:@(current_count)forKey:@"unregistered_update_count"];
 }
 + (bool)checkupdatelimit {
+    NSString *malapiurl = (NSString *)[NSUserDefaults.standardUserDefaults valueForKey:@"MALAPIURL"];
+    if (![malapiurl containsString:@"malupdaterosx.moe"] && ![malapiurl containsString:@"ateliershiori.moe"] ) {
+        // Do not enforce limit with other MAL API servers
+        return false;
+    }
     if (![NSUserDefaults.standardUserDefaults integerForKey:@"donated"]) {
         if (![[NSUserDefaults standardUserDefaults] objectForKey:@"update_reset_date"]) {
             [self setupdatelimitresetdate];
@@ -242,6 +247,8 @@
     OnigRegexp *regex = [OnigRegexp compile:@"(http|https):\\/\\/" options:OnigOptionIgnorecase];
     malapiurl = [malapiurl replaceByRegexp:regex with:@""];
     regex = [OnigRegexp compile:@"\\/.+" options:OnigOptionIgnorecase];
+    malapiurl = [malapiurl replaceByRegexp:regex with:@""];
+    regex = [OnigRegexp compile:@":\\d+" options:OnigOptionIgnorecase];
     malapiurl = [malapiurl replaceByRegexp:regex with:@""];
     return malapiurl;
 }
