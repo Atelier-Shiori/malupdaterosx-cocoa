@@ -7,7 +7,7 @@ XCode 9 or higher is required to build (Deployment Target is OS X 10.9)
 
 Note: Starting with MAL Updater OS X 2.2.7.1, the application is now Developer ID signed. In order to build, you need to have an Apple Developer ID certificate. Otherwise, you would need to disable code signing.
 
-***This program is open source shareware and some features may require a license. Unofficial and self-compiled builds will recieve no support and may not use the default MAL API server (https://malapi.ateliershiori.moe). Doing so is a violation of terms of service.***
+***This program is open source shareware and there are limits on how many scrobbles you can do per week. Additionally, some features may require a license. Unofficial and self-compiled builds will recieve no support and may not use the default MAL API server (https://malapi.ateliershiori.moe). Doing so is a violation of terms of service.***
 
 ## Supporting this Project
 
