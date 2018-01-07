@@ -370,11 +370,7 @@
         }
         else {
             _DetectedType = @"";
-        }
-        if (([_DetectedSource rangeOfString:@"Amazon"].location != NSNotFound) && ![NSUserDefaults.standardUserDefaults boolForKey:@"donated"]){
-            // Amazon detection not available for unregistered users
-            return ScrobblerNothingPlaying;
-        }
+        }å
         // Check for Episode 0 titles
         [self checkzeroEpisode];
         // Check if the title was previously scrobbled

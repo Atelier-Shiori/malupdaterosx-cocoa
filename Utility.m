@@ -226,7 +226,7 @@
         if (![[NSUserDefaults standardUserDefaults] objectForKey:@"update_reset_date"]) {
             [self setupdatelimitresetdate];
         }
-        if ([NSUserDefaults.standardUserDefaults integerForKey:@"unregistered_update_count"] > 7  && [[[NSUserDefaults standardUserDefaults] objectForKey:@"update_reset_date"] timeIntervalSinceNow] >= 0) {
+        if ([NSUserDefaults.standardUserDefaults integerForKey:@"unregistered_update_count"] > 10  && [[[NSUserDefaults standardUserDefaults] objectForKey:@"update_reset_date"] timeIntervalSinceNow] >= 0) {
             return true;
         }
         else if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"update_reset_date"] timeIntervalSinceNow] <= 0) {
