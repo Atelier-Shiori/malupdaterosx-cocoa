@@ -9,6 +9,100 @@
 /* Begin PBXBuildFile section */
 		1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD58140DA1D0A300B32029 /* MainMenu.xib */; };
 		256AC3DA0F4B6AC300CF3369 /* MAL_Updater_OS_XAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 256AC3D90F4B6AC300CF3369 /* MAL_Updater_OS_XAppDelegate.m */; };
+		2D17D2312001ACAD00769195 /* PlexLogin.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2D3CBE521F15336B0085888D /* PlexLogin.xib */; };
+		2D17D2322001ACAD00769195 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
+		2D17D2332001ACAD00769195 /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = 6F1A2C8E1B929B9800D47FE2 /* dsa_pub.pem */; };
+		2D17D2342001ACAD00769195 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8294C45D19F99B2F009DE98B /* Images.xcassets */; };
+		2D17D2352001ACAD00769195 /* MAL Updater OS X.sdef in Resources */ = {isa = PBXBuildFile; fileRef = 6FD961421B419E4C00DE539C /* MAL Updater OS X.sdef */; };
+		2D17D2362001ACAD00769195 /* AdvancedPrefController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6FBA5A0C1ABE484B00B6DB79 /* AdvancedPrefController.xib */; };
+		2D17D2372001ACAD00769195 /* HotkeysPrefs.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6F27CE991A6869ED004E51F8 /* HotkeysPrefs.xib */; };
+		2D17D2382001ACAD00769195 /* rules.png in Resources */ = {isa = PBXBuildFile; fileRef = 6FF0332F1A73F2C70096FC69 /* rules.png */; };
+		2D17D2392001ACAD00769195 /* PFAboutWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2D36F0EA1F153FED00CAC1F5 /* PFAboutWindow.xib */; };
+		2D17D23A2001ACAD00769195 /* HistoryWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5C07DA771A815F580003A827 /* HistoryWindow.xib */; };
+		2D17D23B2001ACAD00769195 /* OfflineViewQueue.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2DAFC1DE1E23143100FB7A14 /* OfflineViewQueue.xib */; };
+		2D17D23C2001ACAD00769195 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD58140DA1D0A300B32029 /* MainMenu.xib */; };
+		2D17D23D2001ACAD00769195 /* FixSearchDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6F2707201A69905D0020913A /* FixSearchDialog.xib */; };
+		2D17D23E2001ACAD00769195 /* StatusUpdateWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2D4A4D091EE4B01D004D3716 /* StatusUpdateWindow.xib */; };
+		2D17D23F2001ACAD00769195 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 5C0A2C4A122C7F960096908D /* Credits.rtf */; };
+		2D17D2412001ACAD00769195 /* ExceptionsPref.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6F27CE961A6869E8004E51F8 /* ExceptionsPref.xib */; };
+		2D17D2422001ACAD00769195 /* GeneralPreferenceView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5CBE9FEE19F2F9E500CA3E5D /* GeneralPreferenceView.xib */; };
+		2D17D2432001ACAD00769195 /* EULA.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 2D36F0EB1F15412500CAC1F5 /* EULA.rtf */; };
+		2D17D2442001ACAD00769195 /* PlexPrefs.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2D3CBE4F1F1533660085888D /* PlexPrefs.xib */; };
+		2D17D2452001ACAD00769195 /* LoginView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5CBE9FEB19F2F9CA00CA3E5D /* LoginView.xib */; };
+		2D17D2462001ACAD00769195 /* SoftwareUpdateView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5C97491C19F3117D000EC02E /* SoftwareUpdateView.xib */; };
+		2D17D2482001ACAD00769195 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		2D17D2492001ACAD00769195 /* NSBundle+LoginItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 916DE6381EA5261A00F870D5 /* NSBundle+LoginItem.m */; };
+		2D17D24A2001ACAD00769195 /* Utility.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F0CF36E1A7DBADD00261A43 /* Utility.m */; };
+		2D17D24B2001ACAD00769195 /* MAL_Updater_OS_XAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 256AC3D90F4B6AC300CF3369 /* MAL_Updater_OS_XAppDelegate.m */; };
+		2D17D24C2001ACAD00769195 /* HotKeyConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F28DC181A67087300AF063F /* HotKeyConstants.m */; };
+		2D17D24D2001ACAD00769195 /* MyAnimeList.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AFEF128120DF8CE0098B59D /* MyAnimeList.m */; };
+		2D17D24E2001ACAD00769195 /* Base64Category.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A6AB37E120F313E00D51D2C /* Base64Category.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		2D17D24F2001ACAD00769195 /* ShareMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D226B281EF30DFB0030E9C5 /* ShareMenu.m */; };
+		2D17D2502001ACAD00769195 /* AutoExceptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F12909A1A7D833100B8C3E6 /* AutoExceptions.m */; };
+		2D17D2522001ACAD00769195 /* InttoStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DC900351E257C3300E45570 /* InttoStatus.m */; };
+		2D17D2532001ACAD00769195 /* NSNumberFormatterNumberOnly.m in Sources */ = {isa = PBXBuildFile; fileRef = 91A8DD5C1E736814006E3566 /* NSNumberFormatterNumberOnly.m */; };
+		2D17D2542001ACAD00769195 /* MALScripting.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FD961401B419E3F00DE539C /* MALScripting.m */; };
+		2D17D2552001ACAD00769195 /* MAL_Updater_OS_X_DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6F5F6C6D1A71696D006D4607 /* MAL_Updater_OS_X_DataModel.xcdatamodeld */; };
+		2D17D2562001ACAD00769195 /* string_score.c in Sources */ = {isa = PBXBuildFile; fileRef = 5967C9321C95AD51005FCBC7 /* string_score.c */; };
+		2D17D2572001ACAD00769195 /* NSString_stripHtml.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C881EFA19F462B400E20425 /* NSString_stripHtml.m */; };
+		2D17D2582001ACAD00769195 /* MyAnimeList+Update.m in Sources */ = {isa = PBXBuildFile; fileRef = 829727971A8BB14E004F73AB /* MyAnimeList+Update.m */; };
+		2D17D2592001ACAD00769195 /* MyAnimeList+HummingbirdSearch.m in Sources */ = {isa = PBXBuildFile; fileRef = 59D99C061CBEDB0000762EA5 /* MyAnimeList+HummingbirdSearch.m */; };
+		2D17D25A2001ACAD00769195 /* HistoryWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C07DA651A8156420003A827 /* HistoryWindow.m */; };
+		2D17D25B2001ACAD00769195 /* MyAnimeList+Keychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 590241251C074AF500495A2F /* MyAnimeList+Keychain.m */; };
+		2D17D25C2001ACAD00769195 /* ExceptionsPref.m in Sources */ = {isa = PBXBuildFile; fileRef = 822AEB8C1A202A7B003DD682 /* ExceptionsPref.m */; };
+		2D17D25D2001ACAD00769195 /* OfflineViewQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DAFC1D81E2313B100FB7A14 /* OfflineViewQueue.m */; };
+		2D17D25E2001ACAD00769195 /* PFMoveApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A2DCCB51210B3BF00C920F1 /* PFMoveApplication.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		2D17D25F2001ACAD00769195 /* FixSearchDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 822AEB871A202931003DD682 /* FixSearchDialog.m */; };
+		2D17D2602001ACAD00769195 /* PFAboutWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D36F0E41F153F5C00CAC1F5 /* PFAboutWindowController.m */; };
+		2D17D2612001ACAD00769195 /* PlexPrefs.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D3CBE441F1531D40085888D /* PlexPrefs.m */; };
+		2D17D2622001ACAD00769195 /* GeneralPrefController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CD36BB919F2ED88007BB6B6 /* GeneralPrefController.m */; };
+		2D17D2632001ACAD00769195 /* ExceptionsCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FAA0C1E1A7E938400416079 /* ExceptionsCache.m */; };
+		2D17D2642001ACAD00769195 /* PlexLogin.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D3CBE471F1531DF0085888D /* PlexLogin.m */; };
+		2D17D2652001ACAD00769195 /* MyAnimeList+Search.m in Sources */ = {isa = PBXBuildFile; fileRef = 829727941A8BB093004F73AB /* MyAnimeList+Search.m */; };
+		2D17D2662001ACAD00769195 /* AdvancedPrefController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FBA5A061ABE460600B6DB79 /* AdvancedPrefController.m */; };
+		2D17D2672001ACAD00769195 /* LoginPref.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CBE9EC219F2F0E300CA3E5D /* LoginPref.m */; };
+		2D17D2682001ACAD00769195 /* HotkeysPrefs.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F28DC031A67082400AF063F /* HotkeysPrefs.m */; };
+		2D17D2692001ACAD00769195 /* StatusUpdateWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D4A4D081EE4B01D004D3716 /* StatusUpdateWindow.m */; };
+		2D17D26A2001ACAD00769195 /* SoftwareUpdatesPref.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C000E4319F30EA50026F350 /* SoftwareUpdatesPref.m */; };
+		2D17D26C2001ACAD00769195 /* MASPreferences.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91206C1C1E75F3F00050E9C5 /* MASPreferences.framework */; };
+		2D17D26D2001ACAD00769195 /* SAMKeychain.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D3CBE3D1F15312E0085888D /* SAMKeychain.framework */; };
+		2D17D26E2001ACAD00769195 /* DetectionKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D63136C1EDA284A00C3CB6B /* DetectionKit.framework */; };
+		2D17D26F2001ACAD00769195 /* MASShortcut.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91206C1A1E75F3E50050E9C5 /* MASShortcut.framework */; };
+		2D17D2702001ACAD00769195 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F28DC1A1A67092F00AF063F /* Carbon.framework */; };
+		2D17D2712001ACAD00769195 /* MASPreferences.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91206C1C1E75F3F00050E9C5 /* MASPreferences.framework */; };
+		2D17D2722001ACAD00769195 /* MASShortcut.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91206C221E75F8920050E9C5 /* MASShortcut.framework */; };
+		2D17D2732001ACAD00769195 /* Reachability.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D6313701EDA293100C3CB6B /* Reachability.framework */; };
+		2D17D2742001ACAD00769195 /* MSWeakTimer_macOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D6522741F7B50F700A65BF8 /* MSWeakTimer_macOS.framework */; };
+		2D17D2752001ACAD00769195 /* CocoaOniguruma.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91A609F21EA3E77400EF40AB /* CocoaOniguruma.framework */; };
+		2D17D2762001ACAD00769195 /* EasyNSURLConnection.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D9C3AE01E6A0BC7007D8F68 /* EasyNSURLConnection.framework */; };
+		2D17D2772001ACAD00769195 /* anitomy-osx.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8227C1161A1D8D34005F3301 /* anitomy-osx.framework */; };
+		2D17D2782001ACAD00769195 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59D503771CB004B10002532D /* Sparkle.framework */; };
+		2D17D27A2001ACAD00769195 /* MASShortcut.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91206C221E75F8920050E9C5 /* MASShortcut.framework */; };
+		2D17D27B2001ACAD00769195 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
+		2D17D27C2001ACAD00769195 /* EasyNSURLConnection.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D9C3AE01E6A0BC7007D8F68 /* EasyNSURLConnection.framework */; };
+		2D17D27D2001ACAD00769195 /* PingNotifier.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D65226E1F7B50C600A65BF8 /* PingNotifier.framework */; };
+		2D17D27E2001ACAD00769195 /* SAMKeychain.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D3CBE3D1F15312E0085888D /* SAMKeychain.framework */; };
+		2D17D27F2001ACAD00769195 /* GBPing.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D65226F1F7B50C700A65BF8 /* GBPing.framework */; };
+		2D17D2802001ACAD00769195 /* CocoaOniguruma.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91A609F21EA3E77400EF40AB /* CocoaOniguruma.framework */; };
+		2D17D2812001ACAD00769195 /* Reachability.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D6313701EDA293100C3CB6B /* Reachability.framework */; };
+		2D17D2822001ACAD00769195 /* XMLReader.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D3CBE3B1F1531210085888D /* XMLReader.framework */; };
+		2D17D2832001ACAD00769195 /* XMLReader.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D3CBE3B1F1531210085888D /* XMLReader.framework */; };
+		2D17D2842001ACAD00769195 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A2DCCBD1210B3D900C920F1 /* Security.framework */; };
+		2D17D2852001ACAD00769195 /* DetectionKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D63136C1EDA284A00C3CB6B /* DetectionKit.framework */; };
+		2D17D2872001ACAD00769195 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C2B9DFB1221EB25006DEF0D /* CoreData.framework */; };
+		2D17D2892001ACAD00769195 /* PingNotifier.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2D65226E1F7B50C600A65BF8 /* PingNotifier.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2D17D28A2001ACAD00769195 /* MASShortcut.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 91206C221E75F8920050E9C5 /* MASShortcut.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2D17D28B2001ACAD00769195 /* anitomy-osx.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8227C1161A1D8D34005F3301 /* anitomy-osx.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2D17D28C2001ACAD00769195 /* MSWeakTimer_macOS.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2D6522741F7B50F700A65BF8 /* MSWeakTimer_macOS.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2D17D28D2001ACAD00769195 /* MASPreferences.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 91206C1C1E75F3F00050E9C5 /* MASPreferences.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2D17D28E2001ACAD00769195 /* XMLReader.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2D3CBE3B1F1531210085888D /* XMLReader.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2D17D28F2001ACAD00769195 /* DetectionKit.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2D63136C1EDA284A00C3CB6B /* DetectionKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2D17D2902001ACAD00769195 /* CocoaOniguruma.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 91A609F21EA3E77400EF40AB /* CocoaOniguruma.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2D17D2912001ACAD00769195 /* GBPing.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2D65226F1F7B50C700A65BF8 /* GBPing.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2D17D2922001ACAD00769195 /* Reachability.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2D6313701EDA293100C3CB6B /* Reachability.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2D17D2932001ACAD00769195 /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 59D503771CB004B10002532D /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2D17D2942001ACAD00769195 /* SAMKeychain.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2D3CBE3D1F15312E0085888D /* SAMKeychain.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2D17D2952001ACAD00769195 /* EasyNSURLConnection.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2D9C3AE01E6A0BC7007D8F68 /* EasyNSURLConnection.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2D226B291EF30DFB0030E9C5 /* ShareMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D226B281EF30DFB0030E9C5 /* ShareMenu.m */; };
 		2D36F0E51F153F5C00CAC1F5 /* PFAboutWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D36F0E41F153F5C00CAC1F5 /* PFAboutWindowController.m */; };
 		2D36F0E81F153FED00CAC1F5 /* PFAboutWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2D36F0EA1F153FED00CAC1F5 /* PFAboutWindow.xib */; };
@@ -122,6 +216,28 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		2D17D2882001ACAD00769195 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				2D17D2892001ACAD00769195 /* PingNotifier.framework in CopyFiles */,
+				2D17D28A2001ACAD00769195 /* MASShortcut.framework in CopyFiles */,
+				2D17D28B2001ACAD00769195 /* anitomy-osx.framework in CopyFiles */,
+				2D17D28C2001ACAD00769195 /* MSWeakTimer_macOS.framework in CopyFiles */,
+				2D17D28D2001ACAD00769195 /* MASPreferences.framework in CopyFiles */,
+				2D17D28E2001ACAD00769195 /* XMLReader.framework in CopyFiles */,
+				2D17D28F2001ACAD00769195 /* DetectionKit.framework in CopyFiles */,
+				2D17D2902001ACAD00769195 /* CocoaOniguruma.framework in CopyFiles */,
+				2D17D2912001ACAD00769195 /* GBPing.framework in CopyFiles */,
+				2D17D2922001ACAD00769195 /* Reachability.framework in CopyFiles */,
+				2D17D2932001ACAD00769195 /* Sparkle.framework in CopyFiles */,
+				2D17D2942001ACAD00769195 /* SAMKeychain.framework in CopyFiles */,
+				2D17D2952001ACAD00769195 /* EasyNSURLConnection.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		3A4C6253120DF5580032F63A /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -156,6 +272,8 @@
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		2D17D29B2001ACAD00769195 /* MAL Updater OS X Community.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MAL Updater OS X Community.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2D17D29C2001ACAD00769195 /* MAL Updater OS X copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "MAL Updater OS X copy-Info.plist"; path = "/Volumes/MacStorage/malupdater-legacy/malupdaterosx-cocoa/MAL Updater OS X copy-Info.plist"; sourceTree = "<absolute>"; };
 		2D226B271EF30DFB0030E9C5 /* ShareMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShareMenu.h; sourceTree = "<group>"; };
 		2D226B281EF30DFB0030E9C5 /* ShareMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShareMenu.m; sourceTree = "<group>"; };
 		2D36F0E31F153F5C00CAC1F5 /* PFAboutWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PFAboutWindowController.h; sourceTree = "<group>"; };
@@ -382,6 +500,39 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		2D17D26B2001ACAD00769195 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2D17D26C2001ACAD00769195 /* MASPreferences.framework in Frameworks */,
+				2D17D26D2001ACAD00769195 /* SAMKeychain.framework in Frameworks */,
+				2D17D26E2001ACAD00769195 /* DetectionKit.framework in Frameworks */,
+				2D17D26F2001ACAD00769195 /* MASShortcut.framework in Frameworks */,
+				2D17D2702001ACAD00769195 /* Carbon.framework in Frameworks */,
+				2D17D2712001ACAD00769195 /* MASPreferences.framework in Frameworks */,
+				2D17D2722001ACAD00769195 /* MASShortcut.framework in Frameworks */,
+				2D17D2732001ACAD00769195 /* Reachability.framework in Frameworks */,
+				2D17D2742001ACAD00769195 /* MSWeakTimer_macOS.framework in Frameworks */,
+				2D17D2752001ACAD00769195 /* CocoaOniguruma.framework in Frameworks */,
+				2D17D2762001ACAD00769195 /* EasyNSURLConnection.framework in Frameworks */,
+				2D17D2772001ACAD00769195 /* anitomy-osx.framework in Frameworks */,
+				2D17D2782001ACAD00769195 /* Sparkle.framework in Frameworks */,
+				2D17D27A2001ACAD00769195 /* MASShortcut.framework in Frameworks */,
+				2D17D27B2001ACAD00769195 /* Cocoa.framework in Frameworks */,
+				2D17D27C2001ACAD00769195 /* EasyNSURLConnection.framework in Frameworks */,
+				2D17D27D2001ACAD00769195 /* PingNotifier.framework in Frameworks */,
+				2D17D27E2001ACAD00769195 /* SAMKeychain.framework in Frameworks */,
+				2D17D27F2001ACAD00769195 /* GBPing.framework in Frameworks */,
+				2D17D2802001ACAD00769195 /* CocoaOniguruma.framework in Frameworks */,
+				2D17D2812001ACAD00769195 /* Reachability.framework in Frameworks */,
+				2D17D2822001ACAD00769195 /* XMLReader.framework in Frameworks */,
+				2D17D2832001ACAD00769195 /* XMLReader.framework in Frameworks */,
+				2D17D2842001ACAD00769195 /* Security.framework in Frameworks */,
+				2D17D2852001ACAD00769195 /* DetectionKit.framework in Frameworks */,
+				2D17D2872001ACAD00769195 /* CoreData.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8D11072E0486CEB800E47090 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -503,6 +654,7 @@
 				8D1107320486CEB800E47090 /* MAL Updater OS X.app */,
 				9143749D1EA4142700ECC683 /* MAL-Updater-OS-XTextualPlugin.bundle */,
 				91A9B6661EA918FB00645690 /* MAL Updater OS XTests.xctest */,
+				2D17D29B2001ACAD00769195 /* MAL Updater OS X Community.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -518,6 +670,7 @@
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
 				2DEFEBF21F7430C10032DDC0 /* Recovered References */,
+				2D17D29C2001ACAD00769195 /* MAL Updater OS X copy-Info.plist */,
 			);
 			name = "MAL Updater OS X";
 			sourceTree = "<group>";
@@ -863,6 +1016,26 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		2D17D22F2001ACAD00769195 /* MAL Updater OS X Community */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2D17D2982001ACAD00769195 /* Build configuration list for PBXNativeTarget "MAL Updater OS X Community" */;
+			buildPhases = (
+				2D17D2302001ACAD00769195 /* Resources */,
+				2D17D2472001ACAD00769195 /* Sources */,
+				2D17D26B2001ACAD00769195 /* Frameworks */,
+				2D17D2882001ACAD00769195 /* CopyFiles */,
+				2D17D2962001ACAD00769195 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "MAL Updater OS X Community";
+			productInstallPath = "$(HOME)/Applications";
+			productName = "MAL Updater OS X";
+			productReference = 2D17D29B2001ACAD00769195 /* MAL Updater OS X Community.app */;
+			productType = "com.apple.product-type.application";
+		};
 		8D1107260486CEB800E47090 /* MAL Updater OS X */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "MAL Updater OS X" */;
@@ -927,6 +1100,10 @@
 			attributes = {
 				LastUpgradeCheck = 0610;
 				TargetAttributes = {
+					2D17D22F2001ACAD00769195 = {
+						DevelopmentTeam = 9HDZTER525;
+						ProvisioningStyle = Automatic;
+					};
 					8D1107260486CEB800E47090 = {
 						DevelopmentTeam = 9HDZTER525;
 						SystemCapabilities = {
@@ -967,11 +1144,40 @@
 				8D1107260486CEB800E47090 /* MAL Updater OS X */,
 				9143749C1EA4142700ECC683 /* MAL-Updater-OS-XTextualPlugin */,
 				91A9B6651EA918FB00645690 /* MAL Updater OS XTests */,
+				2D17D22F2001ACAD00769195 /* MAL Updater OS X Community */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		2D17D2302001ACAD00769195 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2D17D2312001ACAD00769195 /* PlexLogin.xib in Resources */,
+				2D17D2322001ACAD00769195 /* InfoPlist.strings in Resources */,
+				2D17D2332001ACAD00769195 /* dsa_pub.pem in Resources */,
+				2D17D2342001ACAD00769195 /* Images.xcassets in Resources */,
+				2D17D2352001ACAD00769195 /* MAL Updater OS X.sdef in Resources */,
+				2D17D2362001ACAD00769195 /* AdvancedPrefController.xib in Resources */,
+				2D17D2372001ACAD00769195 /* HotkeysPrefs.xib in Resources */,
+				2D17D2382001ACAD00769195 /* rules.png in Resources */,
+				2D17D2392001ACAD00769195 /* PFAboutWindow.xib in Resources */,
+				2D17D23A2001ACAD00769195 /* HistoryWindow.xib in Resources */,
+				2D17D23B2001ACAD00769195 /* OfflineViewQueue.xib in Resources */,
+				2D17D23C2001ACAD00769195 /* MainMenu.xib in Resources */,
+				2D17D23D2001ACAD00769195 /* FixSearchDialog.xib in Resources */,
+				2D17D23E2001ACAD00769195 /* StatusUpdateWindow.xib in Resources */,
+				2D17D23F2001ACAD00769195 /* Credits.rtf in Resources */,
+				2D17D2412001ACAD00769195 /* ExceptionsPref.xib in Resources */,
+				2D17D2422001ACAD00769195 /* GeneralPreferenceView.xib in Resources */,
+				2D17D2432001ACAD00769195 /* EULA.rtf in Resources */,
+				2D17D2442001ACAD00769195 /* PlexPrefs.xib in Resources */,
+				2D17D2452001ACAD00769195 /* LoginView.xib in Resources */,
+				2D17D2462001ACAD00769195 /* SoftwareUpdateView.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8D1107290486CEB800E47090 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1019,6 +1225,19 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		2D17D2962001ACAD00769195 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "#! /bin/bash\n\n# Put this in a 'run script' run phase in xcode\n# Delete all framework headers\ncd \"${BUILD_DIR}/${CONFIGURATION}/${PRODUCT_NAME}.app/Contents/Frameworks\"\n\nif [ $? = 0 ]; then\nfind . -name \"*.h\" -print0 | xargs -0 rm\nfi";
+		};
 		6FD505201A8E6BE700BC3CAD /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1048,6 +1267,47 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		2D17D2472001ACAD00769195 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2D17D2482001ACAD00769195 /* main.m in Sources */,
+				2D17D2492001ACAD00769195 /* NSBundle+LoginItem.m in Sources */,
+				2D17D24A2001ACAD00769195 /* Utility.m in Sources */,
+				2D17D24B2001ACAD00769195 /* MAL_Updater_OS_XAppDelegate.m in Sources */,
+				2D17D24C2001ACAD00769195 /* HotKeyConstants.m in Sources */,
+				2D17D24D2001ACAD00769195 /* MyAnimeList.m in Sources */,
+				2D17D24E2001ACAD00769195 /* Base64Category.m in Sources */,
+				2D17D24F2001ACAD00769195 /* ShareMenu.m in Sources */,
+				2D17D2502001ACAD00769195 /* AutoExceptions.m in Sources */,
+				2D17D2522001ACAD00769195 /* InttoStatus.m in Sources */,
+				2D17D2532001ACAD00769195 /* NSNumberFormatterNumberOnly.m in Sources */,
+				2D17D2542001ACAD00769195 /* MALScripting.m in Sources */,
+				2D17D2552001ACAD00769195 /* MAL_Updater_OS_X_DataModel.xcdatamodeld in Sources */,
+				2D17D2562001ACAD00769195 /* string_score.c in Sources */,
+				2D17D2572001ACAD00769195 /* NSString_stripHtml.m in Sources */,
+				2D17D2582001ACAD00769195 /* MyAnimeList+Update.m in Sources */,
+				2D17D2592001ACAD00769195 /* MyAnimeList+HummingbirdSearch.m in Sources */,
+				2D17D25A2001ACAD00769195 /* HistoryWindow.m in Sources */,
+				2D17D25B2001ACAD00769195 /* MyAnimeList+Keychain.m in Sources */,
+				2D17D25C2001ACAD00769195 /* ExceptionsPref.m in Sources */,
+				2D17D25D2001ACAD00769195 /* OfflineViewQueue.m in Sources */,
+				2D17D25E2001ACAD00769195 /* PFMoveApplication.m in Sources */,
+				2D17D25F2001ACAD00769195 /* FixSearchDialog.m in Sources */,
+				2D17D2602001ACAD00769195 /* PFAboutWindowController.m in Sources */,
+				2D17D2612001ACAD00769195 /* PlexPrefs.m in Sources */,
+				2D17D2622001ACAD00769195 /* GeneralPrefController.m in Sources */,
+				2D17D2632001ACAD00769195 /* ExceptionsCache.m in Sources */,
+				2D17D2642001ACAD00769195 /* PlexLogin.m in Sources */,
+				2D17D2652001ACAD00769195 /* MyAnimeList+Search.m in Sources */,
+				2D17D2662001ACAD00769195 /* AdvancedPrefController.m in Sources */,
+				2D17D2672001ACAD00769195 /* LoginPref.m in Sources */,
+				2D17D2682001ACAD00769195 /* HotkeysPrefs.m in Sources */,
+				2D17D2692001ACAD00769195 /* StatusUpdateWindow.m in Sources */,
+				2D17D26A2001ACAD00769195 /* SoftwareUpdatesPref.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8D11072C0486CEB800E47090 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1241,6 +1501,86 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		2D17D2992001ACAD00769195 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = 9HDZTER525;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SRCROOT)/**",
+					"$(SRCROOT)/\"Frameworks\"/**",
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/Frameworks",
+				);
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = MAL_Updater_OS_X_Prefix.pch;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"oss=1",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INFOPLIST_FILE = "MAL Updater OS X copy-Info.plist";
+				INSTALL_PATH = "$(HOME)/Documents/Build/Debug";
+				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SDKROOT = macosx;
+				STRIP_INSTALLED_PRODUCT = NO;
+			};
+			name = Debug;
+		};
+		2D17D29A2001ACAD00769195 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 9HDZTER525;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SRCROOT)/**",
+					"$(SRCROOT)/\"Frameworks\"/**",
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/Frameworks",
+				);
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = MAL_Updater_OS_X_Prefix.pch;
+				GCC_PREPROCESSOR_DEFINITIONS = "oss=1";
+				INFOPLIST_FILE = "MAL Updater OS X copy-Info.plist";
+				INSTALL_PATH = "$(HOME)/Documents/Build/Release";
+				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SDKROOT = macosx;
+				STRIP_INSTALLED_PRODUCT = YES;
+			};
+			name = Release;
+		};
 		914374A01EA4142700ECC683 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1560,6 +1900,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		2D17D2982001ACAD00769195 /* Build configuration list for PBXNativeTarget "MAL Updater OS X Community" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2D17D2992001ACAD00769195 /* Debug */,
+				2D17D29A2001ACAD00769195 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		914374A21EA4142700ECC683 /* Build configuration list for PBXNativeTarget "MAL-Updater-OS-XTextualPlugin" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

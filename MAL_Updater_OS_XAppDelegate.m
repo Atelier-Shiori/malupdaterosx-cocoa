@@ -18,12 +18,15 @@
 #import "Utility.h"
 #import "ExceptionsCache.h"
 #import "HistoryWindow.h"
-#import "DonationWindowController.h"
 #import "OfflineViewQueue.h"
 #import "StatusUpdateWindow.h"
 #import <MSWeakTimer_macOS/MSWeakTimer.h>
+#ifdef oss
+#else
 #import <Fabric/Fabric.h>
 #import <Crashlytics/Crashlytics.h>
+#import "DonationWindowController.h"
+#endif
 #import "ShareMenu.h"
 #import "PFAboutWindowController.h"
 
@@ -179,7 +182,11 @@
 	
 	// Defaults
 	defaultValues[@"Base64Token"] = @"";
+    #ifdef oss
+    defaultValues[@"MALAPIURL"] = @"http://localhost:8000";
+    #else
 	defaultValues[@"MALAPIURL"] = @"https://malapi.malupdaterosx.moe";
+    #endif
 	defaultValues[@"ScrobbleatStartup"] = @NO;
     defaultValues[@"useSearchCache"] = @YES;
     defaultValues[@"exceptions"] = [[NSMutableArray alloc] init];
@@ -199,7 +206,11 @@
     defaultValues[@"timerinterval"] = @(300);
     defaultValues[@"showcorrection"] = @YES;
     defaultValues[@"NSApplicationCrashOnExceptions"] = @YES;
+    #ifdef oss
+    defaultValues[@"donated"] = @YES;
+    #else
     defaultValues[@"donated"] = @NO;
+    #endif
     defaultValues[@"MacAppStoreMigrated"] = @NO;
     defaultValues[@"enableplexapi"] = @NO;
     defaultValues[@"plexaddress"] = @"localhost";
@@ -327,20 +338,26 @@
             [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"credentialsvalid"];
         }
     }
+    #ifdef oss
+    #else
     if ([Utility checkoldAPI]) {
         [self showNotification:@"MAL Updater OS X" message:@"The API URL has been automatically updated."];
         [[NSUserDefaults standardUserDefaults] setObject:@"https://malapi.malupdaterosx.moe" forKey:@"MALAPIURL"];
     }
+    #endif
 	// Autostart Scrobble at Startup
 	if ([defaults boolForKey:@"ScrobbleatStartup"] == 1) {
 		[self autostarttimer];
 	}
     // Import existing Exceptions Data
     [AutoExceptions importToCoreData];
+    #ifdef oss
+    #else
     // Show Donation Message
     [Utility donateCheck:self];
     // Fabric
     [Fabric with:@[[Crashlytics class]]];
+#endif
 }
 #pragma mark General UI Functions
 - (NSWindowController *)preferencesWindowController
@@ -419,13 +436,17 @@
 		[window makeKeyAndOrderFront:self]; 
 	} 
 }
+
 - (IBAction)enterDonationKey:(id)sender{
     //Since LSUIElement is set to 1 to hide the dock icon, it causes unattended behavior of having the program windows not show to the front.
     [NSApp activateIgnoringOtherApps:YES];
+#ifdef oss
+#else
     if (!_dwindow) {
         _dwindow = [[DonationWindowController alloc] init];
     }
     [_dwindow.window makeKeyAndOrderFront:nil];
+#endif
     
 }
 - (IBAction)showOfflineQueue:(id)sender{
@@ -671,6 +692,8 @@
     NSMutableString *copyrightstr = [NSMutableString new];
     NSDictionary *bundleDict = [NSBundle mainBundle].infoDictionary;
     [copyrightstr appendFormat:@"%@ \r\r",bundleDict[@"NSHumanReadableCopyright"]];
+    #ifdef oss
+    #else
     if (((NSNumber *)[[NSUserDefaults standardUserDefaults] objectForKey:@"donated"]).boolValue) {
         if ([[NSUserDefaults standardUserDefaults] boolForKey:@"MacAppStoreMigrated"]){
             [copyrightstr appendFormat:@"This copy is registered to: MAL Library User"];
@@ -682,6 +705,7 @@
     else {
         [copyrightstr appendString:@"UNREGISTERED COPY"];
     }
+    #endif
     (self.aboutWindowController).appCopyright = [[NSAttributedString alloc] initWithString:copyrightstr
                                                                                 attributes:@{
                                                                                              NSForegroundColorAttributeName:[NSColor colorWithRed:0.0f green:0.0f blue:0.0f alpha:1.0f],

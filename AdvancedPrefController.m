@@ -92,7 +92,11 @@
 - (IBAction)resetapiurl:(id)sender
 {
     //Reset Unofficial MAL API URL
+    #ifdef oss
+    APIUrl.stringValue = @"http://localhost:8000";
+    #else
     APIUrl.stringValue = @"https://malapi.malupdaterosx.moe";
+    #endif
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults] ;
     [defaults setObject:APIUrl.stringValue forKey:@"MALAPIURL"];
     [appdelegate.MALEngine changenotifierhostname];
