@@ -10,7 +10,7 @@ If you haven't installed XCode, install it first and run it. You need the XCode 
 ## Getting the source code and Compling
 To download the source code, open the terminal app and run the following command.
 
-```git clone -b 2.3.x-legacy develop https://github.com/Atelier-Shiori/malupdaterosx-cocoa.git ```
+```git clone -b 2.3.x-legacy https://github.com/Atelier-Shiori/malupdaterosx-cocoa.git ```
 
 Afterwards, the whole respository should download. Then change to the repo directory. The easy way to change the directory is typing "cd " and dragging the folder and pressing enter.
 
