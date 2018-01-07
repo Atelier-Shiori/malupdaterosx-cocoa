@@ -370,7 +370,7 @@
         }
         else {
             _DetectedType = @"";
-        }å
+        }
         // Check for Episode 0 titles
         [self checkzeroEpisode];
         // Check if the title was previously scrobbled
