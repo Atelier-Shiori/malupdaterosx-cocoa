@@ -9,6 +9,8 @@ Note: Starting with MAL Updater OS X 2.2.7.1, the application is now Developer I
 
 ***This program is open source shareware and there are limits on how many scrobbles you can do per week. Additionally, some features may require a license. Unofficial and self-compiled builds will recieve no support and may not use the default MAL API server (https://malapi.ateliershiori.moe). Doing so is a violation of terms of service.***
 
+***For those who wish to use the Community Version (free), you may follow [these instructions](https://github.com/Atelier-Shiori/malupdaterosx-cocoa/blob/2.3.x-legacy/HowToCompileCommunityVersion.md).** Note that this is for advanced users only.
+
 ## Supporting this Project
 
 Like this program and want to support the development of this program? Purchase a [Donation License](https://malupdaterosx.ateliershiori.moe/donate/). This allows us to help cover the costs of developing this program.
