@@ -357,7 +357,7 @@
     [Utility donateCheck:self];
     // Fabric
     [Fabric with:@[[Crashlytics class]]];
-#endif
+    #endif
 }
 #pragma mark General UI Functions
 - (NSWindowController *)preferencesWindowController
