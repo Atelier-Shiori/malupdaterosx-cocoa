@@ -85,10 +85,6 @@
 - (int)startscrobbling {
     // Detect media
     int detectstatus;
-    if ([Utility checkupdatelimit]) {
-        NSLog(@"User's Update Limit reached, not performing scrobble.");
-        return ScrobblerUnregisteredUpdateLimitReached;
-    }
     detectstatus = [self detectmedia];
 	if (detectstatus == ScrobblerDetectedMedia) { // Detects Title
         if (_online) {
@@ -148,9 +144,6 @@
     return detectstatus;
 }
 - (NSDictionary *)scrobblefromqueue{
-    if ([Utility checkupdatelimit]) {
-        return @{@"success": @(false), @"fail": @(0), @"confirmneeded" : @(false)};
-    }
     // Restore Detected Media
     __block NSError *error;
     NSManagedObjectContext *moc = self.managedObjectContext;
