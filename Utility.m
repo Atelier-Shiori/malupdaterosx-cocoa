@@ -212,7 +212,7 @@
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"donated"]) {
         request.useragent = [NSString stringWithFormat:@"%@ %@ (Macintosh; Mac OS X %@; %@)", @"MAL Updater OS X Pro",[NSBundle mainBundle].infoDictionary[@"CFBundleShortVersionString"], [NSDictionary dictionaryWithContentsOfFile:@"/System/Library/CoreServices/SystemVersion.plist"][@"ProductVersion"], [NSLocale currentLocale].localeIdentifier];
     }
-    @endif
+#endif
 }
 + (void)incrementupdatecount {
     int current_count = ((NSNumber *)[NSUserDefaults.standardUserDefaults valueForKey:@"unregistered_update_count"]).intValue;
