@@ -117,7 +117,7 @@
     [alert addButtonWithTitle:@"Enter Key"];
     [alert addButtonWithTitle:@"Remind Me Later"];
     alert.messageText = @"Please Support MAL Updater OS X";
-    alert.informativeText = @"We noticed that you have been using MAL Updater OS X for a while. MAL Updater OS X is shareware and you are limited to 7 list updates per week. \r\rTo remove this limit, consider purchasing a donation license.";
+    alert.informativeText = @"We noticed that you have been using MAL Updater OS X for a while. MAL Updater OS X is donationware and we rely on donations to substain the development of our programs. By donating, you can remove this message.";
     [alert setShowsSuppressionButton:NO];
     // Set Message type to Warning
     alert.alertStyle = NSInformationalAlertStyle;
@@ -141,7 +141,7 @@
 + (void)setReminderDate{
     //Sets Reminder Date
     NSDate *now = [NSDate date];
-    NSDate *reminderdate = [now dateByAddingTimeInterval:60*60*24*7];
+    NSDate *reminderdate = [now dateByAddingTimeInterval:60*60*24];
     [[NSUserDefaults standardUserDefaults] setObject:reminderdate forKey:@"donatereminderdate"];
 }
 + (int)checkDonationKey:(NSString *)key name:(NSString *)name{
@@ -213,37 +213,6 @@
         request.useragent = [NSString stringWithFormat:@"%@ %@ (Macintosh; Mac OS X %@; %@)", @"MAL Updater OS X Pro",[NSBundle mainBundle].infoDictionary[@"CFBundleShortVersionString"], [NSDictionary dictionaryWithContentsOfFile:@"/System/Library/CoreServices/SystemVersion.plist"][@"ProductVersion"], [NSLocale currentLocale].localeIdentifier];
     }
 #endif
-}
-+ (void)incrementupdatecount {
-    int current_count = ((NSNumber *)[NSUserDefaults.standardUserDefaults valueForKey:@"unregistered_update_count"]).intValue;
-    current_count++;
-    [NSUserDefaults.standardUserDefaults setValue:@(current_count)forKey:@"unregistered_update_count"];
-}
-+ (bool)checkupdatelimit {
-    NSString *malapiurl = (NSString *)[NSUserDefaults.standardUserDefaults valueForKey:@"MALAPIURL"];
-    if (([malapiurl rangeOfString:@"malupdaterosx.moe"].location == NSNotFound) && ([malapiurl rangeOfString:@"ateliershiori.moe"].location == NSNotFound)) {
-        // Do not enforce limit with other MAL API servers
-        return false;
-    }
-    if (![NSUserDefaults.standardUserDefaults integerForKey:@"donated"]) {
-        if (![[NSUserDefaults standardUserDefaults] objectForKey:@"update_reset_date"]) {
-            [self setupdatelimitresetdate];
-        }
-        if ([NSUserDefaults.standardUserDefaults integerForKey:@"unregistered_update_count"] > 60  && [[[NSUserDefaults standardUserDefaults] objectForKey:@"update_reset_date"] timeIntervalSinceNow] >= 0) {
-            return true;
-        }
-        else if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"update_reset_date"] timeIntervalSinceNow] <= 0) {
-            [self setupdatelimitresetdate];
-            [NSUserDefaults.standardUserDefaults setValue:@(0) forKey:@"unregistered_update_count"];
-            return false;
-        }
-    }
-    return false;
-}
-+ (void)setupdatelimitresetdate {
-    NSDate *now = [NSDate date];
-    NSDate *reminderdate = [now dateByAddingTimeInterval:60*60*24*7];
-    [[NSUserDefaults standardUserDefaults] setObject:reminderdate forKey:@"update_reset_date"];
 }
 + (NSString *)getHostName {
     NSString *malapiurl = [NSUserDefaults.standardUserDefaults valueForKey:@"MALAPIURL"];
