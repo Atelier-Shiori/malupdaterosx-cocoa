@@ -7,9 +7,9 @@ XCode 9 or higher is required to build (Deployment Target is OS X 10.9)
 
 Note: Starting with MAL Updater OS X 2.2.7.1, the application is now Developer ID signed. In order to build, you need to have an Apple Developer ID certificate. Otherwise, you would need to disable code signing.
 
-***This program is open source shareware and there are limits on how many scrobbles you can do per week. Additionally, some features may require a license. Unofficial and self-compiled builds will recieve no support and may not use the default MAL API server (https://malapi.ateliershiori.moe). Doing so is a violation of terms of service.***
+***This program is open source donationware, and a donation reminder will appear every 24 hours without any restrictions to main software functionality.  Some features may be designated only for people who donated may require a license. Unofficial and self-compiled builds will recieve no support and may not use the default MAL API server (https://malapi.ateliershiori.moe). Doing so is a violation of terms of service.***
 
-***For those who wish to use the Community Version (free), you may follow [these instructions](https://github.com/Atelier-Shiori/malupdaterosx-cocoa/blob/2.3.x-legacy/HowToCompileCommunityVersion.md).** Note that this is for advanced users only.
+***For those who wish to use the Community Version, you may follow [these instructions](https://github.com/Atelier-Shiori/malupdaterosx-cocoa/blob/2.3.x-legacy/HowToCompileCommunityVersion.md).** Note that this is for advanced users only.
 
 ## Supporting this Project
 
