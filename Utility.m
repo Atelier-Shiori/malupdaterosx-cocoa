@@ -113,7 +113,7 @@
 + (void)showDonateReminder:(MAL_Updater_OS_XAppDelegate*)delegate{
     // Shows Donation Reminder
     NSAlert *alert = [[NSAlert alloc] init] ;
-    [alert addButtonWithTitle:@"Purchase"];
+    [alert addButtonWithTitle:@"Donate"];
     [alert addButtonWithTitle:@"Enter Key"];
     [alert addButtonWithTitle:@"Remind Me Later"];
     alert.messageText = @"Please Support MAL Updater OS X";
@@ -141,7 +141,7 @@
 + (void)setReminderDate{
     //Sets Reminder Date
     NSDate *now = [NSDate date];
-    NSDate *reminderdate = [now dateByAddingTimeInterval:60*60*24];
+    NSDate *reminderdate = [now dateByAddingTimeInterval:60*60*24*7*2];
     [[NSUserDefaults standardUserDefaults] setObject:reminderdate forKey:@"donatereminderdate"];
 }
 + (int)checkDonationKey:(NSString *)key name:(NSString *)name{
