@@ -91,7 +91,7 @@
 	}
 	else {
 		// No episode total yet, set to set
-		selectedtotalepisodes = @(0);
+		selectedtotalepisodes = 0;
 	}
     [self.window orderOut:self];
     [NSApp endSheet:self.window returnCode:1];

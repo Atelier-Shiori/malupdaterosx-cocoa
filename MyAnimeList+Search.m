@@ -122,7 +122,7 @@
                     alttitle = syn;
                     alttitle = [alttitle stringByReplacingOccurrencesOfString:@":" withString:@""];
                     matchstatus = [Utility checkMatch:theshowtitle alttitle:alttitle regex:regex option:i];
-                    if (matchstatus == 1 || matchstatus == 2) {
+                    if (matchstatus == PrimaryTitleMatch || matchstatus == AlternateTitleMatch) {
                         break;
                     }
                 }
@@ -130,7 +130,7 @@
             else {
                 matchstatus = [Utility checkMatch:theshowtitle alttitle:alttitle regex:regex option:i];
             }
-            if (matchstatus == 1 || matchstatus == 2) {
+            if (matchstatus == PrimaryTitleMatch || matchstatus == AlternateTitleMatch) {
                 if ([[NSString stringWithFormat:@"%@", searchentry[@"type"]] isEqualToString:@"TV"]) { // Check Seasons if the title is a TV show type
                     // Used for Season Checking
                     OnigRegexp    *regex2 = [OnigRegexp compile:[NSString stringWithFormat:@"((%i(st|nd|rd|th)|%@) season|\\W%i)", self.DetectedSeason, [Utility seasonInWords:self.DetectedSeason],self.DetectedSeason] options:OnigOptionIgnorecase];
@@ -158,10 +158,11 @@
                 //Return titleid if episode is valid
                 if ( ([NSString stringWithFormat:@"%@", searchentry[@"episodes"]].intValue == 0 || ([NSString stringWithFormat:@"%@",searchentry[@"episodes"]].intValue >= (self.DetectedEpisode).intValue))) {
                     NSLog(@"Valid Episode Count");
+                    NSLog(@"Term length: %li, Show title Length: %li, alt title length: %li", term.length, theshowtitle.length, alttitle.length);
                     if (sortedArray.count == 1 || self.DetectedSeason >= 2) {
                         return [self foundtitle:[NSString stringWithFormat:@"%@",searchentry[@"id"]] info:searchentry];
                     }
-                    else if (!titlematch1 && sortedArray.count > 1 && ((term.length < theshowtitle.length+1)||(term.length< alttitle.length && alttitle.length > 0 && matchstatus == 2))) {
+                    else if ((!titlematch1 && sortedArray.count > 1) && ((term.length < theshowtitle.length+1)||(term.length< alttitle.length+1 && alttitle.length > 0 && matchstatus == AlternateTitleMatch))) {
                         mstatus = matchstatus;
                         titlematch1 = searchentry;
                         continue;
@@ -180,7 +181,7 @@
         }
     }
     // If one match is found and not null, then return the id.
-    if (titlematch1) {
+    if (titlematch1/* || titlematch1 == titlematch2*/) {
         // Only Result, return
         return [self foundtitle:[NSString stringWithFormat:@"%@",titlematch1[@"id"]] info:titlematch1];
     }

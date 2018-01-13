@@ -62,7 +62,7 @@
 
 - (IBAction)donate:(id)sender{
     // Show Donation Page
-    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://malupdaterosx.moe/donate/"]];
+    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"https://malupdaterosx.moe/donate/"]];
 }
 
 - (IBAction)purchasedonationlicense:(id)sender {
