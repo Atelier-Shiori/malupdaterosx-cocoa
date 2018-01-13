@@ -148,7 +148,7 @@
 }
 + (int)checkDonationKey:(NSString *)key name:(NSString *)name{
         //Set Search API
-        NSURL *url = [NSURL URLWithString:@"http://licensing.malupdaterosx.moe/keycheck.php"];
+        NSURL *url = [NSURL URLWithString:@"https://licensing.malupdaterosx.moe/keycheck.php"];
         EasyNSURLConnection *request = [[EasyNSURLConnection alloc] initWithURL:url];
         [request addFormData:name forKey:@"name"];
         [request addFormData:key forKey:@"key"];
