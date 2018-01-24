@@ -14,6 +14,7 @@
 #import "MyAnimeList+Keychain.h"
 #import <Reachability/Reachability.h>
 #import "Utility.h"
+#import "TwitterConstants.h"
 
 @interface MyAnimeList ()
 - (int)detectmedia; // 0 - Nothing, 1 - Same, 2 - Update
@@ -29,6 +30,8 @@
     _detection = [Detection new];
     [_detection setKodiReach:[[NSUserDefaults standardUserDefaults] boolForKey:@"enablekodiapi"]];
     [_detection setPlexReach:[[NSUserDefaults standardUserDefaults] boolForKey:@"enableplexapi"]];
+    // Init Twitter Manager
+    _twittermanager = [[TwitterManager alloc] initWithConsumerKeyUsingFirstAccount:kConsumerKey withConsumerSecret:kConsumerSecret];
     // Return Object
     return [super init];
 }

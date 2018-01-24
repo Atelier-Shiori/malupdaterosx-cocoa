@@ -10,6 +10,7 @@
 #import <EasyNSURLConnection/EasyNSURLConnection.h>
 #import "MyAnimeList+Keychain.h"
 #import "Utility.h"
+#import "MyAnimeList+Twitter.h"
 
 @implementation MyAnimeList (Update)
 - (BOOL)checkstatus:(NSString *)titleid {
@@ -122,6 +123,8 @@
                     self.LastScrobbledActualTitle = (NSString *)self.LastScrobbledInfo[@"title"];
                 }
                 self.confirmed = true;
+                // Post tweet
+                [self postupdateanimetweet];
                 // Update Successful
                 return ScrobblerUpdateSuccessful;
             default:
@@ -174,6 +177,8 @@
             if (![self setStartEndDates:titleid]) {
                 NSLog(@"Can't set start/end dates");
             }
+            // Post tweet
+            [self postaddanimetweet];
             return ScrobblerAddTitleSuccessful;
         default:
             // Update Unsuccessful
@@ -244,6 +249,8 @@
             self.LastScrobbledEpisode = episode;
             self.DetectedCurrentEpisode = episode.intValue;
             self.confirmed = true;
+            // Post tweet
+            [self postupdatestatustweet];
             return true;
         default:
             // Update Unsuccessful

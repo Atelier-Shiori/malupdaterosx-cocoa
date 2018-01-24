@@ -182,11 +182,13 @@
 	
 	// Defaults
 	defaultValues[@"Base64Token"] = @"";
+    // API Settings
     #ifdef oss
     defaultValues[@"MALAPIURL"] = @"http://localhost:8000";
     #else
 	defaultValues[@"MALAPIURL"] = @"https://malapi.malupdaterosx.moe";
     #endif
+    // General Settings
 	defaultValues[@"ScrobbleatStartup"] = @NO;
     defaultValues[@"useSearchCache"] = @YES;
     defaultValues[@"exceptions"] = [[NSMutableArray alloc] init];
@@ -195,27 +197,39 @@
     defaultValues[@"ConfirmNewTitle"] = @YES;
     defaultValues[@"ConfirmUpdates"] = @NO;
 	defaultValues[@"UseAutoExceptions"] = @YES;
-    defaultValues[@"enablekodiapi"] = @NO;
-    defaultValues[@"kodiaddress"] = @"";
-    defaultValues[@"kodiport"] = @"3005";
+    defaultValues[@"timerinterval"] = @(300);
+    defaultValues[@"showcorrection"] = @YES;
+    defaultValues[@"NSApplicationCrashOnExceptions"] = @YES;
     if (floor(NSAppKitVersionNumber) > NSAppKitVersionNumber10_9) {
         //Yosemite Specific Advanced Options
         defaultValues[@"DisableYosemiteTitleBar"] = @NO;
         defaultValues[@"DisableYosemiteVibrance"] = @NO;
     }
-    defaultValues[@"timerinterval"] = @(300);
-    defaultValues[@"showcorrection"] = @YES;
-    defaultValues[@"NSApplicationCrashOnExceptions"] = @YES;
+    // Kodi JSON RPC Detection
+    defaultValues[@"enablekodiapi"] = @NO;
+    defaultValues[@"kodiaddress"] = @"";
+    defaultValues[@"kodiport"] = @"3005";
+    // Donation Settings
     #ifdef oss
     defaultValues[@"donated"] = @YES;
     #else
     defaultValues[@"donated"] = @NO;
     #endif
     defaultValues[@"MacAppStoreMigrated"] = @NO;
+    // Plex Media Server
     defaultValues[@"enableplexapi"] = @NO;
     defaultValues[@"plexaddress"] = @"localhost";
     defaultValues[@"plexport"] = @"32400";
     defaultValues[@"plexidentifier"] = @"MAL_Updater_OS_X_Plex_Client";
+    // Social
+    defaultValues[@"tweetonscrobble"] = @NO;
+    defaultValues[@"twitteraddanime"] = @YES;
+    defaultValues[@"twitterupdateanime"] = @YES;
+    defaultValues[@"twitterupdatestatus"] = @NO;
+    defaultValues[@"twitteraddanimeformat"] = @"Started watching %title% Episode %episode% - %malurl% #malupdaterosx";
+    defaultValues[@"twitterupdateanimeformat"] = @"%status% %title% Episode %episode% - %malurl% #malupdaterosx";
+    defaultValues[@"twitterupdatestatusformat"] =  @"Updated %title% Episode %episode% (%status%) - %malurl% #malupdaterosx";
+    
 	//Register Dictionary
 	[[NSUserDefaults standardUserDefaults]
 	 registerDefaults:defaultValues];
@@ -366,12 +380,13 @@
     {
         NSViewController *generalViewController = [[GeneralPrefController alloc] init];
         NSViewController *loginViewController = [[LoginPref alloc] initwithAppDelegate:self];
+        NSViewController *socialViewController = [[SocialPrefController alloc] initWithTwitterManager:MALEngine.twittermanager];
         NSViewController *suViewController = [[SoftwareUpdatesPref alloc] init];
         NSViewController *exceptionsViewController = [[ExceptionsPref alloc] init];
         NSViewController *hotkeyViewController = [[HotkeysPrefs alloc] init];
         NSViewController *plexviewcontroller = [PlexPrefs new];
         NSViewController *advancedViewController = [[AdvancedPrefController alloc] initwithAppDelegate:self];
-        NSArray *controllers = @[generalViewController, loginViewController, hotkeyViewController, plexviewcontroller, exceptionsViewController, suViewController, advancedViewController];
+        NSArray *controllers = @[generalViewController, loginViewController, socialViewController, hotkeyViewController, plexviewcontroller, exceptionsViewController, suViewController, advancedViewController];
         _preferencesWindowController = [[MASPreferencesWindowController alloc] initWithViewControllers:controllers];
     }
     return _preferencesWindowController;

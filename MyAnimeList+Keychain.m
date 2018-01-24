@@ -13,10 +13,17 @@
 #import "Utility.h"
 
 @implementation MyAnimeList (Keychain)
+- (NSString *)getKeychainServiceName {
+    #ifdef DEBUG
+    return @"MAL Updater OS X - DEBUG";
+    #else
+    return @"MAL Updater OS X";
+    #endif
+}
 - (BOOL)checkaccount{
     // This method checks for any accounts that Hachidori can use
-    NSArray *accounts = [SAMKeychain accountsForService:@"MAL Updater OS X"];
-    if (accounts > 0) {
+    NSArray *accounts = [SAMKeychain accountsForService:[self getKeychainServiceName]];
+    if (accounts.count > 0) {
         //retrieve first valid account
         for (NSDictionary *account in accounts) {
             if (account[@"acct"]) {
@@ -34,21 +41,21 @@
 - (NSString *)getusername{
     return self.username;
 }
-- (BOOL)storeaccount:(NSString *)uname password:(NSString *)password{
+- (BOOL)storeaccount:(NSString *)uname password:(NSString *)password {
     //Clear Account Information in the plist file if it hasn't been done already
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setObject:@"" forKey:@"Base64Token"];
     [defaults setObject:@"" forKey:@"Username"];
-    return [SAMKeychain setPassword:password forService:@"MAL Updater OS X" account:uname];
+    return [SAMKeychain setPassword:password forService:[self getKeychainServiceName] account:uname];
 }
 - (BOOL)removeaccount{
-    bool success = [SAMKeychain deletePasswordForService:@"MAL Updater OS X" account:self.username];
+    bool success = [SAMKeychain deletePasswordForService:[self getKeychainServiceName] account:self.username];
     // Set Username to blank
     self.username = @"";
     return success;
 }
 - (NSString *)getBase64{
-    return [[NSString stringWithFormat:@"%@:%@", [self getusername], [SAMKeychain passwordForService:@"MAL Updater OS X" account:self.username]] base64Encoding];
+    return [[NSString stringWithFormat:@"%@:%@", [self getusername], [SAMKeychain passwordForService:[self getKeychainServiceName] account:self.username]] base64Encoding];
 }
 
 - (int)checkMALCredentials {

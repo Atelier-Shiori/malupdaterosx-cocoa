@@ -8,8 +8,9 @@
 
 #import <Cocoa/Cocoa.h>
 #import "MAL_Updater_OS_XAppDelegate.h"
+#import <TwitterManagerKit/TwitterManagerKit.h>
+
 @class Reachability;
-@class streamlinkdetector;
 @class Detection;
 
 @interface MyAnimeList : NSObject
@@ -60,9 +61,9 @@ typedef NS_ENUM(unsigned int, ScrobbleStatus) {
 @property (getter=getOnlineStatus) BOOL online;
 @property BOOL correcting;
 @property (strong) Reachability* reach;
-@property (strong, getter=getstreamlinkdetector) streamlinkdetector *detector;
 @property (strong) Detection *detection;
 @property (nonatomic, readonly) NSManagedObjectContext *managedObjectContext;
+@property (strong) TwitterManager *twittermanager;
 
 - (void)setManagedObjectContext:(NSManagedObjectContext *)context;
 - (int)startscrobbling;

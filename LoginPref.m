@@ -104,11 +104,13 @@
 			}
 			else {
                 [savebut setEnabled:NO];
+                NSString *username = fieldusername.stringValue;
+                NSString *password = fieldpassword.stringValue;
                 dispatch_queue_t queue = dispatch_get_global_queue(
                                                                    DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
                 
                 dispatch_async(queue, ^{
-                    [self login:fieldusername.stringValue password:fieldpassword.stringValue];
+                    [self login:username password:password];
                 });
                 }
 		}
