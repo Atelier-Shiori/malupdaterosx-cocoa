@@ -1,9 +1,9 @@
  [![License](https://img.shields.io/badge/license-BSD-green.svg)](http://opensource.org/licenses/BSD-3-Clause)
 
-# MAL Updater OS X 2.3.X - Legacy
-MAL Updater OS X is an open source OS X scrobbler that automatically detects what's playing and updates the user's MyAnimeList. This is the legacy branch, which will support macOS 10.9, with only minor fixes.
+# MAL Updater OS X 2.4
+MAL Updater OS X is an open source OS X scrobbler that automatically detects what's playing and updates the user's MyAnimeList. 2.4 is a transition build before 3.0. 2.4 drops macOS Yosemite and Mavericks support.
 
-XCode 9 or higher is required to build (Deployment Target is OS X 10.9)
+XCode 9 or higher is required to build (Deployment Target is OS X 10.11)
 
 Note: Starting with MAL Updater OS X 2.2.7.1, the application is now Developer ID signed. In order to build, you need to have an Apple Developer ID certificate. Otherwise, you would need to disable code signing.
 

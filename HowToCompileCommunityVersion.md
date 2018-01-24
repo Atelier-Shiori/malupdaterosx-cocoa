@@ -14,6 +14,8 @@ To download the source code, open the terminal app and run the following command
 
 Afterwards, the whole respository should download. Then change to the repo directory. The easy way to change the directory is typing "cd malupdaterosx-cocoa".
 
+In the repo folder, rename TwitterConstants-sample.m to TwitterConstants.m. For Twitter support to work, you need to obtain a Consumer Key and Secret. You can do this by going to https://apps.twitter.com and creating your own application.
+
 To compile type the following to compile:
 
 ```xcodebuild -target "MAL Updater OS X Community" -configuration "release" ```
