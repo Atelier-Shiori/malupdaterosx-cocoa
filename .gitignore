@@ -1,8 +1,5 @@
 # Ignore Builds Directory
 build/**
-
-TwitterOAuthKeys.m
-
 MAL Updater OS X.xcodeproj/project.xcworkspace/xcuserdata/**
 .DS_Store
 Frameworks/.DS_Store
@@ -10,6 +7,4 @@ Frameworks/.DS_Store
 MAL Updater OS X.xcodeproj/ashe.pbxuser
 MAL Updater OS X.xcodeproj/ashe.perspectivev3
 MAL Updater OS XTests/DonationKeyConstants.m
-TwitterConstants.m
-TwitterConstants.m
 TwitterConstants.m
