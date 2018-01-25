@@ -82,20 +82,20 @@
     
     // Set app name
     if(!self.appName) {
-        self.appName = [bundleDict objectForKey:@"CFBundleName"];
+        self.appName = bundleDict[@"CFBundleName"];
     }
     
     // Set app version
     if(!self.appVersion) {
-        NSString *version = [bundleDict objectForKey:@"CFBundleVersion"];
-        NSString *shortVersion = [bundleDict objectForKey:@"CFBundleShortVersionString"];
+        NSString *version = bundleDict[@"CFBundleVersion"];
+        NSString *shortVersion = bundleDict[@"CFBundleShortVersionString"];
         self.appVersion = [NSString stringWithFormat:NSLocalizedString(@"Version %@ (Build %@)", @"Version %@ (Build %@), displayed in the about window"), shortVersion, version];
     }
 	
     // Set copyright
     if(!self.appCopyright) {
-        self.appCopyright = [[NSAttributedString alloc] initWithString:[bundleDict objectForKey:@"NSHumanReadableCopyright"] attributes:@{
-                                                                                                                                          NSFontAttributeName:[NSFont fontWithName:@"HelveticaNeue" size:11]/*/NSParagraphStyleAttributeName  : paragraphStyle*/}];
+        self.appCopyright = [[NSAttributedString alloc] initWithString:bundleDict[@"NSHumanReadableCopyright"] attributes:@{
+				NSFontAttributeName: [NSFont fontWithName:@"HelveticaNeue" size:11]/*/NSParagraphStyleAttributeName  : paragraphStyle*/}];
     }
 	
 	// Code that can potentially throw an exception

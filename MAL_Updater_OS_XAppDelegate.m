@@ -795,10 +795,10 @@
         for (int i = 0; i < 2; i++) {
             if (i == 0) {
                 if ([MALEngine getQueueCount] > 0 && MALEngine.online) {
-                    NSDictionary *status = [MALEngine scrobblefromqueue];
-                    int success = [status[@"success"] intValue];
-                    int fail = [status[@"fail"] intValue];
-                    bool confirmneeded = [status[@"confirmneeded"] boolValue];
+                    NSDictionary *ostatus = [MALEngine scrobblefromqueue];
+                    int success = [ostatus[@"success"] intValue];
+                    int fail = [ostatus[@"fail"] intValue];
+                    bool confirmneeded = [ostatus[@"confirmneeded"] boolValue];
                     if (confirmneeded) {
                         dispatch_async(dispatch_get_main_queue(), ^{
                         [self setStatusText:@"Scrobble Status: Please confirm update."];
@@ -826,7 +826,7 @@
 }
 - (void)starttimer {
     NSLog(@"Auto Scrobble Started.");
-    timer = [MSWeakTimer scheduledTimerWithTimeInterval:[[(NSNumber *)[NSUserDefaults standardUserDefaults] valueForKey:@"timerinterval"] intValue]
+    timer = [MSWeakTimer scheduledTimerWithTimeInterval:[(NSNumber *)[[NSUserDefaults standardUserDefaults] valueForKey:@"timerinterval"] intValue]
                                                  target:self
                                                selector:@selector(firetimer)
                                                userInfo:nil

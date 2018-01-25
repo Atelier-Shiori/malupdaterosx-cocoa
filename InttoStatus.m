@@ -34,6 +34,8 @@
             case 53:
             case 54:
                 return @"Unsuccessful";
+            default:
+                break;
         }
     }
     return nil;

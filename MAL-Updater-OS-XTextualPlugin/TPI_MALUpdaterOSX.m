@@ -57,7 +57,7 @@
             NSTask *task = [[NSTask alloc] init];
             [task setLaunchPath:@"/usr/bin/osascript"];
             NSString *arguments = [NSString stringWithFormat:@"-e %@", @"tell application \"MAL Updater OS X\" to getstatus"];
-            [task setArguments:[NSArray arrayWithObjects:arguments, nil]];
+            [task setArguments:@[arguments]];
             NSPipe *pipe;
             pipe = [NSPipe pipe];
             task.standardOutput = pipe;
@@ -95,8 +95,7 @@
 - (BOOL)checkIdentifier:(NSString*)identifier {
     NSWorkspace *ws = [NSWorkspace sharedWorkspace];
     NSArray *runningApps = [ws runningApplications];
-    NSRunningApplication *a;
-    for (a in runningApps) {
+    for (NSRunningApplication *a in runningApps) {
         if ([[a bundleIdentifier] isEqualToString:identifier]) {
             return true;
         }

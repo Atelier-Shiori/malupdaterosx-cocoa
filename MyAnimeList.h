@@ -62,7 +62,7 @@ typedef NS_ENUM(unsigned int, ScrobbleStatus) {
 @property BOOL correcting;
 @property (strong) Reachability* reach;
 @property (strong) Detection *detection;
-@property (nonatomic, readonly) NSManagedObjectContext *managedObjectContext;
+@property (nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (strong) TwitterManager *twittermanager;
 
 - (void)setManagedObjectContext:(NSManagedObjectContext *)context;

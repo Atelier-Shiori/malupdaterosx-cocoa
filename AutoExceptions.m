@@ -92,7 +92,7 @@
                     NSString *correcttitle = d[@"correcttitle"];
                     bool iszeroepisode = ((NSNumber *)d[@"iszeroepisode"]).boolValue;
                     int offset = ((NSNumber *)d[@"offset"]).intValue;
-                    NSError *error = nil;
+                    NSError *derror = nil;
                     NSManagedObject *obj = [self checkAutoExceptionsEntry:detectedtitle group:group correcttitle:correcttitle zeroepisode:iszeroepisode offset:offset];
                     if (obj) {
                         // Update Entry
@@ -114,7 +114,7 @@
                         [obj setValue:d[@"mappedepisode"] forKey:@"mappedepisode"];
                     }
                     //Save
-                    [moc save:&error];
+                    [moc save:&derror];
                 }
             }];
             // Set the last updated date

@@ -214,7 +214,7 @@
             if (!ctitle) {
                 return true;
             }
-            else if(ctitle && [ctitle isEqualToString:(NSString *)[entry valueForKey:@"correctTitle"]]) {
+            else if([ctitle isEqualToString:(NSString *)[entry valueForKey:@"correctTitle"]]) {
                return true;
             }
         }

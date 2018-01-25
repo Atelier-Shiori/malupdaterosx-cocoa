@@ -199,6 +199,8 @@
         case 9:
             ordinal = @"th";
             break;
+        default:
+            break;
     }
     return [NSString stringWithFormat:@"%i%@", number, ordinal];
 }

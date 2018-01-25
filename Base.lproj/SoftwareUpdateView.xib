@@ -136,7 +136,6 @@
                     </buttonCell>
                     <connections>
                         <action selector="setBetaChannel:" target="-2" id="gNa-rN-0dq"/>
-                        <binding destination="3" name="enabled" keyPath="values.donated" id="Lb8-y1-x8t"/>
                     </connections>
                 </button>
             </subviews>

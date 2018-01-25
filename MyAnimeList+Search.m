@@ -286,10 +286,10 @@
 }
 - (NSArray *)MALSearchXMLToAtarashiiDataFormat:(NSString *)xml {
     NSError *error = nil;
-    NSDictionary *d = [XMLReader dictionaryForXMLString:xml options:XMLReaderOptionsProcessNamespaces error:&error];
+    NSDictionary *searchxml = [XMLReader dictionaryForXMLString:xml options:XMLReaderOptionsProcessNamespaces error:&error];
     NSArray *searchresults;
-    if (d[@"anime"]) {
-        searchresults = d[@"anime"][@"entry"];
+    if (searchxml[@"anime"]) {
+        searchresults = searchxml[@"anime"][@"entry"];
         if (![searchresults isKindOfClass:[NSArray class]]) {
             // Import only contains one object, put it in an array.
             searchresults = @[searchresults];
