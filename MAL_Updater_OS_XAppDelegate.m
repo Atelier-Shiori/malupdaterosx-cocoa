@@ -200,11 +200,9 @@
     defaultValues[@"timerinterval"] = @(300);
     defaultValues[@"showcorrection"] = @YES;
     defaultValues[@"NSApplicationCrashOnExceptions"] = @YES;
-    if (floor(NSAppKitVersionNumber) > NSAppKitVersionNumber10_9) {
-        //Yosemite Specific Advanced Options
-        defaultValues[@"DisableYosemiteTitleBar"] = @NO;
-        defaultValues[@"DisableYosemiteVibrance"] = @NO;
-    }
+    //Yosemite Specific Advanced Options
+    defaultValues[@"DisableYosemiteTitleBar"] = @NO;
+    defaultValues[@"DisableYosemiteVibrance"] = @NO;
     // Kodi JSON RPC Detection
     defaultValues[@"enablekodiapi"] = @NO;
     defaultValues[@"kodiaddress"] = @"";
@@ -716,9 +714,11 @@
         else {
             [copyrightstr appendFormat:@"This copy is registered to: %@", [[NSUserDefaults standardUserDefaults] objectForKey:@"donor"]];
         }
+        (self.aboutWindowController).appName = @"MAL Updater OS X Pro";
     }
     else {
         [copyrightstr appendString:@"UNREGISTERED COPY"];
+        (self.aboutWindowController).appName = @"MAL Updater OS X";
     }
     #endif
     (self.aboutWindowController).appCopyright = [[NSAttributedString alloc] initWithString:copyrightstr
