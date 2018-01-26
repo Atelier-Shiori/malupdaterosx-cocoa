@@ -9,7 +9,6 @@
 #import <Cocoa/Cocoa.h>
 #import "MAL_Updater_OS_XAppDelegate.h"
 @class Reachability;
-@class streamlinkdetector;
 @class Detection;
 
 @interface MyAnimeList : NSObject

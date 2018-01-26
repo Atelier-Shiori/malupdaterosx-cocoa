@@ -10,3 +10,4 @@ Frameworks/.DS_Store
 MAL Updater OS X.xcodeproj/ashe.pbxuser
 MAL Updater OS X.xcodeproj/ashe.perspectivev3
 MAL Updater OS XTests/DonationKeyConstants.m
+TwitterConstants.m

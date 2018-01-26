@@ -16,7 +16,7 @@
 - (BOOL)checkaccount{
     // This method checks for any accounts that Hachidori can use
     NSArray *accounts = [SAMKeychain accountsForService:@"MAL Updater OS X"];
-    if (accounts > 0) {
+    if (accounts.count > 0) {
         //retrieve first valid account
         for (NSDictionary *account in accounts) {
             if (account[@"acct"]) {

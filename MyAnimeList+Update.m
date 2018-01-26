@@ -100,6 +100,10 @@
         request.headers = (NSMutableDictionary *)@{@"Authorization": [NSString stringWithFormat:@"Basic %@", [self getBase64]]};
         [request setPostMethod:@"PUT"];
         [request addFormData:self.DetectedEpisode forKey:@"episodes"];
+        if ([self.WatchStatus isEqualToString:@"plan to watch"] && self.DetectedCurrentEpisode == 0) {
+            // Set the start date if the title's watch status is Plan to Watch and the watched episodes is zero
+            [request addFormData:[Utility todaydatestring] forKey:@"start"];
+        }
         //Set Status
         self.WatchStatus = (self.DetectedEpisode).intValue == self.TotalEpisodes ? @"completed" : @"watching";
         if ([self.WatchStatus isEqualToString:@"completed"]) {
