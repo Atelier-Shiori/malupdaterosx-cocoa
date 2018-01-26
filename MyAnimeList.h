@@ -59,7 +59,6 @@ typedef NS_ENUM(unsigned int, ScrobbleStatus) {
 @property (getter=getOnlineStatus) BOOL online;
 @property BOOL correcting;
 @property (strong) Reachability* reach;
-@property (strong, getter=getstreamlinkdetector) streamlinkdetector *detector;
 @property (strong) Detection *detection;
 @property (nonatomic, readonly) NSManagedObjectContext *managedObjectContext;
 
