@@ -75,10 +75,12 @@
     // Set Message type to Warning
     alert.alertStyle = NSInformationalAlertStyle;
     // Show as Sheet on Preference Window
-    [alert beginSheetModalForWindow:w
-                      modalDelegate:self
-                     didEndSelector:nil
-                        contextInfo:NULL];
+    if (w) {
+        [alert beginSheetModalForWindow:w completionHandler:nil];
+    }
+    else {
+        [alert beginSheetModalForWindow:w completionHandler:nil];
+    }
 }
 + (NSString *)urlEncodeString:(NSString *)string{
     return [string stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLHostAllowedCharacterSet] ];
@@ -160,7 +162,7 @@
         long statusCode = [request getStatusCode];
     if (statusCode == 200) {
         NSError* jerror;
-        NSDictionary *d = [NSJSONSerialization JSONObjectWithData:request.response.responsedata options:nil error:&jerror];
+        NSDictionary *d = [NSJSONSerialization JSONObjectWithData:request.response.responsedata options:0 error:&jerror];
         int valid = ((NSNumber *)d[@"valid"]).intValue;
         if (valid == 1) {
             // Valid Key

@@ -71,30 +71,21 @@
     alert.informativeText = @"Once done, this action cannot be undone.";
     // Set Message type to Warning
     alert.alertStyle = NSWarningAlertStyle;
-    // Show as Sheet on historywindow
-    [alert beginSheetModalForWindow:self.window
-                      modalDelegate:self
-                     didEndSelector:@selector(clearhistoryended:code:conext:)
-                        contextInfo:NULL];
-}
-
-- (void)clearhistoryended:(NSAlert *)alert
-                    code:(int)echoice
-                  conext:(void *)v
-{
-    if (echoice == 1000) {
-        // Remove All Data
-        NSManagedObjectContext *moc = self.managedObjectContext;
-        NSFetchRequest *allHistory = [[NSFetchRequest alloc] init];
-        allHistory.entity = [NSEntityDescription entityForName:@"History" inManagedObjectContext:moc];
-        
-        NSError *error = nil;
-        NSArray *histories = [moc executeFetchRequest:allHistory error:&error];
-        //error handling goes here
-        for (NSManagedObject *history in histories) {
-            [moc deleteObject:history];
+    [alert beginSheetModalForWindow:self.window completionHandler:^(NSModalResponse returnCode) {
+        if (returnCode == NSAlertFirstButtonReturn) {
+            // Remove All Data
+            NSManagedObjectContext *moc = self.managedObjectContext;
+            NSFetchRequest *allHistory = [[NSFetchRequest alloc] init];
+            allHistory.entity = [NSEntityDescription entityForName:@"History" inManagedObjectContext:moc];
+            
+            NSError *error = nil;
+            NSArray *histories = [moc executeFetchRequest:allHistory error:&error];
+            //error handling goes here
+            for (NSManagedObject *history in histories) {
+                [moc deleteObject:history];
+            }
         }
-    }
-}	
+    }];
+}
 
 @end

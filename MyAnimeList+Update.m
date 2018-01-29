@@ -26,7 +26,7 @@
     //Perform Search
     [request startRequest];
     // Get Status Code
-    int statusCode = [request getStatusCode];
+    long statusCode = [request getStatusCode];
     NSError *error = [request getError]; // Error Detection
     if (statusCode == 200 ) {
         if (self.DetectedEpisode.length == 0) { // Check if there is a DetectedEpisode (needed for checking
@@ -34,7 +34,7 @@
             self.DetectedEpisode = @"1";
         }
         NSError* jerror;
-        NSDictionary *animeinfo = [NSJSONSerialization JSONObjectWithData:request.response.responsedata options:nil error:&jerror];
+        NSDictionary *animeinfo = [NSJSONSerialization JSONObjectWithData:request.response.responsedata options:0 error:&jerror];
         self.TotalEpisodes = animeinfo[@"episodes"] == [NSNull null] ? 0 : ((NSNumber *)animeinfo[@"episodes"]).intValue;
         // Watch Status
         if (animeinfo[@"watched_status"] == [NSNull null]) {

@@ -23,10 +23,6 @@
 @property (strong) MyAnimeList *MALEngine;
 @property (strong) IBOutlet NSView *loginview;
 @property (strong) IBOutlet NSView *loggedinview;
-//Reauthorize Panel
-@property (strong) IBOutlet NSTextField *passwordinput;
-@property (strong) IBOutlet NSImageView *invalidinput;
-@property (weak) IBOutlet NSWindow *loginpanel;
 - (id)initwithAppDelegate:(MAL_Updater_OS_XAppDelegate *)adelegate;
 - (IBAction)startlogin:(id)sender;
 - (IBAction)clearlogin:(id)sender;

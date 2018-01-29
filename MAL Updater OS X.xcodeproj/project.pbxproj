@@ -69,7 +69,6 @@
 		2D17D26E2001ACAD00769195 /* DetectionKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D63136C1EDA284A00C3CB6B /* DetectionKit.framework */; };
 		2D17D26F2001ACAD00769195 /* MASShortcut.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91206C1A1E75F3E50050E9C5 /* MASShortcut.framework */; };
 		2D17D2702001ACAD00769195 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F28DC1A1A67092F00AF063F /* Carbon.framework */; };
-		2D17D2712001ACAD00769195 /* MASPreferences.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91206C1C1E75F3F00050E9C5 /* MASPreferences.framework */; };
 		2D17D2722001ACAD00769195 /* MASShortcut.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91206C221E75F8920050E9C5 /* MASShortcut.framework */; };
 		2D17D2732001ACAD00769195 /* Reachability.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D6313701EDA293100C3CB6B /* Reachability.framework */; };
 		2D17D2742001ACAD00769195 /* MSWeakTimer_macOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D6522741F7B50F700A65BF8 /* MSWeakTimer_macOS.framework */; };
@@ -77,18 +76,11 @@
 		2D17D2762001ACAD00769195 /* EasyNSURLConnection.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D9C3AE01E6A0BC7007D8F68 /* EasyNSURLConnection.framework */; };
 		2D17D2772001ACAD00769195 /* anitomy-osx.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8227C1161A1D8D34005F3301 /* anitomy-osx.framework */; };
 		2D17D2782001ACAD00769195 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59D503771CB004B10002532D /* Sparkle.framework */; };
-		2D17D27A2001ACAD00769195 /* MASShortcut.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91206C221E75F8920050E9C5 /* MASShortcut.framework */; };
 		2D17D27B2001ACAD00769195 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
-		2D17D27C2001ACAD00769195 /* EasyNSURLConnection.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D9C3AE01E6A0BC7007D8F68 /* EasyNSURLConnection.framework */; };
 		2D17D27D2001ACAD00769195 /* PingNotifier.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D65226E1F7B50C600A65BF8 /* PingNotifier.framework */; };
-		2D17D27E2001ACAD00769195 /* SAMKeychain.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D3CBE3D1F15312E0085888D /* SAMKeychain.framework */; };
 		2D17D27F2001ACAD00769195 /* GBPing.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D65226F1F7B50C700A65BF8 /* GBPing.framework */; };
-		2D17D2802001ACAD00769195 /* CocoaOniguruma.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91A609F21EA3E77400EF40AB /* CocoaOniguruma.framework */; };
-		2D17D2812001ACAD00769195 /* Reachability.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D6313701EDA293100C3CB6B /* Reachability.framework */; };
 		2D17D2822001ACAD00769195 /* XMLReader.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D3CBE3B1F1531210085888D /* XMLReader.framework */; };
-		2D17D2832001ACAD00769195 /* XMLReader.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D3CBE3B1F1531210085888D /* XMLReader.framework */; };
 		2D17D2842001ACAD00769195 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A2DCCBD1210B3D900C920F1 /* Security.framework */; };
-		2D17D2852001ACAD00769195 /* DetectionKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D63136C1EDA284A00C3CB6B /* DetectionKit.framework */; };
 		2D17D2872001ACAD00769195 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C2B9DFB1221EB25006DEF0D /* CoreData.framework */; };
 		2D17D2892001ACAD00769195 /* PingNotifier.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2D65226E1F7B50C600A65BF8 /* PingNotifier.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2D17D28A2001ACAD00769195 /* MASShortcut.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 91206C221E75F8920050E9C5 /* MASShortcut.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -111,9 +103,7 @@
 		2D3CBE3E1F15312E0085888D /* SAMKeychain.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D3CBE3D1F15312E0085888D /* SAMKeychain.framework */; };
 		2D3CBE451F1531D40085888D /* PlexPrefs.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D3CBE441F1531D40085888D /* PlexPrefs.m */; };
 		2D3CBE481F1531DF0085888D /* PlexLogin.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D3CBE471F1531DF0085888D /* PlexLogin.m */; };
-		2D3CBE491F1532950085888D /* XMLReader.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D3CBE3B1F1531210085888D /* XMLReader.framework */; };
 		2D3CBE4A1F1532950085888D /* XMLReader.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2D3CBE3B1F1531210085888D /* XMLReader.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		2D3CBE4B1F1532A20085888D /* SAMKeychain.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D3CBE3D1F15312E0085888D /* SAMKeychain.framework */; };
 		2D3CBE4C1F1532A20085888D /* SAMKeychain.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2D3CBE3D1F15312E0085888D /* SAMKeychain.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2D3CBE4D1F1533660085888D /* PlexPrefs.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2D3CBE4F1F1533660085888D /* PlexPrefs.xib */; };
 		2D3CBE501F15336B0085888D /* PlexLogin.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2D3CBE521F15336B0085888D /* PlexLogin.xib */; };
@@ -121,9 +111,7 @@
 		2D4A4D0B1EE4B01D004D3716 /* StatusUpdateWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2D4A4D091EE4B01D004D3716 /* StatusUpdateWindow.xib */; };
 		2D5D38861EB62E8200689CC4 /* DonationKeyConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5D38851EB62E8200689CC4 /* DonationKeyConstants.m */; };
 		2D63136D1EDA284A00C3CB6B /* DetectionKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D63136C1EDA284A00C3CB6B /* DetectionKit.framework */; };
-		2D63136E1EDA287200C3CB6B /* DetectionKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D63136C1EDA284A00C3CB6B /* DetectionKit.framework */; };
 		2D63136F1EDA287200C3CB6B /* DetectionKit.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2D63136C1EDA284A00C3CB6B /* DetectionKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		2D6313711EDA293100C3CB6B /* Reachability.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D6313701EDA293100C3CB6B /* Reachability.framework */; };
 		2D6313721EDA293B00C3CB6B /* Reachability.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D6313701EDA293100C3CB6B /* Reachability.framework */; };
 		2D6313731EDA293B00C3CB6B /* Reachability.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2D6313701EDA293100C3CB6B /* Reachability.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2D6522701F7B50CD00A65BF8 /* GBPing.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D65226F1F7B50C700A65BF8 /* GBPing.framework */; };
@@ -133,7 +121,6 @@
 		2D6522751F7B50FC00A65BF8 /* MSWeakTimer_macOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D6522741F7B50F700A65BF8 /* MSWeakTimer_macOS.framework */; };
 		2D6522761F7B50FC00A65BF8 /* MSWeakTimer_macOS.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2D6522741F7B50F700A65BF8 /* MSWeakTimer_macOS.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2D9C3AE11E6A0BC7007D8F68 /* EasyNSURLConnection.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D9C3AE01E6A0BC7007D8F68 /* EasyNSURLConnection.framework */; };
-		2D9C3AE21E6A0C07007D8F68 /* EasyNSURLConnection.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D9C3AE01E6A0BC7007D8F68 /* EasyNSURLConnection.framework */; };
 		2D9C3AE31E6A0C07007D8F68 /* EasyNSURLConnection.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2D9C3AE01E6A0BC7007D8F68 /* EasyNSURLConnection.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2DAFC1DA1E2313B100FB7A14 /* OfflineViewQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DAFC1D81E2313B100FB7A14 /* OfflineViewQueue.m */; };
 		2DAFC1DC1E23143100FB7A14 /* OfflineViewQueue.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2DAFC1DE1E23143100FB7A14 /* OfflineViewQueue.xib */; };
@@ -188,17 +175,13 @@
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		91206C1B1E75F3E50050E9C5 /* MASShortcut.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91206C1A1E75F3E50050E9C5 /* MASShortcut.framework */; };
 		91206C1D1E75F3F00050E9C5 /* MASPreferences.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91206C1C1E75F3F00050E9C5 /* MASPreferences.framework */; };
-		91206C1E1E75F5AD0050E9C5 /* MASPreferences.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91206C1C1E75F3F00050E9C5 /* MASPreferences.framework */; };
 		91206C1F1E75F5AD0050E9C5 /* MASPreferences.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 91206C1C1E75F3F00050E9C5 /* MASPreferences.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		91206C231E75F8920050E9C5 /* MASShortcut.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91206C221E75F8920050E9C5 /* MASShortcut.framework */; };
 		914374A81EA4150700ECC683 /* TPI_MALUpdaterOSX.m in Sources */ = {isa = PBXBuildFile; fileRef = 914374A71EA4150700ECC683 /* TPI_MALUpdaterOSX.m */; };
 		9149EBE21E75F8A700B1AA22 /* MASShortcut.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91206C221E75F8920050E9C5 /* MASShortcut.framework */; };
 		9149EBE31E75F8A700B1AA22 /* MASShortcut.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 91206C221E75F8920050E9C5 /* MASShortcut.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		9161B2011E90246200FBF52F /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9161B1FF1E90246200FBF52F /* Fabric.framework */; };
 		9161B2021E90246200FBF52F /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9161B2001E90246200FBF52F /* Crashlytics.framework */; };
 		916D042820190AEA001F7E10 /* TwitterManagerKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 916D042720190AEA001F7E10 /* TwitterManagerKit.framework */; };
-		916D042920190AEA001F7E10 /* TwitterManagerKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 916D042720190AEA001F7E10 /* TwitterManagerKit.framework */; };
-		916D042A20190AF6001F7E10 /* TwitterManagerKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 916D042720190AEA001F7E10 /* TwitterManagerKit.framework */; };
 		916D042B20190AF6001F7E10 /* TwitterManagerKit.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 916D042720190AEA001F7E10 /* TwitterManagerKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		916D042C20190B01001F7E10 /* TwitterManagerKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 916D042720190AEA001F7E10 /* TwitterManagerKit.framework */; };
 		916D042D20190B01001F7E10 /* TwitterManagerKit.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 916D042720190AEA001F7E10 /* TwitterManagerKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -212,7 +195,6 @@
 		916D043E2019179D001F7E10 /* SocialPrefController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 916D04402019179D001F7E10 /* SocialPrefController.xib */; };
 		916DE6391EA5261A00F870D5 /* NSBundle+LoginItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 916DE6381EA5261A00F870D5 /* NSBundle+LoginItem.m */; };
 		91A609F31EA3E77400EF40AB /* CocoaOniguruma.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91A609F21EA3E77400EF40AB /* CocoaOniguruma.framework */; };
-		91A609F41EA3E77C00EF40AB /* CocoaOniguruma.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91A609F21EA3E77400EF40AB /* CocoaOniguruma.framework */; };
 		91A609F51EA3E77C00EF40AB /* CocoaOniguruma.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 91A609F21EA3E77400EF40AB /* CocoaOniguruma.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		91A8DD5E1E736814006E3566 /* NSNumberFormatterNumberOnly.m in Sources */ = {isa = PBXBuildFile; fileRef = 91A8DD5C1E736814006E3566 /* NSNumberFormatterNumberOnly.m */; };
 		91A9B6691EA918FB00645690 /* MAL_Updater_OS_XTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 91A9B6681EA918FB00645690 /* MAL_Updater_OS_XTests.m */; };
@@ -533,7 +515,6 @@
 				2D17D26E2001ACAD00769195 /* DetectionKit.framework in Frameworks */,
 				2D17D26F2001ACAD00769195 /* MASShortcut.framework in Frameworks */,
 				2D17D2702001ACAD00769195 /* Carbon.framework in Frameworks */,
-				2D17D2712001ACAD00769195 /* MASPreferences.framework in Frameworks */,
 				2D17D2722001ACAD00769195 /* MASShortcut.framework in Frameworks */,
 				2D17D2732001ACAD00769195 /* Reachability.framework in Frameworks */,
 				2D17D2742001ACAD00769195 /* MSWeakTimer_macOS.framework in Frameworks */,
@@ -542,19 +523,11 @@
 				2D17D2762001ACAD00769195 /* EasyNSURLConnection.framework in Frameworks */,
 				2D17D2772001ACAD00769195 /* anitomy-osx.framework in Frameworks */,
 				2D17D2782001ACAD00769195 /* Sparkle.framework in Frameworks */,
-				916D042920190AEA001F7E10 /* TwitterManagerKit.framework in Frameworks */,
-				2D17D27A2001ACAD00769195 /* MASShortcut.framework in Frameworks */,
 				2D17D27B2001ACAD00769195 /* Cocoa.framework in Frameworks */,
-				2D17D27C2001ACAD00769195 /* EasyNSURLConnection.framework in Frameworks */,
 				2D17D27D2001ACAD00769195 /* PingNotifier.framework in Frameworks */,
-				2D17D27E2001ACAD00769195 /* SAMKeychain.framework in Frameworks */,
 				2D17D27F2001ACAD00769195 /* GBPing.framework in Frameworks */,
-				2D17D2802001ACAD00769195 /* CocoaOniguruma.framework in Frameworks */,
-				2D17D2812001ACAD00769195 /* Reachability.framework in Frameworks */,
 				2D17D2822001ACAD00769195 /* XMLReader.framework in Frameworks */,
-				2D17D2832001ACAD00769195 /* XMLReader.framework in Frameworks */,
 				2D17D2842001ACAD00769195 /* Security.framework in Frameworks */,
-				2D17D2852001ACAD00769195 /* DetectionKit.framework in Frameworks */,
 				2D17D2872001ACAD00769195 /* CoreData.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -568,7 +541,6 @@
 				2D63136D1EDA284A00C3CB6B /* DetectionKit.framework in Frameworks */,
 				91206C1B1E75F3E50050E9C5 /* MASShortcut.framework in Frameworks */,
 				6F28DC1B1A67092F00AF063F /* Carbon.framework in Frameworks */,
-				91206C1E1E75F5AD0050E9C5 /* MASPreferences.framework in Frameworks */,
 				9149EBE21E75F8A700B1AA22 /* MASShortcut.framework in Frameworks */,
 				2D6313721EDA293B00C3CB6B /* Reachability.framework in Frameworks */,
 				2D6522751F7B50FC00A65BF8 /* MSWeakTimer_macOS.framework in Frameworks */,
@@ -577,20 +549,12 @@
 				8227C1171A1D8D34005F3301 /* anitomy-osx.framework in Frameworks */,
 				59D503781CB004B10002532D /* Sparkle.framework in Frameworks */,
 				9161B2021E90246200FBF52F /* Crashlytics.framework in Frameworks */,
-				91206C231E75F8920050E9C5 /* MASShortcut.framework in Frameworks */,
 				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
 				916D042820190AEA001F7E10 /* TwitterManagerKit.framework in Frameworks */,
-				2D9C3AE21E6A0C07007D8F68 /* EasyNSURLConnection.framework in Frameworks */,
 				2D6522721F7B50CD00A65BF8 /* PingNotifier.framework in Frameworks */,
-				916D042A20190AF6001F7E10 /* TwitterManagerKit.framework in Frameworks */,
-				2D3CBE4B1F1532A20085888D /* SAMKeychain.framework in Frameworks */,
 				2D6522701F7B50CD00A65BF8 /* GBPing.framework in Frameworks */,
-				91A609F41EA3E77C00EF40AB /* CocoaOniguruma.framework in Frameworks */,
-				2D6313711EDA293100C3CB6B /* Reachability.framework in Frameworks */,
 				2D3CBE3C1F1531210085888D /* XMLReader.framework in Frameworks */,
-				2D3CBE491F1532950085888D /* XMLReader.framework in Frameworks */,
 				3A2DCCBE1210B3D900C920F1 /* Security.framework in Frameworks */,
-				2D63136E1EDA287200C3CB6B /* DetectionKit.framework in Frameworks */,
 				9161B2011E90246200FBF52F /* Fabric.framework in Frameworks */,
 				5C2B9DFC1221EB25006DEF0D /* CoreData.framework in Frameworks */,
 			);
@@ -1134,7 +1098,7 @@
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0610;
+				LastUpgradeCheck = 0920;
 				TargetAttributes = {
 					2D17D22F2001ACAD00769195 = {
 						DevelopmentTeam = 9HDZTER525;
@@ -1588,6 +1552,7 @@
 				INSTALL_PATH = "$(HOME)/Documents/Build/Debug";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				PRODUCT_BUNDLE_IDENTIFIER = "moe.ateliershiori.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1625,6 +1590,7 @@
 				INSTALL_PATH = "$(HOME)/Documents/Build/Release";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				PRODUCT_BUNDLE_IDENTIFIER = "moe.ateliershiori.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1844,6 +1810,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = 9HDZTER525;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SRCROOT)/**",
 					"$(SRCROOT)/\"Frameworks\"/**",
@@ -1862,6 +1829,7 @@
 				INSTALL_PATH = "$(HOME)/Documents/Build/Debug";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.chikorita157.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "MAL Updater OS X";
 				PROVISIONING_PROFILE = "";
 				SDKROOT = macosx;
@@ -1881,6 +1849,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 9HDZTER525;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SRCROOT)/**",
 					"$(SRCROOT)/\"Frameworks\"/**",
@@ -1895,6 +1864,7 @@
 				INSTALL_PATH = "$(HOME)/Documents/Build/Release";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.chikorita157.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "MAL Updater OS X";
 				PROVISIONING_PROFILE = "";
 				SDKROOT = macosx;
@@ -1905,15 +1875,36 @@
 		C01FCF4F08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_LINK_OBJC_RUNTIME = NO;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_GC = unsupported;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = s;
 				"GCC_PREPROCESSOR_DEFINITIONS[arch=*]" = "DEBUG=1";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = "\"${SDKROOT}/usr/include/libxml2\"/**";
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
@@ -1927,16 +1918,36 @@
 		C01FCF5008A954540054247B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_LINK_OBJC_RUNTIME = NO;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "Don't Code Sign";
 				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_ENABLE_OBJC_GC = unsupported;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = s;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = "\"${SDKROOT}/usr/include/libxml2\"/**";
 				MACOSX_DEPLOYMENT_TARGET = 10.8;

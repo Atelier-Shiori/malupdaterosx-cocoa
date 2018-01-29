@@ -24,9 +24,6 @@
 @synthesize MALEngine;
 @synthesize loginview;
 @synthesize loggedinview;
-@synthesize passwordinput;
-@synthesize invalidinput;
-@synthesize loginpanel;
 
 - (id)init
 {
@@ -201,55 +198,6 @@
     }
     else {
         [Utility showsheetmessage:@"Cannot Logout" explaination:@"Please turn off automatic scrobbling before logging out." window:self.view.window];
-    }
-}
-
-/*
- Reauthorization Panel
- */
-- (IBAction)reauthorize:(id)sender{
-    if (!appdelegate.scrobbling && !appdelegate.scrobbleractive) {
-        [NSApp beginSheet:self.loginpanel
-           modalForWindow:self.view.window modalDelegate:self
-           didEndSelector:@selector(reAuthPanelDidEnd:returnCode:contextInfo:)
-              contextInfo:(void *)nil];
-    }
-    else {
-        [Utility showsheetmessage:@"Cannot Logout" explaination:@"Please turn off automatic scrobbling before reauthorizing." window:self.view.window];
-    }
-}
-
-- (void)reAuthPanelDidEnd:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo {
-    if (returnCode == 1) {
-        dispatch_queue_t queue = dispatch_get_global_queue(
-                                                           DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-        
-        dispatch_async(queue, ^{
-            
-        [self login: [MALEngine getusername] password:passwordinput.stringValue];
-        });
-    }
-    //Reset and Close
-    passwordinput.stringValue = @"";
-    [invalidinput setHidden:YES];
-    [self.loginpanel close];
-}
-
-- (IBAction)cancelreauthorization:(id)sender{
-    [self.loginpanel orderOut:self];
-    [NSApp endSheet:self.loginpanel returnCode:0];
-}
-
-- (IBAction)performreauthorization:(id)sender{
-    if (passwordinput.stringValue.length == 0) {
-        // No password, indicate it
-        NSBeep();
-        [invalidinput setHidden:NO];
-    }
-    else {
-        [invalidinput setHidden:YES];
-        [self.loginpanel orderOut:self];
-        [NSApp endSheet:self.loginpanel returnCode:1];
     }
 }
 @end

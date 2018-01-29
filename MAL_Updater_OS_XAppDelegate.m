@@ -82,55 +82,59 @@
  */
 
 - (NSString *)applicationSupportDirectory {
-	
+    
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES);
     NSString *basePath = (paths.count > 0) ? paths[0] : NSTemporaryDirectory();
+#ifdef DEBUG
+    return [basePath stringByAppendingPathComponent:@"MAL Updater OS X - DEBUG"];
+#else
     return [basePath stringByAppendingPathComponent:@"MAL Updater OS X"];
+#endif
 }
 
 
 /**
- Creates, retains, and returns the managed object model for the application 
+ Creates, retains, and returns the managed object model for the application
  by merging all of the models found in the application bundle.
  */
 
 - (NSManagedObjectModel *)managedObjectModel {
-	
+    
     if (managedObjectModel) return managedObjectModel;
-	
+    
     managedObjectModel = [NSManagedObjectModel mergedModelFromBundles:nil];
     return managedObjectModel;
 }
 
 
 /**
- Returns the persistent store coordinator for the application.  This 
- implementation will create and return a coordinator, having added the 
- store for the application to it.  (The directory for the store is created, 
+ Returns the persistent store coordinator for the application.  This
+ implementation will create and return a coordinator, having added the
+ store for the application to it.  (The directory for the store is created,
  if necessary.)
  */
 
 - (NSPersistentStoreCoordinator *) persistentStoreCoordinator {
-	
+    
     if (persistentStoreCoordinator) return persistentStoreCoordinator;
-	
+    
     NSManagedObjectModel *mom = self.managedObjectModel;
     if (!mom) {
         NSAssert(NO, @"Managed object model is nil");
         NSLog(@"%@:%@ No model to generate a store from", [self class], NSStringFromSelector(_cmd));
         return nil;
     }
-	
+    
     NSFileManager *fileManager = [NSFileManager defaultManager];
     NSString *applicationSupportDirectory = [self applicationSupportDirectory];
     NSError *error = nil;
     
     if ( ![fileManager fileExistsAtPath:applicationSupportDirectory isDirectory:NULL] ) {
-		if (![fileManager createDirectoryAtPath:applicationSupportDirectory withIntermediateDirectories:NO attributes:nil error:&error]) {
+        if (![fileManager createDirectoryAtPath:applicationSupportDirectory withIntermediateDirectories:NO attributes:nil error:&error]) {
             NSAssert(NO, ([NSString stringWithFormat:@"Failed to create App Support directory %@ : %@", applicationSupportDirectory,error]));
             NSLog(@"Error creating application support directory at %@ : %@",applicationSupportDirectory,error);
             return nil;
-		}
+        }
     }
     
     NSURL *url = [NSURL fileURLWithPath: [applicationSupportDirectory stringByAppendingPathComponent: @"Update History.sqlite"]];
@@ -139,28 +143,28 @@
                               NSMigratePersistentStoresAutomaticallyOption : @YES,
                               NSInferMappingModelAutomaticallyOption : @YES
                               };
-    if (![persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType 
-												  configuration:nil 
-															URL:url 
-														options:options
-														  error:&error]) {
+    if (![persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType
+                                                  configuration:nil
+                                                            URL:url
+                                                        options:options
+                                                          error:&error]) {
         [[NSApplication sharedApplication] presentError:error];
-         persistentStoreCoordinator = nil;
+        persistentStoreCoordinator = nil;
         return nil;
-    }    
-	
+    }
+    
     return persistentStoreCoordinator;
 }
 
 /**
  Returns the managed object context for the application (which is already
- bound to the persistent store coordinator for the application.) 
+ bound to the persistent store coordinator for the application.)
  */
 
 - (NSManagedObjectContext *) managedObjectContext {
-	
+    
     if (managedObjectContext) return managedObjectContext;
-	
+    
     NSPersistentStoreCoordinator *coordinator = self.persistentStoreCoordinator;
     if (!coordinator) {
         NSMutableDictionary *dict = [NSMutableDictionary dictionary];
@@ -172,31 +176,31 @@
     }
     managedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
     managedObjectContext.persistentStoreCoordinator = coordinator;
-	
+    
     return managedObjectContext;
 }
 + (void)initialize
 {
-	//Create a Dictionary
-	NSMutableDictionary *defaultValues = [NSMutableDictionary dictionary];
-	
-	// Defaults
-	defaultValues[@"Base64Token"] = @"";
+    //Create a Dictionary
+    NSMutableDictionary *defaultValues = [NSMutableDictionary dictionary];
+    
+    // Defaults
+    defaultValues[@"Base64Token"] = @"";
     // API Settings
-    #ifdef oss
+#ifdef oss
     defaultValues[@"MALAPIURL"] = @"http://localhost:8000";
-    #else
-	defaultValues[@"MALAPIURL"] = @"https://malapi.malupdaterosx.moe";
-    #endif
+#else
+    defaultValues[@"MALAPIURL"] = @"https://malapi.malupdaterosx.moe";
+#endif
     // General Settings
-	defaultValues[@"ScrobbleatStartup"] = @NO;
+    defaultValues[@"ScrobbleatStartup"] = @NO;
     defaultValues[@"useSearchCache"] = @YES;
     defaultValues[@"exceptions"] = [[NSMutableArray alloc] init];
     defaultValues[@"ignoredirectories"] = [[NSMutableArray alloc] init];
     defaultValues[@"IgnoreTitleRules"] = [[NSMutableArray alloc] init];
     defaultValues[@"ConfirmNewTitle"] = @YES;
     defaultValues[@"ConfirmUpdates"] = @NO;
-	defaultValues[@"UseAutoExceptions"] = @YES;
+    defaultValues[@"UseAutoExceptions"] = @YES;
     defaultValues[@"timerinterval"] = @(300);
     defaultValues[@"showcorrection"] = @YES;
     defaultValues[@"NSApplicationCrashOnExceptions"] = @YES;
@@ -208,11 +212,11 @@
     defaultValues[@"kodiaddress"] = @"";
     defaultValues[@"kodiport"] = @"3005";
     // Donation Settings
-    #ifdef oss
+#ifdef oss
     defaultValues[@"donated"] = @YES;
-    #else
+#else
     defaultValues[@"donated"] = @NO;
-    #endif
+#endif
     defaultValues[@"MacAppStoreMigrated"] = @NO;
     // Plex Media Server
     defaultValues[@"enableplexapi"] = @NO;
@@ -228,9 +232,9 @@
     defaultValues[@"twitterupdateanimeformat"] = @"%status% %title% Episode %episode% - %malurl% #malupdaterosx";
     defaultValues[@"twitterupdatestatusformat"] =  @"Updated %title% Episode %episode% (%status%) - %malurl% #malupdaterosx";
     
-	//Register Dictionary
-	[[NSUserDefaults standardUserDefaults]
-	 registerDefaults:defaultValues];
+    //Register Dictionary
+    [[NSUserDefaults standardUserDefaults]
+     registerDefaults:defaultValues];
 }
 - (void) awakeFromNib{
     // Register queue
@@ -241,13 +245,13 @@
     
     //Allocates and loads the images into the application which will be used for our NSStatusItem
     statusImage = [NSImage imageNamed:@"StatusIcon"];
-	
+    
     //Yosemite Dark Menu Support
     [statusImage setTemplate:YES];
     
     //Sets the images in our NSStatusItem
     statusItem.image = statusImage;
-
+    
     //Tells the NSStatusItem what menu to load
     statusItem.menu = statusMenu;
     
@@ -258,35 +262,35 @@
     [statusItem setHighlightMode:YES];
 }
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
-	// Initialize MALEngine
-	MALEngine = [[MyAnimeList alloc] init];
+    // Initialize MALEngine
+    MALEngine = [[MyAnimeList alloc] init];
     [MALEngine setManagedObjectContext:managedObjectContext];
-    #ifdef DEBUG
-    #else
-        // Check if Application is in the /Applications Folder
-        // Only Activate in OS X/macOS is 10.11 or earlier due to Gatekeeper changes in macOS Sierra
-        // Note: Sierra Appkit Version is 1485
-        PFMoveToApplicationsFolderIfNecessary();
-    #endif
-	//Since LSUIElement is set to 1 to hide the dock icon, it causes unattended behavior of having the program windows not show to the front.
-	[NSApp activateIgnoringOtherApps:YES];
+#ifdef DEBUG
+#else
+    // Check if Application is in the /Applications Folder
+    // Only Activate in OS X/macOS is 10.11 or earlier due to Gatekeeper changes in macOS Sierra
+    // Note: Sierra Appkit Version is 1485
+    PFMoveToApplicationsFolderIfNecessary();
+#endif
+    //Since LSUIElement is set to 1 to hide the dock icon, it causes unattended behavior of having the program windows not show to the front.
+    [NSApp activateIgnoringOtherApps:YES];
     
     //Load Defaults
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-
+    
     //Set Notification Center Delegate
     [NSUserNotificationCenter defaultUserNotificationCenter].delegate = self;
-	
-	// Disable Update and Share Buttons
-	[updatetoolbaritem setEnabled:NO];
+    
+    // Disable Update and Share Buttons
+    [updatetoolbaritem setEnabled:NO];
     [sharetoolbaritem setEnabled:NO];
     [correcttoolbaritem setEnabled:NO];
     [openAnimePage setEnabled:NO];
     
     //Register Global Hotkey
     [self registerHotkey];
-	// Hide Window
-	[window close];
+    // Hide Window
+    [window close];
     
     //Set up Yosemite UI Enhancements
     if (floor(NSAppKitVersionNumber) > NSAppKitVersionNumber10_9)
@@ -325,9 +329,9 @@
         image = [NSImage imageNamed:imagename];
         [image setTemplate:YES];
     }
-	
-	// Notify User if there is no Account Info
-	if (![MALEngine checkaccount]) {
+    
+    // Notify User if there is no Account Info
+    if (![MALEngine checkaccount]) {
         // First time prompt
         NSAlert *alert = [[NSAlert alloc] init] ;
         [alert addButtonWithTitle:@"Yes"];
@@ -342,7 +346,7 @@
             [self.preferencesWindowController showWindow:nil];
             [(MASPreferencesWindowController *)self.preferencesWindowController selectControllerAtIndex:1];
         }
-	}
+    }
     else {
         if (![[NSUserDefaults standardUserDefaults] objectForKey:@"credentialscheckdate"]){
             // Check credentials now if user has an account and these values are not set
@@ -350,26 +354,26 @@
             [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"credentialsvalid"];
         }
     }
-    #ifdef oss
-    #else
+#ifdef oss
+#else
     if ([Utility checkoldAPI]) {
         [self showNotification:@"MAL Updater OS X" message:@"The API URL has been automatically updated."];
         [[NSUserDefaults standardUserDefaults] setObject:@"https://malapi.malupdaterosx.moe" forKey:@"MALAPIURL"];
     }
-    #endif
-	// Autostart Scrobble at Startup
-	if ([defaults boolForKey:@"ScrobbleatStartup"] == 1) {
-		[self autostarttimer];
-	}
+#endif
+    // Autostart Scrobble at Startup
+    if ([defaults boolForKey:@"ScrobbleatStartup"] == 1) {
+        [self autostarttimer];
+    }
     // Import existing Exceptions Data
     [AutoExceptions importToCoreData];
-    #ifdef oss
-    #else
+#ifdef oss
+#else
     // Show Donation Message
     [Utility donateCheck:self];
     // Fabric
     [Fabric with:@[[Crashlytics class]]];
-    #endif
+#endif
 }
 #pragma mark General UI Functions
 - (NSWindowController *)preferencesWindowController
@@ -391,36 +395,36 @@
 }
 
 - (IBAction)showPreferences:(id)sender {
-	//Since LSUIElement is set to 1 to hide the dock icon, it causes unattended behavior of having the program windows not show to the front.
-	[NSApp activateIgnoringOtherApps:YES];
-	[self.preferencesWindowController showWindow:nil];
+    //Since LSUIElement is set to 1 to hide the dock icon, it causes unattended behavior of having the program windows not show to the front.
+    [NSApp activateIgnoringOtherApps:YES];
+    [self.preferencesWindowController showWindow:nil];
 }
 - (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender {
-	
+    
     if (!managedObjectContext) return NSTerminateNow;
-	
+    
     if (![managedObjectContext commitEditing]) {
         NSLog(@"%@:%@ unable to commit editing to terminate", [self class], NSStringFromSelector(_cmd));
         return NSTerminateCancel;
     }
-	
+    
     if (!managedObjectContext.hasChanges) return NSTerminateNow;
-	
+    
     NSError *error = nil;
     if (![managedObjectContext save:&error]) {
-		
-        // This error handling simply presents error information in a panel with an 
-        // "Ok" button, which does not include any attempt at error recovery (meaning, 
-        // attempting to fix the error.)  As a result, this implementation will 
-        // present the information to the user and then follow up with a panel asking 
+        
+        // This error handling simply presents error information in a panel with an
+        // "Ok" button, which does not include any attempt at error recovery (meaning,
+        // attempting to fix the error.)  As a result, this implementation will
+        // present the information to the user and then follow up with a panel asking
         // if the user wishes to "Quit Anyway", without saving the changes.
-		
-        // Typically, this process should be altered to include application-specific 
-        // recovery steps.  
-		
+        
+        // Typically, this process should be altered to include application-specific
+        // recovery steps.
+        
         BOOL result = [sender presentError:error];
         if (result) return NSTerminateCancel;
-		
+        
         NSString *question = NSLocalizedString(@"Could not save changes while quitting.  Quit anyway?", @"Quit without saves error question message");
         NSString *info = NSLocalizedString(@"Quitting now will lose any changes you have made since the last successful save", @"Quit without saves error question info");
         NSString *quitButton = NSLocalizedString(@"Quit anyway", @"Quit anyway button title");
@@ -430,24 +434,24 @@
         alert.informativeText = info;
         [alert addButtonWithTitle:quitButton];
         [alert addButtonWithTitle:cancelButton];
-		
+        
         NSInteger answer = [alert runModal];
         
-        if (answer == NSAlertAlternateReturn) return NSTerminateCancel;
-		
+        if (answer == NSAlertSecondButtonReturn) return NSTerminateCancel;
+        
     }
-	
+    
     return NSTerminateNow;
 }
 - (IBAction)togglescrobblewindow:(id)sender
 {
-	if (window.visible) {
-		[window close];
-	} else { 
-		//Since LSUIElement is set to 1 to hide the dock icon, it causes unattended behavior of having the program windows not show to the front.
-		[NSApp activateIgnoringOtherApps:YES];
-		[window makeKeyAndOrderFront:self]; 
-	} 
+    if (window.visible) {
+        [window close];
+    } else {
+        //Since LSUIElement is set to 1 to hide the dock icon, it causes unattended behavior of having the program windows not show to the front.
+        [NSApp activateIgnoringOtherApps:YES];
+        [window makeKeyAndOrderFront:self];
+    }
 }
 
 - (IBAction)enterDonationKey:(id)sender{
@@ -523,21 +527,21 @@
     //[shareMenuItem setHidden:NO];
 }
 - (void)toggleScrobblingUIEnable:(BOOL)enable{
-	dispatch_async(dispatch_get_main_queue(), ^{
-	    statusMenu.autoenablesItems = enable;
-	    updatenow.enabled = enable;
-	    togglescrobbler.enabled = enable;
-	    confirmupdate.enabled = enable;
-	    findtitle.enabled = enable;
-	    openstream.enabled = enable;
-	    if (!enable) {
-	        updatenow.title = @"Updating...";
-	        [self setStatusText:@"Scrobble Status: Scrobbling..."];
-	    }
-	    else {
-	        updatenow.title = @"Update Now";
-	    }
-	});
+    dispatch_async(dispatch_get_main_queue(), ^{
+        statusMenu.autoenablesItems = enable;
+        updatenow.enabled = enable;
+        togglescrobbler.enabled = enable;
+        confirmupdate.enabled = enable;
+        findtitle.enabled = enable;
+        openstream.enabled = enable;
+        if (!enable) {
+            updatenow.title = @"Updating...";
+            [self setStatusText:@"Scrobble Status: Scrobbling..."];
+        }
+        else {
+            updatenow.title = @"Update Now";
+        }
+    });
 }
 - (void)EnableStatusUpdating:(BOOL)enable{
     updatecorrect.autoenablesItems = enable;
@@ -546,7 +550,7 @@
 }
 - (void)performsendupdatenotification:(int)status{
     dispatch_async(dispatch_get_main_queue(), ^{
-        switch (status) { 
+        switch (status) {
             case ScrobblerNothingPlaying:
                 [self setStatusText:@"Scrobble Status: Idle..."];
                 break;
@@ -705,8 +709,8 @@
     NSMutableString *copyrightstr = [NSMutableString new];
     NSDictionary *bundleDict = [NSBundle mainBundle].infoDictionary;
     [copyrightstr appendFormat:@"%@ \r\r",bundleDict[@"NSHumanReadableCopyright"]];
-    #ifdef oss
-    #else
+#ifdef oss
+#else
     if (((NSNumber *)[[NSUserDefaults standardUserDefaults] objectForKey:@"donated"]).boolValue) {
         if ([[NSUserDefaults standardUserDefaults] boolForKey:@"MacAppStoreMigrated"]){
             [copyrightstr appendFormat:@"This copy is registered to: MAL Library User"];
@@ -720,7 +724,7 @@
         [copyrightstr appendString:@"UNREGISTERED COPY"];
         (self.aboutWindowController).appName = @"MAL Updater OS X";
     }
-    #endif
+#endif
     (self.aboutWindowController).appCopyright = [[NSAttributedString alloc] initWithString:copyrightstr
                                                                                 attributes:@{
                                                                                              NSForegroundColorAttributeName:[NSColor colorWithRed:0.0f green:0.0f blue:0.0f alpha:1.0f],
@@ -733,51 +737,51 @@
 #pragma mark Timer Functions
 
 - (IBAction)toggletimer:(id)sender {
-	//Check to see if there is an API Key stored
-	if (![MALEngine checkaccount]) {
+    //Check to see if there is an API Key stored
+    if (![MALEngine checkaccount]) {
         [self showNotification:@"MAL Updater OS X" message:@"Add a login before you start scrobbling."];
-	}
-	else {
-		if (scrobbling == FALSE) {
-			[self starttimer];
-			togglescrobbler.title = @"Stop Scrobbling";
+    }
+    else {
+        if (scrobbling == FALSE) {
+            [self starttimer];
+            togglescrobbler.title = @"Stop Scrobbling";
             [self showNotification:@"MAL Updater OS X" message:@"Auto Scrobble is now turned on."];
-			ScrobblerStatus.objectValue = @"Scrobble Status: Started";
-			//Set Scrobbling State to true
-			scrobbling = TRUE;
-		}
-		else {
-			[self stoptimer];
-			togglescrobbler.title = @"Start Scrobbling";
-			ScrobblerStatus.objectValue = @"Scrobble Status: Stopped";
+            ScrobblerStatus.objectValue = @"Scrobble Status: Started";
+            //Set Scrobbling State to true
+            scrobbling = TRUE;
+        }
+        else {
+            [self stoptimer];
+            togglescrobbler.title = @"Start Scrobbling";
+            ScrobblerStatus.objectValue = @"Scrobble Status: Stopped";
             [self showNotification:@"MAL Updater OS X" message:@"Auto Scrobble is now turned off."];
-			//Set Scrobbling State to false
-			scrobbling = FALSE;
-		}
-	}
-	
+            //Set Scrobbling State to false
+            scrobbling = FALSE;
+        }
+    }
+    
 }
 - (void)autostarttimer {
-	//Check to see if there is an API Key stored
-	if (![MALEngine checkaccount]) {
-         [self showNotification:@"MAL Updater OS X" message:@"Add a login before you start scrobbling."];
-	}
-	else {
-		[self starttimer];
-		togglescrobbler.title = @"Stop Scrobbling";
-		ScrobblerStatus.objectValue = @"Scrobble Status: Started";
+    //Check to see if there is an API Key stored
+    if (![MALEngine checkaccount]) {
+        [self showNotification:@"MAL Updater OS X" message:@"Add a login before you start scrobbling."];
+    }
+    else {
+        [self starttimer];
+        togglescrobbler.title = @"Stop Scrobbling";
+        ScrobblerStatus.objectValue = @"Scrobble Status: Started";
         //Set Scrobbling State to true
-		scrobbling = TRUE;
-	}
+        scrobbling = TRUE;
+    }
 }
 - (void)firetimer {
-	//Tell MALEngine to detect and scrobble if necessary.
-	NSLog(@"Starting...");
+    //Tell MALEngine to detect and scrobble if necessary.
+    NSLog(@"Starting...");
     if (!scrobbleractive) {
         scrobbleractive = true;
         // Disable toggle scrobbler and update now menu items
         [self toggleScrobblingUIEnable:false];
-
+        
         if ([[NSUserDefaults standardUserDefaults] boolForKey:@"UseAutoExceptions"]) {
             // Check for latest list of Auto Exceptions automatically each week
             if ([[NSUserDefaults standardUserDefaults] objectForKey:@"ExceptionsLastUpdated"]) {
@@ -801,15 +805,15 @@
                     bool confirmneeded = [ostatus[@"confirmneeded"] boolValue];
                     if (confirmneeded) {
                         dispatch_async(dispatch_get_main_queue(), ^{
-                        [self setStatusText:@"Scrobble Status: Please confirm update."];
-                        NSDictionary *userinfo = @{@"title": MALEngine.LastScrobbledTitle,  @"episode": MALEngine.LastScrobbledEpisode};
-                        [self showConfirmationNotification:@"Confirm Update" message:[NSString stringWithFormat:@"Click here to confirm update for %@ Episode %@.",MALEngine.LastScrobbledActualTitle,MALEngine.LastScrobbledEpisode] updateData:userinfo];
-                            });
+                            [self setStatusText:@"Scrobble Status: Please confirm update."];
+                            NSDictionary *userinfo = @{@"title": MALEngine.LastScrobbledTitle,  @"episode": MALEngine.LastScrobbledEpisode};
+                            [self showConfirmationNotification:@"Confirm Update" message:[NSString stringWithFormat:@"Click here to confirm update for %@ Episode %@.",MALEngine.LastScrobbledActualTitle,MALEngine.LastScrobbledEpisode] updateData:userinfo];
+                        });
                         break;
                     }
                     else {
                         dispatch_async(dispatch_get_main_queue(), ^{
-                        [self showNotification:@"Updated Queued Items" message:[NSString stringWithFormat:@"%i scrobbled successfully and %i failed",success, fail]];
+                            [self showNotification:@"Updated Queued Items" message:[NSString stringWithFormat:@"%i scrobbled successfully and %i failed",success, fail]];
                         });
                     }
                 }
@@ -819,7 +823,7 @@
                 //Enable the Update button if a title is detected
                 [self performsendupdatenotification:status];
             }
-
+            
         }
         [self performRefreshUI:status];
     }
@@ -846,8 +850,8 @@
         dispatch_queue_t queue = dispatch_get_global_queue(
                                                            DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
         dispatch_async(queue, ^{
-        [self firetimer];
-            });
+            [self firetimer];
+        });
     }
 }
 #pragma mark Correction
@@ -868,30 +872,27 @@
     }
     if (!findtitle.hidden) {
         //Use failed title
-         fsdialog.searchquery = MALEngine.FailedTitle;
+        fsdialog.searchquery = MALEngine.FailedTitle;
     }
     else {
         //Get last scrobbled title
         fsdialog.searchquery = MALEngine.LastScrobbledTitle;
     }
-   
+    
     if (isVisible) {
-        [NSApp beginSheet:fsdialog.window
-           modalForWindow:window modalDelegate:self
-           didEndSelector:@selector(correctionDidEnd:returnCode:contextInfo:)
-              contextInfo:(void *)nil];
+        [self.window beginSheet:fsdialog.window completionHandler:^(NSModalResponse returnCode) {
+            [self correctionDidEnd:returnCode];
+        }];
         [self disableUpdateItems];
     }
     else {
-        [NSApp beginSheet:fsdialog.window
-           modalForWindow:nil modalDelegate:self
-           didEndSelector:@selector(correctionDidEnd:returnCode:contextInfo:)
-              contextInfo:(void *)nil];
+        [self disableUpdateItems];
+        [self correctionDidEnd:[NSApp runModalForWindow:fsdialog.window]];
     }
     
 }
-- (void)correctionDidEnd:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo {
-    if (returnCode == 1) {
+- (void)correctionDidEnd:(long)returnCode{
+    if (returnCode == NSModalResponseOK) {
         if ([fsdialog.selectedaniid isEqualToString:MALEngine.AniID]) {
             NSLog(@"ID matches, correction not needed.");
         }
@@ -944,9 +945,9 @@
                     //Show Anime Correct Information
                     NSDictionary *ainfo = MALEngine.LastScrobbledInfo;
                     [self showAnimeInfo:ainfo];
-					[confirmupdate setHidden:true];
+                    [confirmupdate setHidden:true];
                     [findtitle setHidden:true];
-					//Regenerate Share Items
+                    //Regenerate Share Items
                     [_shareMenu generateShareMenu:@[[NSString stringWithFormat:@"%@ - %@", MALEngine.LastScrobbledTitle, MALEngine.LastScrobbledEpisode ], [NSURL URLWithString:[NSString stringWithFormat:@"http://myanimelist.net/anime/%@", MALEngine.AniID]]]];
                     break;
                 }
@@ -989,13 +990,13 @@
 #pragma mark History Window functions
 
 - (IBAction)showhistory:(id)sender {
-		//Since LSUIElement is set to 1 to hide the dock icon, it causes unattended behavior of having the program windows not show to the front.
-		[NSApp activateIgnoringOtherApps:YES];
+    //Since LSUIElement is set to 1 to hide the dock icon, it causes unattended behavior of having the program windows not show to the front.
+    [NSApp activateIgnoringOtherApps:YES];
     if (!historywindowcontroller) {
         historywindowcontroller = [[HistoryWindow alloc] init];
     }
-		[historywindowcontroller.window makeKeyAndOrderFront:nil];
-
+    [historywindowcontroller.window makeKeyAndOrderFront:nil];
+    
 }
 #pragma mark StatusIconTooltip, Status Text, Last Scrobbled Title Setters
 
@@ -1005,11 +1006,11 @@
 }
 - (void)setStatusText:(NSString*)messagetext
 {
-	ScrobblerStatus.objectValue = messagetext;
+    ScrobblerStatus.objectValue = messagetext;
 }
 - (void)setLastScrobbledTitle:(NSString*)messagetext
 {
-	LastScrobbled.objectValue = messagetext;
+    LastScrobbled.objectValue = messagetext;
 }
 - (void)setStatusMenuTitleEpisode:(NSString *)title episode:(NSString *) episode{
     //Set New Title and Episode
@@ -1045,54 +1046,57 @@
 - (IBAction)updatestatusmenu:(id)sender{
     [self showUpdateDialog:nil];
 }
-- (void)showUpdateDialog:(NSWindow *) w{
+- (void)showUpdateDialog:(NSWindow *) w {
     if (!_updatewindow) {
         _updatewindow = [StatusUpdateWindow new];
-        // Set completion handler
-        __weak MAL_Updater_OS_XAppDelegate *weakself = self;
-        _updatewindow.completion = ^void(int returnCode){
-            [weakself updateDidEnd:returnCode];
-        };
     }
-	// Show Dialog
+    // Set completion handler
+    __weak MAL_Updater_OS_XAppDelegate *weakself = self;
+    _updatewindow.completion = ^void(long returnCode){
+        [weakself updateDidEnd:returnCode];
+    };
+    // Show Dialog
     [_updatewindow showUpdateDialog:w withMALEngine:MALEngine];
 }
-- (void)updateDidEnd:(int)returnCode {
+- (void)updateDidEnd:(long)returnCode {
+    __block NSString *tmpepisode = _updatewindow.episodefield.stringValue;
+    __block bool episodechanged = false;
     dispatch_queue_t queue = dispatch_get_global_queue(
                                                        DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     dispatch_async(queue, ^{
-    // Check if Episode field is empty. If so, set it to last scrobbled episode
-    NSString *tmpepisode = _updatewindow.episodefield.stringValue;
-    bool episodechanged = false;
-    if (tmpepisode.length == 0) {
-        tmpepisode = [NSString stringWithFormat:@"%i", MALEngine.DetectedCurrentEpisode];
-    }
-    if (tmpepisode.intValue != MALEngine.DetectedCurrentEpisode) {
-        episodechanged = true; // Used to update the status window
-    }
-
-    if (returnCode == 1) {
-         dispatch_async(dispatch_get_main_queue(), ^{
-        BOOL result = [MALEngine updatestatus:MALEngine.AniID score:(int)_updatewindow.showscore.selectedTag watchstatus:_updatewindow.showstatus.titleOfSelectedItem episode:tmpepisode];
-        if (result)
-            [self setStatusText:@"Scrobble Status: Updating of Watch Status/Score Successful."];
-        if (episodechanged) {
-            // Update the tooltip, menu and last scrobbled title
-            [self setStatusMenuTitleEpisode:MALEngine.LastScrobbledActualTitle episode:MALEngine.LastScrobbledEpisode];
-            [self updateLastScrobbledTitleStatus:false];
-            [confirmupdate setHidden:true];
+        // Check if Episode field is empty. If so, set it to last scrobbled episode
+        if (tmpepisode.length == 0) {
+            tmpepisode = [NSString stringWithFormat:@"%i", MALEngine.DetectedCurrentEpisode];
         }
-        else
-            [self setStatusText:@"Scrobble Status: Unable to update Watch Status/Score."];
-         });
-    }
-    dispatch_async(dispatch_get_main_queue(), ^{
-    //If scrobbling is on, restart timer
-	if (scrobbling == TRUE) {
-		[self starttimer];
-	}
-    [self enableUpdateItems];
-    });
+        if (tmpepisode.intValue != MALEngine.DetectedCurrentEpisode) {
+            episodechanged = true; // Used to update the status window
+        }
+        
+        if (returnCode == NSModalResponseOK) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                BOOL result = [MALEngine updatestatus:MALEngine.AniID score:(int)_updatewindow.showscore.selectedTag watchstatus:_updatewindow.showstatus.titleOfSelectedItem episode:tmpepisode];
+                if (result) {
+                    [self setStatusText:@"Scrobble Status: Updating of Watch Status/Score Successful."];
+                }
+                else{
+                    [self setStatusText:@"Scrobble Status: Unable to update Watch Status/Score."];
+                }
+                
+                if (episodechanged) {
+                    // Update the tooltip, menu and last scrobbled title
+                    [self setStatusMenuTitleEpisode:MALEngine.LastScrobbledActualTitle episode:MALEngine.LastScrobbledEpisode];
+                    [self updateLastScrobbledTitleStatus:false];
+                    [confirmupdate setHidden:true];
+                }
+            });
+        }
+        dispatch_async(dispatch_get_main_queue(), ^{
+            //If scrobbling is on, restart timer
+            if (scrobbling == TRUE) {
+                [self starttimer];
+            }
+            [self enableUpdateItems];
+        });
     });
 }
 
@@ -1145,63 +1149,63 @@
                                                        DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     
     dispatch_async(queue, ^{
-    BOOL success = [MALEngine confirmupdate];
-    if (success) {
-         dispatch_async(dispatch_get_main_queue(), ^{
-        [self updateLastScrobbledTitleStatus:false];
-        [HistoryWindow addrecord:MALEngine.LastScrobbledActualTitle Episode:MALEngine.LastScrobbledEpisode Date:[NSDate date]];
-        [confirmupdate setHidden:YES];
-        [self setStatusText:@"Scrobble Status: Update was successful."];
-        [self showNotification:@"MAL Updater OS X" message:[NSString stringWithFormat:@"%@ Episode %@ has been updated.",MALEngine.LastScrobbledActualTitle,MALEngine.LastScrobbledEpisode]];
-        if (MALEngine.LastScrobbledTitleNew) {
-            // Enable Update Status functions for new and unconfirmed titles.
-            [self EnableStatusUpdating:YES];
+        BOOL success = [MALEngine confirmupdate];
+        if (success) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self updateLastScrobbledTitleStatus:false];
+                [HistoryWindow addrecord:MALEngine.LastScrobbledActualTitle Episode:MALEngine.LastScrobbledEpisode Date:[NSDate date]];
+                [confirmupdate setHidden:YES];
+                [self setStatusText:@"Scrobble Status: Update was successful."];
+                [self showNotification:@"MAL Updater OS X" message:[NSString stringWithFormat:@"%@ Episode %@ has been updated.",MALEngine.LastScrobbledActualTitle,MALEngine.LastScrobbledEpisode]];
+                if (MALEngine.LastScrobbledTitleNew) {
+                    // Enable Update Status functions for new and unconfirmed titles.
+                    [self EnableStatusUpdating:YES];
+                }
+            });
+            if ([MALEngine getQueueCount] > 0) {
+                // Continue to scrobble rest of the queue.
+                [self firetimer];
+            }
         }
-         });
-        if ([MALEngine getQueueCount] > 0) {
-            // Continue to scrobble rest of the queue.
-            [self firetimer];
+        else {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self showNotification:@"MAL Updater OS X" message:@"Failed to confirm update. Please try again later."];
+                [self setStatusText:@"Unable to confirm update."];
+            });
         }
-    }
-    else {
-        dispatch_async(dispatch_get_main_queue(), ^{
-        [self showNotification:@"MAL Updater OS X" message:@"Failed to confirm update. Please try again later."];
-        [self setStatusText:@"Unable to confirm update."];
-        });
-    }
     });
 }
 #pragma mark Hotkeys
 - (void)registerHotkey{
     [[MASShortcutBinder sharedBinder]
      bindShortcutWithDefaultsKey:kPreferenceScrobbleNowShortcut toAction:^{
-        // Scrobble Now Global Hotkey
-        dispatch_queue_t queue = dispatch_get_global_queue(
-                                                           DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-        
-        dispatch_async(queue, ^{
-        if ([MALEngine checkaccount] && !panelactive) {
-            [self firetimer];
-        }
-            });
-    }];
+         // Scrobble Now Global Hotkey
+         dispatch_queue_t queue = dispatch_get_global_queue(
+                                                            DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+         
+         dispatch_async(queue, ^{
+             if ([MALEngine checkaccount] && !panelactive) {
+                 [self firetimer];
+             }
+         });
+     }];
     [[MASShortcutBinder sharedBinder]
      bindShortcutWithDefaultsKey:kPreferenceShowStatusMenuShortcut toAction:^{
-        // Status Window Toggle Global Hotkey
-        [self togglescrobblewindow:nil];
-    }];
+         // Status Window Toggle Global Hotkey
+         [self togglescrobblewindow:nil];
+     }];
     [[MASShortcutBinder sharedBinder]
      bindShortcutWithDefaultsKey:kPreferenceToggleScrobblingShortcut toAction:^{
-        // Auto Scrobble Toggle Global Hotkey
-        [self toggletimer:nil];
-    }];
+         // Auto Scrobble Toggle Global Hotkey
+         [self toggletimer:nil];
+     }];
     [[MASShortcutBinder sharedBinder]
      bindShortcutWithDefaultsKey:kPreferenceConfirmUpdateShortcut toAction:^{
-        // Confirm Update Hotkey
-        if (!confirmupdate.hidden) {
-            [self performconfirmupdate];
-        }
-    }];
+         // Confirm Update Hotkey
+         if (!confirmupdate.hidden) {
+             [self performconfirmupdate];
+         }
+     }];
 }
 #pragma mark Misc
 
@@ -1216,7 +1220,7 @@
     if (d[@"synopsis"] != [NSNull null]) {
         anidescription = [anidescription stripHtml]; //Removes HTML tags
         [self appendToAnimeInfo:@"Description"];
-
+        
     }
     else {
         anidescription = @"No description available.";
@@ -1252,7 +1256,7 @@
 - (void)appendToAnimeInfo:(NSString*)text
 {
     NSAttributedString* attr = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ \n", text]];
-        
+    
     [animeinfo.textStorage appendAttributedString:attr];
 }
 - (NSDictionary *)getNowPlaying{

@@ -94,14 +94,13 @@
     if (!_plexloginwindowcontroller) {
         _plexloginwindowcontroller = [PlexLogin new];
     }
-    [NSApp beginSheet:_plexloginwindowcontroller.window
-       modalForWindow:self.view.window modalDelegate:self
-       didEndSelector:@selector(plexloginDidEnd:returnCode:contextInfo:)
-          contextInfo:(void *)nil];
+    [self.view.window beginSheet:_plexloginwindowcontroller.window completionHandler:^(NSModalResponse returnCode) {
+        [self plexloginDidEnd:returnCode];
+    }];
 }
 
-- (void)plexloginDidEnd:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo {
-    if (returnCode == 1) {
+- (void)plexloginDidEnd:(long)returnCode {
+    if (returnCode == NSModalResponseOK) {
         [self loadplexlogin];
     }
 }

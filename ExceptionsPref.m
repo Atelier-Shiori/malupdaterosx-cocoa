@@ -73,14 +73,13 @@
         fsdialog = [FixSearchDialog new];
         [fsdialog setCorrection:false];
         fsdialog.searchquery = detectedtitle;
-        [NSApp beginSheet:fsdialog.window
-           modalForWindow:self.view.window modalDelegate:self
-           didEndSelector:@selector(correctionDidEnd:returnCode:contextInfo:)
-              contextInfo:(void *)nil];
+        [self.view.window beginSheet:fsdialog.window completionHandler:^(NSModalResponse returnCode) {
+            [self correctionDidEnd:returnCode];
+        }];
     }];
 }
-- (void)correctionDidEnd:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo {
-    if (returnCode == 1) {
+- (void)correctionDidEnd:(long)returnCode {
+    if (returnCode == NSModalResponseOK) {
         // Check if correct title exists
         if ([self checkifexists:detectedtitle offset:0 correcttitle:fsdialog.selectedtitle]) {
             // Exists, don't do anything

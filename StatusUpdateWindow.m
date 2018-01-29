@@ -28,12 +28,10 @@
     // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
 }
 
-- (void)showUpdateDialog:(NSWindow *) w withMALEngine:(MyAnimeList *)MALEngine{
+- (void)showUpdateDialog:(NSWindow *)w withMALEngine:(MyAnimeList *)MALEngine{
     // Show Sheet
-    [NSApp beginSheet:self.window
-       modalForWindow:w modalDelegate:self
-       didEndSelector:@selector(updateDidEnd:returnCode:contextInfo:)
-          contextInfo:(void *)nil];
+    [self.window makeKeyAndOrderFront:self];
+    [self.window orderOut:self];
     // Set up UI
     _showtitle.objectValue = MALEngine.LastScrobbledTitle;
     [_showscore selectItemWithTag:MALEngine.TitleScore];
@@ -47,17 +45,34 @@
     if (appdel.scrobbling) {
         [appdel stoptimer];
     }
-    
+    if (w) {
+        [w beginSheet:self.window completionHandler:^(NSModalResponse returnCode) {
+            self.completion(returnCode);
+        }];
+    }
+    else {
+        self.completion([NSApp runModalForWindow:self.window]);
+    }
 }
 
 - (IBAction)closeupdatestatus:(id)sender {
-    [self.window orderOut:self];
-    [NSApp endSheet:self.window returnCode:0];
+    if (self.window.sheetParent) {
+        [self.window.sheetParent endSheet:self.window returnCode:NSModalResponseCancel];
+    }
+    else {
+        [NSApp stopModalWithCode:NSModalResponseCancel];
+    }
+    [self.window close];
 }
 
 - (IBAction)updatetitlestatus:(id)sender {
-    [self.window orderOut:self];
-    [NSApp endSheet:self.window returnCode:1];
+    if (self.window.sheetParent) {
+        [self.window.sheetParent endSheet:self.window returnCode:NSModalResponseOK];
+    }
+    else {
+        [NSApp stopModalWithCode:NSModalResponseOK];
+    }
+    [self.window close];
 }
 
 - (void)updateDidEnd:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo {

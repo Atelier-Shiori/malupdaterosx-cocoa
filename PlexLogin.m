@@ -34,8 +34,8 @@
 }
 - (IBAction)cancel:(id)sender {
     _status.stringValue = @"";
-    [self.window orderOut:self];
-    [NSApp endSheet:self.window returnCode:0];
+    [self.window.sheetParent endSheet:self.window returnCode:NSModalResponseCancel];
+    [self.window close];
 }
 
 - (IBAction)login:(id)sender {
@@ -54,8 +54,8 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             if (success) {
                 _status.stringValue = @"";
-                [self.window orderOut:self];
-                [NSApp endSheet:self.window returnCode:1];
+                [self.window.sheetParent endSheet:self.window returnCode:NSModalResponseOK];
+                [self.window close];
             }
             else {
                 _status.stringValue = @"Login failed.";

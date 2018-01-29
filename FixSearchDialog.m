@@ -56,8 +56,15 @@
 }
 
 - (IBAction)closesearch:(id)sender {
-    [self.window orderOut:self];
-    [NSApp endSheet:self.window returnCode:0];
+    //[self.window orderOut:self];
+    //[NSApp endSheet:self.window returnCode:0];
+    if (self.window.sheetParent) {
+        [self.window.sheetParent endSheet:self.window returnCode:NSModalResponseCancel];
+    }
+    else {
+        [NSApp stopModalWithCode:NSModalResponseCancel];
+    }
+    [self.window close];
 }
 
 - (IBAction)updatesearch:(id)sender {
@@ -93,8 +100,14 @@
 		// No episode total yet, set to set
 		selectedtotalepisodes = 0;
 	}
-    [self.window orderOut:self];
-    [NSApp endSheet:self.window returnCode:1];
+    //[self.window orderOut:self];
+   // [NSApp endSheet:self.window returnCode:1];
+    if (self.window.sheetParent) {
+        [self.window.sheetParent endSheet:self.window returnCode:NSModalResponseOK];
+    }
+    else {
+        [NSApp stopModalWithCode:NSModalResponseOK];
+    }
 }
 
 - (IBAction)search:(id)sender{
@@ -143,7 +156,7 @@
         //Parse Data
         NSError* error;
         
-        NSArray *searchdata = [NSJSONSerialization JSONObjectWithData:data options:nil error:&error];
+        NSArray *searchdata = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
         
         //Add it to the array controller
         [arraycontroller addObjects:searchdata];

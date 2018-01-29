@@ -15,6 +15,6 @@
 @property (strong) IBOutlet NSPopUpButton *showscore;
 @property (strong) IBOutlet NSTextField *episodefield;
 @property (strong) IBOutlet NSNumberFormatter *epiformatter;
-@property (nonatomic, copy) void (^completion)(int returncode);
+@property (nonatomic, copy) void (^completion)(long returncode);
 - (void)showUpdateDialog:(NSWindow *) w withMALEngine:(MyAnimeList *)MALEngine;
 @end
