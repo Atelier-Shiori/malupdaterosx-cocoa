@@ -36,6 +36,9 @@
         NSError* jerror;
         NSDictionary *animeinfo = [NSJSONSerialization JSONObjectWithData:request.response.responsedata options:0 error:&jerror];
         self.TotalEpisodes = animeinfo[@"episodes"] == [NSNull null] ? 0 : ((NSNumber *)animeinfo[@"episodes"]).intValue;
+        // Set air status
+        self.airing = ((animeinfo[@"start_date"] != [NSNull null] && animeinfo[@"end_date"] == [NSNull null]) || [(NSString *)animeinfo[@"status"] isEqualToString:@"currently airing"]);
+        self.completedairing = ((animeinfo[@"start_date"] != [NSNull null] && animeinfo[@"end_date"] != [NSNull null]) || [(NSString *)animeinfo[@"status"] isEqualToString:@"finished airing"]);
         // Watch Status
         if (animeinfo[@"watched_status"] == [NSNull null]) {
             NSLog(@"Not on List");
@@ -75,8 +78,16 @@
 }
 
 - (int)updatetitle:(NSString *)titleid confirming:(bool)confirming{
+    NSLog(@"Checking Air Status");
+    if (!self.airing && !self.completedairing) {
+        // User attempting to update title that haven't been aired.
+        return ScrobblerInvalidScrobble;
+    }
+    else if ((self.DetectedEpisode).intValue == self.TotalEpisodes && self.airing && !self.completedairing) {
+        // User attempting to complete a title, which haven't finished airing
+        return ScrobblerInvalidScrobble;
+    }
     NSLog(@"Updating Title");
-    
     if ((self.DetectedEpisode).intValue <= self.DetectedCurrentEpisode ) {
         // Already Watched, no need to scrobble
         // Store Scrobbled Title and Episode

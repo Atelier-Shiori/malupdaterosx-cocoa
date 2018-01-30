@@ -146,7 +146,7 @@
 
     return detectstatus;
 }
-- (NSDictionary *)scrobblefromqueue{
+- (NSDictionary *)scrobblefromqueue {
     // Restore Detected Media
     __block NSError *error;
     NSManagedObjectContext *moc = self.managedObjectContext;

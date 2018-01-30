@@ -596,15 +596,10 @@
                 [self showNotification:@"Invalid Credentials" message:@"Your credentials may be incorrect. Please log in again."];
                 [self setStatusText:@"Scrobble Status: Invalid credentials."];
                 break;
-            case ScrobblerUnregisteredUpdateLimitReached: {
-                NSDate *resetdate = [NSUserDefaults.standardUserDefaults valueForKey:@"update_reset_date"];
-                NSDateFormatter *df = [NSDateFormatter new];
-                df.dateStyle = NSDateFormatterMediumStyle;
-                df.timeStyle = NSDateFormatterShortStyle;
-                [self showNotification:@"Update/Scrobble Limit Reached" message:[NSString stringWithFormat:@"You reached the update limit for this week. It will reset on %@. Considering registering.", [df stringFromDate:resetdate]]];
-                [self setStatusText:@"Scrobble Status: Update limit reached."];
+            case ScrobblerInvalidScrobble:
+                [self showNotification:@"Invalid Scrobble" message:@"You are trying to scrobble a title that haven't been aired or finished airing yet, which is not allowed."];
+                [self setStatusText:@"Scrobble Status: Invalid Scrobble."];
                 break;
-            }
             default:
                 break;
         }

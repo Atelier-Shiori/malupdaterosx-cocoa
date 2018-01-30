@@ -11,7 +11,8 @@
 #import "MyAnimeList.h"
 
 @interface StatusUpdateWindow ()
-
+@property bool airing;
+@property bool completedairing;
 @end
 
 @implementation StatusUpdateWindow
@@ -36,6 +37,8 @@
     _showtitle.objectValue = MALEngine.LastScrobbledTitle;
     [_showscore selectItemWithTag:MALEngine.TitleScore];
     [_showstatus selectItemAtIndex:[MALEngine getWatchStatus]];
+    _airing = [MALEngine getairing];
+    _completedairing = [MALEngine getcompletedairing];
     _episodefield.stringValue = [NSString stringWithFormat:@"%i", MALEngine.DetectedCurrentEpisode];
     if (MALEngine.TotalEpisodes !=0) {
         _epiformatter.maximum = @(MALEngine.TotalEpisodes);
@@ -66,6 +69,17 @@
 }
 
 - (IBAction)updatetitlestatus:(id)sender {
+    if (_airing && !_completedairing && [_showstatus.selectedItem.title isEqualToString:@"completed"]) {
+        NSBeep();
+        return;
+    }
+    else if (_episodefield.intValue > _epiformatter.maximum.intValue || _episodefield.intValue < 0) {
+        NSBeep();
+        return;
+    }
+    else if ([_showstatus.selectedItem.title isEqualToString:@"completed"]) {
+        _episodefield.intValue = _epiformatter.maximum.intValue;
+    }
     if (self.window.sheetParent) {
         [self.window.sheetParent endSheet:self.window returnCode:NSModalResponseOK];
     }
