@@ -7,6 +7,7 @@
 
 #import "SocialPrefController.h"
 #import <TwitterManagerKit/TwitterManagerKit.h>
+#import "DiscordManager.h"
 
 @interface SocialPrefController ()
 @property (strong) IBOutlet NSTextField *usernamefield;
@@ -21,8 +22,9 @@
     return [super initWithNibName:@"SocialPrefController" bundle:nil];
 }
 
-- (id)initWithTwitterManager:(TwitterManager *)tm {
+- (id)initWithTwitterManager:(TwitterManager *)tm withDiscordManager:(DiscordManager *)dm{
     self.tw = tm;
+    self.dm = dm;
     return [self init];
 }
 
@@ -72,6 +74,15 @@
             }
         }
     }];
+}
+
+- (IBAction)togglepresence:(id)sender {
+    if ([NSUserDefaults.standardUserDefaults boolForKey:@"usediscordrichpresence"]) {
+        [_dm startDiscordRPC];
+    }
+    else {
+        [_dm shutdownDiscordRPC];
+    }
 }
 
 #pragma mark MASPreferences

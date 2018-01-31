@@ -11,6 +11,7 @@
 #import "MyAnimeList+Keychain.h"
 #import "Utility.h"
 #import "MyAnimeList+Twitter.h"
+#import "MyAnimeList+Discord.h"
 
 @implementation MyAnimeList (Update)
 - (BOOL)checkstatus:(NSString *)titleid {
@@ -93,6 +94,7 @@
         // Store Scrobbled Title and Episode
         self.confirmed = true;
         [self storeLastScrobbled];
+        [self sendDiscordPresence];
         return ScrobblerUpdateNotNeeded;
     }
     else if (!self.LastScrobbledTitleNew && [[NSUserDefaults standardUserDefaults] boolForKey:@"ConfirmUpdates"] && !self.confirmed && !self.correcting && !confirming) {
@@ -140,6 +142,7 @@
                 self.confirmed = true;
                 // Post tweet
                 [self postupdateanimetweet];
+                [self sendDiscordPresence];
                 // Update Successful
                 return ScrobblerUpdateSuccessful;
             default:
@@ -149,7 +152,16 @@
         
     }
 }
-- (int)addtitle:(NSString *)titleid confirming:(bool)confirming{
+- (int)addtitle:(NSString *)titleid confirming:(bool)confirming {
+    NSLog(@"Checking Air Status");
+    if (!self.airing && !self.completedairing) {
+        // User attempting to update title that haven't been aired.
+        return ScrobblerInvalidScrobble;
+    }
+    else if ((self.DetectedEpisode).intValue == self.TotalEpisodes && self.airing && !self.completedairing) {
+        // User attempting to complete a title, which haven't finished airing
+        return ScrobblerInvalidScrobble;
+    }
     NSLog(@"Adding Title");
     //Check Confirm
     if (self.LastScrobbledTitleNew && [[NSUserDefaults standardUserDefaults] boolForKey:@"ConfirmNewTitle"] && !self.confirmed && !self.correcting && !confirming) {
@@ -194,6 +206,7 @@
             }
             // Post tweet
             [self postaddanimetweet];
+            [self sendDiscordPresence];
             return ScrobblerAddTitleSuccessful;
         default:
             // Update Unsuccessful

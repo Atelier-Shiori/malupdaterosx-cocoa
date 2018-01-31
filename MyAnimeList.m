@@ -32,6 +32,11 @@
     [_detection setPlexReach:[[NSUserDefaults standardUserDefaults] boolForKey:@"enableplexapi"]];
     // Init Twitter Manager
     self.twittermanager = [[TwitterManager alloc] initWithConsumerKeyUsingFirstAccount:kConsumerKey withConsumerSecret:kConsumerSecret];
+    // Init Discord
+    self.discordmanager = [DiscordManager new];
+    if ([NSUserDefaults.standardUserDefaults boolForKey:@"usediscordrichpresence"]) {
+        [_discordmanager startDiscordRPC];
+    }
     // Return Object
     return [super init];
 }

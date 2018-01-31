@@ -231,7 +231,8 @@
     defaultValues[@"twitteraddanimeformat"] = @"Started watching %title% Episode %episode% - %malurl% #malupdaterosx";
     defaultValues[@"twitterupdateanimeformat"] = @"%status% %title% Episode %episode% - %malurl% #malupdaterosx";
     defaultValues[@"twitterupdatestatusformat"] =  @"Updated %title% Episode %episode% (%status%) - %malurl% #malupdaterosx";
-    
+    defaultValues[@"usediscordrichpresence"] = @NO;
+                                                    
     //Register Dictionary
     [[NSUserDefaults standardUserDefaults]
      registerDefaults:defaultValues];
@@ -382,7 +383,7 @@
     {
         NSViewController *generalViewController = [[GeneralPrefController alloc] init];
         NSViewController *loginViewController = [[LoginPref alloc] initwithAppDelegate:self];
-        NSViewController *socialViewController = [[SocialPrefController alloc] initWithTwitterManager:MALEngine.twittermanager];
+        NSViewController *socialViewController = [[SocialPrefController alloc] initWithTwitterManager:MALEngine.twittermanager withDiscordManager:MALEngine.discordmanager];
         NSViewController *suViewController = [[SoftwareUpdatesPref alloc] init];
         NSViewController *exceptionsViewController = [[ExceptionsPref alloc] init];
         NSViewController *hotkeyViewController = [[HotkeysPrefs alloc] init];
@@ -443,6 +444,12 @@
     
     return NSTerminateNow;
 }
+
+- (void)applicationWillTerminate:(NSNotification *)notification {
+    // Shutdown Discord RPC
+    [MALEngine.discordmanager shutdownDiscordRPC];
+}
+
 - (IBAction)togglescrobblewindow:(id)sender
 {
     if (window.visible) {
@@ -553,6 +560,10 @@
         switch (status) {
             case ScrobblerNothingPlaying:
                 [self setStatusText:@"Scrobble Status: Idle..."];
+                // Remove Discord Presence
+                if (MALEngine.discordmanager.discordrpcrunning) {
+                    [MALEngine.discordmanager removePresence];
+                }
                 break;
             case ScrobblerSameEpisodePlaying:
                 [self setStatusText:@"Scrobble Status: Same Episode Playing, Scrobble not needed."];

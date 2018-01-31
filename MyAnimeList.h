@@ -9,6 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #import "MAL_Updater_OS_XAppDelegate.h"
 #import <TwitterManagerKit/TwitterManagerKit.h>
+#import "DiscordManager.h"
 
 @class Reachability;
 @class Detection;
@@ -66,6 +67,7 @@ typedef NS_ENUM(unsigned int, ScrobbleStatus) {
 @property (strong) Detection *detection;
 @property (nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (strong) TwitterManager *twittermanager;
+@property (strong) DiscordManager *discordmanager;
 
 - (void)setManagedObjectContext:(NSManagedObjectContext *)context;
 - (int)startscrobbling;

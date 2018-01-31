@@ -199,6 +199,14 @@
 		91A8DD5E1E736814006E3566 /* NSNumberFormatterNumberOnly.m in Sources */ = {isa = PBXBuildFile; fileRef = 91A8DD5C1E736814006E3566 /* NSNumberFormatterNumberOnly.m */; };
 		91A9B6691EA918FB00645690 /* MAL_Updater_OS_XTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 91A9B6681EA918FB00645690 /* MAL_Updater_OS_XTests.m */; };
 		91A9B6701EA9192D00645690 /* testdata.json in Resources */ = {isa = PBXBuildFile; fileRef = 9115DA401EA911A300CAEF4E /* testdata.json */; };
+		F842BB40202214A800A7A0A4 /* DiscordRPC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F842BB3F202214A800A7A0A4 /* DiscordRPC.framework */; };
+		F842BB41202214A800A7A0A4 /* DiscordRPC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F842BB3F202214A800A7A0A4 /* DiscordRPC.framework */; };
+		F842BB442022158600A7A0A4 /* DiscordManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F842BB432022158600A7A0A4 /* DiscordManager.m */; };
+		F842BB452022158600A7A0A4 /* DiscordManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F842BB432022158600A7A0A4 /* DiscordManager.m */; };
+		F8E2188320222424002E9F70 /* DiscordRPC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F842BB3F202214A800A7A0A4 /* DiscordRPC.framework */; };
+		F8E2188420222424002E9F70 /* DiscordRPC.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = F842BB3F202214A800A7A0A4 /* DiscordRPC.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F8E2188720222AB7002E9F70 /* MyAnimeList+Discord.m in Sources */ = {isa = PBXBuildFile; fileRef = F8E2188620222AB7002E9F70 /* MyAnimeList+Discord.m */; };
+		F8E2188820222AB7002E9F70 /* MyAnimeList+Discord.m in Sources */ = {isa = PBXBuildFile; fileRef = F8E2188620222AB7002E9F70 /* MyAnimeList+Discord.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -244,6 +252,7 @@
 				2D6522731F7B50CD00A65BF8 /* PingNotifier.framework in CopyFiles */,
 				9149EBE31E75F8A700B1AA22 /* MASShortcut.framework in CopyFiles */,
 				8227C1181A1D8D47005F3301 /* anitomy-osx.framework in CopyFiles */,
+				F8E2188420222424002E9F70 /* DiscordRPC.framework in CopyFiles */,
 				2D6522761F7B50FC00A65BF8 /* MSWeakTimer_macOS.framework in CopyFiles */,
 				91206C1F1E75F5AD0050E9C5 /* MASPreferences.framework in CopyFiles */,
 				2D3CBE4A1F1532950085888D /* XMLReader.framework in CopyFiles */,
@@ -503,6 +512,11 @@
 		91A9B6661EA918FB00645690 /* MAL Updater OS XTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "MAL Updater OS XTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		91A9B6681EA918FB00645690 /* MAL_Updater_OS_XTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MAL_Updater_OS_XTests.m; sourceTree = "<group>"; };
 		91A9B66A1EA918FB00645690 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F842BB3F202214A800A7A0A4 /* DiscordRPC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DiscordRPC.framework; path = Frameworks/DiscordRPC.framework; sourceTree = "<group>"; };
+		F842BB422022158600A7A0A4 /* DiscordManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DiscordManager.h; sourceTree = "<group>"; };
+		F842BB432022158600A7A0A4 /* DiscordManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DiscordManager.m; sourceTree = "<group>"; };
+		F8E2188520222AB7002E9F70 /* MyAnimeList+Discord.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MyAnimeList+Discord.h"; sourceTree = "<group>"; };
+		F8E2188620222AB7002E9F70 /* MyAnimeList+Discord.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "MyAnimeList+Discord.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -523,6 +537,7 @@
 				2D17D2762001ACAD00769195 /* EasyNSURLConnection.framework in Frameworks */,
 				2D17D2772001ACAD00769195 /* anitomy-osx.framework in Frameworks */,
 				2D17D2782001ACAD00769195 /* Sparkle.framework in Frameworks */,
+				F842BB41202214A800A7A0A4 /* DiscordRPC.framework in Frameworks */,
 				2D17D27B2001ACAD00769195 /* Cocoa.framework in Frameworks */,
 				2D17D27D2001ACAD00769195 /* PingNotifier.framework in Frameworks */,
 				2D17D27F2001ACAD00769195 /* GBPing.framework in Frameworks */,
@@ -536,11 +551,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F8E2188320222424002E9F70 /* DiscordRPC.framework in Frameworks */,
 				91206C1D1E75F3F00050E9C5 /* MASPreferences.framework in Frameworks */,
 				2D3CBE3E1F15312E0085888D /* SAMKeychain.framework in Frameworks */,
 				2D63136D1EDA284A00C3CB6B /* DetectionKit.framework in Frameworks */,
 				91206C1B1E75F3E50050E9C5 /* MASShortcut.framework in Frameworks */,
 				6F28DC1B1A67092F00AF063F /* Carbon.framework in Frameworks */,
+				F842BB40202214A800A7A0A4 /* DiscordRPC.framework in Frameworks */,
 				9149EBE21E75F8A700B1AA22 /* MASShortcut.framework in Frameworks */,
 				2D6313721EDA293B00C3CB6B /* Reachability.framework in Frameworks */,
 				2D6522751F7B50FC00A65BF8 /* MSWeakTimer_macOS.framework in Frameworks */,
@@ -597,6 +614,8 @@
 				59D99C061CBEDB0000762EA5 /* MyAnimeList+HummingbirdSearch.m */,
 				829727961A8BB14E004F73AB /* MyAnimeList+Update.h */,
 				829727971A8BB14E004F73AB /* MyAnimeList+Update.m */,
+				F8E2188520222AB7002E9F70 /* MyAnimeList+Discord.h */,
+				F8E2188620222AB7002E9F70 /* MyAnimeList+Discord.m */,
 				916D042E20190B8E001F7E10 /* MyAnimeList+Twitter.h */,
 				916D042F20190B8E001F7E10 /* MyAnimeList+Twitter.m */,
 				3AFEF127120DF8CE0098B59D /* MyAnimeList.h */,
@@ -623,6 +642,7 @@
 		1058C7A2FEA54F0111CA2CBB /* Other Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F842BB3F202214A800A7A0A4 /* DiscordRPC.framework */,
 				916D042720190AEA001F7E10 /* TwitterManagerKit.framework */,
 				2D6522741F7B50F700A65BF8 /* MSWeakTimer_macOS.framework */,
 				2D65226F1F7B50C700A65BF8 /* GBPing.framework */,
@@ -864,6 +884,8 @@
 				91A8DD5D1E736814006E3566 /* NSNumberFormatterNumberOnly.h */,
 				916D043220190BC2001F7E10 /* TwitterConstants.h */,
 				916D043320190BC2001F7E10 /* TwitterConstants.m */,
+				F842BB422022158600A7A0A4 /* DiscordManager.h */,
+				F842BB432022158600A7A0A4 /* DiscordManager.m */,
 			);
 			name = "Support Classes";
 			sourceTree = "<group>";
@@ -1289,6 +1311,7 @@
 				916D043520190BC2001F7E10 /* TwitterConstants.m in Sources */,
 				2D17D2562001ACAD00769195 /* string_score.c in Sources */,
 				916D043A20190F34001F7E10 /* SocialPrefController.m in Sources */,
+				F842BB452022158600A7A0A4 /* DiscordManager.m in Sources */,
 				2D17D2572001ACAD00769195 /* NSString_stripHtml.m in Sources */,
 				2D17D2582001ACAD00769195 /* MyAnimeList+Update.m in Sources */,
 				2D17D2592001ACAD00769195 /* MyAnimeList+HummingbirdSearch.m in Sources */,
@@ -1303,6 +1326,7 @@
 				2D17D2622001ACAD00769195 /* GeneralPrefController.m in Sources */,
 				2D17D2632001ACAD00769195 /* ExceptionsCache.m in Sources */,
 				2D17D2642001ACAD00769195 /* PlexLogin.m in Sources */,
+				F8E2188820222AB7002E9F70 /* MyAnimeList+Discord.m in Sources */,
 				2D17D2652001ACAD00769195 /* MyAnimeList+Search.m in Sources */,
 				916D043120190B8E001F7E10 /* MyAnimeList+Twitter.m in Sources */,
 				2D17D2662001ACAD00769195 /* AdvancedPrefController.m in Sources */,
@@ -1340,6 +1364,8 @@
 				590241261C074AF500495A2F /* MyAnimeList+Keychain.m in Sources */,
 				822AEB8D1A202A7B003DD682 /* ExceptionsPref.m in Sources */,
 				2DAFC1DA1E2313B100FB7A14 /* OfflineViewQueue.m in Sources */,
+				F8E2188720222AB7002E9F70 /* MyAnimeList+Discord.m in Sources */,
+				F842BB442022158600A7A0A4 /* DiscordManager.m in Sources */,
 				3A2DCCB61210B3BF00C920F1 /* PFMoveApplication.m in Sources */,
 				822AEB891A202931003DD682 /* FixSearchDialog.m in Sources */,
 				2D36F0E51F153F5C00CAC1F5 /* PFAboutWindowController.m in Sources */,
