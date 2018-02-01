@@ -81,6 +81,7 @@
         [_dm startDiscordRPC];
     }
     else {
+        [_dm removePresence];
         [_dm shutdownDiscordRPC];
     }
 }

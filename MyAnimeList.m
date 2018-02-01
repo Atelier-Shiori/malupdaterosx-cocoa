@@ -35,7 +35,7 @@
     // Init Discord
     self.discordmanager = [DiscordManager new];
     if ([NSUserDefaults.standardUserDefaults boolForKey:@"usediscordrichpresence"]) {
-        [_discordmanager startDiscordRPC];
+        [self.discordmanager startDiscordRPC];
     }
     // Return Object
     return [super init];
