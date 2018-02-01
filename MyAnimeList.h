@@ -26,8 +26,7 @@ typedef NS_ENUM(unsigned int, ScrobbleStatus) {
     ScrobblerUpdateFailed = 53,
     ScrobblerFailed = 54,
     ScrobblerInvalidCredentials = 55,
-    ScrobblerMALUpdaterOSXNeedsUpdate = 56,
-    ScrobblerUnregisteredUpdateLimitReached = 57
+    ScrobblerMALUpdaterOSXNeedsUpdate = 56
 };
 @property (strong) NSString *MALApiUrl;
 @property (strong, getter=getLastScrobbledTitle) NSString *LastScrobbledTitle;
