@@ -45,21 +45,36 @@ static void handleDiscordError(int errcode, const char* message)
 }
 
 - (void)UpdatePresence:(NSString *)state withDetails:(NSString *)details {
-    //char buffer[256];
-    DiscordRichPresence discordPresence;
-    discordPresence.state = state.UTF8String;
-    discordPresence.details = details.UTF8String;
-    discordPresence.largeImageKey = "default";
-    discordPresence.smallImageKey = "default";
-    discordPresence.largeImageText = "";
-    discordPresence.smallImageText = "";
-    Discord_UpdatePresence(&discordPresence);
-    Discord_RunCallbacks();
+    if ([self checkDiscordRunning]) {
+        //char buffer[256];
+        DiscordRichPresence discordPresence;
+        discordPresence.state = state.UTF8String;
+        discordPresence.details = details.UTF8String;
+        discordPresence.largeImageKey = "default";
+        discordPresence.smallImageKey = "default";
+        discordPresence.largeImageText = "";
+        discordPresence.smallImageText = "";
+        Discord_UpdatePresence(&discordPresence);
+        Discord_RunCallbacks();
+    }
 }
 
 - (void)removePresence {
-    Discord_ClearPresence();
+    if ([self checkDiscordRunning]) {
+        Discord_ClearPresence();
+        Discord_RunCallbacks();
+    }
 }
 
-
+- (BOOL)checkDiscordRunning {
+    NSWorkspace *ws = [NSWorkspace sharedWorkspace];
+    NSArray *runningApps = ws.runningApplications;
+    NSRunningApplication *a;
+    for (a in runningApps) {
+        if ([a.bundleIdentifier isEqualToString:@"com.hnc.Discord"]) {
+            return true;
+        }
+    }
+    return false;
+}
 @end
