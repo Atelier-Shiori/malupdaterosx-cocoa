@@ -199,6 +199,8 @@
 		91A8DD5E1E736814006E3566 /* NSNumberFormatterNumberOnly.m in Sources */ = {isa = PBXBuildFile; fileRef = 91A8DD5C1E736814006E3566 /* NSNumberFormatterNumberOnly.m */; };
 		91A9B6691EA918FB00645690 /* MAL_Updater_OS_XTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 91A9B6681EA918FB00645690 /* MAL_Updater_OS_XTests.m */; };
 		91A9B6701EA9192D00645690 /* testdata.json in Resources */ = {isa = PBXBuildFile; fileRef = 9115DA401EA911A300CAEF4E /* testdata.json */; };
+		F80D9BC5202B6449004CA29D /* DiscordRPC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F842BB3F202214A800A7A0A4 /* DiscordRPC.framework */; };
+		F80D9BC6202B6449004CA29D /* DiscordRPC.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = F842BB3F202214A800A7A0A4 /* DiscordRPC.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F842BB40202214A800A7A0A4 /* DiscordRPC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F842BB3F202214A800A7A0A4 /* DiscordRPC.framework */; };
 		F842BB41202214A800A7A0A4 /* DiscordRPC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F842BB3F202214A800A7A0A4 /* DiscordRPC.framework */; };
 		F842BB442022158600A7A0A4 /* DiscordManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F842BB432022158600A7A0A4 /* DiscordManager.m */; };
@@ -232,6 +234,7 @@
 				2D17D2892001ACAD00769195 /* PingNotifier.framework in CopyFiles */,
 				2D17D28A2001ACAD00769195 /* MASShortcut.framework in CopyFiles */,
 				2D17D28B2001ACAD00769195 /* anitomy-osx.framework in CopyFiles */,
+				F80D9BC6202B6449004CA29D /* DiscordRPC.framework in CopyFiles */,
 				2D17D28C2001ACAD00769195 /* MSWeakTimer_macOS.framework in CopyFiles */,
 				2D17D28D2001ACAD00769195 /* MASPreferences.framework in CopyFiles */,
 				2D17D28E2001ACAD00769195 /* XMLReader.framework in CopyFiles */,
@@ -536,6 +539,7 @@
 				2D17D26F2001ACAD00769195 /* MASShortcut.framework in Frameworks */,
 				2D17D2702001ACAD00769195 /* Carbon.framework in Frameworks */,
 				2D17D2722001ACAD00769195 /* MASShortcut.framework in Frameworks */,
+				F80D9BC5202B6449004CA29D /* DiscordRPC.framework in Frameworks */,
 				2D17D2732001ACAD00769195 /* Reachability.framework in Frameworks */,
 				2D17D2742001ACAD00769195 /* MSWeakTimer_macOS.framework in Frameworks */,
 				916D042C20190B01001F7E10 /* TwitterManagerKit.framework in Frameworks */,
