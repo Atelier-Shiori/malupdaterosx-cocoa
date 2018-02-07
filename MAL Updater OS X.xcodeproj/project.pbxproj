@@ -203,6 +203,9 @@
 		F842BB41202214A800A7A0A4 /* DiscordRPC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F842BB3F202214A800A7A0A4 /* DiscordRPC.framework */; };
 		F842BB442022158600A7A0A4 /* DiscordManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F842BB432022158600A7A0A4 /* DiscordManager.m */; };
 		F842BB452022158600A7A0A4 /* DiscordManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F842BB432022158600A7A0A4 /* DiscordManager.m */; };
+		F8AF4832202A573200D559A3 /* TorrentBrowser.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8D07F46202A43910008F4E0 /* TorrentBrowser.framework */; };
+		F8AF4833202A573200D559A3 /* TorrentBrowser.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = F8D07F46202A43910008F4E0 /* TorrentBrowser.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F8D07F47202A43910008F4E0 /* TorrentBrowser.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8D07F46202A43910008F4E0 /* TorrentBrowser.framework */; };
 		F8E2188320222424002E9F70 /* DiscordRPC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F842BB3F202214A800A7A0A4 /* DiscordRPC.framework */; };
 		F8E2188420222424002E9F70 /* DiscordRPC.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = F842BB3F202214A800A7A0A4 /* DiscordRPC.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F8E2188720222AB7002E9F70 /* MyAnimeList+Discord.m in Sources */ = {isa = PBXBuildFile; fileRef = F8E2188620222AB7002E9F70 /* MyAnimeList+Discord.m */; };
@@ -255,6 +258,7 @@
 				F8E2188420222424002E9F70 /* DiscordRPC.framework in CopyFiles */,
 				2D6522761F7B50FC00A65BF8 /* MSWeakTimer_macOS.framework in CopyFiles */,
 				91206C1F1E75F5AD0050E9C5 /* MASPreferences.framework in CopyFiles */,
+				F8AF4833202A573200D559A3 /* TorrentBrowser.framework in CopyFiles */,
 				2D3CBE4A1F1532950085888D /* XMLReader.framework in CopyFiles */,
 				2D63136F1EDA287200C3CB6B /* DetectionKit.framework in CopyFiles */,
 				91A609F51EA3E77C00EF40AB /* CocoaOniguruma.framework in CopyFiles */,
@@ -515,6 +519,8 @@
 		F842BB3F202214A800A7A0A4 /* DiscordRPC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DiscordRPC.framework; path = Frameworks/DiscordRPC.framework; sourceTree = "<group>"; };
 		F842BB422022158600A7A0A4 /* DiscordManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DiscordManager.h; sourceTree = "<group>"; };
 		F842BB432022158600A7A0A4 /* DiscordManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DiscordManager.m; sourceTree = "<group>"; };
+		F8D07F46202A43910008F4E0 /* TorrentBrowser.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TorrentBrowser.framework; path = Frameworks/TorrentBrowser.framework; sourceTree = "<group>"; };
+		F8D07F48202A43D60008F4E0 /* MAL_Updater_OS_X_DataModel 6.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "MAL_Updater_OS_X_DataModel 6.xcdatamodel"; sourceTree = "<group>"; };
 		F8E2188520222AB7002E9F70 /* MyAnimeList+Discord.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MyAnimeList+Discord.h"; sourceTree = "<group>"; };
 		F8E2188620222AB7002E9F70 /* MyAnimeList+Discord.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "MyAnimeList+Discord.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -572,7 +578,9 @@
 				2D6522701F7B50CD00A65BF8 /* GBPing.framework in Frameworks */,
 				2D3CBE3C1F1531210085888D /* XMLReader.framework in Frameworks */,
 				3A2DCCBE1210B3D900C920F1 /* Security.framework in Frameworks */,
+				F8AF4832202A573200D559A3 /* TorrentBrowser.framework in Frameworks */,
 				9161B2011E90246200FBF52F /* Fabric.framework in Frameworks */,
+				F8D07F47202A43910008F4E0 /* TorrentBrowser.framework in Frameworks */,
 				5C2B9DFC1221EB25006DEF0D /* CoreData.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -642,6 +650,7 @@
 		1058C7A2FEA54F0111CA2CBB /* Other Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F8D07F46202A43910008F4E0 /* TorrentBrowser.framework */,
 				F842BB3F202214A800A7A0A4 /* DiscordRPC.framework */,
 				916D042720190AEA001F7E10 /* TwitterManagerKit.framework */,
 				2D6522741F7B50F700A65BF8 /* MSWeakTimer_macOS.framework */,
@@ -2040,6 +2049,7 @@
 		6F5F6C6D1A71696D006D4607 /* MAL_Updater_OS_X_DataModel.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				F8D07F48202A43D60008F4E0 /* MAL_Updater_OS_X_DataModel 6.xcdatamodel */,
 				2DE00CDE1F8C1023002573DC /* MAL_Updater_OS_X_DataModel 5.xcdatamodel */,
 				2D907A371F8AC27A00DF47A5 /* MAL_Updater_OS_X_DataModel 4.xcdatamodel */,
 				2D907A361F8ABFB500DF47A5 /* MAL_Updater_OS_X_DataModel 4.xcdatamodel */,
@@ -2047,7 +2057,7 @@
 				6F5F6C6E1A71696D006D4607 /* MAL_Updater_OS_X_DataModel 2.xcdatamodel */,
 				6F5F6C6F1A71696D006D4607 /* MAL_Updater_OS_X_DataModel.xcdatamodel */,
 			);
-			currentVersion = 2DE00CDE1F8C1023002573DC /* MAL_Updater_OS_X_DataModel 5.xcdatamodel */;
+			currentVersion = F8D07F48202A43D60008F4E0 /* MAL_Updater_OS_X_DataModel 6.xcdatamodel */;
 			path = MAL_Updater_OS_X_DataModel.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

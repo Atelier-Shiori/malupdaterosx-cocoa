@@ -296,6 +296,25 @@
                         <action selector="showOfflineQueue:" target="560" id="jVo-rx-ULQ"/>
                     </connections>
                 </menuItem>
+                <menuItem title="Torrents Browser" id="wBZ-q5-E8B">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="openTorrentBrowser:" target="560" id="YZl-Lg-bEd"/>
+                        <binding destination="RrG-fz-WPF" name="hidden2" keyPath="values.oss" previousBinding="B0n-jh-tgu" id="eIw-ua-ayI">
+                            <dictionary key="options">
+                                <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
+                                <integer key="NSNullPlaceholder" value="-1"/>
+                            </dictionary>
+                        </binding>
+                        <binding destination="RrG-fz-WPF" name="hidden" keyPath="values.donated" id="B0n-jh-tgu">
+                            <dictionary key="options">
+                                <string key="NSValueTransformerName">NSNegateBoolean</string>
+                            </dictionary>
+                        </binding>
+                    </connections>
+                </menuItem>
                 <menuItem isSeparatorItem="YES" id="556">
                     <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                 </menuItem>
@@ -401,14 +420,14 @@
                                         <rect key="frame" x="154" y="0.0" width="286" height="190"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                         <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="ypk-hd-jNn">
-                                            <rect key="frame" x="1" y="1" width="269" height="188"/>
+                                            <rect key="frame" x="1" y="1" width="284" height="188"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <textView editable="NO" importsGraphics="NO" verticallyResizable="YES" findStyle="panel" continuousSpellChecking="YES" allowsNonContiguousLayout="YES" quoteSubstitution="YES" dashSubstitution="YES" smartInsertDelete="YES" id="bGm-dl-hOF">
                                                     <rect key="frame" x="0.0" y="0.0" width="269" height="188"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <color key="backgroundColor" name="windowBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                    <size key="minSize" width="269" height="188"/>
+                                                    <size key="minSize" width="284" height="188"/>
                                                     <size key="maxSize" width="463" height="10000000"/>
                                                     <color key="insertionPointColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                                 </textView>
@@ -420,7 +439,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                         </scroller>
                                         <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="T9f-gy-fHS">
-                                            <rect key="frame" x="270" y="1" width="15" height="188"/>
+                                            <rect key="frame" x="269" y="1" width="16" height="188"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </scroller>
                                     </scrollView>

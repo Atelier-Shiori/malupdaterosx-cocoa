@@ -2,6 +2,8 @@
 
 The community version of MAL Updater OS X is meant for advanced users. It does not have any restrictions. However, there is **no support** and you have to install your own Unofficial MAL API server. Also, you have to compile each update (following the steps for obtaining the source code and compling) as the App Cast will only download the official release. Do not create any issues if you are using the Community Version. They will be ignored.
 
+The community version does not contain closed source features such as the Bittorent Browser.
+
 ## What do you need
 * [Xcode](https://developer.apple.com/xcode/) 
 

@@ -79,7 +79,7 @@
         [alert beginSheetModalForWindow:w completionHandler:nil];
     }
     else {
-        [alert beginSheetModalForWindow:w completionHandler:nil];
+        [alert runModal];
     }
 }
 + (NSString *)urlEncodeString:(NSString *)string{

@@ -17,6 +17,11 @@
 @class StatusUpdateWindow;
 @class ShareMenu;
 @class PFAboutWindowController;
+#ifdef oss
+#else
+@class TorrentBrowserController;
+#endif
+
 
 @interface MAL_Updater_OS_XAppDelegate : NSObject <NSApplicationDelegate, NSUserNotificationCenterDelegate, NSSharingServiceDelegate> {
     NSManagedObjectModel *managedObjectModel;
@@ -80,6 +85,10 @@
 @property (strong) StatusUpdateWindow *updatewindow;
 @property (strong) IBOutlet ShareMenu *shareMenu;
 @property (strong) PFAboutWindowController *aboutWindowController;
+#ifdef oss
+#else
+@property (strong) TorrentBrowserController *tbc;
+#endif
 
 - (void)showhistory:(id)sender;
 - (IBAction)togglescrobblewindow:(id)sender;

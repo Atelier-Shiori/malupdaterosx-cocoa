@@ -26,6 +26,7 @@
 #import <Fabric/Fabric.h>
 #import <Crashlytics/Crashlytics.h>
 #import "DonationWindowController.h"
+#import <TorrentBrowser/TorrentBrowser.h>
 #endif
 #import "ShareMenu.h"
 #import "PFAboutWindowController.h"
@@ -214,8 +215,12 @@
     // Donation Settings
 #ifdef oss
     defaultValues[@"donated"] = @YES;
+    defaultValues[@"oss"] = @YES;
 #else
     defaultValues[@"donated"] = @NO;
+    defaultValues[@"oss"] = @NO;
+    defaultValues[@"autodownloadtorrents"] = @YES;
+    defaultValues[@"autodownloadinterval"] = @(3600);
 #endif
     defaultValues[@"MacAppStoreMigrated"] = @NO;
     // Plex Media Server
@@ -361,6 +366,17 @@
         [self showNotification:@"MAL Updater OS X" message:@"The API URL has been automatically updated."];
         [[NSUserDefaults standardUserDefaults] setObject:@"https://malapi.malupdaterosx.moe" forKey:@"MALAPIURL"];
     }
+    // Set up Torrent Browser (closed source)
+    _tbc = [[TorrentBrowserController alloc] initwithManagedObjectContext:managedObjectContext];
+    // Start Timer for Auto Downloading of Torrents if enabled
+    if ([NSUserDefaults.standardUserDefaults boolForKey:@"autodownloadtorrents"]) {
+        if ([_tbc.tmanager startAutoDownloadTimer]) {
+            NSLog(@"Timer started");
+        }
+        else {
+            NSLog(@"Failed to start timer.");
+        }
+    }
 #endif
     // Autostart Scrobble at Startup
     if ([defaults boolForKey:@"ScrobbleatStartup"] == 1) {
@@ -389,7 +405,11 @@
         NSViewController *hotkeyViewController = [[HotkeysPrefs alloc] init];
         NSViewController *plexviewcontroller = [PlexPrefs new];
         NSViewController *advancedViewController = [[AdvancedPrefController alloc] initwithAppDelegate:self];
+#ifdef oss
         NSArray *controllers = @[generalViewController, loginViewController, socialViewController, hotkeyViewController, plexviewcontroller, exceptionsViewController, suViewController, advancedViewController];
+#else
+        NSArray *controllers = @[generalViewController, loginViewController, socialViewController, hotkeyViewController, plexviewcontroller, [_tbc getBittorrentPreferences], exceptionsViewController, suViewController, advancedViewController];
+#endif
         _preferencesWindowController = [[MASPreferencesWindowController alloc] initWithViewControllers:controllers];
     }
     return _preferencesWindowController;
@@ -1283,4 +1303,13 @@
     [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://myanimelist.net/anime/%@", MALEngine.AniID]]];
 }
 
+#pragma mark Torrent Browser
+- (IBAction)openTorrentBrowser:(id)sender {
+#ifdef oss
+#else
+    //Since LSUIElement is set to 1 to hide the dock icon, it causes unattended behavior of having the program windows not show to the front.
+    [NSApp activateIgnoringOtherApps:YES];
+    [_tbc.window makeKeyAndOrderFront:self];
+#endif
+}
 @end
