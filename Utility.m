@@ -221,6 +221,7 @@
 #endif
 }
 + (NSString *)getHostName {
+    // Gets the host name of an address
     NSString *malapiurl = [NSUserDefaults.standardUserDefaults valueForKey:@"MALAPIURL"];
     OnigRegexp *regex = [OnigRegexp compile:@"(http|https):\\/\\/" options:OnigOptionIgnorecase];
     malapiurl = [malapiurl replaceByRegexp:regex with:@""];
@@ -229,5 +230,15 @@
     regex = [OnigRegexp compile:@":\\d+" options:OnigOptionIgnorecase];
     malapiurl = [malapiurl replaceByRegexp:regex with:@""];
     return malapiurl;
+}
++ (bool)checkBeta {
+    // Check if user is using beta. If so, use the experimental Appcast branch.
+    NSBundle *bundle = [NSBundle mainBundle];
+    NSString *versionString = bundle.infoDictionary[@"CFBundleShortVersionString"];
+    if ([versionString containsString:@"b"] || [versionString containsString:@"a"] || [versionString containsString:@"pre"] || [versionString containsString:@"rc"]) {
+                [[NSUserDefaults standardUserDefaults] setObject:@"https://updates.ateliershiori.moe/malupdaterosx-beta/profileInfo.php" forKey:@"SUFeedURL"];
+        return true;
+    }
+    return false;
 }
 @end

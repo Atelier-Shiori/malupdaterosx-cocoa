@@ -39,4 +39,5 @@ typedef NS_ENUM(unsigned int, matchtype) {
 + (NSString *)todaydatestring;
 + (void)setUserAgent:(EasyNSURLConnection *)request;
 + (NSString *)getHostName;
++ (bool)checkBeta;
 @end

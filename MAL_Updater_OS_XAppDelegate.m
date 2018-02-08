@@ -311,6 +311,11 @@
             NSLog(@"Failed to start timer.");
         }
     }
+    
+    // Check Beta
+    if ([Utility checkBeta]) {
+        [self showNotification:@"Experimental Update Branch is Enabled" message:@"MAL Updater OS X will use the experimental update branch since you are using a prerelease version."];
+    }
 #endif
     
     //Set up Yosemite UI Enhancements
