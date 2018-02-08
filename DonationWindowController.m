@@ -36,7 +36,7 @@
         // Check donation key
         int success = [Utility checkDonationKey:key.stringValue name:name.stringValue];
         if (success == 1) {
-            [Utility showsheetmessage:@"Registered" explaination:@"Thank you for donating. The donation reminder will no longer appear and access to weekly builds is now unlocked." window:nil];
+            [Utility showsheetmessage:@"Registered" explaination:@"Thank you for donating. The donation reminder will no longer appear and exclusive features are unlocked." window:nil];
             // Add to the preferences
             [[NSUserDefaults standardUserDefaults] setObject:name.stringValue forKey:@"donor"];
             [[NSUserDefaults standardUserDefaults] setObject:key.stringValue forKey:@"donatekey"];
