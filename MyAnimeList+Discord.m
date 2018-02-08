@@ -9,7 +9,7 @@
 
 @implementation MyAnimeList (Discord)
 - (void)sendDiscordPresence {
-    if (self.discordmanager.discordrpcrunning) {
+    if ([NSUserDefaults.standardUserDefaults boolForKey:@"usediscordrichpresence"] && self.discordmanager.discordrpcrunning) {
         [self.discordmanager UpdatePresence:[NSString stringWithFormat:@"Episode %@ in %@", self.LastScrobbledEpisode, self.LastScrobbledSource] withDetails:[NSString stringWithFormat:@"%@ %@", self.WatchStatus, self.LastScrobbledActualTitle ]];
     }
 }

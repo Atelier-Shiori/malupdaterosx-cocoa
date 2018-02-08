@@ -148,6 +148,11 @@
             return ScrobblerOfflineQueued;
         }
 	}
+    else {
+        if ([NSUserDefaults.standardUserDefaults boolForKey:@"usediscordrichpresence"] && self.discordmanager.discordrpcrunning) {
+            [_discordmanager removePresence];
+        }
+    }
 
     return detectstatus;
 }

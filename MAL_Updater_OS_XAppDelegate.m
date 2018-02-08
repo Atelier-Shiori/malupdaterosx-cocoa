@@ -580,10 +580,6 @@
         switch (status) {
             case ScrobblerNothingPlaying:
                 [self setStatusText:@"Scrobble Status: Idle..."];
-                // Remove Discord Presence
-                if (MALEngine.discordmanager.discordrpcrunning) {
-                    [MALEngine.discordmanager removePresence];
-                }
                 break;
             case ScrobblerSameEpisodePlaying:
                 [self setStatusText:@"Scrobble Status: Same Episode Playing, Scrobble not needed."];
