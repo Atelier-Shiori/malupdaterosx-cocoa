@@ -71,7 +71,7 @@
                     </textFieldCell>
                 </textField>
                 <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="l7a-oZ-fCO">
-                    <rect key="frame" x="77" y="282" width="128" height="18"/>
+                    <rect key="frame" x="77" y="282" width="466" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Tweet on Scrobble" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="UgX-Pt-pIp">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -82,7 +82,7 @@
                     </connections>
                 </button>
                 <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Vq8-mr-iex">
-                    <rect key="frame" x="100" y="260" width="231" height="18"/>
+                    <rect key="frame" x="100" y="260" width="436" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Post a tweet when adding a new title" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="1Ob-b7-lF3">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -94,7 +94,7 @@
                     </connections>
                 </button>
                 <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Q77-6X-oDX">
-                    <rect key="frame" x="100" y="202" width="216" height="18"/>
+                    <rect key="frame" x="100" y="202" width="436" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Post a tweet when updating a title" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="YSd-zd-QqP">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -106,7 +106,7 @@
                     </connections>
                 </button>
                 <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iDR-j0-Kzm">
-                    <rect key="frame" x="100" y="142" width="240" height="18"/>
+                    <rect key="frame" x="100" y="142" width="443" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Post a tweet when updating the status" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="J99-Vd-LOd">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>

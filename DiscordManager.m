@@ -46,14 +46,17 @@ static void handleDiscordError(int errcode, const char* message)
 
 - (void)UpdatePresence:(NSString *)state withDetails:(NSString *)details {
     if ([self checkDiscordRunning]) {
-        //char buffer[256];
+        Discord_ClearPresence();
         DiscordRichPresence discordPresence;
         discordPresence.state = state.UTF8String;
         discordPresence.details = details.UTF8String;
+        discordPresence.startTimestamp = 0;
         discordPresence.largeImageKey = "default";
         discordPresence.smallImageKey = "default";
         discordPresence.largeImageText = "";
         discordPresence.smallImageText = "";
+        discordPresence.matchSecret = NULL;
+        discordPresence.spectateSecret = NULL;
         Discord_UpdatePresence(&discordPresence);
         Discord_RunCallbacks();
     }
