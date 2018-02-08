@@ -219,7 +219,7 @@
 #else
     defaultValues[@"donated"] = @NO;
     defaultValues[@"oss"] = @NO;
-    defaultValues[@"autodownloadtorrents"] = @YES;
+    defaultValues[@"autodownloadtorrents"] = @NO;
     defaultValues[@"autodownloadinterval"] = @(3600);
 #endif
     defaultValues[@"MacAppStoreMigrated"] = @NO;
@@ -298,6 +298,21 @@
     // Hide Window
     [window close];
     
+#ifdef oss
+#else
+    // Set up Torrent Browser (closed source)
+    _tbc = [[TorrentBrowserController alloc] initwithManagedObjectContext:managedObjectContext];
+    // Start Timer for Auto Downloading of Torrents if enabled
+    if ([NSUserDefaults.standardUserDefaults boolForKey:@"autodownloadtorrents"]) {
+        if ([_tbc.tmanager startAutoDownloadTimer]) {
+            NSLog(@"Timer started");
+        }
+        else {
+            NSLog(@"Failed to start timer.");
+        }
+    }
+#endif
+    
     //Set up Yosemite UI Enhancements
     if (floor(NSAppKitVersionNumber) > NSAppKitVersionNumber10_9)
     {
@@ -365,17 +380,6 @@
     if ([Utility checkoldAPI]) {
         [self showNotification:@"MAL Updater OS X" message:@"The API URL has been automatically updated."];
         [[NSUserDefaults standardUserDefaults] setObject:@"https://malapi.malupdaterosx.moe" forKey:@"MALAPIURL"];
-    }
-    // Set up Torrent Browser (closed source)
-    _tbc = [[TorrentBrowserController alloc] initwithManagedObjectContext:managedObjectContext];
-    // Start Timer for Auto Downloading of Torrents if enabled
-    if ([NSUserDefaults.standardUserDefaults boolForKey:@"autodownloadtorrents"]) {
-        if ([_tbc.tmanager startAutoDownloadTimer]) {
-            NSLog(@"Timer started");
-        }
-        else {
-            NSLog(@"Failed to start timer.");
-        }
     }
 #endif
     // Autostart Scrobble at Startup

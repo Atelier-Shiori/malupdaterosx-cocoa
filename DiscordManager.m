@@ -55,6 +55,9 @@ static void handleDiscordError(int errcode, const char* message)
         discordPresence.smallImageKey = "default";
         discordPresence.largeImageText = "";
         discordPresence.smallImageText = "";
+        discordPresence.partyId = NULL;
+        discordPresence.joinSecret = NULL;
+        discordPresence.spectateSecret = NULL;
         discordPresence.matchSecret = NULL;
         discordPresence.spectateSecret = NULL;
         Discord_UpdatePresence(&discordPresence);
