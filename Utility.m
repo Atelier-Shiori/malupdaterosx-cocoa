@@ -236,8 +236,10 @@
     NSBundle *bundle = [NSBundle mainBundle];
     NSString *versionString = bundle.infoDictionary[@"CFBundleShortVersionString"];
     if ([versionString containsString:@"b"] || [versionString containsString:@"a"] || [versionString containsString:@"pre"] || [versionString containsString:@"rc"]) {
-                [[NSUserDefaults standardUserDefaults] setObject:@"https://updates.ateliershiori.moe/malupdaterosx-beta/profileInfo.php" forKey:@"SUFeedURL"];
-        return true;
+        if (![[NSUserDefaults.standardUserDefaults stringForKey:@"SUFeedURL"] isEqualToString:@"https://updates.malupdaterosx.moe/malupdaterosx-beta/profileInfo.php"]) {
+                [NSUserDefaults.standardUserDefaults setObject:@"https://updates.malupdaterosx.moe/malupdaterosx-beta/profileInfo.php" forKey:@"SUFeedURL"];
+            return true;
+        }
     }
     return false;
 }
