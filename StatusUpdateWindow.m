@@ -19,8 +19,9 @@
 @implementation StatusUpdateWindow
 - (instancetype)init{
     self = [super initWithWindowNibName:@"StatusUpdateWindow"];
-    if(!self)
+    if (!self) {
         return nil;
+    }
     return self;
 }
 

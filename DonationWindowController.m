@@ -20,8 +20,9 @@
 
 - (id)init{
     self = [super initWithWindowNibName:@"DonationWindow"];
-    if(!self)
+    if (!self) {
         return nil;
+    }
     return self;
 }
 

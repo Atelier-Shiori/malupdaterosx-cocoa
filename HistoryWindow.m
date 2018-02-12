@@ -25,8 +25,9 @@
 }
 - (id)init{
     self = [super initWithWindowNibName:@"HistoryWindow"];
-    if(!self)
+    if (!self) {
         return nil;
+    }
     return self;
 }
 

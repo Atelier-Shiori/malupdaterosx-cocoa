@@ -22,8 +22,9 @@
 
 - (instancetype)init {
     self = [super initWithWindowNibName:@"PlexLogin"];
-    if(!self)
+    if (!self) {
         return nil;
+    }
     return self;
 }
 

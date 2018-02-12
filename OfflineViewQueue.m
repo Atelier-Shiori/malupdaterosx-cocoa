@@ -22,8 +22,9 @@
 }
 - (id)init{
     self = [super initWithWindowNibName:@"OfflineViewQueue"];
-    if(!self)
+    if (!self) {
         return nil;
+    }
     return self;
 }
 - (void)windowDidLoad {
