@@ -36,6 +36,8 @@
     }
     // Set Context
     [_MALEngine setManagedObjectContext:[delegate getObjectContext]];
+    // Set testing status
+    _MALEngine.testing = true;
     // Load Test Data
     NSBundle *mainBundle = [NSBundle bundleForClass:[self class]];
     NSData *dataset = [NSData dataWithContentsOfFile:[mainBundle pathForResource: @"testdata" ofType: @"json"]
@@ -43,7 +45,7 @@
                                                error:NULL];
     NSError *error;
     _testdata = [NSArray alloc];
-    _testdata= [NSJSONSerialization JSONObjectWithData:dataset options:kNilOptions error:&error];
+    _testdata= [NSJSONSerialization JSONObjectWithData:dataset options:0 error:&error];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     _confirmnewtitles = [defaults valueForKey:@"ConfirmNewTitle"];
     [defaults setValue:@NO forKey:@"ConfirmNewTitle"];

@@ -6,20 +6,21 @@
 //
 
 #import "MyAnimeList+Twitter.h"
+#import <TwitterManagerKit/TwitterManagerKit.h>
 
 @implementation MyAnimeList (Twitter)
 - (void)postaddanimetweet {
-    if ([NSUserDefaults.standardUserDefaults boolForKey:@"twitteraddanime"] && [NSUserDefaults.standardUserDefaults boolForKey:@"tweetonscrobble"]) {
+    if ([NSUserDefaults.standardUserDefaults boolForKey:@"twitteraddanime"] && [NSUserDefaults.standardUserDefaults boolForKey:@"tweetonscrobble"] && !self.testing) {
         [self performtweet:[NSUserDefaults.standardUserDefaults objectForKey:@"twitteraddanimeformat"]];
     }
 }
 - (void)postupdateanimetweet {
-    if ([NSUserDefaults.standardUserDefaults boolForKey:@"twitterupdateanime"] && [NSUserDefaults.standardUserDefaults boolForKey:@"tweetonscrobble"]) {
+    if ([NSUserDefaults.standardUserDefaults boolForKey:@"twitterupdateanime"] && [NSUserDefaults.standardUserDefaults boolForKey:@"tweetonscrobble"] && !self.testing) {
         [self performtweet:[NSUserDefaults.standardUserDefaults objectForKey:@"twitterupdateanimeformat"]];
     }
 }
 - (void)postupdatestatustweet {
-    if ([NSUserDefaults.standardUserDefaults boolForKey:@"twitterupdatestatus"] && [NSUserDefaults.standardUserDefaults boolForKey:@"tweetonscrobble"]) {
+    if ([NSUserDefaults.standardUserDefaults boolForKey:@"twitterupdatestatus"] && [NSUserDefaults.standardUserDefaults boolForKey:@"tweetonscrobble"] && !self.testing) {
         [self performtweet:[NSUserDefaults.standardUserDefaults objectForKey:@"twitterupdatestatusformat"]];
     }
 }

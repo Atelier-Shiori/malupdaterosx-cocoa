@@ -93,13 +93,13 @@
 - (void)finish:(NSDictionary *)d{
     selectedtitle = d[@"title"];
     selectedaniid = [d[@"id"] stringValue];
-	if (d[@"episodes"]) {
-    	selectedtotalepisodes = ((NSNumber *)d[@"episodes"]).intValue;
-	}
-	else {
-		// No episode total yet, set to set
-		selectedtotalepisodes = 0;
-	}
+    if (d[@"episodes"]) {
+        selectedtotalepisodes = ((NSNumber *)d[@"episodes"]).intValue;
+    }
+    else {
+        // No episode total yet, set to set
+        selectedtotalepisodes = 0;
+    }
     //[self.window orderOut:self];
    // [NSApp endSheet:self.window returnCode:1];
     if (self.window.sheetParent) {

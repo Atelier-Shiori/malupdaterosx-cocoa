@@ -42,7 +42,7 @@
     // Set Logo
     logo.image = NSApp.applicationIconImage;
     // Load Login State
-	[self loadlogin];
+    [self loadlogin];
 }
 
 #pragma mark -
@@ -66,40 +66,40 @@
 #pragma mark Login Preferences Functions
 - (void)loadlogin
 {
-	// Load Username
-	if ([MALEngine checkaccount]) {
-		[clearbut setEnabled: YES];
-		[savebut setEnabled: NO];
+    // Load Username
+    if ([MALEngine checkaccount]) {
+        [clearbut setEnabled: YES];
+        [savebut setEnabled: NO];
         [loggedinview setHidden:NO];
         [loginview setHidden:YES];
         loggedinuser.stringValue = [MALEngine getusername];
-	}
-	else {
-		//Disable Clearbut
-		[clearbut setEnabled: NO];
-		[savebut setEnabled: YES];
-	}
+    }
+    else {
+        //Disable Clearbut
+        [clearbut setEnabled: NO];
+        [savebut setEnabled: YES];
+    }
 }
 
 - (IBAction)startlogin:(id)sender
 {
-	{
-		//Start Login Process
-		//Disable Login Button
-		[savebut setEnabled: NO];
-		[savebut displayIfNeeded];
-		if ( fieldusername.stringValue.length == 0) {
-			//No Username Entered! Show error message
-			[Utility showsheetmessage:@"MAL Updater OS X was unable to log you in since you didn't enter a username" explaination:@"Enter a valid username and try logging in again" window:self.view.window];
-			[savebut setEnabled: YES];
-		}
-		else {
-			if ( fieldpassword.stringValue.length == 0 ) {
-				//No Password Entered! Show error message.
-				[Utility showsheetmessage:@"MAL Updater OS X was unable to log you in since you didn't enter a password" explaination:@"Enter a valid password and try logging in again." window:self.view.window];
-				[savebut setEnabled: YES];
-			}
-			else {
+    {
+        //Start Login Process
+        //Disable Login Button
+        [savebut setEnabled: NO];
+        [savebut displayIfNeeded];
+        if ( fieldusername.stringValue.length == 0) {
+            //No Username Entered! Show error message
+            [Utility showsheetmessage:@"MAL Updater OS X was unable to log you in since you didn't enter a username" explaination:@"Enter a valid username and try logging in again" window:self.view.window];
+            [savebut setEnabled: YES];
+        }
+        else {
+            if ( fieldpassword.stringValue.length == 0 ) {
+                //No Password Entered! Show error message.
+                [Utility showsheetmessage:@"MAL Updater OS X was unable to log you in since you didn't enter a password" explaination:@"Enter a valid password and try logging in again." window:self.view.window];
+                [savebut setEnabled: YES];
+            }
+            else {
                 [savebut setEnabled:NO];
                 NSString *username = fieldusername.stringValue;
                 NSString *password = fieldpassword.stringValue;
@@ -110,23 +110,23 @@
                     [self login:username password:password];
                 });
                 }
-		}
-	}
+        }
+    }
 }
 
 - (void)login:(NSString *)username password:(NSString *)password{
     //Set Login URL
-	NSURL *url = [NSURL URLWithString:@"https://myanimelist.net/api/account/verify_credentials.xml"];
+    NSURL *url = [NSURL URLWithString:@"https://myanimelist.net/api/account/verify_credentials.xml"];
     EasyNSURLConnection *request = [[EasyNSURLConnection alloc] initWithURL:url];
     [Utility setUserAgent:request];
-	//Ignore Cookies
-	[request setUseCookies:NO];
-	//Set Username and Password
+    //Ignore Cookies
+    [request setUseCookies:NO];
+    //Set Username and Password
     request.headers = (NSMutableDictionary *)@{@"Authorization": [NSString stringWithFormat:@"Basic %@", [[NSString stringWithFormat:@"%@:%@", username, password] base64Encoding]]};
-	//Verify Username/Password
-	[request startRequest];
-	// Check for errors
-    NSError *error = [request getError];
+    //Verify Username/Password
+    [request startRequest];
+    // Check for errors
+    NSError *error = request.error;
     dispatch_async(dispatch_get_main_queue(), ^{
         if ([request getStatusCode] == 200 && !error) {
                 //Login successful
@@ -159,8 +159,8 @@
 
 - (IBAction)registermal:(id)sender
 {
-	//Show MAL Registration Page
-	[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://myanimelist.net/register.php"]];
+    //Show MAL Registration Page
+    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://myanimelist.net/register.php"]];
 }
 
 - (IBAction) showgettingstartedpage:(id)sender

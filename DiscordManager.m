@@ -6,6 +6,8 @@
 //
 
 #import "DiscordManager.h"
+#import <DiscordRPC/DiscordRPC.h>
+
 static const char* APPLICATION_ID = "408279303835353091";
 
 @implementation DiscordManager

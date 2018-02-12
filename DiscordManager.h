@@ -6,7 +6,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <DiscordRPC/DiscordRPC.h>
 
 @interface DiscordManager : NSObject
 @property (getter=getStarted) bool discordrpcrunning;

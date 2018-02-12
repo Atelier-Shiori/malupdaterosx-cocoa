@@ -28,7 +28,7 @@
     [request startRequest];
     // Get Status Code
     long statusCode = [request getStatusCode];
-    NSError *error = [request getError]; // Error Detection
+    NSError *error = request.error; // Error Detection
     if (statusCode == 200 ) {
         if (self.DetectedEpisode.length == 0) { // Check if there is a DetectedEpisode (needed for checking
             // Set detected episode to 1
@@ -112,7 +112,7 @@
         [request setUseCookies:NO];
         //Set Token
         request.headers = (NSMutableDictionary *)@{@"Authorization": [NSString stringWithFormat:@"Basic %@", [self getBase64]]};
-        [request setPostMethod:@"PUT"];
+        request.postmethod = @"PUT";
         [request addFormData:self.DetectedEpisode forKey:@"episodes"];
         if ([self.WatchStatus isEqualToString:@"plan to watch"] && self.DetectedCurrentEpisode == 0) {
             // Set the start date if the title's watch status is Plan to Watch and the watched episodes is zero
@@ -227,7 +227,7 @@
     //Set Token
     request.headers = (NSMutableDictionary *)@{@"Authorization": [NSString stringWithFormat:@"Basic %@", [self getBase64]]};
     //Set method to Delete
-    [request setPostMethod:@"DELETE"];
+    request.postmethod = @"DELETE";
     // Do Update
     [request startFormRequest];
     switch ([request getStatusCode]) {
@@ -259,7 +259,7 @@
     [request setUseCookies:NO];
     //Set Token
     request.headers = (NSMutableDictionary *)@{@"Authorization": [NSString stringWithFormat:@"Basic %@", [self getBase64]]};
-    [request setPostMethod:@"PUT"];
+    request.postmethod = @"PUT";
     //Set current episode
     [request addFormData:episode forKey:@"episodes"];
     //Set new watch status
@@ -291,7 +291,7 @@
     [Utility setUserAgent:request];
     [request setUseCookies:NO];
     request.headers = (NSMutableDictionary *)@{@"Authorization": [NSString stringWithFormat:@"Basic %@", [self getBase64]]};
-    [request setPostMethod:@"PUT"];
+    request.postmethod = @"PUT";
     // Set Date
     [request addFormData:[Utility todaydatestring] forKey:@"start"];
     if ([self.WatchStatus isEqualToString:@"completed"]) {

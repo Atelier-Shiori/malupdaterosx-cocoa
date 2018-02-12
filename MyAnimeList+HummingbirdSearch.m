@@ -70,7 +70,7 @@
 - (NSString *)hfindaniid:(NSData *)ResponseData searchterm:(NSString *) term{
     // Initalize JSON parser
     NSError* error;
-    NSDictionary *data = [NSJSONSerialization JSONObjectWithData:ResponseData options:kNilOptions error:&error];
+    NSDictionary *data = [NSJSONSerialization JSONObjectWithData:ResponseData options:0 error:&error];
     NSArray *tmpa = data[@"data"];
     tmpa = [NSArray arrayWithArray:[tmpa filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"(type == %@)" , @"anime"]]];
     NSMutableArray *searchdata = [NSMutableArray new];
@@ -211,7 +211,7 @@
 }
 - (NSString *)hcomparetitle:(NSString *)title match1:(NSDictionary *)match1 match2:(NSDictionary *)match2 mstatus:(int)a mstatus2:(int)b{
     // Perform string score between two titles to see if one is the correct match or not
-    float score1, score2, ascore1, ascore2;
+    double score1, score2, ascore1, ascore2;
     double fuzziness = 0.3;
     NSDictionary *mtitle1 = match1[@"titles"];
     NSDictionary *mtitle2 = match2[@"titles"];
@@ -247,8 +247,8 @@
     }
     
     // Take the highest of both matches scores
-    float finalscore1 = score1 > ascore1 ? score1 : ascore1;
-    float finalscore2 = score2 > ascore2 ? score2 : ascore2;
+    double finalscore1 = score1 > ascore1 ? score1 : ascore1;
+    double finalscore2 = score2 > ascore2 ? score2 : ascore2;
     
     // Compare Scores
     if (finalscore1 == finalscore2 || finalscore1 == INFINITY) {
@@ -278,7 +278,7 @@
     long statusCode = [request getStatusCode];
     if (statusCode == 200) {
         NSError* error;
-        NSDictionary *d = [NSJSONSerialization JSONObjectWithData:request.response.responsedata options:kNilOptions error:&error];
+        NSDictionary *d = [NSJSONSerialization JSONObjectWithData:request.response.responsedata options:0 error:&error];
         NSArray *mappings = d[@"data"];
         for (NSDictionary *m in mappings) {
             if ([[NSString stringWithFormat:@"%@",[m[@"attributes"] valueForKey:@"externalSite"]] isEqualToString:@"myanimelist/anime"]) {

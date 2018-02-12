@@ -8,6 +8,7 @@
 
 #import "MyAnimeList.h"
 #import <DetectionKit/DetectionKit.h>
+#import <TwitterManagerKit/TwitterManagerKit.h>
 #import "MyAnimeList+Search.h"
 #import "MyAnimeList+Update.h"
 #import "MyAnimeList+HummingbirdSearch.h"
@@ -52,22 +53,22 @@
 - (int)getWatchStatus
 {
     if ([_WatchStatus isEqualToString:@"watching"]) {
-		return 0;
+        return 0;
     }
     else if ([_WatchStatus isEqualToString:@"completed"]) {
-		return 1;
+        return 1;
     }
     else if ([_WatchStatus isEqualToString:@"on-hold"]) {
-		return 2;
+        return 2;
     }
     else if ([_WatchStatus isEqualToString:@"dropped"]) {
-		return 3;
+        return 3;
     }
     else if ([_WatchStatus isEqualToString:@"plan-to-watch"]) {
         return 4;
     }
     else {
-		return 0; //fallback
+        return 0; //fallback
     }
 }
 - (int)getQueueCount{
@@ -94,7 +95,7 @@
     // Detect media
     int detectstatus;
     detectstatus = [self detectmedia];
-	if (detectstatus == ScrobblerDetectedMedia) { // Detects Title
+    if (detectstatus == ScrobblerDetectedMedia) { // Detects Title
         if (_online) {
             int result = [self scrobble];
             // Empty out Detected Title/Episode to prevent same title detection
@@ -147,7 +148,7 @@
             _Success = true;
             return ScrobblerOfflineQueued;
         }
-	}
+    }
     else {
         if ([NSUserDefaults.standardUserDefaults boolForKey:@"usediscordrichpresence"] && self.discordmanager.discordrpcrunning) {
             [_discordmanager removePresence];
@@ -223,7 +224,7 @@
     return @{@"success": @(successc), @"fail": @(fail), @"confirmneeded" : @(confirmneeded)};
 }
 - (int)scrobbleagain:(NSString *)showtitle Episode:(NSString *)episode correctonce:(BOOL)correctonce {
-	_correcting = true;
+    _correcting = true;
     NSString *lasttitle;
     if (correctonce) {
         lasttitle = _LastScrobbledTitle;
@@ -315,7 +316,7 @@
                 //Title is not on list. Add Title
                 int s = [self addtitle:_AniID confirming:_confirmed];
                 _Success = s == ScrobblerAddTitleSuccessful || s == ScrobblerConfirmNeeded ? true : false;
-				status = s;
+                status = s;
             }
             else {
                 // Update Title as Usual
@@ -444,13 +445,13 @@
         return false;
     }
     int status;
-	if (_LastScrobbledTitleNew)
-	{
-		status = [self addtitle:_AniID confirming:true];
-	}
-	else {
-		status = [self updatetitle:_AniID confirming:true];
-	}
+    if (_LastScrobbledTitleNew)
+    {
+        status = [self addtitle:_AniID confirming:true];
+    }
+    else {
+        status = [self updatetitle:_AniID confirming:true];
+    }
     NSLog(@"Confirming process complete with status code: %i", status);
     
     if (status == 21 || status ==22) {

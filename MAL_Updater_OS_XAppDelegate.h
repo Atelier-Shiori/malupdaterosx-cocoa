@@ -27,7 +27,6 @@
     NSManagedObjectModel *managedObjectModel;
 	NSManagedObjectContext *managedObjectContext;
 	NSPersistentStoreCoordinator *persistentStoreCoordinator;
-    
 }
 /* Windows */
 @property (strong) NSWindow *window;

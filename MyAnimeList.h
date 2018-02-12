@@ -8,11 +8,11 @@
 
 #import <Cocoa/Cocoa.h>
 #import "MAL_Updater_OS_XAppDelegate.h"
-#import <TwitterManagerKit/TwitterManagerKit.h>
 #import "DiscordManager.h"
 
 @class Reachability;
 @class Detection;
+@class TwitterManager;
 
 @interface MyAnimeList : NSObject
 typedef NS_ENUM(unsigned int, ScrobbleStatus) {
@@ -63,6 +63,7 @@ typedef NS_ENUM(unsigned int, ScrobbleStatus) {
 @property (getter=getSuccess) BOOL Success;
 @property (getter=getOnlineStatus) BOOL online;
 @property BOOL correcting;
+@property BOOL testing;
 @property (strong) Reachability* reach;
 @property (strong) Detection *detection;
 @property (nonatomic) NSManagedObjectContext *managedObjectContext;

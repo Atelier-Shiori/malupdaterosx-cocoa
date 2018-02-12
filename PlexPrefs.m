@@ -33,7 +33,7 @@
     // Load Login State for Plex
     [self loadplexlogin];
 }
-- (id)init
+- (instancetype)init
 {
     // Initalize MAL Engine value
     MAL_Updater_OS_XAppDelegate *appdelegate = (MAL_Updater_OS_XAppDelegate *)[NSApplication sharedApplication].delegate;

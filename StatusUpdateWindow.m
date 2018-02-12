@@ -13,7 +13,7 @@
 @interface StatusUpdateWindow ()
 @property bool airing;
 @property bool completedairing;
-@property bool currentwatchedepisode;
+@property int currentwatchedepisode;
 @end
 
 @implementation StatusUpdateWindow
@@ -38,9 +38,9 @@
     _showtitle.objectValue = MALEngine.LastScrobbledTitle;
     [_showscore selectItemWithTag:MALEngine.TitleScore];
     [_showstatus selectItemAtIndex:[MALEngine getWatchStatus]];
-    _airing = [MALEngine getairing];
-    _completedairing = [MALEngine getcompletedairing];
-    _currentwatchedepisode = [MALEngine getCurrentEpisode];
+    _airing = MALEngine.airing;
+    _completedairing = MALEngine.completedairing;
+    _currentwatchedepisode = MALEngine.DetectedCurrentEpisode;
     _episodefield.stringValue = [NSString stringWithFormat:@"%i", MALEngine.DetectedCurrentEpisode];
     if (MALEngine.TotalEpisodes !=0) {
         _epiformatter.maximum = @(MALEngine.TotalEpisodes);

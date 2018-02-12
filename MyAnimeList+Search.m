@@ -116,7 +116,7 @@
             else {alttitle = @"";}
             // Remove colons as they are invalid characters for filenames and to improve accuracy
             theshowtitle = [theshowtitle stringByReplacingOccurrencesOfString:@":" withString:@""];
-            int matchstatus;
+            int matchstatus = 0;
             if (((NSArray *)searchentry[@"synonyms"]).count > 0) {
                 for (NSString *syn in a) {
                     alttitle = syn;
@@ -230,7 +230,7 @@
 
 - (NSString *)comparetitle:(NSString *)title match1:(NSDictionary *)match1 match2:(NSDictionary *)match2 mstatus:(int)a mstatus2:(int)b{
     // Perform string score between two titles to see if one is the correct match or not
-    float score1, score2, ascore1, ascore2;
+    double score1, score2, ascore1, ascore2;
     double fuzziness = 0.3;
     int season1 = ((NSNumber *)[[Recognition alloc] recognize:match1[@"title"]][@"season"]).intValue;
     int season2 = ((NSNumber *)[[Recognition alloc] recognize:match2[@"title"]][@"season"]).intValue;
@@ -267,8 +267,8 @@
     }
     
     // Take the highest of both matches scores
-    float finalscore1 = score1 > ascore1 ? score1 : ascore1;
-    float finalscore2 = score2 > ascore2 ? score2 : ascore2;
+    double finalscore1 = score1 > ascore1 ? score1 : ascore1;
+    double finalscore2 = score2 > ascore2 ? score2 : ascore2;
     // Compare Scores
     if (finalscore1 == finalscore2 || finalscore1 == INFINITY) {
         //Scores can't be reliably compared, just return the first match
@@ -313,10 +313,10 @@
     }
     return output;
 }
-- (float)gethighestsynonymscore:(NSArray *)synonyms withTitle:(NSString *)title {
-    float score = 0;
+- (double)gethighestsynonymscore:(NSArray *)synonyms withTitle:(NSString *)title {
+    double score = 0;
     for (NSString *synonym in synonyms ) {
-        float tmpscore = string_fuzzy_score(title.UTF8String, synonym.UTF8String, 0.3);
+        double tmpscore = string_fuzzy_score(title.UTF8String, synonym.UTF8String, 0.3);
         if (tmpscore > score) {
             score = tmpscore;
         }

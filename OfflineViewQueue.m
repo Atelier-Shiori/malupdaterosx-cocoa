@@ -31,8 +31,7 @@
     
     // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
 }
-- (IBAction)clearqueue:(id)sender
-{
+- (IBAction)clearqueue:(id)sender {
     // Set Up Prompt Message Window
     NSAlert *alert = [[NSAlert alloc] init];
     [alert addButtonWithTitle:@"Yes"];
@@ -42,31 +41,22 @@
     // Set Message type to Warning
     alert.alertStyle = NSWarningAlertStyle;
     // Show as Sheet on historywindow
-    [alert beginSheetModalForWindow:self.window
-                      modalDelegate:self
-                     didEndSelector:@selector(clearhistoryended:code:conext:)
-                        contextInfo:NULL];
-    
-}
-- (void)clearhistoryended:(NSAlert *)alert
-                    code:(int)echoice
-                  conext:(void *)v
-{
-    if (echoice == 1000) {
-        // Remove All Data
-        NSManagedObjectContext *moc = self.managedObjectContext;
-        NSFetchRequest *allQueue = [[NSFetchRequest alloc] init];
-        allQueue.entity = [NSEntityDescription entityForName:@"OfflineQueue" inManagedObjectContext:moc];
-        
-        NSError *error = nil;
-        NSArray *queue = [moc executeFetchRequest:allQueue error:&error];
-        //error handling goes here
-        for (NSManagedObject *item in queue) {
-            [moc deleteObject:item];
+    [alert beginSheetModalForWindow:self.window completionHandler:^(NSModalResponse returnCode) {
+        if (returnCode == NSAlertFirstButtonReturn) {
+            // Remove All Data
+            NSManagedObjectContext *moc = self.managedObjectContext;
+            NSFetchRequest *allQueue = [[NSFetchRequest alloc] init];
+            allQueue.entity = [NSEntityDescription entityForName:@"OfflineQueue" inManagedObjectContext:moc];
+
+            NSError *error = nil;
+            NSArray *queue = [moc executeFetchRequest:allQueue error:&error];
+            //error handling goes here
+            for (NSManagedObject *item in queue) {
+                [moc deleteObject:item];
+            }
+            [moc save:&error];
         }
-        [moc save:&error];
-    }
-    
+    }];
 }
 
 @end
