@@ -237,6 +237,8 @@
     defaultValues[@"twitterupdateanimeformat"] = @"%status% %title% Episode %episode% - %malurl% #malupdaterosx";
     defaultValues[@"twitterupdatestatusformat"] =  @"Updated %title% Episode %episode% (%status%) - %malurl% #malupdaterosx";
     defaultValues[@"usediscordrichpresence"] = @NO;
+    defaultValues[@"torrentagreement"] = @NO;
+    defaultValues[@"torrentsiteselected"] = @(0);
                                                     
     //Register Dictionary
     [[NSUserDefaults standardUserDefaults]
