@@ -321,33 +321,29 @@
 #endif
     
     //Set up Yosemite UI Enhancements
-    if (floor(NSAppKitVersionNumber) > NSAppKitVersionNumber10_9)
-    {
-        if ([defaults boolForKey:@"DisableYosemiteTitleBar"] != 1) {
-            // OS X 10.10 code here.
-            //Hide Title Bar
-            self.window.titleVisibility = NSWindowTitleHidden;
-            // Fix Window Size
-            NSRect frame = window.frame;
-            frame.size = CGSizeMake(440, 291);
-            [window setFrame:frame display:YES];
-        }
-        if ([defaults boolForKey:@"DisableYosemiteVibrance"] != 1) {
-            //Add NSVisualEffectView to Window
-            windowcontent.blendingMode = NSVisualEffectBlendingModeBehindWindow;
-            windowcontent.material = NSVisualEffectMaterialLight;
-            windowcontent.state = NSVisualEffectStateFollowsWindowActiveState;
-            windowcontent.appearance = [NSAppearance appearanceNamed:NSAppearanceNameVibrantLight];
-            //Make Animeinfo textview transparrent
-            [animeinfooutside setDrawsBackground:NO];
-            animeinfo.backgroundColor = [NSColor clearColor];
-        }
-        else {
-            windowcontent.state = NSVisualEffectStateInactive;
-            [animeinfooutside setDrawsBackground:NO];
-            animeinfo.backgroundColor = [NSColor clearColor];
-        }
-        
+    if ([defaults boolForKey:@"DisableYosemiteTitleBar"] != 1) {
+        // OS X 10.10 code here.
+        //Hide Title Bar
+        self.window.titleVisibility = NSWindowTitleHidden;
+        // Fix Window Size
+        NSRect frame = window.frame;
+        frame.size = CGSizeMake(440, 291);
+        [window setFrame:frame display:YES];
+    }
+    if ([defaults boolForKey:@"DisableYosemiteVibrance"] != 1) {
+        //Add NSVisualEffectView to Window
+        windowcontent.blendingMode = NSVisualEffectBlendingModeBehindWindow;
+        windowcontent.material = NSVisualEffectMaterialLight;
+        windowcontent.state = NSVisualEffectStateFollowsWindowActiveState;
+        windowcontent.appearance = [NSAppearance appearanceNamed:NSAppearanceNameVibrantLight];
+        //Make Animeinfo textview transparrent
+        animeinfooutside.drawsBackground = NO;
+        animeinfo.backgroundColor = [NSColor clearColor];
+    }
+    else {
+        windowcontent.state = NSVisualEffectStateInactive;
+        animeinfooutside.drawsBackground = NO;
+        animeinfo.backgroundColor = [NSColor clearColor];
     }
     // Fix template images
     // There is a bug where template images are not made even if they are set in XCAssets
@@ -368,7 +364,7 @@
         alert.informativeText = @"Before using this program, you need to login. Do you want to open Preferences to log in now?\r\rPlease note that MAL Updater OS X now stores user information in the Keychain and therefore, you must login again.";
         // Set Message type to Warning
         alert.alertStyle = NSInformationalAlertStyle;
-        if ([alert runModal]== NSAlertFirstButtonReturn) {
+        if ([alert runModal] == NSAlertFirstButtonReturn) {
             // Show Preference Window and go to Login Preference Pane
             [NSApp activateIgnoringOtherApps:YES];
             [self.preferencesWindowController showWindow:nil];
@@ -548,7 +544,7 @@
         updatedupdatestatus.enabled = YES;
         updatecorrect.autoenablesItems = YES;
     }
-    [statusMenu setAutoenablesItems:YES];
+    statusMenu.autoenablesItems = YES;
     confirmupdate.enabled = YES;
     findtitle.enabled = YES;
     openstream.enabled = YES;
