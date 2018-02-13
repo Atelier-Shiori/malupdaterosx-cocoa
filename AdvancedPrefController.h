@@ -11,7 +11,7 @@
 #import "MAL_Updater_OS_XAppDelegate.h"
 #import "MyAnimeList.h"
 
-@interface AdvancedPrefController : NSViewController <MASPreferencesViewController>
+@interface AdvancedPrefController : NSViewController <MASPreferencesViewController, NSTextFieldDelegate>
 @property (strong) IBOutlet NSTextField *APIUrl;
 @property (strong) MAL_Updater_OS_XAppDelegate* appdelegate;
 @property (strong) IBOutlet NSButton *kodicheck;
