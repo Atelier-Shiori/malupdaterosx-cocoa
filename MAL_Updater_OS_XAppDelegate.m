@@ -579,6 +579,9 @@
                 [self showNotification:@"Invalid Credentials" message:@"Your credentials may be incorrect. Please log in again."];
                 [self setStatusText:@"Scrobble Status: Invalid credentials."];
                 break;
+            case ScrobblerInvalidScrobble:
+                [self showNotification:@"Invalid Scrobble" message:@"You are trying to scrobble a title that haven't been aired or finished airing yet."];
+                [self setStatusText:@"Scrobble Status: Invalid Scrobble."];
             default:
                 break;
         }

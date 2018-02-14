@@ -26,7 +26,8 @@ typedef NS_ENUM(unsigned int, ScrobbleStatus) {
     ScrobblerUpdateFailed = 53,
     ScrobblerFailed = 54,
     ScrobblerInvalidCredentials = 55,
-    ScrobblerMALUpdaterOSXNeedsUpdate = 56
+    ScrobblerMALUpdaterOSXNeedsUpdate = 56,
+    ScrobblerInvalidScrobble = 58
 };
 @property (strong) NSString *MALApiUrl;
 @property (strong, getter=getLastScrobbledTitle) NSString *LastScrobbledTitle;
@@ -51,6 +52,8 @@ typedef NS_ENUM(unsigned int, ScrobbleStatus) {
 @property (getter=getTotalEpisodes) int TotalEpisodes;
 @property (strong) NSString *WatchStatus;
 @property (getter=getScore) int TitleScore;
+@property (getter=getairing) bool airing;
+@property (getter=getcompletedairing) bool completedairing;
 @property (strong, getter=getAniID)NSString *AniID;
 @property (getter=getisNewTitle) BOOL LastScrobbledTitleNew;
 @property (getter=getConfirmed) BOOL confirmed;
