@@ -85,7 +85,11 @@
 	
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES);
     NSString *basePath = (paths.count > 0) ? paths[0] : NSTemporaryDirectory();
+#ifdef DEBUG
+    return [basePath stringByAppendingPathComponent:@"MAL Updater OS X - DEBUG"];
+#else
     return [basePath stringByAppendingPathComponent:@"MAL Updater OS X"];
+#endif
 }
 
 
