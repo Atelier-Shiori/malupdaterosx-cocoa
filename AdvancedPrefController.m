@@ -108,9 +108,7 @@
     if ([textfield.identifier isEqualToString:@"kodihost"]) {
         [malengine.detection setKodiReachAddress:textfield.stringValue];
     }
-    else if ([textfield.identifier isEqualToString:@"apiurl"]) {
-        [malengine changenotifierhostname];
-    }
+ 
 }
 - (IBAction)setKodiReach:(id)sender{
     MyAnimeList *malengine = appdelegate.MALEngine;
