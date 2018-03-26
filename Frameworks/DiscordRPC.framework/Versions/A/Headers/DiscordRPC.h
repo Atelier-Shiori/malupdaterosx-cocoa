@@ -15,5 +15,5 @@ FOUNDATION_EXPORT double DiscordRPCVersionNumber;
 FOUNDATION_EXPORT const unsigned char DiscordRPCVersionString[];
 
 // In this header, you should import all the public headers of your framework using statements like #import <DiscordRPC/PublicHeader.h>
-#import <DiscordRPC/discord-rpc.h>
+#import <DiscordRPC/discord_rpc.h>
 
