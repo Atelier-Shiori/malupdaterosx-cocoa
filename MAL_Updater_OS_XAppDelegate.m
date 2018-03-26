@@ -880,7 +880,6 @@
 
 #pragma mark Correction
 - (IBAction)showCorrectionSearchWindow:(id)sender{
-    bool isVisible = window.visible;
     // Stop Timer temporarily if scrobbling is turned on
     if (scrobbling == TRUE) {
         [self stoptimer];
@@ -902,11 +901,15 @@
         //Get last scrobbled title
         fsdialog.searchquery = MALEngine.LastScrobbledTitle;
     }
+    __block bool wasVisible = self.window.isVisible;
     if (!self.window.isVisible) {
         [self.window makeKeyAndOrderFront:self];
         [NSApp activateIgnoringOtherApps:YES];
     }
     [self.window beginSheet:fsdialog.window completionHandler:^(NSModalResponse returnCode) {
+        if (!wasVisible) {
+            [self.window close];
+        }
         [self correctionDidEnd:returnCode];
     }];
     [self disableUpdateItems];
