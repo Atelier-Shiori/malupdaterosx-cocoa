@@ -902,17 +902,14 @@
         //Get last scrobbled title
         fsdialog.searchquery = MALEngine.LastScrobbledTitle;
     }
-    
-    if (isVisible) {
-        [self.window beginSheet:fsdialog.window completionHandler:^(NSModalResponse returnCode) {
-            [self correctionDidEnd:returnCode];
-        }];
-        [self disableUpdateItems];
+    if (!self.window.isVisible) {
+        [self.window makeKeyAndOrderFront:self];
+        [NSApp activateIgnoringOtherApps:YES];
     }
-    else {
-        [self disableUpdateItems];
-        [self correctionDidEnd:[NSApp runModalForWindow:fsdialog.window]];
-    }
+    [self.window beginSheet:fsdialog.window completionHandler:^(NSModalResponse returnCode) {
+        [self correctionDidEnd:returnCode];
+    }];
+    [self disableUpdateItems];
 }
 
 - (void)correctionDidEnd:(long)returnCode{
