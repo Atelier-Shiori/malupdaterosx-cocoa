@@ -12,7 +12,7 @@
 #import "Utility.h"
 
 @interface FixSearchDialog ()
-
+@property (nonatomic, copy) void (^completionHandler)(long returnCode);
 @end
 
 @implementation FixSearchDialog
@@ -55,6 +55,12 @@
     }
 }
 
+- (void)showWindowAsModal:(void (^)(long returnCode))completionHandler {
+    [self.window makeKeyAndOrderFront:self];
+    [NSApp activateIgnoringOtherApps:YES];
+    _completionHandler = completionHandler;
+}
+
 - (IBAction)closesearch:(id)sender {
     //[self.window orderOut:self];
     //[NSApp endSheet:self.window returnCode:0];
@@ -62,7 +68,7 @@
         [self.window.sheetParent endSheet:self.window returnCode:NSModalResponseCancel];
     }
     else {
-        [NSApp stopModalWithCode:NSModalResponseCancel];
+        _completionHandler(NSModalResponseCancel);
     }
     [self.window close];
 }
@@ -100,14 +106,13 @@
         // No episode total yet, set to set
         selectedtotalepisodes = 0;
     }
-    //[self.window orderOut:self];
-   // [NSApp endSheet:self.window returnCode:1];
     if (self.window.sheetParent) {
         [self.window.sheetParent endSheet:self.window returnCode:NSModalResponseOK];
     }
     else {
-        [NSApp stopModalWithCode:NSModalResponseOK];
+        _completionHandler(NSModalResponseOK);
     }
+    [self.window close];
 }
 
 - (IBAction)search:(id)sender{

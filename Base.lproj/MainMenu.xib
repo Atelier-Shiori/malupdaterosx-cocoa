@@ -161,7 +161,7 @@
             </connections>
         </arrayController>
         <customObject id="540" customClass="SUUpdater"/>
-        <menu id="543" userLabel="StatusMenu">
+        <menu autoenablesItems="NO" id="543" userLabel="StatusMenu">
             <items>
                 <menuItem title="About MAL Updater OS X" id="547">
                     <modifierMask key="keyEquivalentModifierMask"/>
@@ -199,13 +199,13 @@
                     </connections>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" hidden="YES" id="egk-cQ-duZ"/>
-                <menuItem title="Last Scrobbled:" hidden="YES" enabled="NO" id="53a-L9-dCg">
+                <menuItem title="Last Scrobbled:" hidden="YES" enabled="NO" identifier="lastscrobbled" id="53a-L9-dCg">
                     <modifierMask key="keyEquivalentModifierMask"/>
                 </menuItem>
-                <menuItem title="Show Title" hidden="YES" enabled="NO" indentationLevel="1" id="XZU-Ti-Qvg">
+                <menuItem title="Show Title" hidden="YES" enabled="NO" identifier="showtitle" indentationLevel="1" id="XZU-Ti-Qvg">
                     <modifierMask key="keyEquivalentModifierMask"/>
                 </menuItem>
-                <menuItem title="Episode" hidden="YES" enabled="NO" indentationLevel="1" id="tL9-L5-eca">
+                <menuItem title="Episode" hidden="YES" enabled="NO" identifier="episode" indentationLevel="1" id="tL9-L5-eca">
                     <modifierMask key="keyEquivalentModifierMask"/>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" hidden="YES" id="ZEo-hm-rcH">
@@ -213,7 +213,7 @@
                 </menuItem>
                 <menuItem title="Update/Correct" hidden="YES" id="xQ0-Wd-k7I">
                     <modifierMask key="keyEquivalentModifierMask"/>
-                    <menu key="submenu" title="Update/Correct" id="tvQ-no-ADg">
+                    <menu key="submenu" title="Update/Correct" autoenablesItems="NO" identifier="updatecorrect" id="tvQ-no-ADg">
                         <items>
                             <menuItem title="Update Status…" id="jLZ-Sk-Bfm">
                                 <modifierMask key="keyEquivalentModifierMask"/>
@@ -232,7 +232,7 @@
                 </menuItem>
                 <menuItem title="Share" hidden="YES" id="4x0-G3-pYv">
                     <modifierMask key="keyEquivalentModifierMask"/>
-                    <menu key="submenu" title="Share" id="ltR-rE-E7c">
+                    <menu key="submenu" title="Share" identifier="share" id="ltR-rE-E7c">
                         <items>
                             <menuItem state="on" image="NSShareTemplate" hidden="YES" id="mLn-eT-r6O"/>
                         </items>
@@ -400,8 +400,8 @@
                                         <rect key="frame" x="154" y="0.0" width="286" height="190"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                         <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="ypk-hd-jNn">
-                                            <rect key="frame" x="1" y="1" width="284" height="188"/>
-                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <rect key="frame" x="1" y="1" width="269" height="188"/>
+                                            <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <textView editable="NO" importsGraphics="NO" verticallyResizable="YES" findStyle="panel" continuousSpellChecking="YES" allowsNonContiguousLayout="YES" quoteSubstitution="YES" dashSubstitution="YES" smartInsertDelete="YES" id="bGm-dl-hOF">
                                                     <rect key="frame" x="0.0" y="0.0" width="269" height="188"/>
