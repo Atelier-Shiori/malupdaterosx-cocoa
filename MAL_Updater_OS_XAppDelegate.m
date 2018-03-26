@@ -521,8 +521,6 @@
 - (void)disableUpdateItems{
     // Disables update options to prevent erorrs
     panelactive = true;
-    statusMenu.autoenablesItems = NO;
-    updatecorrect.autoenablesItems = NO;
     updatenow.enabled = NO;
     togglescrobbler.enabled = NO;
     updatedcorrecttitle.enabled = NO;
@@ -542,9 +540,7 @@
     }
     if (!confirmupdate.hidden && !MALEngine.LastScrobbledTitleNew) {
         updatedupdatestatus.enabled = YES;
-        updatecorrect.autoenablesItems = YES;
     }
-    statusMenu.autoenablesItems = YES;
     confirmupdate.enabled = YES;
     findtitle.enabled = YES;
     openstream.enabled = YES;
@@ -561,7 +557,6 @@
 }
 - (void)toggleScrobblingUIEnable:(BOOL)enable{
     dispatch_async(dispatch_get_main_queue(), ^{
-        statusMenu.autoenablesItems = enable;
         updatenow.enabled = enable;
         togglescrobbler.enabled = enable;
         confirmupdate.enabled = enable;
@@ -577,9 +572,19 @@
     });
 }
 - (void)EnableStatusUpdating:(BOOL)enable{
-    updatecorrect.autoenablesItems = enable;
     updatetoolbaritem.enabled = enable;
     updatedupdatestatus.enabled = enable;
+}
+- (void)disableallstatusitems:(bool)enable {
+    self.statusMenu.autoenablesItems = NO;
+    for (NSMenuItem *item in statusMenu.itemArray) {
+        if ([item.identifier isEqualToString:@"lastscrobbled"] || [item.identifier isEqualToString:@"showtitle"] || [item.identifier isEqualToString:@"episode"] || [item.identifier isEqualToString:@"updatecorrect"] || [item.identifier isEqualToString:@"share"]) {
+            continue;
+        }
+        if (!item.hidden) {
+            item.enabled = !enable;
+        }
+    }
 }
 - (void)performsendupdatenotification:(int)status{
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -687,25 +692,29 @@
             
             // Show hidden menus
             [self unhideMenus];
-            
         }
+        // Enable Menu Items
+        scrobbleractive = false;
         if (status == 51) {
             //Show option to find title
             findtitle.hidden = NO;
             if (((NSNumber *)[[NSUserDefaults standardUserDefaults] valueForKey:@"showcorrection"]).boolValue) {
+                updatenow.title = @"Update Now";
                 [self showCorrectionSearchWindow:self];
             }
+            else {
+                 [self toggleScrobblingUIEnable:true];
+            }
         }
-        // Enable Menu Items
-        scrobbleractive = false;
-        [self toggleScrobblingUIEnable:true];
+        else {
+            [self toggleScrobblingUIEnable:true];
+        }
     });
 }
 
 - (void)resetUI {
     // Resets the UI when the user logs out
     [_shareMenu resetShareMenu];
-    updatecorrect.autoenablesItems = NO;
     [self EnableStatusUpdating:NO];
     sharetoolbaritem.enabled = NO;
     correcttoolbaritem.enabled = NO;
@@ -901,21 +910,22 @@
         //Get last scrobbled title
         fsdialog.searchquery = MALEngine.LastScrobbledTitle;
     }
-    __block bool wasVisible = self.window.isVisible;
-    if (!self.window.isVisible) {
-        [self.window makeKeyAndOrderFront:self];
-        [NSApp activateIgnoringOtherApps:YES];
+    if (self.window.isVisible) {
+        [self.window beginSheet:fsdialog.window completionHandler:^(NSModalResponse returnCode) {
+            [self correctionDidEnd:returnCode];
+        }];
     }
-    [self.window beginSheet:fsdialog.window completionHandler:^(NSModalResponse returnCode) {
-        if (!wasVisible) {
-            [self.window close];
-        }
-        [self correctionDidEnd:returnCode];
-    }];
+    else {
+        [fsdialog showWindowAsModal:^(long returnCode) {
+            [self correctionDidEnd:returnCode];
+        }];
+    }
+    [self disableallstatusitems:true];
     [self disableUpdateItems];
 }
 
 - (void)correctionDidEnd:(long)returnCode{
+    [self disableallstatusitems:false];
     if (returnCode == NSModalResponseOK) {
         if ([fsdialog.selectedaniid isEqualToString:MALEngine.AniID]) {
             NSLog(@"ID matches, correction not needed.");
@@ -1043,19 +1053,16 @@
 }
 - (void)updateLastScrobbledTitleStatus:(BOOL)pending{
     if (pending) {
-        updatecorrect.autoenablesItems = NO;
         lastupdateheader.title = @"Pending:";
         [self setLastScrobbledTitle:[NSString stringWithFormat:@"Pending: %@ - Episode %@ playing from %@",MALEngine.LastScrobbledTitle,MALEngine.LastScrobbledEpisode, MALEngine.LastScrobbledSource]];
         [self setStatusToolTip:[NSString stringWithFormat:@"MAL Updater OS X - %@ - %@ (Pending)",MALEngine.LastScrobbledActualTitle,MALEngine.LastScrobbledEpisode]];
     }
     else if (!MALEngine.online) {
-        updatecorrect.autoenablesItems = NO;
         lastupdateheader.title = @"Queued:";
         [self setLastScrobbledTitle:[NSString stringWithFormat:@"Queued: %@ - Episode %@ playing from %@",MALEngine.LastScrobbledTitle,MALEngine.LastScrobbledEpisode, MALEngine.LastScrobbledSource]];
         [self setStatusToolTip:[NSString stringWithFormat:@"MAL Updater OS X - %@ - %@ (Queued)",MALEngine.LastScrobbledActualTitle,MALEngine.LastScrobbledEpisode]];
     }
     else {
-        updatecorrect.autoenablesItems = NO;
         lastupdateheader.title = @"Last Scrobbled:";
         [self setLastScrobbledTitle:[NSString stringWithFormat:@"Last Scrobbled: %@ - Episode %@ playing from %@",MALEngine.LastScrobbledTitle,MALEngine.LastScrobbledEpisode, MALEngine.LastScrobbledSource]];
         [self setStatusToolTip:[NSString stringWithFormat:@"MAL Updater OS X - %@ - %@",MALEngine.LastScrobbledActualTitle,MALEngine.LastScrobbledEpisode]];
@@ -1081,8 +1088,10 @@
     };
     // Show Dialog
     [_updatewindow showUpdateDialog:w withMALEngine:MALEngine];
+    [self disableallstatusitems:true];
 }
 - (void)updateDidEnd:(long)returnCode {
+    [self disableallstatusitems:false];
     __block NSString *tmpepisode = _updatewindow.episodefield.stringValue;
     __block bool episodechanged = false;
     dispatch_queue_t queue = dispatch_get_global_queue(

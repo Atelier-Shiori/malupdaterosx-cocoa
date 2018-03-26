@@ -25,5 +25,6 @@
 - (id)init;
 - (bool)getdeleteTitleonCorrection;
 - (bool)getcorrectonce;
+- (void)showWindowAsModal:(void (^)(long returnCode))completionHandler;
 
 @end

@@ -57,7 +57,8 @@
         }];
     }
     else {
-        self.completion([NSApp runModalForWindow:self.window]);
+        [NSApp activateIgnoringOtherApps:YES];
+        [self.window makeKeyAndOrderFront:self];
     }
 }
 
@@ -66,7 +67,7 @@
         [self.window.sheetParent endSheet:self.window returnCode:NSModalResponseCancel];
     }
     else {
-        [NSApp stopModalWithCode:NSModalResponseCancel];
+        _completion(NSModalResponseCancel);
     }
     [self.window close];
 }
@@ -88,7 +89,7 @@
         [self.window.sheetParent endSheet:self.window returnCode:NSModalResponseOK];
     }
     else {
-        [NSApp stopModalWithCode:NSModalResponseOK];
+        _completion(NSModalResponseOK);
     }
     [self.window close];
 }
