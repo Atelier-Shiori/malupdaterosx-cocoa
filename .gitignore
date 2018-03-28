@@ -12,3 +12,4 @@ MAL Updater OS X.xcodeproj/xcuserdata/takanashirikka.xcuserdatad/xcdebugger/Brea
 Frameworks/TorrentBrowser.framework.dSYM/**
 Frameworks/TorrentBrowser.framework
 Frameworks/TorrentBrowser.framework/**
+ClientConstants.m
