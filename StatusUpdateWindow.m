@@ -68,8 +68,8 @@
     }
     else {
         _completion(NSModalResponseCancel);
+        [self.window close];
     }
-    [self.window close];
 }
 
 - (IBAction)updatetitlestatus:(id)sender {
@@ -77,7 +77,7 @@
         NSBeep();
         return;
     }
-    else if (_episodefield.intValue > _epiformatter.maximum.intValue || _episodefield.intValue < 0) {
+    else if (_episodefield.intValue < _epiformatter.maximum.intValue || _episodefield.intValue < 0) {
         NSBeep();
         _episodefield.intValue = _currentwatchedepisode;
         return;
@@ -90,8 +90,8 @@
     }
     else {
         _completion(NSModalResponseOK);
+        [self.window close];
     }
-    [self.window close];
 }
 
 - (void)updateDidEnd:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo {
