@@ -993,7 +993,6 @@
             }
         }
     }
-    fsdialog = nil;
     [self enableUpdateItems];
     //Restart Timer
     if (scrobbling == TRUE) {
