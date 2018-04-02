@@ -70,7 +70,9 @@
             // Exists, don't do anything
             return;
         }
-        fsdialog = [FixSearchDialog new];
+        if (!fsdialog) {
+            fsdialog = [FixSearchDialog new];
+        }
         [fsdialog setCorrection:false];
         fsdialog.searchquery = detectedtitle;
         [self.view.window beginSheet:fsdialog.window completionHandler:^(NSModalResponse returnCode) {
