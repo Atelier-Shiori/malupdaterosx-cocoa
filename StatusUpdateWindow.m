@@ -90,10 +90,7 @@
     }
     else {
         _completion(NSModalResponseOK);
-<<<<<<< HEAD
-=======
         [self.window close];
->>>>>>> 4415445bd18cadf711fc39c1c4c79c51bef5950d
     }
 }
 
