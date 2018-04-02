@@ -973,6 +973,7 @@
                         [self unhideMenus];
                         sharetoolbaritem.enabled = YES;
                         correcttoolbaritem.enabled = YES;
+                        updatetoolbaritem.enabled = YES;
                         openAnimePage.enabled = YES;
                         shareMenuItem.hidden = NO;
                     }
