@@ -92,7 +92,6 @@
     }
     // Refetch Exceptions Data
     [arraycontroller fetch:self];
-    fsdialog = nil;
     detectedtitle = nil;
 }
 - (IBAction)removeSlection:(id)sender{
