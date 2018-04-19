@@ -3,7 +3,7 @@
 //  MAL Updater OS X
 //
 //  Created by アナスタシア on 2015/11/26.
-//  Copyright 2009-2016 Atelier Shiori. All rights reserved. Code licensed under New BSD License
+//  Copyright 2009-2016 MAL Updater OS X Group. All rights reserved. Code licensed under New BSD License
 //
 
 #import "MyAnimeList+Keychain.h"

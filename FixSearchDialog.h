@@ -3,7 +3,7 @@
 //  MAL Updater OS X
 //
 //  Created by 高町なのは on 2014/11/15.
-//  Copyright (c) 2014年 Atelier Shiori. All rights reserved.
+//  Copyright (c) 2014年 MAL Updater OS X Group. All rights reserved.
 //
 
 #import <Cocoa/Cocoa.h>
