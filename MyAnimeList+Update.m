@@ -3,7 +3,7 @@
 //  MAL Updater OS X
 //
 //  Created by 高町なのは on 2015/02/11.
-//  Copyright 2009-2015 Atelier Shiori. All rights reserved. Code licensed under New BSD License
+//  Copyright 2009-2015 MAL Updater OS X Group. All rights reserved. Code licensed under New BSD License
 //
 
 #import "MyAnimeList+Update.h"
