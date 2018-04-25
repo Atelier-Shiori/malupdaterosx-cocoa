@@ -211,6 +211,16 @@
 		F89B2105206C51740028FCB1 /* AFNetworking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F89B2103206C51730028FCB1 /* AFNetworking.framework */; };
 		F8AF4832202A573200D559A3 /* TorrentBrowser.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8D07F46202A43910008F4E0 /* TorrentBrowser.framework */; };
 		F8AF4833202A573200D559A3 /* TorrentBrowser.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = F8D07F46202A43910008F4E0 /* TorrentBrowser.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F8C32D4920911A3400EAEC70 /* PKCEGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = F8C32D4820911A3400EAEC70 /* PKCEGenerator.m */; };
+		F8C32D4A20911A3400EAEC70 /* PKCEGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = F8C32D4820911A3400EAEC70 /* PKCEGenerator.m */; };
+		F8C32D4B20911DFB00EAEC70 /* AFNetworking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F89B2103206C51730028FCB1 /* AFNetworking.framework */; };
+		F8C32D4C20911DFB00EAEC70 /* AFNetworking.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = F89B2103206C51730028FCB1 /* AFNetworking.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F8C32D5020911F1800EAEC70 /* AuthWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = F8C32D4D20911F1600EAEC70 /* AuthWindow.xib */; };
+		F8C32D5120911F1800EAEC70 /* AuthWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = F8C32D4D20911F1600EAEC70 /* AuthWindow.xib */; };
+		F8C32D5220911F1800EAEC70 /* AuthWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = F8C32D4F20911F1700EAEC70 /* AuthWindow.m */; };
+		F8C32D5320911F1800EAEC70 /* AuthWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = F8C32D4F20911F1700EAEC70 /* AuthWindow.m */; };
+		F8C32D5620911F4400EAEC70 /* AuthWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = F8C32D5420911F4400EAEC70 /* AuthWebView.m */; };
+		F8C32D5720911F4400EAEC70 /* AuthWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = F8C32D5420911F4400EAEC70 /* AuthWebView.m */; };
 		F8D07F47202A43910008F4E0 /* TorrentBrowser.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8D07F46202A43910008F4E0 /* TorrentBrowser.framework */; };
 		F8E2188320222424002E9F70 /* DiscordRPC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F842BB3F202214A800A7A0A4 /* DiscordRPC.framework */; };
 		F8E2188420222424002E9F70 /* DiscordRPC.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = F842BB3F202214A800A7A0A4 /* DiscordRPC.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -271,6 +281,7 @@
 				91A609F51EA3E77C00EF40AB /* CocoaOniguruma.framework in CopyFiles */,
 				2D6522711F7B50CD00A65BF8 /* GBPing.framework in CopyFiles */,
 				916D042B20190AF6001F7E10 /* TwitterManagerKit.framework in CopyFiles */,
+				F8C32D4C20911DFB00EAEC70 /* AFNetworking.framework in CopyFiles */,
 				2D6313731EDA293B00C3CB6B /* Reachability.framework in CopyFiles */,
 				59D503791CB004BA0002532D /* Sparkle.framework in CopyFiles */,
 				2D3CBE4C1F1532A20085888D /* SAMKeychain.framework in CopyFiles */,
@@ -529,6 +540,13 @@
 		F89B20F4206C4FA70028FCB1 /* ClientConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ClientConstants.h; sourceTree = "<group>"; };
 		F89B20F5206C4FA70028FCB1 /* ClientConstants.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ClientConstants.m; sourceTree = "<group>"; };
 		F89B2103206C51730028FCB1 /* AFNetworking.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AFNetworking.framework; path = Frameworks/AFNetworking.framework; sourceTree = "<group>"; };
+		F8C32D4720911A3400EAEC70 /* PKCEGenerator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PKCEGenerator.h; sourceTree = "<group>"; };
+		F8C32D4820911A3400EAEC70 /* PKCEGenerator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PKCEGenerator.m; sourceTree = "<group>"; };
+		F8C32D4D20911F1600EAEC70 /* AuthWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AuthWindow.xib; sourceTree = "<group>"; };
+		F8C32D4E20911F1700EAEC70 /* AuthWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AuthWindow.h; sourceTree = "<group>"; };
+		F8C32D4F20911F1700EAEC70 /* AuthWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AuthWindow.m; sourceTree = "<group>"; };
+		F8C32D5420911F4400EAEC70 /* AuthWebView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AuthWebView.m; sourceTree = "<group>"; };
+		F8C32D5520911F4400EAEC70 /* AuthWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AuthWebView.h; sourceTree = "<group>"; };
 		F8D07F46202A43910008F4E0 /* TorrentBrowser.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TorrentBrowser.framework; path = Frameworks/TorrentBrowser.framework; sourceTree = "<group>"; };
 		F8D07F48202A43D60008F4E0 /* MAL_Updater_OS_X_DataModel 6.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "MAL_Updater_OS_X_DataModel 6.xcdatamodel"; sourceTree = "<group>"; };
 		F8E2188520222AB7002E9F70 /* MyAnimeList+Discord.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MyAnimeList+Discord.h"; sourceTree = "<group>"; };
@@ -585,6 +603,7 @@
 				8227C1171A1D8D34005F3301 /* anitomy-osx.framework in Frameworks */,
 				59D503781CB004B10002532D /* Sparkle.framework in Frameworks */,
 				9161B2021E90246200FBF52F /* Crashlytics.framework in Frameworks */,
+				F8C32D4B20911DFB00EAEC70 /* AFNetworking.framework in Frameworks */,
 				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
 				916D042820190AEA001F7E10 /* TwitterManagerKit.framework in Frameworks */,
 				2D6522721F7B50CD00A65BF8 /* PingNotifier.framework in Frameworks */,
@@ -641,6 +660,8 @@
 				916D042F20190B8E001F7E10 /* MyAnimeList+Twitter.m */,
 				3AFEF127120DF8CE0098B59D /* MyAnimeList.h */,
 				3AFEF128120DF8CE0098B59D /* MyAnimeList.m */,
+				F8C32D4720911A3400EAEC70 /* PKCEGenerator.h */,
+				F8C32D4820911A3400EAEC70 /* PKCEGenerator.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -812,6 +833,11 @@
 		5C07DA621A8156210003A827 /* Window Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				F8C32D4E20911F1700EAEC70 /* AuthWindow.h */,
+				F8C32D4F20911F1700EAEC70 /* AuthWindow.m */,
+				F8C32D4D20911F1600EAEC70 /* AuthWindow.xib */,
+				F8C32D5520911F4400EAEC70 /* AuthWebView.h */,
+				F8C32D5420911F4400EAEC70 /* AuthWebView.m */,
 				2D36F0E21F153F3B00CAC1F5 /* About */,
 				2D3CBE461F1531DF0085888D /* PlexLogin.h */,
 				2D3CBE471F1531DF0085888D /* PlexLogin.m */,
@@ -1210,6 +1236,7 @@
 				2D17D2362001ACAD00769195 /* AdvancedPrefController.xib in Resources */,
 				2D17D2372001ACAD00769195 /* HotkeysPrefs.xib in Resources */,
 				2D17D2382001ACAD00769195 /* rules.png in Resources */,
+				F8C32D5120911F1800EAEC70 /* AuthWindow.xib in Resources */,
 				2D17D2392001ACAD00769195 /* PFAboutWindow.xib in Resources */,
 				2D17D23A2001ACAD00769195 /* HistoryWindow.xib in Resources */,
 				2D17D23B2001ACAD00769195 /* OfflineViewQueue.xib in Resources */,
@@ -1242,6 +1269,7 @@
 				2D36F0E81F153FED00CAC1F5 /* PFAboutWindow.xib in Resources */,
 				5C07DA751A815F580003A827 /* HistoryWindow.xib in Resources */,
 				2DAFC1DC1E23143100FB7A14 /* OfflineViewQueue.xib in Resources */,
+				F8C32D5020911F1800EAEC70 /* AuthWindow.xib in Resources */,
 				1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */,
 				6F27071E1A69905D0020913A /* FixSearchDialog.xib in Resources */,
 				2D4A4D0B1EE4B01D004D3716 /* StatusUpdateWindow.xib in Resources */,
@@ -1324,6 +1352,7 @@
 				2D17D2492001ACAD00769195 /* NSBundle+LoginItem.m in Sources */,
 				2D17D24A2001ACAD00769195 /* Utility.m in Sources */,
 				2D17D24B2001ACAD00769195 /* MAL_Updater_OS_XAppDelegate.m in Sources */,
+				F8C32D5320911F1800EAEC70 /* AuthWindow.m in Sources */,
 				2D17D24C2001ACAD00769195 /* HotKeyConstants.m in Sources */,
 				2D17D24D2001ACAD00769195 /* MyAnimeList.m in Sources */,
 				2D17D24E2001ACAD00769195 /* Base64Category.m in Sources */,
@@ -1347,6 +1376,8 @@
 				2D17D25D2001ACAD00769195 /* OfflineViewQueue.m in Sources */,
 				2D17D25E2001ACAD00769195 /* PFMoveApplication.m in Sources */,
 				2D17D25F2001ACAD00769195 /* FixSearchDialog.m in Sources */,
+				F8C32D4A20911A3400EAEC70 /* PKCEGenerator.m in Sources */,
+				F8C32D5720911F4400EAEC70 /* AuthWebView.m in Sources */,
 				2D17D2602001ACAD00769195 /* PFAboutWindowController.m in Sources */,
 				2D17D2612001ACAD00769195 /* PlexPrefs.m in Sources */,
 				2D17D2622001ACAD00769195 /* GeneralPrefController.m in Sources */,
@@ -1377,6 +1408,7 @@
 				916D043020190B8E001F7E10 /* MyAnimeList+Twitter.m in Sources */,
 				3A6AB37F120F313E00D51D2C /* Base64Category.m in Sources */,
 				2D226B291EF30DFB0030E9C5 /* ShareMenu.m in Sources */,
+				F8C32D5220911F1800EAEC70 /* AuthWindow.m in Sources */,
 				6F12909B1A7D833100B8C3E6 /* AutoExceptions.m in Sources */,
 				2DDBB73D1E1D52100075B0D0 /* DonationWindowController.m in Sources */,
 				2DC900361E257C3300E45570 /* InttoStatus.m in Sources */,
@@ -1385,6 +1417,7 @@
 				6F5F6C701A71696D006D4607 /* MAL_Updater_OS_X_DataModel.xcdatamodeld in Sources */,
 				5967C9341C95AD51005FCBC7 /* string_score.c in Sources */,
 				5C881EFB19F462B400E20425 /* NSString_stripHtml.m in Sources */,
+				F8C32D4920911A3400EAEC70 /* PKCEGenerator.m in Sources */,
 				829727981A8BB14E004F73AB /* MyAnimeList+Update.m in Sources */,
 				59D99C071CBEDB0000762EA5 /* MyAnimeList+HummingbirdSearch.m in Sources */,
 				5C07DA671A8156420003A827 /* HistoryWindow.m in Sources */,
@@ -1396,6 +1429,7 @@
 				3A2DCCB61210B3BF00C920F1 /* PFMoveApplication.m in Sources */,
 				822AEB891A202931003DD682 /* FixSearchDialog.m in Sources */,
 				2D36F0E51F153F5C00CAC1F5 /* PFAboutWindowController.m in Sources */,
+				F8C32D5620911F4400EAEC70 /* AuthWebView.m in Sources */,
 				2D3CBE451F1531D40085888D /* PlexPrefs.m in Sources */,
 				5CD36BBA19F2ED88007BB6B6 /* GeneralPrefController.m in Sources */,
 				6FAA0C1F1A7E938400416079 /* ExceptionsCache.m in Sources */,

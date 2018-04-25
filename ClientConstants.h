@@ -9,4 +9,5 @@
 
 @interface ClientConstants : NSObject
 FOUNDATION_EXPORT NSString *const kMALClientID;
+FOUNDATION_EXPORT NSString *const kMALClientSecret;
 @end

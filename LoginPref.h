@@ -11,6 +11,8 @@
 #import "MAL_Updater_OS_XAppDelegate.h"
 #import "MyAnimeList+Keychain.h"
 
+@class AuthWindow;
+
 @interface LoginPref : NSViewController <MASPreferencesViewController>
 @property (strong) IBOutlet NSImageView *logo;
 //Login Preferences
@@ -23,10 +25,11 @@
 @property (strong) MyAnimeList *MALEngine;
 @property (strong) IBOutlet NSView *loginview;
 @property (strong) IBOutlet NSView *loggedinview;
+@property (strong) AuthWindow *authw;
 - (id)initwithAppDelegate:(MAL_Updater_OS_XAppDelegate *)adelegate;
 - (IBAction)startlogin:(id)sender;
 - (IBAction)clearlogin:(id)sender;
 - (IBAction)registermal:(id)sender;
-- (void)login:(NSString *)username password:(NSString *)password;
+- (void)login:(NSString *)pin withChallenge:(NSString *)challenge;
 - (void)loadlogin;
 @end

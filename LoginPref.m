@@ -9,9 +9,11 @@
 #import "LoginPref.h"
 #import "Base64Category.h"
 #import "MAL_Updater_OS_XAppDelegate.h"
-#import <EasyNSURLConnection/EasyNSURLConnection.h>
+#import <AFNetworking/AFNetworking.h>
+#import "AuthWindow.h"
 #import "Utility.h"
-
+#import "ClientConstants.h"
+#import "PKCEGenerator.h"
 
 @implementation LoginPref
 @synthesize logo;
@@ -81,40 +83,43 @@
     }
 }
 
-- (IBAction)startlogin:(id)sender
-{
-    {
-        //Start Login Process
-        //Disable Login Button
-        [savebut setEnabled: NO];
-        [savebut displayIfNeeded];
-        if ( fieldusername.stringValue.length == 0) {
-            //No Username Entered! Show error message
-            [Utility showsheetmessage:@"MAL Updater OS X was unable to log you in since you didn't enter a username" explaination:@"Enter a valid username and try logging in again" window:self.view.window];
-            [savebut setEnabled: YES];
+- (IBAction)authorize:(id)sender {
+    if (!_authw) {
+        _authw = [AuthWindow new];
+    }
+    else {
+        [_authw.window makeKeyAndOrderFront:self];
+        [_authw loadAuthorization];
+        [_authw close];
+    }
+    savebut.enabled = NO;
+    [self.view.window beginSheet:_authw.window completionHandler:^(NSModalResponse returnCode) {
+        if (returnCode == NSModalResponseOK) {
+            NSString *pin = _authw.pin.copy;
+            _authw.pin = nil;
+            [self login:pin withChallenge:_authw.challenge];
         }
         else {
-            if ( fieldpassword.stringValue.length == 0 ) {
-                //No Password Entered! Show error message.
-                [Utility showsheetmessage:@"MAL Updater OS X was unable to log you in since you didn't enter a password" explaination:@"Enter a valid password and try logging in again." window:self.view.window];
-                [savebut setEnabled: YES];
-            }
-            else {
-                [savebut setEnabled:NO];
-                NSString *username = fieldusername.stringValue;
-                NSString *password = fieldpassword.stringValue;
-                dispatch_queue_t queue = dispatch_get_global_queue(
-                                                                   DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-                
-                dispatch_async(queue, ^{
-                    [self login:username password:password];
-                });
-                }
+            savebut.enabled = YES;
         }
-    }
+    }];
 }
 
-- (void)login:(NSString *)username password:(NSString *)password{
+- (void)login:(NSString *)pin withChallenge:(NSString *)challenge {
+    AFOAuth2Manager *OAuth2Manager =
+    [[AFOAuth2Manager alloc] initWithBaseURL:[NSURL URLWithString:@"https://myanimelist.net/"]
+                                    clientID:kMALClientID
+                                      secret:kMALClientSecret];
+    OAuth2Manager.useHTTPBasicAuthentication = NO;
+    NSDictionary *parameters = @{@"grant_type" : @"authorization_code", @"code" : pin, @"code_verifier" : challenge};
+    NSLog(@"%@", parameters);
+    [OAuth2Manager authenticateUsingOAuthWithURLString:@"/v1/oauth2/token" parameters:parameters success:^(AFOAuthCredential * _Nonnull credential) {
+        NSLog(@"Token: %@", credential.accessToken);
+    } failure:^(NSError * _Nonnull error) {
+        NSLog(@"Error: %@", error);
+
+    }];
+    /*
     //Set Login URL
     NSURL *url = [NSURL URLWithString:@"https://myanimelist.net/api/account/verify_credentials.xml"];
     EasyNSURLConnection *request = [[EasyNSURLConnection alloc] initWithURL:url];
@@ -154,7 +159,7 @@
             }
         }
         [savebut setEnabled:YES];
-    });
+    }); */
 }
 
 - (IBAction)registermal:(id)sender
