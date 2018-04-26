@@ -8,7 +8,6 @@
 
 #import "MyAnimeList+Search.h"
 #import "MyAnimeList+Keychain.h"
-#import <EasyNSURLConnection/EasyNSURLConnection.h>
 #import "Utility.h"
 #import "ExceptionsCache.h"
 #import "Recognition.h"
@@ -43,28 +42,22 @@
 }
 - (NSString *)performSearch:(NSString *)searchtitle{
     NSLog(@"Searching For Title");
-    //Escape Search Term
+    // Escape Search Term
     NSString *searchterm = [Utility urlEncodeString:searchtitle];
-    
-    //Set Search API
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://api.myanimelist.net/v2/anime?q=%@&limit=25&fields=id,title,main_picture,alternative_titles,start_date,end_date,synopsis,media_type,status,num_episodes", searchterm]];
-    EasyNSURLConnection *request = [[EasyNSURLConnection alloc] initWithURL:url];
-    [Utility setUserAgent:request];
-    //Set Token
-    request.headers = (NSMutableDictionary *)@{@"Authorization": [NSString stringWithFormat:@"Bearer %@", [self retrieveCredentials].accessToken]};
-    //Ignore Cookies
-    [request setUseCookies:NO];
-    //Perform Search
-    [request startRequest];
-    
+    // Set token
+    [self.syncmanager.requestSerializer setValue:[NSString stringWithFormat:@"Bearer %@", [self retrieveCredentials].accessToken] forHTTPHeaderField:@"Authorization"];
+    // Perform search
+    NSURLSessionDataTask *task;
+    NSError *error;
+    id responseObject = [self.syncmanager syncGET:[NSString stringWithFormat:@"https://api.myanimelist.net/v2/anime?q=%@&limit=25&fields=id,title,main_picture,alternative_titles,start_date,end_date,synopsis,media_type,status,num_episodes", searchterm] parameters:nil task:&task error:&error];
     // Get Status Code
-    long statusCode = [request getStatusCode];
+    long statusCode = ((NSHTTPURLResponse *)task.response).statusCode;
     switch (statusCode) {
         case 0:
             self.Success = NO;
             return @"";
         case 200:
-            return [self findaniid:[request getResponseDataJsonParsed] searchterm:searchtitle];
+            return [self findaniid:responseObject searchterm:searchtitle];
         default:
             self.Success = NO;
             return @"";

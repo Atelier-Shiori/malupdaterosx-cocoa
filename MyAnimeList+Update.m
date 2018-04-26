@@ -17,24 +17,20 @@
 - (BOOL)checkstatus:(NSString *)titleid {
     NSLog(@"Checking Status");
     //Set Search API
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://api.myanimelist.net/v2/anime/%@", titleid]];
-    EasyNSURLConnection *request = [[EasyNSURLConnection alloc] initWithURL:url];
-    [Utility setUserAgent:request];
-    //Ignore Cookies
-    [request setUseCookies:NO];
     //Set Token
-    request.headers = (NSMutableDictionary *)@{@"Authorization": [NSString stringWithFormat:@"Bearer %@", [self retrieveCredentials].accessToken]};
-    //Perform Search
-    [request startRequest];
+    [self.syncmanager.requestSerializer setValue:[NSString stringWithFormat:@"Bearer %@", [self retrieveCredentials].accessToken] forHTTPHeaderField:@"Authorization"];
+    //Perform status check
+    NSURLSessionDataTask *task;
+    NSError *error;
+    id responseObject = [self.syncmanager syncGET:[NSString stringWithFormat:@"https://api.myanimelist.net/v2/anime/%@", titleid] parameters:nil task:&task error:&error];
     // Get Status Code
-    long statusCode = [request getStatusCode];
-    NSError *error = request.error; // Error Detection
+    long statusCode = ((NSHTTPURLResponse *)task.response).statusCode;
     if (statusCode == 200 ) {
         if (self.DetectedEpisode.length == 0) { // Check if there is a DetectedEpisode (needed for checking
             // Set detected episode to 1
             self.DetectedEpisode = @"1";
         }
-        NSDictionary *animeinfo = [request.response getResponseDataJsonParsed];
+        NSDictionary *animeinfo = responseObject;
         self.TotalEpisodes = animeinfo[@"num_episodes"] == [NSNull null] ? 0 : ((NSNumber *)animeinfo[@"num_episodes"]).intValue;
         // Set air status
         self.airing = ((animeinfo[@"start_date"] != [NSNull null] && animeinfo[@"end_date"] == [NSNull null]) || [(NSString *)animeinfo[@"status"] isEqualToString:@"currently_airing"]);
@@ -125,13 +121,11 @@
     return [self performupdate:titleid isAdding:YES];
 }
 - (int)performupdate:(NSString *)titleid isAdding:(bool)isadding {
-    // Update the title
-    //Set library/scrobble API
-
     //Set Token
     [self.syncmanager.requestSerializer setValue:[NSString stringWithFormat:@"Bearer %@", [self retrieveCredentials].accessToken] forHTTPHeaderField:@"Authorization"];
     NSMutableDictionary *parameters = [NSMutableDictionary new];
-    parameters[@"num_episodes_watched"] = @(self.DetectedEpisode.intValue);
+    parameters[@"num_watched_episodes"] = @(self.DetectedEpisode.intValue);
+    //parameters[@"num_episodes_watched"] = @(self.DetectedEpisode.intValue);
     /*
     if (([self.WatchStatus isEqualToString:@"plan_to_watch"] && self.DetectedCurrentEpisode == 0) || isadding) {
         // Set the start date if the title's watch status is Plan to Watch and the watched episodes is zero
@@ -188,22 +182,14 @@
 }
 - (bool)removetitle:(NSString *)titleid{
     NSLog(@"Removing %@", titleid);
-    //Set up Delegate
-    
-    // Update the title
-    //Set library/scrobble API
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://api.myanimelist.net/v2/anime/%@/my_list_status", titleid]];
-    EasyNSURLConnection *request = [[EasyNSURLConnection alloc] initWithURL:url];
-    [Utility setUserAgent:request];
-    //Ignore Cookies
-    [request setUseCookies:NO];
+    //Remove title
     //Set Token
-    request.headers = (NSMutableDictionary *)@{@"Authorization": [NSString stringWithFormat:@"Bearer %@", [self retrieveCredentials].accessToken]};
-    //Set method to Delete
-    request.postmethod = @"DELETE";
+    [self.syncmanager.requestSerializer setValue:[NSString stringWithFormat:@"Bearer %@", [self retrieveCredentials].accessToken] forHTTPHeaderField:@"Authorization"];
     // Do Update
-    [request startFormRequest];
-    switch ([request getStatusCode]) {
+    NSURLSessionDataTask *task;
+    NSError *error;
+    id responseObject = [self.syncmanager syncDELETE:[NSString stringWithFormat:@"https://api.myanimelist.net/v2/anime/%@/my_list_status", titleid] parameters:nil task:&task error:&error];
+    switch (((NSHTTPURLResponse *)task.response).statusCode) {
         case 200:
         case 201:
             return true;
@@ -233,13 +219,12 @@
         return;
     }
     // Update the title
-    //Set library/scrobble API
-    EasyNSURLConnection *request = [[EasyNSURLConnection alloc] init];
-    [Utility setUserAgent:request];
-    //Ignore Cookies
-    [request setUseCookies:NO];
+    //Set Token
+    [self.asyncmanager.requestSerializer setValue:[NSString stringWithFormat:@"Bearer %@", [self retrieveCredentials].accessToken] forHTTPHeaderField:@"Authorization"];
+    //NSDictionary *parameters = @{@"num_episodes_watched" : @(episode.intValue), @"status" : [showwatchstatus.lowercaseString stringByReplacingOccurrencesOfString:@" " withString:@"_"], @"score" : @(showscore)};
+    NSDictionary *parameters = @{@"num_watched_episodes" : @(episode.intValue), @"status" : [showwatchstatus.lowercaseString stringByReplacingOccurrencesOfString:@" " withString:@"_"], @"score" : @(showscore)};
     // Set up request and do update
-    [request PUT:[NSString stringWithFormat:@"%@/2.1/animelist/anime/%@/my_list_status", self.MALApiUrl, titleid] parameters:@{@"num_episodes_watched" : episode, @"status" : [showwatchstatus.lowercaseString stringByReplacingOccurrencesOfString:@" " withString:@"_"], @"score" : @(showscore)} headers:@{@"Authorization": [NSString stringWithFormat:@"Bearer %@", [self retrieveCredentials].accessToken]} completion:^(EasyNSURLResponse *response) {
+    [self.asyncmanager PUT:[NSString stringWithFormat:@"%@/2.1/animelist/anime/%@/my_list_status", self.MALApiUrl, titleid] parameters:parameters success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         self.TitleScore = showscore;
         self.WatchStatus = showwatchstatus;
         self.LastScrobbledEpisode = episode;
@@ -248,31 +233,9 @@
         // Post tweet
         [self postupdatestatustweet];
         completionHandler(true);
-    } error:^(NSError *error, int statuscode) {
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         completionHandler(false);
     }];
-}
-- (bool)setStartEndDates:(NSString *)titleid {
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/2.1/animelist/anime/%@", self.MALApiUrl, titleid]];
-    EasyNSURLConnection *request = [[EasyNSURLConnection alloc] initWithURL:url];
-    [Utility setUserAgent:request];
-    [request setUseCookies:NO];
-    request.headers = (NSMutableDictionary *)@{@"Authorization": [NSString stringWithFormat:@"Bearer %@", [self retrieveCredentials].accessToken]};
-    request.postmethod = @"PUT";
-    // Set Date
-    [request addFormData:[Utility todaydatestring] forKey:@"start"];
-    if ([self.WatchStatus isEqualToString:@"completed"]) {
-        [request addFormData:[Utility todaydatestring] forKey:@"end"];
-    }
-    [request startFormRequest];
-    switch ([request getStatusCode]) {
-        case 200:
-        case 201:
-            return true;
-        default:
-            return false;
-    }
-    
 }
 - (void)storeLastScrobbled{
     self.LastScrobbledTitle = self.DetectedTitle;
