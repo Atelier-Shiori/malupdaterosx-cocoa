@@ -1,7 +1,7 @@
  [![License](https://img.shields.io/badge/license-BSD-green.svg)](http://opensource.org/licenses/BSD-3-Clause)
 
 # MAL Updater OS X 2.5
-MAL Updater OS X is an open source OS X scrobbler that automatically detects what's playing and updates the user's MyAnimeList. This release uses the official new MAL API, which removes the dependency, Atarashii-API. Note that this is in active development and is not ready for regular use.
+MAL Updater OS X is an open source OS X scrobbler that automatically detects what's playing and updates the user's MyAnimeList. This release uses the official new MAL API, which removes the dependency, Atarashii-API. 
 
 2.5 requires macOS El Capitan or later.
 
