@@ -9,6 +9,8 @@
 #import "ExceptionsPref.h"
 #import "Recognition.h"
 #import "ExceptionsCache.h"
+#import "MyAnimeList+Keychain.h"
+#import "Utility.h"
 
 @interface ExceptionsPref ()
 
@@ -52,7 +54,12 @@
     return NSLocalizedString(@"Exceptions", @"Toolbar item name for the Exceptions spreference pane");
 }
 #pragma mark Anime Exceptions List Functions
-- (IBAction)addTitle:(id)sender{
+- (IBAction)addTitle:(id)sender {
+    // Check if account exists
+    if (![MyAnimeList checkaccount]) {
+        [Utility showsheetmessage:@"Not Logged In" explaination:@"To add a rule, please add an account first. Search requires an account." window:self.view.window];
+        return;
+    }
     //Obtain Detected Title from Media File
     NSOpenPanel *op = [NSOpenPanel openPanel];
     op.allowedFileTypes = @[@"mkv", @"mp4", @"avi", @"ogm", @"rm", @"rmvb", @"wmv", @"divx", @"mov", @"flv", @"mpg", @"3gp"];

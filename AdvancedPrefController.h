@@ -12,13 +12,8 @@
 #import "MyAnimeList.h"
 
 @interface AdvancedPrefController : NSViewController <MASPreferencesViewController, NSTextFieldDelegate>
-@property (strong) IBOutlet NSTextField *APIUrl;
 @property (strong) MAL_Updater_OS_XAppDelegate* appdelegate;
 @property (strong) IBOutlet NSButton *kodicheck;
-@property (strong) IBOutlet NSButton *testapibtn;
-@property (strong) IBOutlet NSProgressIndicator *testprogressindicator;
 
 - (id)initwithAppDelegate:(MAL_Updater_OS_XAppDelegate *)adelegate;
-- (IBAction)testapi:(id)sender;
-- (IBAction)resetapiurl:(id)sender;
 @end

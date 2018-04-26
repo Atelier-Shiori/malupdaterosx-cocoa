@@ -220,17 +220,6 @@
     }
 #endif
 }
-+ (NSString *)getHostName {
-    // Gets the host name of an address
-    NSString *malapiurl = [NSUserDefaults.standardUserDefaults valueForKey:@"MALAPIURL"];
-    OnigRegexp *regex = [OnigRegexp compile:@"(http|https):\\/\\/" options:OnigOptionIgnorecase];
-    malapiurl = [malapiurl replaceByRegexp:regex with:@""];
-    regex = [OnigRegexp compile:@"\\/.+" options:OnigOptionIgnorecase];
-    malapiurl = [malapiurl replaceByRegexp:regex with:@""];
-    regex = [OnigRegexp compile:@":\\d+" options:OnigOptionIgnorecase];
-    malapiurl = [malapiurl replaceByRegexp:regex with:@""];
-    return malapiurl;
-}
 + (bool)checkBeta {
     // Check if user is using beta. If so, use the experimental Appcast branch.
     NSBundle *bundle = [NSBundle mainBundle];
@@ -242,5 +231,14 @@
         }
     }
     return false;
+}
++ (NSArray *)convertSearchArray:(NSArray *)a {
+    NSMutableArray *tmparray = [NSMutableArray new];
+    for (NSDictionary *d in a) {
+        if (d[@"node"]) {
+            [tmparray addObject:d[@"node"]];
+        }
+    }
+    return tmparray;
 }
 @end

@@ -38,6 +38,6 @@ typedef NS_ENUM(unsigned int, matchtype) {
 + (NSString *)numbertoordinal:(int)number;
 + (NSString *)todaydatestring;
 + (void)setUserAgent:(EasyNSURLConnection *)request;
-+ (NSString *)getHostName;
 + (bool)checkBeta;
++ (NSArray *)convertSearchArray:(NSArray *)a;
 @end

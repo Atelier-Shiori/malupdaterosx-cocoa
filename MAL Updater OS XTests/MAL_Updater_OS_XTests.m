@@ -63,7 +63,7 @@
 }
 
 - (void)testScrobble {
-    if ([_MALEngine checkaccount]) {
+    if ([MyAnimeList checkaccount]) {
         // Test an array of file names (Retrieve a JSON file from local drive)
         int success = 0;
         int fail = 0;

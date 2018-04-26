@@ -28,7 +28,7 @@
             <windowStyleMask key="styleMask" titled="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="712" y="522" width="455" height="377"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1177"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
             <view key="contentView" id="02G-J8-xy0">
                 <rect key="frame" x="0.0" y="0.0" width="455" height="377"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -107,14 +107,14 @@ IA
                         <rect key="frame" x="22" y="81" width="413" height="73"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <clipView key="contentView" ambiguous="YES" drawsBackground="NO" copiesOnScroll="NO" id="uXy-aN-gSK">
-                            <rect key="frame" x="0.0" y="0.0" width="398" height="73"/>
+                            <rect key="frame" x="0.0" y="0.0" width="413" height="73"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <textView ambiguous="YES" editable="NO" drawsBackground="NO" importsGraphics="NO" richText="NO" verticallyResizable="YES" usesFontPanel="YES" findStyle="panel" usesRuler="YES" allowsNonContiguousLayout="YES" quoteSubstitution="YES" dashSubstitution="YES" smartInsertDelete="YES" id="iBE-bg-nWF">
-                                    <rect key="frame" x="0.0" y="0.0" width="398" height="73"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="413" height="73"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                    <size key="minSize" width="398" height="73"/>
+                                    <size key="minSize" width="413" height="73"/>
                                     <size key="maxSize" width="463" height="10000000"/>
                                     <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                 </textView>
@@ -125,7 +125,7 @@ IA
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                         <scroller key="verticalScroller" verticalHuggingPriority="750" horizontal="NO" id="Tyl-DB-SfW">
-                            <rect key="frame" x="398" y="0.0" width="15" height="73"/>
+                            <rect key="frame" x="397" y="0.0" width="16" height="73"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                     </scrollView>
@@ -172,7 +172,7 @@ IA
                                             </textFieldCell>
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                             <connections>
-                                                <binding destination="VfW-m1-nhU" name="value" keyPath="arrangedObjects.type" id="4c6-Q0-Oe0">
+                                                <binding destination="VfW-m1-nhU" name="value" keyPath="arrangedObjects.media_type" id="OeC-0s-nDN">
                                                     <dictionary key="options">
                                                         <bool key="NSConditionallySetsEditable" value="YES"/>
                                                     </dictionary>
@@ -192,7 +192,7 @@ IA
                                             </textFieldCell>
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                             <connections>
-                                                <binding destination="VfW-m1-nhU" name="value" keyPath="arrangedObjects.episodes" id="xAV-90-DcA">
+                                                <binding destination="VfW-m1-nhU" name="value" keyPath="arrangedObjects.num_episodes" id="WHt-Ay-asD">
                                                     <dictionary key="options">
                                                         <bool key="NSConditionallySetsEditable" value="YES"/>
                                                     </dictionary>
@@ -207,11 +207,11 @@ IA
                             </subviews>
                         </clipView>
                         <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="izl-Lr-ejy">
-                            <rect key="frame" x="-7" y="8" width="0.0" height="15"/>
+                            <rect key="frame" x="1" y="7" width="0.0" height="16"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                         <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="GqG-4a-mWY">
-                            <rect key="frame" x="-14" y="15" width="15" height="0.0"/>
+                            <rect key="frame" x="-15" y="23" width="16" height="0.0"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                         <tableHeaderView key="headerView" id="u1g-0B-sEm">

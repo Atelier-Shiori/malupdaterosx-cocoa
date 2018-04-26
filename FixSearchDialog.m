@@ -7,12 +7,14 @@
 //
 
 #import "FixSearchDialog.h"
-#import <EasyNSURLConnection/EasyNSURLConnection.h>
+#import <AFNetworking/AFNetworking.h>
 #import "NSString_stripHtml.h"
+#import "MyAnimeList+Keychain.h"
 #import "Utility.h"
 
 @interface FixSearchDialog ()
 @property (nonatomic, copy) void (^completionHandler)(long returnCode);
+@property (strong) AFHTTPSessionManager *searchManager;
 @end
 
 @implementation FixSearchDialog
@@ -48,6 +50,8 @@
     else {
         deleteoncorrection.state = 0;
     }
+    _searchManager = [AFHTTPSessionManager manager];
+    _searchManager.responseSerializer = [AFJSONResponseSerializer serializer];
     [super windowDidLoad];
     if (searchquery.length>0) {
         search.stringValue = searchquery;
@@ -116,32 +120,21 @@
 }
 
 - (IBAction)search:(id)sender{
-    if (search.stringValue.length> 0) {
-        __block NSString *searchterm = [Utility urlEncodeString:search.stringValue];
-        dispatch_queue_t queue = dispatch_get_global_queue(
-                                                           DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-        dispatch_async(queue, ^{
-        //Set Search API
-        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/2.1/anime/search?q=%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"MALAPIURL"], searchterm]];
-        EasyNSURLConnection *request = [[EasyNSURLConnection alloc] initWithURL:url];
-        [Utility setUserAgent:request];
-        //Ignore Cookies
-        [request setUseCookies:NO];
-        //Perform Search
-        [request startRequest];
-        // Get Status Code
-        long statusCode = [request getStatusCode];
-        NSData *response = request.response.responsedata;
-        dispatch_async(dispatch_get_main_queue(), ^{
-        switch (statusCode) {
-            case 200:
-                [self populateData:response];
-                break;
-            default:
-                break;
-        }
-        });
-        });
+    if ([MyAnimeList checkexpired]) {
+        [MyAnimeList refreshtoken:^(bool success) {
+            [self search:sender];
+        }];
+        return;
+    }
+    if (search.stringValue.length > 0) {
+        NSString *searchterm = [Utility urlEncodeString:search.stringValue];
+        // Set Token
+            [_searchManager.requestSerializer setValue:[NSString stringWithFormat:@"Bearer %@", [MyAnimeList retrieveCredentials].accessToken] forHTTPHeaderField:@"Authorization"];
+        // Perform Search
+        [_searchManager GET:[NSString stringWithFormat:@"https://api.myanimelist.net/v2/anime?q=%@&limit=25&fields=id,title,main_picture,alternative_titles,start_date,end_date,synopsis,media_type,status,num_episodes", searchterm] parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+            [self populateData:[Utility convertSearchArray:responseObject[@"data"]]];
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        }];
     }
     else {
         //Remove all existing Data
@@ -154,15 +147,10 @@
     [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"https://github.com/chikorita157/malupdaterosx-cocoa/wiki/Correction-Exception-Help"]];
 }
 
-- (void)populateData:(NSData *)data {
+- (void)populateData:(NSArray *)searchdata {
     //Remove all existing Data
     [[arraycontroller mutableArrayValueForKey:@"content"] removeAllObjects];
-    if (data) {
-        //Parse Data
-        NSError* error;
-        
-        NSArray *searchdata = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
-        
+    if (searchdata) {
         //Add it to the array controller
         [arraycontroller addObjects:searchdata];
     }

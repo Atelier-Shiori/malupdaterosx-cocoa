@@ -45,7 +45,7 @@
     // Escape Search Term
     NSString *searchterm = [Utility urlEncodeString:searchtitle];
     // Set token
-    [self.syncmanager.requestSerializer setValue:[NSString stringWithFormat:@"Bearer %@", [self retrieveCredentials].accessToken] forHTTPHeaderField:@"Authorization"];
+    [self.syncmanager.requestSerializer setValue:[NSString stringWithFormat:@"Bearer %@", [MyAnimeList retrieveCredentials].accessToken] forHTTPHeaderField:@"Authorization"];
     // Perform search
     NSURLSessionDataTask *task;
     NSError *error;
@@ -65,7 +65,7 @@
     
 }
 - (NSString *)findaniid:(id)ResponseData searchterm:(NSString *)term {
-    NSArray *searchdata = [self convertArray:ResponseData[@"data"]];
+    NSArray *searchdata = [Utility convertSearchArray:ResponseData[@"data"]];
     NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:@"title" ascending:YES];
     searchdata = [searchdata sortedArrayUsingDescriptors:@[descriptor]];
     //Initalize NSString to dump the title temporarily
@@ -295,15 +295,5 @@
         }
     }
     return score;
-}
-
-- (NSArray *)convertArray:(NSArray *)a {
-    NSMutableArray *tmparray = [NSMutableArray new];
-    for (NSDictionary *d in a) {
-        if (d[@"node"]) {
-            [tmparray addObject:d[@"node"]];
-        }
-    }
-    return tmparray;
 }
 @end

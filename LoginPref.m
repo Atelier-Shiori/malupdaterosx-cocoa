@@ -67,7 +67,7 @@
 - (void)loadlogin
 {
     // Load Username
-    if ([MALEngine checkaccount]) {
+    if ([MyAnimeList checkaccount]) {
         [clearbut setEnabled: YES];
         [savebut setEnabled: NO];
         [loggedinview setHidden:NO];
@@ -112,7 +112,7 @@
     NSDictionary *parameters = @{@"grant_type" : @"authorization_code", @"code" : pin, @"code_verifier" : challenge};
     NSLog(@"%@", parameters);
     [OAuth2Manager authenticateUsingOAuthWithURLString:@"/v1/oauth2/token" parameters:parameters success:^(AFOAuthCredential * _Nonnull credential) {
-        [MALEngine storeaccount:credential];
+        [MyAnimeList storeaccount:credential];
         [MALEngine retrieveusername:^(bool success) {
             if (success) {
                 //Login successful

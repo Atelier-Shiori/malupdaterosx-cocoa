@@ -355,7 +355,7 @@
     }
     
     // Notify User if there is no Account Info
-    if (![MALEngine checkaccount]) {
+    if (![MyAnimeList checkaccount]) {
         // First time prompt
         NSAlert *alert = [[NSAlert alloc] init] ;
         [alert addButtonWithTitle:@"Yes"];
@@ -770,7 +770,7 @@
 
 - (IBAction)toggletimer:(id)sender {
     //Check to see if there is an API Key stored
-    if (![MALEngine checkaccount]) {
+    if (![MyAnimeList checkaccount]) {
         [self showNotification:@"MAL Updater OS X" message:@"Add a login before you start scrobbling."];
     }
     else {
@@ -795,7 +795,7 @@
 }
 - (void)autostarttimer {
     //Check to see if there is an API Key stored
-    if (![MALEngine checkaccount]) {
+    if (![MyAnimeList checkaccount]) {
         [self showNotification:@"MAL Updater OS X" message:@"Add a login before you start scrobbling."];
     }
     else {
@@ -808,9 +808,9 @@
 }
 - (void)firetimer {
     // Check if token have expired. If so, refresh and then fire the timer again
-    if ([MALEngine checkexpired]) {
+    if ([MyAnimeList checkexpired]) {
         // Refresh token and try again
-        [MALEngine refreshtoken:^(bool success) {
+        [MyAnimeList refreshtoken:^(bool success) {
             if (success) {
                 [self firetimer];
             }
@@ -889,7 +889,7 @@
 }
 
 - (IBAction)updatenow:(id)sender {
-    if (![MALEngine checkaccount]) {
+    if (![MyAnimeList checkaccount]) {
         [self showNotification:@"MAL Updater OS X" message:@"Add a login before you start scrobbling."];
     }
     else {
@@ -904,9 +904,9 @@
 #pragma mark Correction
 - (IBAction)showCorrectionSearchWindow:(id)sender{
     // Check token to see if it's expired. If so, refresh the token.
-    if ([MALEngine checkexpired]) {
+    if ([MyAnimeList checkexpired]) {
         // Refresh token and try again
-        [MALEngine refreshtoken:^(bool success) {
+        [MyAnimeList refreshtoken:^(bool success) {
             if (success) {
                 [self showCorrectionSearchWindow:sender];
             }
@@ -1199,9 +1199,9 @@
 }
 - (void)performconfirmupdate {
     // Check token to see if it's expired. If so, refresh the token.
-    if ([MALEngine checkexpired]) {
+    if ([MyAnimeList checkexpired]) {
         // Refresh token and try again
-        [MALEngine refreshtoken:^(bool success) {
+        [MyAnimeList refreshtoken:^(bool success) {
             if (success) {
                 [self performconfirmupdate];
             }
@@ -1250,7 +1250,7 @@
                                                             DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
          
          dispatch_async(queue, ^{
-             if ([MALEngine checkaccount] && !panelactive) {
+             if ([MyAnimeList checkaccount] && !panelactive) {
                  [self firetimer];
              }
          });
@@ -1295,23 +1295,20 @@
     //Meta Information
     [self appendToAnimeInfo:@""];
     [self appendToAnimeInfo:@"Other Information"];
-    [self appendToAnimeInfo:[NSString stringWithFormat:@"Classification: %@", d[@"classification"]]];
+    [self appendToAnimeInfo:[NSString stringWithFormat:@"Classification: %@", d[@"rating"]]];
     [self appendToAnimeInfo:[NSString stringWithFormat:@"Start Date: %@", d[@"start_date"]]];
     [self appendToAnimeInfo:[NSString stringWithFormat:@"Airing Status: %@", d[@"status"]]];
     NSString *epi;
-    if (d[@"episodes"] == [NSNull null]) {
+    if (d[@"num_episodes"] == [NSNull null]) {
         epi = @"Unknown";
     }
     else {
-        epi = d[@"episodes"];
+        epi = d[@"num_episodes"];
     }
     [self appendToAnimeInfo:[NSString stringWithFormat:@"Episodes: %@", epi]];
-    [self appendToAnimeInfo:[NSString stringWithFormat:@"Popularity: %@", d[@"popularity_rank"]]];
-    if (d[@"favorited_count"]) {
-        [self appendToAnimeInfo:[NSString stringWithFormat:@"Favorited: %@", d[@"favorited_count"]]];
-    }
+    [self appendToAnimeInfo:[NSString stringWithFormat:@"Popularity: %@", d[@"rank"]]];
     //Image
-    NSImage *dimg = (d[@"image_url"] != [NSNull null]) ? [[NSImage alloc]initByReferencingURL:[NSURL URLWithString: (NSString *)d[@"image_url"]]] : [NSImage imageNamed:@"missing"]; //Downloads Image
+    NSImage *dimg = (d[@"main_picture"][@"large"] != [NSNull null]) ? [[NSImage alloc]initByReferencingURL:[NSURL URLWithString: (NSString *)d[@"main_picture"][@"large"]]] : [NSImage imageNamed:@"missing"]; //Downloads Image
     img.image = dimg; //Get the Image for the title
     // Clear Anime Info so that MAL Updater OS X won't attempt to retrieve it if the same episode and title is playing
     [MALEngine clearAnimeInfo];

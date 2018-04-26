@@ -9,12 +9,13 @@
 #import "MyAnimeList.h"
 
 @interface MyAnimeList (Keychain)
-- (BOOL)checkaccount;
-- (AFOAuthCredential *)retrieveCredentials;
-- (BOOL)storeaccount:(AFOAuthCredential *)cred;
++ (BOOL)checkaccount;
++ (AFOAuthCredential *)retrieveCredentials;
++ (BOOL)storeaccount:(AFOAuthCredential *)cred;
 - (BOOL)removeaccount;
 - (NSString *)getusername;
-- (bool)checkexpired;
-- (void)refreshtoken:(void (^)(bool success)) completionHandler;
++ (NSString *)retrieveUsername;
++ (bool)checkexpired;
++ (void)refreshtoken:(void (^)(bool success)) completionHandler;
 - (void)retrieveusername:(void (^)(bool success)) completionHandler;
 @end

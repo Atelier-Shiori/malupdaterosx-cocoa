@@ -18,11 +18,11 @@
     NSLog(@"Checking Status");
     //Set Search API
     //Set Token
-    [self.syncmanager.requestSerializer setValue:[NSString stringWithFormat:@"Bearer %@", [self retrieveCredentials].accessToken] forHTTPHeaderField:@"Authorization"];
+    [self.syncmanager.requestSerializer setValue:[NSString stringWithFormat:@"Bearer %@", [MyAnimeList retrieveCredentials].accessToken] forHTTPHeaderField:@"Authorization"];
     //Perform status check
     NSURLSessionDataTask *task;
     NSError *error;
-    id responseObject = [self.syncmanager syncGET:[NSString stringWithFormat:@"https://api.myanimelist.net/v2/anime/%@", titleid] parameters:nil task:&task error:&error];
+    id responseObject = [self.syncmanager syncGET:[NSString stringWithFormat:@"https://api.myanimelist.net/v2/anime/%@?fields=id,title,main_picture,alternative_titles,start_date,end_date,synopsis,media_type,status,num_episodes,rating,rank,popularity,my_list_status", titleid] parameters:nil task:&task error:&error];
     // Get Status Code
     long statusCode = ((NSHTTPURLResponse *)task.response).statusCode;
     if (statusCode == 200 ) {
@@ -122,7 +122,7 @@
 }
 - (int)performupdate:(NSString *)titleid isAdding:(bool)isadding {
     //Set Token
-    [self.syncmanager.requestSerializer setValue:[NSString stringWithFormat:@"Bearer %@", [self retrieveCredentials].accessToken] forHTTPHeaderField:@"Authorization"];
+    [self.syncmanager.requestSerializer setValue:[NSString stringWithFormat:@"Bearer %@", [MyAnimeList retrieveCredentials].accessToken] forHTTPHeaderField:@"Authorization"];
     NSMutableDictionary *parameters = [NSMutableDictionary new];
     parameters[@"num_watched_episodes"] = @(self.DetectedEpisode.intValue);
     //parameters[@"num_episodes_watched"] = @(self.DetectedEpisode.intValue);
@@ -141,7 +141,6 @@
     parameters[@"status"] = self.WatchStatus;
     // Set existing score to prevent the score from being erased.
     parameters[@"score"] = @(self.TitleScore);
-    NSLog(@"%@",parameters);
     // Do Update
     NSURLSessionDataTask *task;
     NSError *error;
@@ -184,7 +183,7 @@
     NSLog(@"Removing %@", titleid);
     //Remove title
     //Set Token
-    [self.syncmanager.requestSerializer setValue:[NSString stringWithFormat:@"Bearer %@", [self retrieveCredentials].accessToken] forHTTPHeaderField:@"Authorization"];
+    [self.syncmanager.requestSerializer setValue:[NSString stringWithFormat:@"Bearer %@", [MyAnimeList retrieveCredentials].accessToken] forHTTPHeaderField:@"Authorization"];
     // Do Update
     NSURLSessionDataTask *task;
     NSError *error;
@@ -207,8 +206,8 @@
 {
     NSLog(@"Updating Status for %@", titleid);
     // Check Credentials
-    if ([self checkexpired]) {
-        [self refreshtoken:^(bool success) {
+    if ([MyAnimeList checkexpired]) {
+        [MyAnimeList refreshtoken:^(bool success) {
             if (success) {
                 [self updatestatus:titleid score:showscore watchstatus:showwatchstatus episode:episode completion:completionHandler];
             }
@@ -220,11 +219,11 @@
     }
     // Update the title
     //Set Token
-    [self.asyncmanager.requestSerializer setValue:[NSString stringWithFormat:@"Bearer %@", [self retrieveCredentials].accessToken] forHTTPHeaderField:@"Authorization"];
+    [self.asyncmanager.requestSerializer setValue:[NSString stringWithFormat:@"Bearer %@", [MyAnimeList retrieveCredentials].accessToken] forHTTPHeaderField:@"Authorization"];
     //NSDictionary *parameters = @{@"num_episodes_watched" : @(episode.intValue), @"status" : [showwatchstatus.lowercaseString stringByReplacingOccurrencesOfString:@" " withString:@"_"], @"score" : @(showscore)};
     NSDictionary *parameters = @{@"num_watched_episodes" : @(episode.intValue), @"status" : [showwatchstatus.lowercaseString stringByReplacingOccurrencesOfString:@" " withString:@"_"], @"score" : @(showscore)};
     // Set up request and do update
-    [self.asyncmanager PUT:[NSString stringWithFormat:@"%@/2.1/animelist/anime/%@/my_list_status", self.MALApiUrl, titleid] parameters:parameters success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    [self.asyncmanager PUT:[NSString stringWithFormat:@"https://api.myanimelist.net/v2/anime/%@/my_list_status", titleid] parameters:parameters success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         self.TitleScore = showscore;
         self.WatchStatus = showwatchstatus;
         self.LastScrobbledEpisode = episode;

@@ -35,7 +35,6 @@ typedef NS_ENUM(unsigned int, ScrobbleStatus) {
 };
 @property (strong) AFHTTPSessionManager *syncmanager;
 @property (strong) AFHTTPSessionManager *asyncmanager;
-@property (strong) NSString *MALApiUrl;
 @property (strong, getter=getLastScrobbledTitle) NSString *LastScrobbledTitle;
 @property (strong, getter=getLastScrobbledEpisode) NSString *LastScrobbledEpisode;
 @property (strong, getter=getLastScrobbledActualTitle) NSString *LastScrobbledActualTitle;
@@ -85,5 +84,4 @@ typedef NS_ENUM(unsigned int, ScrobbleStatus) {
 - (void)clearAnimeInfo;
 - (NSString *)startSearch;
 - (void)resetinfo;
-- (void)changenotifierhostname;
 @end

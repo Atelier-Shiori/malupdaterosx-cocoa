@@ -280,8 +280,6 @@
 - (int)scrobble{
     NSLog(@"=============");
     NSLog(@"Scrobbling...");
-    // Set MAL API URL
-    _MALApiUrl = [[NSUserDefaults standardUserDefaults] objectForKey:@"MALAPIURL"];
     int status;
     NSLog(@"Finding AniID");
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"useSearchCache"]) {
@@ -631,26 +629,22 @@
 
 - (void)setupnotifier {
     //Create Reachability Object
-    _reach = [Reachability reachabilityWithHostname:[Utility getHostName]];
+    _reach = [Reachability reachabilityWithHostname:@"api.myanimelist.net"];
     // Set up blocks
     // Set the blocks
     _reach.reachableBlock = ^(Reachability*reach)
     {
         _online = true;
         dispatch_async(dispatch_get_main_queue(), ^{
-            NSLog(@"Atarashii-API is reachable.");
+            NSLog(@"MAL API is reachable.");
         });
     };
     _reach.unreachableBlock = ^(Reachability*reach)
     {
         _online = false;
-        NSLog(@"Computer not connected to internet or Atarashii-API Server is down");
+        NSLog(@"Computer not connected to internet or MAL API Server is down");
     };
     // Start notifier
     [_reach startNotifier];
-}
-- (void)changenotifierhostname {
-    [_reach stopNotifier];
-    [self setupnotifier];
 }
 @end

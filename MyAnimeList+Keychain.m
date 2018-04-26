@@ -11,43 +11,46 @@
 #import "Utility.h"
 
 @implementation MyAnimeList (Keychain)
-- (NSString *)getKeychainServiceName {
++ (NSString *)getKeychainServiceName {
     #ifdef DEBUG
     return @"MAL Updater OS X - DEBUG";
     #else
     return @"MAL Updater OS X";
     #endif
 }
-- (BOOL)checkaccount {
-    bool exists = [self retrieveCredentials];
++ (BOOL)checkaccount {
+    bool exists = [MyAnimeList retrieveCredentials];
     return exists;
 }
-- (AFOAuthCredential *)retrieveCredentials {
++ (AFOAuthCredential *)retrieveCredentials {
     return [AFOAuthCredential retrieveCredentialWithIdentifier:[self getKeychainServiceName]];
 }
 - (NSString *)getusername {
     self.username = [NSUserDefaults.standardUserDefaults valueForKey:@"mal-username"];
     return self.username;
 }
-- (BOOL)storeaccount:(AFOAuthCredential *)cred {
++ (NSString *)retrieveUsername {
+    return [NSUserDefaults.standardUserDefaults valueForKey:@"mal-username"];
+}
++ (BOOL)storeaccount:(AFOAuthCredential *)cred {
     return [AFOAuthCredential storeCredential:cred withIdentifier:[self getKeychainServiceName]];
 }
 - (BOOL)removeaccount{
-    bool success = [AFOAuthCredential deleteCredentialWithIdentifier:[self getKeychainServiceName]];
+    bool success = [AFOAuthCredential deleteCredentialWithIdentifier:[MyAnimeList getKeychainServiceName]];
     // Set Username to blank
      [NSUserDefaults.standardUserDefaults setObject:@"" forKey:@"mal-username"];
     self.username = @"";
     return success;
 }
 
-- (bool)checkexpired {
-    AFOAuthCredential * cred = [self retrieveCredentials];
++ (bool)checkexpired {
+    AFOAuthCredential * cred = [MyAnimeList retrieveCredentials];
     return cred.expired;
 }
 
-- (void)refreshtoken:(void (^)(bool success)) completionHandler {
++ (void)refreshtoken:(void (^)(bool success)) completionHandler {
     AFOAuthCredential *cred =
-    [AFOAuthCredential retrieveCredentialWithIdentifier:[self getKeychainServiceName]];
+    [AFOAuthCredential retrieveCredentialWithIdentifier:[MyAnimeList getKeychainServiceName]];
     NSURL *baseURL = [NSURL URLWithString:@"https://myanimelist.net/"];
     AFOAuth2Manager *OAuth2Manager = [[AFOAuth2Manager alloc] initWithBaseURL:baseURL
                                                                      clientID:kMALClientID
@@ -66,7 +69,7 @@
 }
 
 - (void)retrieveusername:(void (^)(bool success)) completionHandler {
-    [self.asyncmanager.requestSerializer setValue:[NSString stringWithFormat:@"Bearer %@", [self retrieveCredentials].accessToken] forHTTPHeaderField:@"Authorization"];
+    [self.asyncmanager.requestSerializer setValue:[NSString stringWithFormat:@"Bearer %@", [MyAnimeList retrieveCredentials].accessToken] forHTTPHeaderField:@"Authorization"];
     [self.asyncmanager GET:@"https://api.myanimelist.net/v0.20/users/@me?fields=name" parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         if (responseObject[@"name"]) {
             [NSUserDefaults.standardUserDefaults setObject:responseObject[@"name"] forKey:@"mal-username"];
