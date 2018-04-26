@@ -7,6 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import <AFNetworking/AFNetworking.h>
 #import "MAL_Updater_OS_XAppDelegate.h"
 #import "DiscordManager.h"
 
@@ -32,6 +33,8 @@ typedef NS_ENUM(unsigned int, ScrobbleStatus) {
     ScrobblerMALUpdaterOSXNeedsUpdate = 56,
     ScrobblerInvalidScrobble = 58
 };
+@property (strong) AFHTTPSessionManager *syncmanager;
+@property (strong) AFHTTPSessionManager *asyncmanager;
 @property (strong) NSString *MALApiUrl;
 @property (strong, getter=getLastScrobbledTitle) NSString *LastScrobbledTitle;
 @property (strong, getter=getLastScrobbledEpisode) NSString *LastScrobbledEpisode;

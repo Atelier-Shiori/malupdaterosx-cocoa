@@ -818,6 +818,7 @@
                 [self showNotification:@"Unable to refresh token" message:@"Please remove the account, authorize your account and try again."];
             }
         }];
+        return;
     }
     //Tell MALEngine to detect and scrobble if necessary.
     NSLog(@"Starting...");

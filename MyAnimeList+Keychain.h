@@ -7,7 +7,6 @@
 //
 
 #import "MyAnimeList.h"
-#import <AFNetworking/AFOAuthCredential.h>
 
 @interface MyAnimeList (Keychain)
 - (BOOL)checkaccount;

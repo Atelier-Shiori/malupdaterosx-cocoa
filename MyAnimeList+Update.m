@@ -127,15 +127,11 @@
 - (int)performupdate:(NSString *)titleid isAdding:(bool)isadding {
     // Update the title
     //Set library/scrobble API
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://api.myanimelist.net/v2/anime/%@/my_list_status", titleid]];
-    EasyNSURLConnection *request = [[EasyNSURLConnection alloc] initWithURL:url];
-    [Utility setUserAgent:request];
-    //Ignore Cookies
-    [request setUseCookies:NO];
+
     //Set Token
-    request.headers = (NSMutableDictionary *)@{@"Authorization": [NSString stringWithFormat:@"Bearer %@", [self retrieveCredentials].accessToken]};
-    request.postmethod = @"PUT";
-    [request addFormData:self.DetectedEpisode forKey:@"num_episodes_watched"];
+    [self.syncmanager.requestSerializer setValue:[NSString stringWithFormat:@"Bearer %@", [self retrieveCredentials].accessToken] forHTTPHeaderField:@"Authorization"];
+    NSMutableDictionary *parameters = [NSMutableDictionary new];
+    parameters[@"num_episodes_watched"] = @(self.DetectedEpisode.intValue);
     /*
     if (([self.WatchStatus isEqualToString:@"plan_to_watch"] && self.DetectedCurrentEpisode == 0) || isadding) {
         // Set the start date if the title's watch status is Plan to Watch and the watched episodes is zero
@@ -145,16 +141,19 @@
     self.WatchStatus = (self.DetectedEpisode).intValue == self.TotalEpisodes ? @"completed" : @"watching";
     /*
     if ([self.WatchStatus isEqualToString:@"completed"]) {
-        [request addFormData:[Utility todaydatestring] forKey:@"end"];
+        parameters[@"end"] = [Utility todaydatestring];
     }
      */
-    [request addFormData:self.WatchStatus forKey:@"status"];
+    parameters[@"status"] = self.WatchStatus;
     // Set existing score to prevent the score from being erased.
-    [request addFormData:@(self.TitleScore).stringValue forKey:@"score"];
+    parameters[@"score"] = @(self.TitleScore);
+    NSLog(@"%@",parameters);
     // Do Update
-    [request startFormRequest];
+    NSURLSessionDataTask *task;
+    NSError *error;
+    id responseObject = [self.syncmanager syncPUT:[NSString stringWithFormat:@"https://api.myanimelist.net/v2/anime/%@/my_list_status", titleid] parameters:parameters task:&task error:&error];
     
-    switch ([request getStatusCode]) {
+    switch (((NSHTTPURLResponse *)task.response).statusCode) {
         case 200: {
             // Store Last Scrobbled Title
             self.LastScrobbledTitle = self.DetectedTitle;
@@ -178,7 +177,8 @@
             }
         default: {
             // Update Unsuccessful
-            NSLog(@"%@", request.response.getResponseDataJsonParsed);
+            NSString* ErrorResponse = [[NSString alloc] initWithData:(NSData *)error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] encoding:NSUTF8StringEncoding];
+            NSLog(@"%@",ErrorResponse);
             if (isadding) {
                 return ScrobblerAddTitleFailed;
             }

@@ -11,7 +11,6 @@
 #import <TwitterManagerKit/TwitterManagerKit.h>
 #import "MyAnimeList+Search.h"
 #import "MyAnimeList+Update.h"
-#import "MyAnimeList+HummingbirdSearch.h"
 #import "MyAnimeList+Keychain.h"
 #import <Reachability/Reachability.h>
 #import "Utility.h"
@@ -38,6 +37,12 @@
     if ([NSUserDefaults.standardUserDefaults boolForKey:@"usediscordrichpresence"]) {
         [self.discordmanager startDiscordRPC];
     }
+    // init AFNetworking
+    _syncmanager = [AFHTTPSessionManager manager];
+    _syncmanager.completionQueue = dispatch_queue_create("AFNetworking+Synchronous", NULL);
+    _asyncmanager = [AFHTTPSessionManager manager];
+    _syncmanager.responseSerializer = [AFJSONResponseSerializer serializer];
+    _asyncmanager.responseSerializer = [AFJSONResponseSerializer serializer];
     // Return Object
     return [super init];
 }
@@ -596,19 +601,7 @@
 }
 - (NSString *)startSearch{
     // Performs Search
-    NSString *tmpid;
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"useHummingbirdSearch"]) {
-        // Search using Hummingbird.me Search API to get malapi_id
-        tmpid = [self hsearchanime];
-        if (tmpid.length == 0) {
-            // Fallback
-            tmpid =[self searchanime];
-        }
-    }
-    else {
-        tmpid = [self searchanime]; // Use MAL Search
-    }
-    return tmpid;
+    return [self searchanime];
 }
 - (NSManagedObject *)checkifexistinqueue{
     // Return existing offline queue item

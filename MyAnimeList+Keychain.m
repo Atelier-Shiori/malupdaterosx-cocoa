@@ -7,9 +7,6 @@
 //
 
 #import "MyAnimeList+Keychain.h"
-#import <EasyNSURLConnection/EasyNSURLConnection.h>
-#import <AFNetworking/AFOAuth2Manager.h>
-#import <SAMKeychain/SAMKeychain.h>
 #import "ClientConstants.h"
 #import "Utility.h"
 
@@ -59,6 +56,7 @@
     [OAuth2Manager authenticateUsingOAuthWithURLString:@"/v1/oauth2/token"
                                             parameters:@{@"grant_type":@"refresh_token", @"refresh_token":cred.refreshToken} success:^(AFOAuthCredential *credential) {
                                                 NSLog(@"Token refreshed");
+                                                [self storeaccount:credential];
                                                 completionHandler(true);
                                             }
                                                failure:^(NSError *error) {
@@ -68,18 +66,16 @@
 }
 
 - (void)retrieveusername:(void (^)(bool success)) completionHandler {
-    EasyNSURLConnection *request = [[EasyNSURLConnection alloc] init];
-    [request setUseCookies:NO];
-    [request GET:@"https://api.myanimelist.net/v0.20/users/@me?fields=name" headers:@{@"Authorization": [NSString stringWithFormat:@"Bearer %@", [self retrieveCredentials].accessToken]} completion:^(EasyNSURLResponse *response) {
-        NSDictionary *responsedata = response.getResponseDataJsonParsed;
-        if (responsedata[@"name"]) {
-            [NSUserDefaults.standardUserDefaults setObject:responsedata[@"name"] forKey:@"mal-username"];
+    [self.asyncmanager.requestSerializer setValue:[NSString stringWithFormat:@"Bearer %@", [self retrieveCredentials].accessToken] forHTTPHeaderField:@"Authorization"];
+    [self.asyncmanager GET:@"https://api.myanimelist.net/v0.20/users/@me?fields=name" parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        if (responseObject[@"name"]) {
+            [NSUserDefaults.standardUserDefaults setObject:responseObject[@"name"] forKey:@"mal-username"];
             completionHandler(true);
         }
         else {
             completionHandler(false);
         }
-    } error:^(NSError *error, int statuscode) {
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         completionHandler(false);
     }];
 }
