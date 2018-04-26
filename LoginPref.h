@@ -16,8 +16,6 @@
 @interface LoginPref : NSViewController <MASPreferencesViewController>
 @property (strong) IBOutlet NSImageView *logo;
 //Login Preferences
-@property (strong) IBOutlet NSTextField *fieldusername;
-@property (strong) IBOutlet NSTextField *fieldpassword;
 @property (strong) IBOutlet NSButton *savebut;
 @property (strong) IBOutlet NSButton *clearbut;
 @property (strong) IBOutlet NSTextField *loggedinuser;
@@ -27,7 +25,6 @@
 @property (strong) IBOutlet NSView *loggedinview;
 @property (strong) AuthWindow *authw;
 - (id)initwithAppDelegate:(MAL_Updater_OS_XAppDelegate *)adelegate;
-- (IBAction)startlogin:(id)sender;
 - (IBAction)clearlogin:(id)sender;
 - (IBAction)registermal:(id)sender;
 - (void)login:(NSString *)pin withChallenge:(NSString *)challenge;

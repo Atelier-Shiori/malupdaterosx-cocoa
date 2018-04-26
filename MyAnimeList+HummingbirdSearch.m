@@ -13,7 +13,7 @@
 #import "Recognition.h"
 
 @implementation MyAnimeList (HummingbirdSearch)
-- (NSString *)hsearchanime{
+- (NSString *)hsearchanime {
     // Searches for ID of associated title
     NSString *searchtitle = self.DetectedTitle;
     if (self.DetectedSeason > 1) {

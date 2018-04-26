@@ -58,13 +58,13 @@
     else if ([_WatchStatus isEqualToString:@"completed"]) {
         return 1;
     }
-    else if ([_WatchStatus isEqualToString:@"on-hold"]) {
+    else if ([_WatchStatus isEqualToString:@"on_hold"]) {
         return 2;
     }
     else if ([_WatchStatus isEqualToString:@"dropped"]) {
         return 3;
     }
-    else if ([_WatchStatus isEqualToString:@"plan-to-watch"]) {
+    else if ([_WatchStatus isEqualToString:@"plan_to_watch"]) {
         return 4;
     }
     else {
@@ -275,10 +275,6 @@
 - (int)scrobble{
     NSLog(@"=============");
     NSLog(@"Scrobbling...");
-    // Check Credentials
-    if ([self checkMALCredentials] == 0) {
-        return ScrobblerInvalidCredentials;
-    }
     // Set MAL API URL
     _MALApiUrl = [[NSUserDefaults standardUserDefaults] objectForKey:@"MALAPIURL"];
     int status;
@@ -441,9 +437,6 @@
     NSLog(@"=============");
     NSLog(@"Confirming: %@ - %@",_LastScrobbledActualTitle, _LastScrobbledEpisode);
     // Check Credentials
-    if ([self checkMALCredentials] == 0) {
-        return false;
-    }
     int status;
     if (_LastScrobbledTitleNew)
     {

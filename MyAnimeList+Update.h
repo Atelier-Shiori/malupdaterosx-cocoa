@@ -10,10 +10,11 @@
 
 @interface MyAnimeList (Update)
 - (BOOL)checkstatus:(NSString *)titleid;
-- (BOOL)updatestatus:(NSString *)titleid
+- (void)updatestatus:(NSString *)titleid
               score:(int)showscore
         watchstatus:(NSString*)showwatchstatus
-            episode:(NSString*)episode;
+            episode:(NSString*)episode
+          completion:(void (^)(bool success)) completionHandler;
 - (bool)removetitle:(NSString *)titleid;
 - (int)updatetitle:(NSString *)titleid confirming:(bool) confirming;
 - (int)addtitle:(NSString *)titleid confirming:(bool) confirming;

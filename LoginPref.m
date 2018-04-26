@@ -17,8 +17,6 @@
 
 @implementation LoginPref
 @synthesize logo;
-@synthesize fieldusername;
-@synthesize fieldpassword;
 @synthesize savebut;
 @synthesize clearbut;
 @synthesize loggedinuser;
@@ -114,52 +112,29 @@
     NSDictionary *parameters = @{@"grant_type" : @"authorization_code", @"code" : pin, @"code_verifier" : challenge};
     NSLog(@"%@", parameters);
     [OAuth2Manager authenticateUsingOAuthWithURLString:@"/v1/oauth2/token" parameters:parameters success:^(AFOAuthCredential * _Nonnull credential) {
-        NSLog(@"Token: %@", credential.accessToken);
-    } failure:^(NSError * _Nonnull error) {
-        NSLog(@"Error: %@", error);
-
-    }];
-    /*
-    //Set Login URL
-    NSURL *url = [NSURL URLWithString:@"https://myanimelist.net/api/account/verify_credentials.xml"];
-    EasyNSURLConnection *request = [[EasyNSURLConnection alloc] initWithURL:url];
-    [Utility setUserAgent:request];
-    //Ignore Cookies
-    [request setUseCookies:NO];
-    //Set Username and Password
-    request.headers = (NSMutableDictionary *)@{@"Authorization": [NSString stringWithFormat:@"Basic %@", [[NSString stringWithFormat:@"%@:%@", username, password] base64Encoding]]};
-    //Verify Username/Password
-    [request startRequest];
-    // Check for errors
-    NSError *error = request.error;
-    dispatch_async(dispatch_get_main_queue(), ^{
-        if ([request getStatusCode] == 200 && !error) {
+        [MALEngine storeaccount:credential];
+        [MALEngine retrieveusername:^(bool success) {
+            if (success) {
                 //Login successful
                 [Utility showsheetmessage:@"Login Successful" explaination: @"Login is successful." window:self.view.window];
-                // Store account in login keychain
-                [MALEngine storeaccount:fieldusername.stringValue password:fieldpassword.stringValue];
-                [clearbut setEnabled: YES];
-                loggedinuser.stringValue = username;
+                clearbut.enabled = YES;
+                savebut.enabled = YES;
+                loggedinuser.stringValue = [MALEngine getusername];
                 [loggedinview setHidden:NO];
                 [loginview setHidden:YES];
-                [[NSUserDefaults standardUserDefaults] setObject:[NSDate dateWithTimeIntervalSinceNow:60*60*24] forKey:@"credentialscheckdate"];
-                [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"credentialsvalid"];
-        }
-        else {
-            if (error.code == NSURLErrorNotConnectedToInternet) {
-                [Utility showsheetmessage:@"MAL Updater OS X was unable to log you in since you are not connected to the internet" explaination:@"Check your internet connection and try again." window:self.view.window];
-                [savebut setEnabled: YES];
-                savebut.keyEquivalent = @"\r";
             }
             else {
-                //Login Failed, show error message
-                [Utility showsheetmessage:@"MAL Updater OS X was unable to log you in since you don't have the correct username and/or password." explaination:@"Check your username and password and try logging in again. If you recently changed your password, enter your new password and try again." window:self.view.window];
-                [savebut setEnabled: YES];
+                [Utility showsheetmessage:@"MAL Updater OS X was unable to log you in since the username couldn't be retrieved" explaination:@"Please try again later." window:self.view.window];
+                savebut.enabled = YES;
                 savebut.keyEquivalent = @"\r";
             }
-        }
-        [savebut setEnabled:YES];
-    }); */
+        }];
+    } failure:^(NSError * _Nonnull error) {
+        NSLog(@"Error: %@", error);
+        [Utility showsheetmessage:@"MAL Updater OS X was unable to log you because of an unknown error." explaination:error.localizedDescription window:self.view.window];
+        savebut.enabled = YES;
+        savebut.keyEquivalent = @"\r";
+    }];
 }
 
 - (IBAction)registermal:(id)sender
@@ -195,8 +170,6 @@
                 loggedinuser.stringValue = @"";
                 [loggedinview setHidden:YES];
                 [loginview setHidden:NO];
-                fieldusername.stringValue = @"";
-                fieldpassword.stringValue = @"";
                 [appdelegate resetUI];
             }
         }];

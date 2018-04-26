@@ -7,12 +7,15 @@
 //
 
 #import "MyAnimeList.h"
+#import <AFNetworking/AFOAuthCredential.h>
 
 @interface MyAnimeList (Keychain)
 - (BOOL)checkaccount;
-- (BOOL)storeaccount:(NSString *)uname password:(NSString *)password;
+- (AFOAuthCredential *)retrieveCredentials;
+- (BOOL)storeaccount:(AFOAuthCredential *)cred;
 - (BOOL)removeaccount;
 - (NSString *)getusername;
-- (NSString *)getBase64;
-- (int)checkMALCredentials;
+- (bool)checkexpired;
+- (void)refreshtoken:(void (^)(bool success)) completionHandler;
+- (void)retrieveusername:(void (^)(bool success)) completionHandler;
 @end

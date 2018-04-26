@@ -807,6 +807,18 @@
     }
 }
 - (void)firetimer {
+    // Check if token have expired. If so, refresh and then fire the timer again
+    if ([MALEngine checkexpired]) {
+        // Refresh token and try again
+        [MALEngine refreshtoken:^(bool success) {
+            if (success) {
+                [self firetimer];
+            }
+            else {
+                [self showNotification:@"Unable to refresh token" message:@"Please remove the account, authorize your account and try again."];
+            }
+        }];
+    }
     //Tell MALEngine to detect and scrobble if necessary.
     NSLog(@"Starting...");
     if (!scrobbleractive) {
@@ -875,9 +887,10 @@
     [timer invalidate];
 }
 
-- (IBAction)updatenow:(id)sender{
-    if (![MALEngine checkaccount])
+- (IBAction)updatenow:(id)sender {
+    if (![MALEngine checkaccount]) {
         [self showNotification:@"MAL Updater OS X" message:@"Add a login before you start scrobbling."];
+    }
     else {
         dispatch_queue_t queue = dispatch_get_global_queue(
                                                            DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
@@ -889,6 +902,19 @@
 
 #pragma mark Correction
 - (IBAction)showCorrectionSearchWindow:(id)sender{
+    // Check token to see if it's expired. If so, refresh the token.
+    if ([MALEngine checkexpired]) {
+        // Refresh token and try again
+        [MALEngine refreshtoken:^(bool success) {
+            if (success) {
+                [self showCorrectionSearchWindow:sender];
+            }
+            else {
+                [self showNotification:@"Unable to refresh token" message:@"Please remove the account, authorize your account and try again."];
+            }
+        }];
+        return;
+    }
     // Stop Timer temporarily if scrobbling is turned on
     if (scrobbling == TRUE) {
         [self stoptimer];
@@ -1094,9 +1120,6 @@
     [self disableallstatusitems:false];
     __block NSString *tmpepisode = _updatewindow.episodefield.stringValue;
     __block bool episodechanged = false;
-    dispatch_queue_t queue = dispatch_get_global_queue(
-                                                       DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-    dispatch_async(queue, ^{
         // Check if Episode field is empty. If so, set it to last scrobbled episode
         if (tmpepisode.length == 0) {
             tmpepisode = [NSString stringWithFormat:@"%i", MALEngine.DetectedCurrentEpisode];
@@ -1106,31 +1129,27 @@
         }
         
         if (returnCode == NSModalResponseOK) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                BOOL result = [MALEngine updatestatus:MALEngine.AniID score:(int)_updatewindow.showscore.selectedTag watchstatus:_updatewindow.showstatus.titleOfSelectedItem episode:tmpepisode];
-                if (result) {
-                    [self setStatusText:@"Scrobble Status: Updating of Watch Status/Score Successful."];
-                }
-                else{
-                    [self setStatusText:@"Scrobble Status: Unable to update Watch Status/Score."];
-                }
-                
-                if (episodechanged) {
-                    // Update the tooltip, menu and last scrobbled title
-                    [self setStatusMenuTitleEpisode:MALEngine.LastScrobbledActualTitle episode:MALEngine.LastScrobbledEpisode];
-                    [self updateLastScrobbledTitleStatus:false];
-                    [confirmupdate setHidden:true];
-                }
-            });
+                [MALEngine updatestatus:MALEngine.AniID score:(int)_updatewindow.showscore.selectedTag watchstatus:_updatewindow.showstatus.titleOfSelectedItem episode:tmpepisode completion:^(bool success) {
+                    if (success) {
+                        [self setStatusText:@"Scrobble Status: Updating of Watch Status/Score Successful."];
+                    }
+                    else{
+                        [self setStatusText:@"Scrobble Status: Unable to update Watch Status/Score."];
+                    }
+                    
+                    if (episodechanged) {
+                        // Update the tooltip, menu and last scrobbled title
+                        [self setStatusMenuTitleEpisode:MALEngine.LastScrobbledActualTitle episode:MALEngine.LastScrobbledEpisode];
+                        [self updateLastScrobbledTitleStatus:false];
+                        [confirmupdate setHidden:true];
+                    }
+                }];
         }
-        dispatch_async(dispatch_get_main_queue(), ^{
-            //If scrobbling is on, restart timer
-            if (scrobbling == TRUE) {
-                [self starttimer];
-            }
-            [self enableUpdateItems];
-        });
-    });
+        //If scrobbling is on, restart timer
+        if (scrobbling == TRUE) {
+            [self starttimer];
+        }
+        [self enableUpdateItems];
 }
 
 #pragma mark Notification Center and Title/Update Confirmation
@@ -1177,7 +1196,20 @@
 - (IBAction)confirmupdate:(id)sender{
     [self performconfirmupdate];
 }
-- (void)performconfirmupdate{
+- (void)performconfirmupdate {
+    // Check token to see if it's expired. If so, refresh the token.
+    if ([MALEngine checkexpired]) {
+        // Refresh token and try again
+        [MALEngine refreshtoken:^(bool success) {
+            if (success) {
+                [self performconfirmupdate];
+            }
+            else {
+                [self showNotification:@"Unable to refresh token" message:@"Please remove the account, authorize your account and try again."];
+            }
+        }];
+        return;
+    }
     dispatch_queue_t queue = dispatch_get_global_queue(
                                                        DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     

@@ -8,8 +8,9 @@
 
 #import "MyAnimeList+Keychain.h"
 #import <EasyNSURLConnection/EasyNSURLConnection.h>
+#import <AFNetworking/AFOAuth2Manager.h>
 #import <SAMKeychain/SAMKeychain.h>
-#import "Base64Category.h"
+#import "ClientConstants.h"
 #import "Utility.h"
 
 @implementation MyAnimeList (Keychain)
@@ -20,82 +21,67 @@
     return @"MAL Updater OS X";
     #endif
 }
-- (BOOL)checkaccount{
-    // This method checks for any accounts that Hachidori can use
-    NSArray *accounts = [SAMKeychain accountsForService:[self getKeychainServiceName]];
-    if (accounts.count > 0) {
-        //retrieve first valid account
-        for (NSDictionary *account in accounts) {
-            if (account[@"acct"]) {
-                self.username = (NSString *)account[@"acct"];
-                return true;
-            }
-            else {
-                continue;
-            }
-        }
-    }
-    self.username = @"";
-    return false;
+- (BOOL)checkaccount {
+    bool exists = [self retrieveCredentials];
+    return exists;
 }
-- (NSString *)getusername{
+- (AFOAuthCredential *)retrieveCredentials {
+    return [AFOAuthCredential retrieveCredentialWithIdentifier:[self getKeychainServiceName]];
+}
+- (NSString *)getusername {
+    self.username = [NSUserDefaults.standardUserDefaults valueForKey:@"mal-username"];
     return self.username;
 }
-- (BOOL)storeaccount:(NSString *)uname password:(NSString *)password {
-    //Clear Account Information in the plist file if it hasn't been done already
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setObject:@"" forKey:@"Base64Token"];
-    [defaults setObject:@"" forKey:@"Username"];
-    return [SAMKeychain setPassword:password forService:[self getKeychainServiceName] account:uname];
+- (BOOL)storeaccount:(AFOAuthCredential *)cred {
+    return [AFOAuthCredential storeCredential:cred withIdentifier:[self getKeychainServiceName]];
 }
 - (BOOL)removeaccount{
-    bool success = [SAMKeychain deletePasswordForService:[self getKeychainServiceName] account:self.username];
+    bool success = [AFOAuthCredential deleteCredentialWithIdentifier:[self getKeychainServiceName]];
     // Set Username to blank
+     [NSUserDefaults.standardUserDefaults setObject:@"" forKey:@"mal-username"];
     self.username = @"";
     return success;
 }
-- (NSString *)getBase64{
-    return [[NSString stringWithFormat:@"%@:%@", [self getusername], [SAMKeychain passwordForService:[self getKeychainServiceName] account:self.username]] base64Encoding];
+
+- (bool)checkexpired {
+    AFOAuthCredential * cred = [self retrieveCredentials];
+    return cred.expired;
 }
 
-- (int)checkMALCredentials {
-    // Check if the credentialsvalid flag is not set to false/NO
-    if (![[NSUserDefaults standardUserDefaults] boolForKey:@"credentialsvalid"]) {
-        return 0;
-    }
-    if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"credentialscheckdate"] timeIntervalSinceNow] < 0) {
-        // Check credentials
-        //Set Login URL
-        NSURL *url = [NSURL URLWithString:@"https://myanimelist.net/api/account/verify_credentials.xml"];
-        EasyNSURLConnection *request = [[EasyNSURLConnection alloc] initWithURL:url];
-        [Utility setUserAgent:request];
-        //Ignore Cookies
-        [request setUseCookies:NO];
-        //Set Username and Password
-        request.headers = (NSMutableDictionary *)@{@"Authorization": [NSString stringWithFormat:@"Basic %@", [self getBase64]]};
-        //Verify Username/Password
-        [request startRequest];
-        // Check for errors
-        NSError *error = request.error;
-        if ([request getStatusCode] == 200 && !error) {
-            [[NSUserDefaults standardUserDefaults] setObject:[NSDate dateWithTimeIntervalSinceNow:60*60*24] forKey:@"credentialscheckdate"];
-            NSLog(@"User credentials valid.");
-            return 1;
-        }
-        else if ([request getStatusCode] == 204) {
-            [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"credentialsvalid"];
-            NSLog(@"ERROR: User credentials are invalid. Aborting...");
-            return 0;
+- (void)refreshtoken:(void (^)(bool success)) completionHandler {
+    AFOAuthCredential *cred =
+    [AFOAuthCredential retrieveCredentialWithIdentifier:[self getKeychainServiceName]];
+    NSURL *baseURL = [NSURL URLWithString:@"https://myanimelist.net/"];
+    AFOAuth2Manager *OAuth2Manager = [[AFOAuth2Manager alloc] initWithBaseURL:baseURL
+                                                                     clientID:kMALClientID
+                                                                       secret:kMALClientSecret];
+    [OAuth2Manager setUseHTTPBasicAuthentication:NO];
+    [OAuth2Manager authenticateUsingOAuthWithURLString:@"/v1/oauth2/token"
+                                            parameters:@{@"grant_type":@"refresh_token", @"refresh_token":cred.refreshToken} success:^(AFOAuthCredential *credential) {
+                                                NSLog(@"Token refreshed");
+                                                completionHandler(true);
+                                            }
+                                               failure:^(NSError *error) {
+                                                   NSLog(@"Token cannot be refreshed: %@", error);
+                                                   completionHandler(false);
+                                               }];
+}
+
+- (void)retrieveusername:(void (^)(bool success)) completionHandler {
+    EasyNSURLConnection *request = [[EasyNSURLConnection alloc] init];
+    [request setUseCookies:NO];
+    [request GET:@"https://api.myanimelist.net/v0.20/users/@me?fields=name" headers:@{@"Authorization": [NSString stringWithFormat:@"Bearer %@", [self retrieveCredentials].accessToken]} completion:^(EasyNSURLResponse *response) {
+        NSDictionary *responsedata = response.getResponseDataJsonParsed;
+        if (responsedata[@"name"]) {
+            [NSUserDefaults.standardUserDefaults setObject:responsedata[@"name"] forKey:@"mal-username"];
+            completionHandler(true);
         }
         else {
-            NSLog(@"Unable to check user credentials. Trying again later.");
-            return 2;
+            completionHandler(false);
         }
-    }
-    return 1;
-   
-    
+    } error:^(NSError *error, int statuscode) {
+        completionHandler(false);
+    }];
 }
-
 
 @end
