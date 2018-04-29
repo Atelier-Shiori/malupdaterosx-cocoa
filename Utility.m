@@ -17,7 +17,13 @@
             regex:(OnigRegexp *)regex
            option:(int)i{
     //Checks for matches
-    if ([regex search:title].count > 0) {
+    if ([title isEqualToString:regex.expression]) {
+        return PrimaryTitleMatch;
+    }
+    else if ([atitle isEqualToString:regex.expression]) {
+        return PrimaryTitleMatch;
+    }
+    else if ([regex search:title].count > 0) {
         return PrimaryTitleMatch;
     }
     else if (([regex search:atitle] && atitle.length >0 && i==0)) {
