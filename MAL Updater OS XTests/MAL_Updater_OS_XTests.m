@@ -114,15 +114,27 @@
 }
 
 - (void)testDonationKeyValidation {
-    int status = [Utility checkDonationKey:donorkey name:donorname];
-    if (status == 1) {
-        NSLog(@"Donation key validated successfully");
-        XCTAssert(YES, @"No Errors");
-    }
-    else {
-        NSLog(@"Donation key validated failed");
-        XCTAssert(NO, @"Key validation failed.");
-    }
+    XCTestExpectation *expectation = [self expectationWithDescription:@"DonationKeyCheck"];
+    [Utility checkDonationKey:donorkey name:donorname completion:^(int success) {
+        if (success == 1) {
+            NSLog(@"Donation key validated successfully");
+            XCTAssert(YES, @"No Errors");
+        }
+        else {
+            NSLog(@"Donation key validated failed");
+            XCTAssert(NO, @"Key validation failed.");
+        }
+        [expectation fulfill];
+    }];
+    [self waitForExpectationsWithTimeout:90 handler:^(NSError *error) {
+        
+        if(error)
+        {
+            XCTFail(@"Expectation Failed with error: %@", error);
+        }
+        
+    }];
+
 }
 
 @end

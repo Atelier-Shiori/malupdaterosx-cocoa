@@ -257,10 +257,10 @@
     int season1 = ((NSNumber *)[[Recognition alloc] recognize:match1[@"title"]][@"season"]).intValue;
     int season2 = ((NSNumber *)[[Recognition alloc] recognize:match2[@"title"]][@"season"]).intValue;
     //Score first title
-    score1 = string_fuzzy_score(title.UTF8String, [[NSString stringWithFormat:@"%@", match1[@"title"]] stringByReplacingOccurrencesOfString:@":" withString:@""].UTF8String, fuzziness);
+    score1 = string_fuzzy_score([[NSString stringWithFormat:@"%@", match1[@"title"]] stringByReplacingOccurrencesOfString:@":" withString:@""].UTF8String, title.UTF8String, fuzziness);
     ascore1 = [self gethighestsynonymscore:match1[@"synonyms"] withTitle:title];
     //Score Second Title
-    score2 = string_fuzzy_score(title.UTF8String, [[NSString stringWithFormat:@"%@", match2[@"title"]] stringByReplacingOccurrencesOfString:@":" withString:@""].UTF8String, fuzziness);
+    score2 = string_fuzzy_score([[NSString stringWithFormat:@"%@", match2[@"title"]] stringByReplacingOccurrencesOfString:@":" withString:@""].UTF8String, title.UTF8String, fuzziness);
     ascore2 = [self gethighestsynonymscore:match1[@"synonyms"] withTitle:title];
     NSLog(@"%@ score - %f", match1[@"title"], score1);
     NSLog(@"%@ score - %f", match2[@"title"], score2);
@@ -310,7 +310,7 @@
 - (double)gethighestsynonymscore:(NSArray *)synonyms withTitle:(NSString *)title {
     double score = 0;
     for (NSString *synonym in synonyms ) {
-        double tmpscore = string_fuzzy_score([title stringByReplacingOccurrencesOfString:@":" withString:@""].UTF8String, synonym.UTF8String, 0.3);
+        double tmpscore = string_fuzzy_score(synonym.UTF8String, [title stringByReplacingOccurrencesOfString:@":" withString:@""].UTF8String, 0.3);
         if (tmpscore > score) {
             score = tmpscore;
         }
