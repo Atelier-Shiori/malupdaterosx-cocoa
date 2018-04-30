@@ -8,7 +8,6 @@
 
 #import "AdvancedPrefController.h"
 #import "Utility.h"
-#import <EasyNSURLConnection/EasyNSURLConnection.h>
 #import <DetectionKit/DetectionKit.h>
 
 @interface AdvancedPrefController ()

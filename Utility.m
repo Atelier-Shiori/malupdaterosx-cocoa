@@ -7,9 +7,9 @@
 //
 
 #import "Utility.h"
-#import <EasyNSURLConnection/EasyNSURLConnection.h>
 #import <CocoaOniguruma/OnigRegexp.h>
 #import <CocoaOniguruma/OnigRegexpUtility.h>
+#import <AFNetworking/AFNetworking.h>
 
 @implementation Utility
 + (int)checkMatch:(NSString *)title
@@ -94,20 +94,21 @@
     }
     if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"donatereminderdate"] timeIntervalSinceNow] < 0) {
         if (((NSNumber *)[[NSUserDefaults standardUserDefaults] objectForKey:@"donated"]).boolValue) {
-            int validkey = [Utility checkDonationKey:[[NSUserDefaults standardUserDefaults] objectForKey:@"donatekey"] name:[[NSUserDefaults standardUserDefaults] objectForKey:@"donor"]];
-            if (validkey == 1) {
-                //Reset check
-                [Utility setReminderDate];
-            }
-            else if (validkey == 2) {
-                //Try again when there is internet access
-            }
-            else {
-                //Invalid Key
-                [Utility showsheetmessage:@"Donation Key Error" explaination:@"This key has been revoked. Please contact the author of this program or enter a valid key." window:nil];
-                [Utility showDonateReminder:delegate];
-                [[NSUserDefaults standardUserDefaults] setObject:@NO forKey:@"donated"];
-            }
+            [Utility checkDonationKey:[[NSUserDefaults standardUserDefaults] objectForKey:@"donatekey"] name:[[NSUserDefaults standardUserDefaults] objectForKey:@"donor"] completion:^(int success) {
+                if (success == 1) {
+                    //Reset check
+                    [Utility setReminderDate];
+                }
+                else if (success == 2) {
+                    //Try again when there is internet access
+                }
+                else {
+                    //Invalid Key
+                    [Utility showsheetmessage:@"Donation Key Error" explaination:@"This key has been revoked. Please contact the author of this program or enter a valid key." window:nil];
+                    [Utility showDonateReminder:delegate];
+                    [[NSUserDefaults standardUserDefaults] setObject:@NO forKey:@"donated"];
+                }
+            }];
         }
         else {
             [Utility showDonateReminder:delegate];
@@ -148,36 +149,24 @@
     NSDate *reminderdate = [now dateByAddingTimeInterval:60*60*24*7*2];
     [[NSUserDefaults standardUserDefaults] setObject:reminderdate forKey:@"donatereminderdate"];
 }
-+ (int)checkDonationKey:(NSString *)key name:(NSString *)name{
-        //Set Search API
-        NSURL *url = [NSURL URLWithString:@"https://licensing.malupdaterosx.moe/keycheck.php"];
-        EasyNSURLConnection *request = [[EasyNSURLConnection alloc] initWithURL:url];
-        [request addFormData:name forKey:@"name"];
-        [request addFormData:key forKey:@"key"];
-        //Ignore Cookies
-        [request setUseCookies:NO];
-        //Perform Search
-        [request startJSONFormRequest:EasyNSURLConnectionJsonType];
-        // Get Status Code
-        long statusCode = [request getStatusCode];
-    if (statusCode == 200) {
-        NSError* jerror;
-        NSDictionary *d = [NSJSONSerialization JSONObjectWithData:request.response.responsedata options:0 error:&jerror];
-        int valid = ((NSNumber *)d[@"valid"]).intValue;
++ (void)checkDonationKey:(NSString *)key name:(NSString *)name completion:(void (^)(int success)) completionHandler {
+    // Checks Donation Key validatity
+    AFHTTPSessionManager *manager = [self manager];
+    [manager POST:@"https://licensing.malupdaterosx.moe/keycheck.php" parameters:@{@"name" : name, @"key" : key} progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        int valid = ((NSNumber *)responseObject[@"valid"]).intValue;
         if (valid == 1) {
             // Valid Key
-            return 1;
+            completionHandler(1);
         }
         else {
             // Invalid Key
-            return 0;
+            completionHandler(0);
         }
-    }
-    else {
-        // No Internet
-        return 2;
-    }
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        completionHandler(2);
+    }];
 }
+
 + (NSString *)numbertoordinal:(int)number {
     NSString *tmpnum = [NSString stringWithFormat:@"%i", number];
     tmpnum = [tmpnum substringFromIndex:tmpnum.length-1];
@@ -232,5 +221,16 @@
         }
     }
     return tmparray;
+}
++ (AFHTTPSessionManager*)manager {
+    static dispatch_once_t onceToken;
+    static AFHTTPSessionManager *manager = nil;
+    dispatch_once(&onceToken, ^{
+        manager = [AFHTTPSessionManager manager];
+        manager.requestSerializer = [AFJSONRequestSerializer serializer];
+        manager.responseSerializer = [AFJSONResponseSerializer serializer];
+    });
+    
+    return manager;
 }
 @end

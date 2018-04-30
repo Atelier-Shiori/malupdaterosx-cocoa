@@ -47,26 +47,19 @@
     [_progressindicator startAnimation:self];
     NSString *username = _username.stringValue;
     NSString *password = _password.stringValue;
-    dispatch_queue_t queue = dispatch_get_global_queue(
-                                                       DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-    
-    dispatch_async(queue, ^{
-        bool success = [PlexAuth performplexlogin:username withPassword:password];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            if (success) {
-                _status.stringValue = @"";
-                [self.window.sheetParent endSheet:self.window returnCode:NSModalResponseOK];
-                [self.window close];
-            }
-            else {
-                _status.stringValue = @"Login failed.";
-            }
-            _loginbutton.enabled = YES;
-            _cancelbutton.enabled = YES;
-            _progressindicator.hidden = YES;
-            [_progressindicator stopAnimation:self];
-        });
-    });
-    
+    [PlexAuth performplexlogin:username withPassword:password completion:^(bool success) {
+        if (success) {
+            _status.stringValue = @"";
+            [self.window.sheetParent endSheet:self.window returnCode:NSModalResponseOK];
+            [self.window close];
+        }
+        else {
+            _status.stringValue = @"Login failed.";
+        }
+        _loginbutton.enabled = YES;
+        _cancelbutton.enabled = YES;
+        _progressindicator.hidden = YES;
+        [_progressindicator stopAnimation:self];
+    }];
 }
 @end

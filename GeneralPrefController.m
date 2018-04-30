@@ -7,7 +7,6 @@
 //
 
 #import "GeneralPrefController.h"
-#import <EasyNSURLConnection/EasyNSURLConnection.h>
 #import "MAL_Updater_OS_XAppDelegate.h"
 #import "AutoExceptions.h"
 #import "Utility.h"

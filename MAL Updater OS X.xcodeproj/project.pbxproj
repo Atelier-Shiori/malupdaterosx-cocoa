@@ -119,8 +119,6 @@
 		2D6522731F7B50CD00A65BF8 /* PingNotifier.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2D65226E1F7B50C600A65BF8 /* PingNotifier.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2D6522751F7B50FC00A65BF8 /* MSWeakTimer_macOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D6522741F7B50F700A65BF8 /* MSWeakTimer_macOS.framework */; };
 		2D6522761F7B50FC00A65BF8 /* MSWeakTimer_macOS.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2D6522741F7B50F700A65BF8 /* MSWeakTimer_macOS.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		2D9C3AE11E6A0BC7007D8F68 /* EasyNSURLConnection.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D9C3AE01E6A0BC7007D8F68 /* EasyNSURLConnection.framework */; };
-		2D9C3AE31E6A0C07007D8F68 /* EasyNSURLConnection.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2D9C3AE01E6A0BC7007D8F68 /* EasyNSURLConnection.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2DAFC1DA1E2313B100FB7A14 /* OfflineViewQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DAFC1D81E2313B100FB7A14 /* OfflineViewQueue.m */; };
 		2DAFC1DC1E23143100FB7A14 /* OfflineViewQueue.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2DAFC1DE1E23143100FB7A14 /* OfflineViewQueue.xib */; };
 		2DC900361E257C3300E45570 /* InttoStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DC900351E257C3300E45570 /* InttoStatus.m */; };
@@ -283,7 +281,6 @@
 				2D6313731EDA293B00C3CB6B /* Reachability.framework in CopyFiles */,
 				59D503791CB004BA0002532D /* Sparkle.framework in CopyFiles */,
 				2D3CBE4C1F1532A20085888D /* SAMKeychain.framework in CopyFiles */,
-				2D9C3AE31E6A0C07007D8F68 /* EasyNSURLConnection.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -595,7 +592,6 @@
 				2D6313721EDA293B00C3CB6B /* Reachability.framework in Frameworks */,
 				2D6522751F7B50FC00A65BF8 /* MSWeakTimer_macOS.framework in Frameworks */,
 				91A609F31EA3E77400EF40AB /* CocoaOniguruma.framework in Frameworks */,
-				2D9C3AE11E6A0BC7007D8F68 /* EasyNSURLConnection.framework in Frameworks */,
 				8227C1171A1D8D34005F3301 /* anitomy-osx.framework in Frameworks */,
 				59D503781CB004B10002532D /* Sparkle.framework in Frameworks */,
 				9161B2021E90246200FBF52F /* Crashlytics.framework in Frameworks */,

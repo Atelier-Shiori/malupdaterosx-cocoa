@@ -12,7 +12,6 @@
 #import "MAL_Updater_OS_XAppDelegate.h"
 
 @class OnigRegexp;
-@class EasyNSURLConnection;
 
 @interface Utility : NSObject
 typedef NS_ENUM(unsigned int, matchtype) {
@@ -34,7 +33,7 @@ typedef NS_ENUM(unsigned int, matchtype) {
 + (void)donateCheck:(MAL_Updater_OS_XAppDelegate*)delegate;
 + (void)showDonateReminder:(MAL_Updater_OS_XAppDelegate*)delegate;
 + (void)setReminderDate;
-+ (int)checkDonationKey:(NSString *)key name:(NSString *)name;
++ (void)checkDonationKey:(NSString *)key name:(NSString *)name completion:(void (^)(int success)) completionHandler;
 + (NSString *)numbertoordinal:(int)number;
 + (NSString *)todaydatestring;
 + (bool)checkBeta;
