@@ -7,6 +7,8 @@
 //
 
 #import "MyAnimeList.h"
+@class AFOAuth2Manager;
+@class AFOAuthCredential;
 
 @interface MyAnimeList (Keychain)
 + (BOOL)checkaccount;

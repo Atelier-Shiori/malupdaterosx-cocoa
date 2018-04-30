@@ -7,7 +7,7 @@
 //
 
 #import "MyAnimeList+Update.h"
-#import <EasyNSURLConnection/EasyNSURLConnection.h>
+#import <AFNetworking/AFNetworking.h>
 #import "MyAnimeList+Keychain.h"
 #import "Utility.h"
 #import "MyAnimeList+Twitter.h"

@@ -9,6 +9,7 @@
 #import "MyAnimeList+Keychain.h"
 #import "ClientConstants.h"
 #import "Utility.h"
+#import <AFNetworking/AFNetworking.h>
 
 @implementation MyAnimeList (Keychain)
 + (NSString *)getKeychainServiceName {

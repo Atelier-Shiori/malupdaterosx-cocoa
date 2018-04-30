@@ -37,7 +37,6 @@ typedef NS_ENUM(unsigned int, matchtype) {
 + (int)checkDonationKey:(NSString *)key name:(NSString *)name;
 + (NSString *)numbertoordinal:(int)number;
 + (NSString *)todaydatestring;
-+ (void)setUserAgent:(EasyNSURLConnection *)request;
 + (bool)checkBeta;
 + (NSArray *)convertSearchArray:(NSArray *)a;
 @end

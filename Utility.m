@@ -16,14 +16,8 @@
          alttitle:(NSString *)atitle
             regex:(OnigRegexp *)regex
            option:(int)i{
-    //Checks for matches
-    if ([title isEqualToString:regex.expression]) {
-        return PrimaryTitleMatch;
-    }
-    else if ([atitle isEqualToString:regex.expression]) {
-        return PrimaryTitleMatch;
-    }
-    else if ([regex search:title].count > 0) {
+    // Checks for matches
+    if ([regex search:title].count > 0) {
         return PrimaryTitleMatch;
     }
     else if (([regex search:atitle] && atitle.length >0 && i==0)) {
@@ -217,14 +211,6 @@
     NSDateFormatter *df = [NSDateFormatter new];
     df.dateFormat = @"yyyy-MM-dd";
     return [df stringFromDate:today];
-}
-+ (void)setUserAgent:(EasyNSURLConnection *)request {
-    #ifdef oss
-    #else
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"donated"]) {
-        request.useragent = [NSString stringWithFormat:@"%@ %@ (Macintosh; Mac OS X %@; %@)", @"MAL Updater OS X Pro",[NSBundle mainBundle].infoDictionary[@"CFBundleShortVersionString"], [NSDictionary dictionaryWithContentsOfFile:@"/System/Library/CoreServices/SystemVersion.plist"][@"ProductVersion"], [NSLocale currentLocale].localeIdentifier];
-    }
-#endif
 }
 + (bool)checkBeta {
     // Check if user is using beta. If so, use the experimental Appcast branch.

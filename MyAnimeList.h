@@ -7,13 +7,13 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import <AFNetworking/AFNetworking.h>
 #import "MAL_Updater_OS_XAppDelegate.h"
 #import "DiscordManager.h"
 
 @class Reachability;
 @class Detection;
 @class TwitterManager;
+@class AFHTTPSessionManager;
 
 @interface MyAnimeList : NSObject
 typedef NS_ENUM(unsigned int, ScrobbleStatus) {

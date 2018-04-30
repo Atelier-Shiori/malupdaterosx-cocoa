@@ -7,6 +7,7 @@
 //
 
 #import "MyAnimeList.h"
+#import <AFNetworking/AFNetworking.h>
 #import <DetectionKit/DetectionKit.h>
 #import <TwitterManagerKit/TwitterManagerKit.h>
 #import "MyAnimeList+Search.h"
