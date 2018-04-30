@@ -51,7 +51,7 @@
     [defaults setValue:@NO forKey:@"ConfirmNewTitle"];
     _useSearchCache  = [defaults valueForKey:@"useSearchCache"];
     [defaults setValue:@NO forKey:@"useSearchCache"];
-
+    
 }
 
 - (void)tearDown {

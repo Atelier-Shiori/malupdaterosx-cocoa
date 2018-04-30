@@ -49,7 +49,8 @@
     // Perform search
     NSURLSessionDataTask *task;
     NSError *error;
-    id responseObject = [self.syncmanager syncGET:[NSString stringWithFormat:@"https://api.myanimelist.net/v2/anime?q=%@&limit=25&fields=id,title,main_picture,alternative_titles,start_date,end_date,synopsis,media_type,status,num_episodes", searchterm] parameters:nil task:&task error:&error];
+    NSString *tmpsearchterm = searchterm.length > 50 ? [searchterm substringToIndex:50] : searchterm;
+    id responseObject = [self.syncmanager syncGET:[NSString stringWithFormat:@"https://api.myanimelist.net/v2/anime?q=%@&limit=25&fields=id,title,main_picture,alternative_titles,start_date,end_date,synopsis,media_type,status,num_episodes", tmpsearchterm] parameters:nil task:&task error:&error];
     // Get Status Code
     long statusCode = ((NSHTTPURLResponse *)task.response).statusCode;
     switch (statusCode) {
@@ -58,9 +59,12 @@
             return @"";
         case 200:
             return [self findaniid:responseObject searchterm:searchtitle];
-        default:
+        default: {
+            NSString *ErrorResponse = [[NSString alloc] initWithData:(NSData *)error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] encoding:NSUTF8StringEncoding];
+            NSLog(@"%@",ErrorResponse);
             self.Success = NO;
             return @"";
+        }
     }
     
 }
