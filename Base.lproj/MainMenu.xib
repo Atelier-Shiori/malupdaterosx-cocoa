@@ -400,8 +400,8 @@
                                         <rect key="frame" x="154" y="0.0" width="286" height="190"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                         <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="ypk-hd-jNn">
-                                            <rect key="frame" x="1" y="1" width="269" height="188"/>
-                                            <autoresizingMask key="autoresizingMask"/>
+                                            <rect key="frame" x="1" y="1" width="284" height="188"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <textView editable="NO" importsGraphics="NO" verticallyResizable="YES" findStyle="panel" continuousSpellChecking="YES" allowsNonContiguousLayout="YES" quoteSubstitution="YES" dashSubstitution="YES" smartInsertDelete="YES" id="bGm-dl-hOF">
                                                     <rect key="frame" x="0.0" y="0.0" width="269" height="188"/>
@@ -441,12 +441,12 @@
             <toolbar key="toolbar" implicitIdentifier="DCC0DC7D-FE0D-4AF0-A2AD-D3CF993B3D2A" autosavesConfiguration="NO" allowsUserCustomization="NO" displayMode="iconOnly" sizeMode="regular" id="790">
                 <allowedToolbarItems>
                     <toolbarItem implicitItemIdentifier="0E4188FA-8F45-4FA5-9215-564D57735453" label="Edit Status" paletteLabel="Edit Status" toolTip="Edit Status" image="update" id="k8g-Fn-fps">
-                        <size key="minSize" width="32" height="25"/>
+                        <size key="minSize" width="25" height="25"/>
                         <size key="maxSize" width="32" height="32"/>
-                        <button key="view" verticalHuggingPriority="750" id="Meq-3s-3x5">
-                            <rect key="frame" x="12" y="14" width="32" height="25"/>
+                        <button key="view" verticalHuggingPriority="750" misplaced="YES" id="Meq-3s-3x5">
+                            <rect key="frame" x="13" y="14" width="32" height="25"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="update" imagePosition="below" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="bg1-7y-pBr">
+                            <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="update" imagePosition="above" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="bg1-7y-pBr">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
@@ -459,9 +459,9 @@
                         <size key="minSize" width="32" height="25"/>
                         <size key="maxSize" width="32" height="32"/>
                         <button key="view" verticalHuggingPriority="750" id="sGW-w2-kC0">
-                            <rect key="frame" x="22" y="14" width="32" height="25"/>
+                            <rect key="frame" x="24" y="14" width="32" height="25"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="history" imagePosition="below" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Z3h-uy-9hi">
+                            <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="history" imagePosition="above" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Z3h-uy-9hi">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
@@ -482,9 +482,9 @@
                         <size key="minSize" width="32" height="25"/>
                         <size key="maxSize" width="32" height="32"/>
                         <button key="view" verticalHuggingPriority="750" id="uu4-Ct-6q9">
-                            <rect key="frame" x="16" y="14" width="32" height="25"/>
+                            <rect key="frame" x="17" y="14" width="32" height="25"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="correct" imagePosition="below" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="kSD-gp-80T">
+                            <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="correct" imagePosition="above" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="kSD-gp-80T">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
@@ -518,9 +518,9 @@
                         <size key="minSize" width="32" height="25"/>
                         <size key="maxSize" width="32" height="32"/>
                         <button key="view" verticalHuggingPriority="750" id="KFJ-iS-Wdx">
-                            <rect key="frame" x="37" y="14" width="32" height="25"/>
+                            <rect key="frame" x="40" y="14" width="32" height="25"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="Info" imagePosition="below" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="dZI-lo-iNp">
+                            <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="Info" imagePosition="above" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="dZI-lo-iNp">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="system"/>
                                 <connections>
@@ -552,10 +552,10 @@
         </customObject>
     </objects>
     <resources>
-        <image name="Info" width="32" height="32"/>
+        <image name="Info" width="50" height="50"/>
         <image name="NSShareTemplate" width="11" height="16"/>
-        <image name="correct" width="32" height="32"/>
-        <image name="history" width="32" height="32"/>
-        <image name="update" width="32" height="32"/>
+        <image name="correct" width="50" height="50"/>
+        <image name="history" width="50" height="50"/>
+        <image name="update" width="50" height="50"/>
     </resources>
 </document>
