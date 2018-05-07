@@ -8,10 +8,13 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="GeneralPrefController">
             <connections>
+                <outlet property="animerealtionschk" destination="Q5H-0h-XWS" id="cXo-Ye-dP1"/>
+                <outlet property="animerelationindicator" destination="Fef-Zl-N2B" id="Ka8-Xe-Fwx"/>
                 <outlet property="disablenewtitlebar" destination="30" id="45"/>
                 <outlet property="disablevibarency" destination="31" id="44"/>
                 <outlet property="indicator" destination="81" id="82"/>
                 <outlet property="startatlogin" destination="46" id="61"/>
+                <outlet property="updateanimerelationsbtn" destination="hID-fS-oi8" id="wr1-Ho-sfZ"/>
                 <outlet property="updateexceptionsbtn" destination="65" id="84"/>
                 <outlet property="updateexceptionschk" destination="63" id="85"/>
                 <outlet property="view" destination="3" id="21"/>
@@ -21,11 +24,11 @@
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <userDefaultsController representsSharedInstance="YES" id="2"/>
         <customView misplaced="YES" id="3" userLabel="General">
-            <rect key="frame" x="0.0" y="0.0" width="600" height="384"/>
+            <rect key="frame" x="0.0" y="0.0" width="600" height="440"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <button toolTip="This option when enabled will make MAL Updater OS X start detecting playing media after you launch the program." misplaced="YES" id="5">
-                    <rect key="frame" x="234" y="329" width="234" height="18"/>
+                    <rect key="frame" x="234" y="385" width="234" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Start Scrobbling at startup" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="14">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -36,7 +39,7 @@
                     </connections>
                 </button>
                 <textField verticalHuggingPriority="750" misplaced="YES" allowsCharacterPickerTouchBarItem="YES" id="4">
-                    <rect key="frame" x="120" y="351" width="106" height="17"/>
+                    <rect key="frame" x="120" y="407" width="106" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Scrobbler:" id="15">
                         <font key="font" metaFont="system"/>
@@ -45,7 +48,7 @@
                     </textFieldCell>
                 </textField>
                 <button toolTip="Clears the Search Cache" verticalHuggingPriority="750" misplaced="YES" id="23">
-                    <rect key="frame" x="240" y="211" width="161" height="32"/>
+                    <rect key="frame" x="240" y="267" width="161" height="32"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="push" title="Clear Search Cache" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="26">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -57,7 +60,7 @@
                     </connections>
                 </button>
                 <button misplaced="YES" id="30">
-                    <rect key="frame" x="233" y="84" width="250" height="18"/>
+                    <rect key="frame" x="233" y="70" width="250" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Disable Yosemite Style Titlebar" bezelStyle="regularSquare" imagePosition="left" inset="2" id="37">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -68,7 +71,7 @@
                     </connections>
                 </button>
                 <button misplaced="YES" id="31">
-                    <rect key="frame" x="233" y="62" width="213" height="18"/>
+                    <rect key="frame" x="233" y="48" width="213" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Disable Vibrancy" bezelStyle="regularSquare" imagePosition="left" inset="2" id="36">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -79,7 +82,7 @@
                     </connections>
                 </button>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" allowsCharacterPickerTouchBarItem="YES" id="32">
-                    <rect key="frame" x="99" y="86" width="126" height="17"/>
+                    <rect key="frame" x="99" y="72" width="126" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="UI Options:" id="35">
                         <font key="font" metaFont="system"/>
@@ -88,7 +91,7 @@
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" misplaced="YES" setsMaxLayoutWidthAtFirstLayout="YES" allowsCharacterPickerTouchBarItem="YES" id="33">
-                    <rect key="frame" x="160" y="20" width="316" height="34"/>
+                    <rect key="frame" x="160" y="6" width="316" height="34"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Changing UI Settings require a relaunch to take effect. " id="34">
                         <font key="font" metaFont="smallSystem"/>
@@ -97,7 +100,7 @@
                     </textFieldCell>
                 </textField>
                 <button misplaced="YES" id="24">
-                    <rect key="frame" x="234" y="244" width="223" height="18"/>
+                    <rect key="frame" x="234" y="300" width="223" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <string key="toolTip">This option will save the detected title with the show id so that MAL Updater OS X won't have to search for it again when a previously updated title gets scrobbled again.</string>
                     <buttonCell key="cell" type="check" title="Cache Found Show IDs" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="25">
@@ -109,7 +112,7 @@
                     </connections>
                 </button>
                 <button toolTip="This option allows MAL Updater OS X to launch after startup." misplaced="YES" id="46">
-                    <rect key="frame" x="234" y="350" width="278" height="18"/>
+                    <rect key="frame" x="234" y="406" width="278" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Start MAL Updater OS X at startup" bezelStyle="regularSquare" imagePosition="left" inset="2" id="47">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -120,7 +123,7 @@
                     </connections>
                 </button>
                 <button misplaced="YES" id="52">
-                    <rect key="frame" x="234" y="307" width="250" height="18"/>
+                    <rect key="frame" x="234" y="363" width="250" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <string key="toolTip">This option will make the scrobbler ask if you want to add the title, giving you an opertunity to correct it before applying it.</string>
                     <buttonCell key="cell" type="check" title="Confirm new titles before adding" bezelStyle="regularSquare" imagePosition="left" inset="2" id="55">
@@ -132,7 +135,7 @@
                     </connections>
                 </button>
                 <button toolTip="This option allows the scrobbler to ask if the update is okay before applying it." misplaced="YES" id="53">
-                    <rect key="frame" x="234" y="287" width="256" height="18"/>
+                    <rect key="frame" x="234" y="343" width="256" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Confirm before updating title" bezelStyle="regularSquare" imagePosition="left" inset="2" id="54">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -143,9 +146,9 @@
                     </connections>
                 </button>
                 <button misplaced="YES" id="63">
-                    <rect key="frame" x="233" y="190" width="214" height="18"/>
+                    <rect key="frame" x="233" y="246" width="214" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="check" title="Enable Auto Exceptions" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="64">
+                    <buttonCell key="cell" type="check" title="Enable Auto Title Correction" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="64">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
@@ -155,9 +158,9 @@
                     </connections>
                 </button>
                 <button verticalHuggingPriority="750" misplaced="YES" id="65">
-                    <rect key="frame" x="239" y="158" width="233" height="32"/>
+                    <rect key="frame" x="239" y="214" width="266" height="32"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="push" title="Update Auto Exceptions Data" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="66">
+                    <buttonCell key="cell" type="push" title="Update Auto Title Correction Data" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="66">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
@@ -167,7 +170,7 @@
                     </connections>
                 </button>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" allowsCharacterPickerTouchBarItem="YES" id="67">
-                    <rect key="frame" x="238" y="140" width="274" height="17"/>
+                    <rect key="frame" x="238" y="196" width="274" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Date" id="68">
                         <dateFormatter key="formatter" dateStyle="full" timeStyle="long" id="69"/>
@@ -180,11 +183,11 @@
                     </connections>
                 </textField>
                 <progressIndicator wantsLayer="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" maxValue="100" displayedWhenStopped="NO" bezeled="NO" indeterminate="YES" controlSize="small" style="spinning" id="81">
-                    <rect key="frame" x="221" y="167" width="16" height="16"/>
+                    <rect key="frame" x="221" y="223" width="16" height="16"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                 </progressIndicator>
                 <textField verticalHuggingPriority="750" misplaced="YES" allowsCharacterPickerTouchBarItem="YES" id="1HV-VU-EbU">
-                    <rect key="frame" x="87" y="114" width="138" height="17"/>
+                    <rect key="frame" x="87" y="100" width="138" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Auto Scrobble Every:" id="Mxi-kY-UNM">
                         <font key="font" metaFont="system"/>
@@ -193,7 +196,7 @@
                     </textFieldCell>
                 </textField>
                 <popUpButton verticalHuggingPriority="750" misplaced="YES" id="qPv-9s-fzy">
-                    <rect key="frame" x="233" y="108" width="120" height="26"/>
+                    <rect key="frame" x="233" y="94" width="120" height="26"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <popUpButtonCell key="cell" type="push" title="5 minutes" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" tag="300" imageScaling="proportionallyDown" inset="2" selectedItem="EgG-kR-K8g" id="7YU-h6-1Om">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -216,7 +219,7 @@
                     </connections>
                 </popUpButton>
                 <button misplaced="YES" id="wKb-xa-f6w">
-                    <rect key="frame" x="234" y="266" width="277" height="18"/>
+                    <rect key="frame" x="234" y="322" width="277" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Show correction if title is not found" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="R5j-AN-2aZ">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -226,8 +229,49 @@
                         <binding destination="2" name="value" keyPath="values.showcorrection" id="zFE-2k-gb7"/>
                     </connections>
                 </button>
+                <button misplaced="YES" id="Q5H-0h-XWS">
+                    <rect key="frame" x="230" y="172" width="214" height="18"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="check" title="Enable Anime Relations" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="O4R-3c-Ivz">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="disableAnimeRelations:" target="-2" id="3x1-Np-KbR"/>
+                        <binding destination="2" name="value" keyPath="values.UseAnimeRelations" id="O7S-nd-xGh"/>
+                    </connections>
+                </button>
+                <button verticalHuggingPriority="750" misplaced="YES" id="hID-fS-oi8">
+                    <rect key="frame" x="236" y="140" width="266" height="32"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="push" title="Update Anime Relations Data" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="RY4-g6-cHu">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="updateRelations:" target="-2" id="eqJ-ua-Piv"/>
+                        <binding destination="2" name="enabled" keyPath="values.UseAnimeRelations" id="Zhn-UU-lf2"/>
+                    </connections>
+                </button>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" allowsCharacterPickerTouchBarItem="YES" id="jMl-CZ-7IO">
+                    <rect key="frame" x="235" y="122" width="274" height="17"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Date" id="qv4-jd-Fo1">
+                        <dateFormatter key="formatter" dateStyle="full" timeStyle="long" id="KlU-2w-wOt"/>
+                        <font key="font" metaFont="smallSystem"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                    <connections>
+                        <binding destination="2" name="value" keyPath="values.AnimeRelationsLastUpdated" id="1Q4-wR-3aI"/>
+                    </connections>
+                </textField>
+                <progressIndicator wantsLayer="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" maxValue="100" displayedWhenStopped="NO" bezeled="NO" indeterminate="YES" controlSize="small" style="spinning" id="Fef-Zl-N2B">
+                    <rect key="frame" x="218" y="149" width="16" height="16"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                </progressIndicator>
             </subviews>
-            <point key="canvasLocation" x="232" y="395"/>
+            <point key="canvasLocation" x="232" y="423"/>
         </customView>
     </objects>
 </document>

@@ -199,6 +199,8 @@
 		F842BB41202214A800A7A0A4 /* DiscordRPC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F842BB3F202214A800A7A0A4 /* DiscordRPC.framework */; };
 		F842BB442022158600A7A0A4 /* DiscordManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F842BB432022158600A7A0A4 /* DiscordManager.m */; };
 		F842BB452022158600A7A0A4 /* DiscordManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F842BB432022158600A7A0A4 /* DiscordManager.m */; };
+		F8858CD120A08F1E00C0C12F /* AnimeRelations.m in Sources */ = {isa = PBXBuildFile; fileRef = F8858CD020A08F1E00C0C12F /* AnimeRelations.m */; };
+		F8858CD220A08F1E00C0C12F /* AnimeRelations.m in Sources */ = {isa = PBXBuildFile; fileRef = F8858CD020A08F1E00C0C12F /* AnimeRelations.m */; };
 		F89B20F6206C4FA70028FCB1 /* ClientConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = F89B20F5206C4FA70028FCB1 /* ClientConstants.m */; };
 		F89B20F7206C4FA70028FCB1 /* ClientConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = F89B20F5206C4FA70028FCB1 /* ClientConstants.m */; };
 		F89B2104206C51740028FCB1 /* AFNetworking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F89B2103206C51730028FCB1 /* AFNetworking.framework */; };
@@ -527,6 +529,9 @@
 		F842BB3F202214A800A7A0A4 /* DiscordRPC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DiscordRPC.framework; path = Frameworks/DiscordRPC.framework; sourceTree = "<group>"; };
 		F842BB422022158600A7A0A4 /* DiscordManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DiscordManager.h; sourceTree = "<group>"; };
 		F842BB432022158600A7A0A4 /* DiscordManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DiscordManager.m; sourceTree = "<group>"; };
+		F8858CCE20A08D4E00C0C12F /* MAL_Updater_OS_X_DataModel 7.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "MAL_Updater_OS_X_DataModel 7.xcdatamodel"; sourceTree = "<group>"; };
+		F8858CCF20A08F1E00C0C12F /* AnimeRelations.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AnimeRelations.h; sourceTree = "<group>"; };
+		F8858CD020A08F1E00C0C12F /* AnimeRelations.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AnimeRelations.m; sourceTree = "<group>"; };
 		F89B20F4206C4FA70028FCB1 /* ClientConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ClientConstants.h; sourceTree = "<group>"; };
 		F89B20F5206C4FA70028FCB1 /* ClientConstants.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ClientConstants.m; sourceTree = "<group>"; };
 		F89B2103206C51730028FCB1 /* AFNetworking.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AFNetworking.framework; path = Frameworks/AFNetworking.framework; sourceTree = "<group>"; };
@@ -861,6 +866,8 @@
 				3A6AB37E120F313E00D51D2C /* Base64Category.m */,
 				5C881EF919F462B400E20425 /* NSString_stripHtml.h */,
 				5C881EFA19F462B400E20425 /* NSString_stripHtml.m */,
+				F8858CCF20A08F1E00C0C12F /* AnimeRelations.h */,
+				F8858CD020A08F1E00C0C12F /* AnimeRelations.m */,
 			);
 			name = "Other Classes";
 			sourceTree = "<group>";
@@ -1352,6 +1359,7 @@
 				F89B20F7206C4FA70028FCB1 /* ClientConstants.m in Sources */,
 				F842BB452022158600A7A0A4 /* DiscordManager.m in Sources */,
 				2D17D2572001ACAD00769195 /* NSString_stripHtml.m in Sources */,
+				F8858CD220A08F1E00C0C12F /* AnimeRelations.m in Sources */,
 				2D17D2582001ACAD00769195 /* MyAnimeList+Update.m in Sources */,
 				2D17D25A2001ACAD00769195 /* HistoryWindow.m in Sources */,
 				2D17D25B2001ACAD00769195 /* MyAnimeList+Keychain.m in Sources */,
@@ -1415,6 +1423,7 @@
 				2D3CBE451F1531D40085888D /* PlexPrefs.m in Sources */,
 				5CD36BBA19F2ED88007BB6B6 /* GeneralPrefController.m in Sources */,
 				6FAA0C1F1A7E938400416079 /* ExceptionsCache.m in Sources */,
+				F8858CD120A08F1E00C0C12F /* AnimeRelations.m in Sources */,
 				916D043420190BC2001F7E10 /* TwitterConstants.m in Sources */,
 				2D3CBE481F1531DF0085888D /* PlexLogin.m in Sources */,
 				916D043920190F34001F7E10 /* SocialPrefController.m in Sources */,
@@ -2083,6 +2092,7 @@
 		6F5F6C6D1A71696D006D4607 /* MAL_Updater_OS_X_DataModel.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				F8858CCE20A08D4E00C0C12F /* MAL_Updater_OS_X_DataModel 7.xcdatamodel */,
 				F8D07F48202A43D60008F4E0 /* MAL_Updater_OS_X_DataModel 6.xcdatamodel */,
 				2DE00CDE1F8C1023002573DC /* MAL_Updater_OS_X_DataModel 5.xcdatamodel */,
 				2D907A371F8AC27A00DF47A5 /* MAL_Updater_OS_X_DataModel 4.xcdatamodel */,
@@ -2091,7 +2101,7 @@
 				6F5F6C6E1A71696D006D4607 /* MAL_Updater_OS_X_DataModel 2.xcdatamodel */,
 				6F5F6C6F1A71696D006D4607 /* MAL_Updater_OS_X_DataModel.xcdatamodel */,
 			);
-			currentVersion = F8D07F48202A43D60008F4E0 /* MAL_Updater_OS_X_DataModel 6.xcdatamodel */;
+			currentVersion = F8858CCE20A08D4E00C0C12F /* MAL_Updater_OS_X_DataModel 7.xcdatamodel */;
 			path = MAL_Updater_OS_X_DataModel.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
