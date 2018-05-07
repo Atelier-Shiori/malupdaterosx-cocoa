@@ -150,7 +150,7 @@
         [self updateRelations:self];
     }
     else {
-        // Clears Exceptions if User chooses
+        // Clears anime relations if User chooses
         // Set Up Prompt Message Window
         NSAlert *alert = [[NSAlert alloc] init] ;
         [alert addButtonWithTitle:@"Yes"];

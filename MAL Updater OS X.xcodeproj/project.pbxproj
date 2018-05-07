@@ -201,6 +201,8 @@
 		F842BB452022158600A7A0A4 /* DiscordManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F842BB432022158600A7A0A4 /* DiscordManager.m */; };
 		F8858CD120A08F1E00C0C12F /* AnimeRelations.m in Sources */ = {isa = PBXBuildFile; fileRef = F8858CD020A08F1E00C0C12F /* AnimeRelations.m */; };
 		F8858CD220A08F1E00C0C12F /* AnimeRelations.m in Sources */ = {isa = PBXBuildFile; fileRef = F8858CD020A08F1E00C0C12F /* AnimeRelations.m */; };
+		F8858CD520A0BBBF00C0C12F /* MyAnimeList+AnimeRelations.m in Sources */ = {isa = PBXBuildFile; fileRef = F8858CD420A0BBBF00C0C12F /* MyAnimeList+AnimeRelations.m */; };
+		F8858CD620A0BBBF00C0C12F /* MyAnimeList+AnimeRelations.m in Sources */ = {isa = PBXBuildFile; fileRef = F8858CD420A0BBBF00C0C12F /* MyAnimeList+AnimeRelations.m */; };
 		F89B20F6206C4FA70028FCB1 /* ClientConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = F89B20F5206C4FA70028FCB1 /* ClientConstants.m */; };
 		F89B20F7206C4FA70028FCB1 /* ClientConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = F89B20F5206C4FA70028FCB1 /* ClientConstants.m */; };
 		F89B2104206C51740028FCB1 /* AFNetworking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F89B2103206C51730028FCB1 /* AFNetworking.framework */; };
@@ -532,6 +534,8 @@
 		F8858CCE20A08D4E00C0C12F /* MAL_Updater_OS_X_DataModel 7.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "MAL_Updater_OS_X_DataModel 7.xcdatamodel"; sourceTree = "<group>"; };
 		F8858CCF20A08F1E00C0C12F /* AnimeRelations.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AnimeRelations.h; sourceTree = "<group>"; };
 		F8858CD020A08F1E00C0C12F /* AnimeRelations.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AnimeRelations.m; sourceTree = "<group>"; };
+		F8858CD320A0BBBF00C0C12F /* MyAnimeList+AnimeRelations.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MyAnimeList+AnimeRelations.h"; sourceTree = "<group>"; };
+		F8858CD420A0BBBF00C0C12F /* MyAnimeList+AnimeRelations.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "MyAnimeList+AnimeRelations.m"; sourceTree = "<group>"; };
 		F89B20F4206C4FA70028FCB1 /* ClientConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ClientConstants.h; sourceTree = "<group>"; };
 		F89B20F5206C4FA70028FCB1 /* ClientConstants.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ClientConstants.m; sourceTree = "<group>"; };
 		F89B2103206C51730028FCB1 /* AFNetworking.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AFNetworking.framework; path = Frameworks/AFNetworking.framework; sourceTree = "<group>"; };
@@ -644,6 +648,8 @@
 				590241251C074AF500495A2F /* MyAnimeList+Keychain.m */,
 				829727931A8BB093004F73AB /* MyAnimeList+Search.h */,
 				829727941A8BB093004F73AB /* MyAnimeList+Search.m */,
+				F8858CD320A0BBBF00C0C12F /* MyAnimeList+AnimeRelations.h */,
+				F8858CD420A0BBBF00C0C12F /* MyAnimeList+AnimeRelations.m */,
 				829727961A8BB14E004F73AB /* MyAnimeList+Update.h */,
 				829727971A8BB14E004F73AB /* MyAnimeList+Update.m */,
 				F8E2188520222AB7002E9F70 /* MyAnimeList+Discord.h */,
@@ -1380,6 +1386,7 @@
 				2D17D2662001ACAD00769195 /* AdvancedPrefController.m in Sources */,
 				2D17D2672001ACAD00769195 /* LoginPref.m in Sources */,
 				2D17D2682001ACAD00769195 /* HotkeysPrefs.m in Sources */,
+				F8858CD620A0BBBF00C0C12F /* MyAnimeList+AnimeRelations.m in Sources */,
 				2D17D2692001ACAD00769195 /* StatusUpdateWindow.m in Sources */,
 				2D17D26A2001ACAD00769195 /* SoftwareUpdatesPref.m in Sources */,
 			);
@@ -1421,6 +1428,7 @@
 				2D36F0E51F153F5C00CAC1F5 /* PFAboutWindowController.m in Sources */,
 				F8C32D5620911F4400EAEC70 /* AuthWebView.m in Sources */,
 				2D3CBE451F1531D40085888D /* PlexPrefs.m in Sources */,
+				F8858CD520A0BBBF00C0C12F /* MyAnimeList+AnimeRelations.m in Sources */,
 				5CD36BBA19F2ED88007BB6B6 /* GeneralPrefController.m in Sources */,
 				6FAA0C1F1A7E938400416079 /* ExceptionsCache.m in Sources */,
 				F8858CD120A08F1E00C0C12F /* AnimeRelations.m in Sources */,

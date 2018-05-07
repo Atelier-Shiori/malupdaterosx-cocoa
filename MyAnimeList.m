@@ -13,6 +13,7 @@
 #import "MyAnimeList+Search.h"
 #import "MyAnimeList+Update.h"
 #import "MyAnimeList+Keychain.h"
+#import "MyAnimeList+AnimeRelations.h"
 #import <Reachability/Reachability.h>
 #import "Utility.h"
 #import "TwitterConstants.h"
@@ -253,7 +254,7 @@
     }
     return status;
 }
-- (int)performscrobbletest:(NSString *)filename delete:(bool)deletetitle{
+- (int)performscrobbletest:(NSString *)filename delete:(bool)deletetitle {
     NSDictionary *result = [[Recognition alloc] recognize:filename];
     //Populate Data
     _DetectedTitle = result[@"title"];
@@ -278,7 +279,8 @@
     }
     return status;
 }
-- (int)scrobble{
+
+- (int)scrobble {
     NSLog(@"=============");
     NSLog(@"Scrobbling...");
     int status;
@@ -482,7 +484,7 @@
     }
     else {_DetectedTitleisEpisodeZero = false;}
 }
-- (NSString *)checkCache{
+- (NSString *)checkCache {
     NSManagedObjectContext *moc = managedObjectContext;
     NSFetchRequest *allCaches = [[NSFetchRequest alloc] init];
     allCaches.entity = [NSEntityDescription entityForName:@"Cache" inManagedObjectContext:moc];
@@ -500,6 +502,16 @@
                 NSNumber *totalepisodes = [cacheentry valueForKey:@"totalEpisodes"];
                 if ( _DetectedEpisode.intValue <= totalepisodes.intValue || totalepisodes.intValue == 0 ) {
                     return [cacheentry valueForKey:@"id"];
+                }
+                else {
+                    // Check Anime Relations
+                     if ([NSUserDefaults.standardUserDefaults boolForKey:@"UseAnimeRelations"]) {
+                        int newid = [self checkAnimeRelations:((NSString *)[cacheentry valueForKey:@"id"]).intValue];
+                        if (newid > 0) {
+                            NSLog(@"Using Anime Relations mapping id...");
+                            return @(newid).stringValue;
+                        }
+                     }
                 }
             }
         }

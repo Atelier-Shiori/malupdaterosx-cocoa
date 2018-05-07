@@ -36,7 +36,7 @@
     [self.window makeKeyAndOrderFront:self];
     [self.window orderOut:self];
     // Set up UI
-    _showtitle.objectValue = MALEngine.LastScrobbledTitle;
+    _showtitle.objectValue = MALEngine.LastScrobbledActualTitle;
     [_showscore selectItemWithTag:MALEngine.TitleScore];
     [_showstatus selectItemAtIndex:[MALEngine getWatchStatus]];
     _airing = MALEngine.airing;

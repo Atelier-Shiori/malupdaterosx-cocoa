@@ -15,6 +15,7 @@
 #import "FixSearchDialog.h"
 #import "Hotkeys.h"
 #import "AutoExceptions.h"
+#import "AnimeRelations.h"
 #import "Utility.h"
 #import "ExceptionsCache.h"
 #import "HistoryWindow.h"
@@ -202,6 +203,7 @@
     defaultValues[@"ConfirmNewTitle"] = @YES;
     defaultValues[@"ConfirmUpdates"] = @NO;
     defaultValues[@"UseAutoExceptions"] = @YES;
+    defaultValues[@"UseAnimeRelations"] = @YES;
     defaultValues[@"timerinterval"] = @(300);
     defaultValues[@"showcorrection"] = @YES;
     defaultValues[@"NSApplicationCrashOnExceptions"] = @YES;
@@ -675,7 +677,7 @@
                 NSDictionary *ainfo = MALEngine.LastScrobbledInfo;
                 if (ainfo != nil) { // Checks if MAL Updater OS X already populated info about the just updated title.
                     [self showAnimeInfo:ainfo];
-                    [_shareMenu generateShareMenu:@[[NSString stringWithFormat:@"%@ - %@", MALEngine.LastScrobbledTitle, MALEngine.LastScrobbledEpisode ], [NSURL URLWithString:[NSString stringWithFormat:@"http://myanimelist.net/anime/%@", MALEngine.AniID]]]];
+                    [_shareMenu generateShareMenu:@[[NSString stringWithFormat:@"%@ - %@", MALEngine.LastScrobbledActualTitle, MALEngine.LastScrobbledEpisode ], [NSURL URLWithString:[NSString stringWithFormat:@"http://myanimelist.net/anime/%@", MALEngine.AniID]]]];
                     shareMenuItem.hidden = NO;
                 }
             }
@@ -838,6 +840,19 @@
             else {
                 // First time, populate
                 [AutoExceptions updateAutoExceptions];
+            }
+        }
+        if ([[NSUserDefaults standardUserDefaults] boolForKey:@"UseAnimeRelations"]) {
+            // Check for latest list of Anime Relations automatically each week
+            if ([[NSUserDefaults standardUserDefaults] objectForKey:@"AnimeRelationsLastUpdated"]) {
+                if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"AnimeRelationsLastUpdated"] timeIntervalSinceNow] < -604800) {
+                    // Has been 1 Week, update Anime Relations
+                    [AnimeRelations updateRelations];
+                }
+            }
+            else {
+                // First time, populate
+                [AnimeRelations updateRelations];
             }
         }
         int status = 0;

@@ -11,6 +11,7 @@
 #import "Utility.h"
 #import "ExceptionsCache.h"
 #import "Recognition.h"
+#import "MyAnimeList+AnimeRelations.h"
 #import <AFNetworking/AFNetworking.h>
 
 @implementation MyAnimeList (Search)
@@ -171,7 +172,7 @@
                     }
                 }
                 //Return titleid if episode is valid
-                if (([NSString stringWithFormat:@"%@", searchentry[@"num_episodes"]].intValue == 0 || ([NSString stringWithFormat:@"%@",searchentry[@"num_episodes"]].intValue >= (self.DetectedEpisode).intValue))) {
+                if (([NSString stringWithFormat:@"%@", searchentry[@"num_episodes"]].intValue == 0 || ([NSString stringWithFormat:@"%@",searchentry[@"num_episodes"]].intValue >= (self.DetectedEpisode).intValue)) && self.DetectedEpisode.intValue > 0) {
                     NSLog(@"Valid Episode Count");
                     NSLog(@"Term length: %li, Show title Length: %li, alt title length: %li", term.length, theshowtitle.length, alttitle.length);
                     if (sortedArray.count == 1 || self.DetectedSeason >= 2) {
@@ -196,6 +197,13 @@
                     }
                 }
                 else {
+                    if ([NSUserDefaults.standardUserDefaults boolForKey:@"UseAnimeRelations"]) {
+                        int newid = [self checkAnimeRelations:((NSNumber *)searchentry[@"id"]).intValue];
+                        if (newid > 0) {
+                            [self foundtitle:[NSString stringWithFormat:@"%@",searchentry[@"id"]] info:searchentry];
+                            return @(newid).stringValue;
+                        }
+                    }
                     // Detected episodes exceed total episodes
                     continue;
                 }
@@ -336,4 +344,5 @@
     NSString *tmpterm = [self removeslashsearchterm:searchterm];
     return (string_score([title stringByReplacingOccurrencesOfString:@":" withString:@""].UTF8String, tmpterm.UTF8String) >= .95 || string_score([altTitle stringByReplacingOccurrencesOfString:@":" withString:@""].UTF8String, tmpterm.UTF8String) >= .95);
 }
+
 @end
