@@ -523,7 +523,7 @@
     NSManagedObjectContext *moc = self.managedObjectContext;
     bool found = false;
     NSPredicate *predicate;
-    for (int i = 0; i < 2; i++) {
+    for (int i = 0; i < 3; i++) {
         
         NSFetchRequest *allExceptions = [[NSFetchRequest alloc] init];
         __block NSError *error = nil;
@@ -537,14 +537,19 @@
                 predicate = [NSPredicate predicateWithFormat: @"(detectedTitle ==[c] %@) AND ((detectedSeason == %i) OR (detectedSeason == %i))", _DetectedTitle, 0, 1];
             }
         }
-        else if (i== 1 && [[NSUserDefaults standardUserDefaults] boolForKey:@"UseAutoExceptions"]) {
+        else if (i < 3 && [[NSUserDefaults standardUserDefaults] boolForKey:@"UseAutoExceptions"]) {
             NSLog(@"Checking Auto Exceptions");
-            allExceptions.entity = [NSEntityDescription entityForName:@"AutoExceptions" inManagedObjectContext:moc];
+            allExceptions.entity = [NSEntityDescription entityForName:@"AutoCorrection" inManagedObjectContext:moc];
             if (_DetectedSeason == 1 || _DetectedSeason == 0) {
                 predicate = [NSPredicate predicateWithFormat: @"(detectedTitle ==[c] %@) AND ((group == %@) OR (group == %@))", _DetectedTitle, _DetectedGroup, @"ALL"];
             }
             else {
-                predicate = [NSPredicate predicateWithFormat: @"((detectedTitle ==[c] %@) OR (detectedTitle ==[c] %@) OR (detectedTitle ==[c] %@)) AND ((group == %@) OR (group == %@))", [NSString stringWithFormat:@"%@ %i", _DetectedTitle, _DetectedSeason], [NSString stringWithFormat:@"%@ S%i", _DetectedTitle, _DetectedSeason], [NSString stringWithFormat:@"%@ %@ Season", _DetectedTitle, [Utility numbertoordinal:_DetectedSeason]], _DetectedGroup, @"ALL"];
+                if (i == 1) {
+                    predicate = [NSPredicate predicateWithFormat: @"((detectedTitle ==[c] %@) OR (detectedTitle ==[c] %@) OR (detectedTitle ==[c] %@)) AND ((group == %@) OR (group == %@))", [NSString stringWithFormat:@"%@ %i", _DetectedTitle, _DetectedSeason], [NSString stringWithFormat:@"%@ S%i", _DetectedTitle, _DetectedSeason], [NSString stringWithFormat:@"%@ %@ Season", _DetectedTitle, [Utility numbertoordinal:_DetectedSeason]], _DetectedGroup, @"ALL"];
+                }
+                else {
+                    predicate = [NSPredicate predicateWithFormat: @"(detectedTitle ==[c] %@) AND ((group == %@) OR (group == %@))", _DetectedTitle, _DetectedGroup, @"ALL"];
+                }
             }
         }
         else {break;}
@@ -598,8 +603,10 @@
                         if (tmpepisode > 0) {
                             _DetectedEpisode = [NSString stringWithFormat:@"%i", tmpepisode];
                         }
+                        if (_DetectedSeason > 0 && i != 2) {
+                            _DetectedSeason = 0;
+                        }
                         _DetectedType = @"";
-                        _DetectedSeason = 0;
                         _DetectedTitleisEpisodeZero = false;
                         found = true;
                         break;

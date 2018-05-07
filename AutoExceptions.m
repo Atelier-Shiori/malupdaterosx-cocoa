@@ -59,7 +59,7 @@
     AFHTTPSessionManager *manager = [self manager];
     NSError *error;
     NSURLSessionDataTask *task;
-    id responseObject = [manager syncGET:@"https://exceptions.ateliershiori.moe" parameters:nil task:&task error:&error];
+    id responseObject = [manager syncGET:@"http://exceptions.malupdaterosx.moe/corrections/" parameters:nil task:&task error:&error];
     // Get Status Code
     switch (((NSHTTPURLResponse *)task.response).statusCode) {
         case 200:{
@@ -88,7 +88,7 @@
                     else {
                         // Add Entry to Auto Exceptions
                         obj = [NSEntityDescription
-                               insertNewObjectForEntityForName:@"AutoExceptions"
+                               insertNewObjectForEntityForName:@"AutoCorrection"
                                inManagedObjectContext: moc];
                         // Set values in the new record
                         [obj setValue:detectedtitle forKey:@"detectedTitle"];
@@ -117,7 +117,7 @@
     MAL_Updater_OS_XAppDelegate *delegate = (MAL_Updater_OS_XAppDelegate *)[NSApplication sharedApplication].delegate;
     NSManagedObjectContext *moc = delegate.managedObjectContext;
     NSFetchRequest *allExceptions = [[NSFetchRequest alloc] init];
-    allExceptions.entity = [NSEntityDescription entityForName:@"AutoExceptions" inManagedObjectContext:moc];
+    allExceptions.entity = [NSEntityDescription entityForName:@"AutoCorrection" inManagedObjectContext:moc];
     
     NSError *error = nil;
     NSArray *exceptions = [moc executeFetchRequest:allExceptions error:&error];
@@ -139,7 +139,7 @@
     NSManagedObjectContext *moc = delegate.managedObjectContext;
     NSPredicate *predicate = [NSPredicate predicateWithFormat: @"(detectedTitle ==[c] %@) AND (correctTitle == %@) AND (group ==[c] %@) AND (iszeroepisode == %i) AND (episodeOffset == %i)", ctitle,correcttitle, group, zeroepisode, offset] ;
     NSFetchRequest *exfetch = [[NSFetchRequest alloc] init];
-    exfetch.entity = [NSEntityDescription entityForName:@"AutoExceptions" inManagedObjectContext:moc];
+    exfetch.entity = [NSEntityDescription entityForName:@"AutoCorrection" inManagedObjectContext:moc];
     exfetch.predicate = predicate;
     NSArray *exceptions = [moc executeFetchRequest:exfetch error:&error];
     if (exceptions.count > 0) {
