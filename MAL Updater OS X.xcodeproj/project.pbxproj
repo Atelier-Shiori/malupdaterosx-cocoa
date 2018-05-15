@@ -203,6 +203,9 @@
 		91A8DD5E1E736814006E3566 /* NSNumberFormatterNumberOnly.m in Sources */ = {isa = PBXBuildFile; fileRef = 91A8DD5C1E736814006E3566 /* NSNumberFormatterNumberOnly.m */; };
 		91A9B6691EA918FB00645690 /* MAL_Updater_OS_XTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 91A9B6681EA918FB00645690 /* MAL_Updater_OS_XTests.m */; };
 		91A9B6701EA9192D00645690 /* testdata.json in Resources */ = {isa = PBXBuildFile; fileRef = 9115DA401EA911A300CAEF4E /* testdata.json */; };
+		F84F3D3920AB248A00B9250F /* DonationCheck_KeyOnly.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F84F3D3820AB248A00B9250F /* DonationCheck_KeyOnly.framework */; };
+		F84F3D3A20AB249900B9250F /* DonationCheck_KeyOnly.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F84F3D3820AB248A00B9250F /* DonationCheck_KeyOnly.framework */; };
+		F84F3D3B20AB249900B9250F /* DonationCheck_KeyOnly.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = F84F3D3820AB248A00B9250F /* DonationCheck_KeyOnly.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -251,6 +254,7 @@
 				91206C1F1E75F5AD0050E9C5 /* MASPreferences.framework in CopyFiles */,
 				2D3CBE4A1F1532950085888D /* XMLReader.framework in CopyFiles */,
 				2D63136F1EDA287200C3CB6B /* DetectionKit.framework in CopyFiles */,
+				F84F3D3B20AB249900B9250F /* DonationCheck_KeyOnly.framework in CopyFiles */,
 				91A609F51EA3E77C00EF40AB /* CocoaOniguruma.framework in CopyFiles */,
 				2D6522711F7B50CD00A65BF8 /* GBPing.framework in CopyFiles */,
 				2D6313731EDA293B00C3CB6B /* Reachability.framework in CopyFiles */,
@@ -497,6 +501,7 @@
 		91A9B6661EA918FB00645690 /* MAL Updater OS XTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "MAL Updater OS XTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		91A9B6681EA918FB00645690 /* MAL_Updater_OS_XTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MAL_Updater_OS_XTests.m; sourceTree = "<group>"; };
 		91A9B66A1EA918FB00645690 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F84F3D3820AB248A00B9250F /* DonationCheck_KeyOnly.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DonationCheck_KeyOnly.framework; path = Frameworks/DonationCheck_KeyOnly.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -545,6 +550,7 @@
 				91206C1E1E75F5AD0050E9C5 /* MASPreferences.framework in Frameworks */,
 				9149EBE21E75F8A700B1AA22 /* MASShortcut.framework in Frameworks */,
 				2D6313721EDA293B00C3CB6B /* Reachability.framework in Frameworks */,
+				F84F3D3920AB248A00B9250F /* DonationCheck_KeyOnly.framework in Frameworks */,
 				2D6522751F7B50FC00A65BF8 /* MSWeakTimer_macOS.framework in Frameworks */,
 				91A609F31EA3E77400EF40AB /* CocoaOniguruma.framework in Frameworks */,
 				2D9C3AE11E6A0BC7007D8F68 /* EasyNSURLConnection.framework in Frameworks */,
@@ -565,6 +571,7 @@
 				2D63136E1EDA287200C3CB6B /* DetectionKit.framework in Frameworks */,
 				9161B2011E90246200FBF52F /* Fabric.framework in Frameworks */,
 				5C2B9DFC1221EB25006DEF0D /* CoreData.framework in Frameworks */,
+				F84F3D3A20AB249900B9250F /* DonationCheck_KeyOnly.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -629,6 +636,7 @@
 		1058C7A2FEA54F0111CA2CBB /* Other Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F84F3D3820AB248A00B9250F /* DonationCheck_KeyOnly.framework */,
 				2D6522741F7B50F700A65BF8 /* MSWeakTimer_macOS.framework */,
 				2D65226F1F7B50C700A65BF8 /* GBPing.framework */,
 				2D65226E1F7B50C600A65BF8 /* PingNotifier.framework */,

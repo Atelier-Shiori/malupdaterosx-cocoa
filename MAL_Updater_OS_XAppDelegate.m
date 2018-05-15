@@ -697,7 +697,8 @@
             [copyrightstr appendFormat:@"This copy is registered to: MAL Library User"];
         }
         else {
-            [copyrightstr appendFormat:@"This copy is registered to: %@", [[NSUserDefaults standardUserDefaults] objectForKey:@"donor"]];
+            [copyrightstr appendFormat:@"This copy is registered to: %@\r", [[NSUserDefaults standardUserDefaults] objectForKey:@"donor"]];
+            [copyrightstr appendFormat:@"Donation Key: %@", [[NSUserDefaults standardUserDefaults] objectForKey:@"donatekey"]];
         }
     }
     else {

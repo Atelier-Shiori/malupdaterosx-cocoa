@@ -10,6 +10,10 @@
 #import <EasyNSURLConnection/EasyNSURLConnection.h>
 #import <CocoaOniguruma/OnigRegexp.h>
 #import <CocoaOniguruma/OnigRegexpUtility.h>
+#ifdef oss
+#else
+#import <DonationCheck_KeyOnly/DonationKeyVerify.h>
+#endif
 
 @implementation Utility
 + (int)checkMatch:(NSString *)title
@@ -85,31 +89,34 @@
 }
 + (void)donateCheck:(MAL_Updater_OS_XAppDelegate*)delegate{
     if ([NSUserDefaults.standardUserDefaults boolForKey:@"MacAppStoreMigrated"]) {
+        [[NSUserDefaults standardUserDefaults] setObject:@NO forKey:@"donated"];
+        [[NSUserDefaults standardUserDefaults] setObject:@NO forKey:@"MacAppStoreMigrated"];
         return;
     }
     if (![[NSUserDefaults standardUserDefaults] objectForKey:@"donatereminderdate"]) {
         [Utility setReminderDate];
     }
-    if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"donatereminderdate"] timeIntervalSinceNow] < 0) {
-        if (((NSNumber *)[[NSUserDefaults standardUserDefaults] objectForKey:@"donated"]).boolValue) {
-            int validkey = [Utility checkDonationKey:[[NSUserDefaults standardUserDefaults] objectForKey:@"donatekey"] name:[[NSUserDefaults standardUserDefaults] objectForKey:@"donor"]];
-            if (validkey == 1) {
-                //Reset check
-                [Utility setReminderDate];
-            }
-            else if (validkey == 2) {
-                //Try again when there is internet access
-            }
-            else {
-                //Invalid Key
-                [Utility showsheetmessage:@"Donation Key Error" explaination:@"This key has been revoked. Please contact the author of this program or enter a valid key." window:nil];
-                [Utility showDonateReminder:delegate];
-                [[NSUserDefaults standardUserDefaults] setObject:@NO forKey:@"donated"];
-            }
+    if (((NSNumber *)[[NSUserDefaults standardUserDefaults] objectForKey:@"donated"]).boolValue) {
+        int validkey = [Utility checkDonationKey:[[NSUserDefaults standardUserDefaults] objectForKey:@"donatekey"] name:[[NSUserDefaults standardUserDefaults] objectForKey:@"donor"]];
+        if (validkey == 1) {
+            //Reset check
+            [Utility setReminderDate];
+            return;
+        }
+        else if (validkey == 2) {
+            //Try again when there is internet access
+            return;
         }
         else {
+            //Invalid Key
+            [Utility showsheetmessage:@"Donation Key Error" explaination:@"This key has been revoked. Please contact the author of this program or enter a valid key." window:nil];
             [Utility showDonateReminder:delegate];
+            [[NSUserDefaults standardUserDefaults] setObject:@NO forKey:@"donated"];
+            return;
         }
+    }
+    if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"donatereminderdate"] timeIntervalSinceNow] < 0) {
+        [Utility showDonateReminder:delegate];
     }
 }
 + (void)showDonateReminder:(MAL_Updater_OS_XAppDelegate*)delegate{
@@ -147,23 +154,34 @@
     [[NSUserDefaults standardUserDefaults] setObject:reminderdate forKey:@"donatereminderdate"];
 }
 + (int)checkDonationKey:(NSString *)key name:(NSString *)name{
-        //Set Search API
-        NSURL *url = [NSURL URLWithString:@"https://licensing.malupdaterosx.moe/keycheck.php"];
-        EasyNSURLConnection *request = [[EasyNSURLConnection alloc] initWithURL:url];
-        [request addFormData:name forKey:@"name"];
-        [request addFormData:key forKey:@"key"];
-        //Ignore Cookies
-        [request setUseCookies:NO];
-        //Perform Search
-        [request startJSONFormRequest:EasyNSURLConnectionJsonType];
-        // Get Status Code
-        long statusCode = [request getStatusCode];
+    // Check Cocoafob Keys
+    bool valid = [DonationKeyVerify checkMALULicense:name withDonationKey:key];
+    if (valid) {
+        return 1;
+    }
+    // Checks Donation Key validatity
+    NSURL *url = [NSURL URLWithString:@"https://licensing.malupdaterosx.moe/keycheck.php"];
+    EasyNSURLConnection *request = [[EasyNSURLConnection alloc] initWithURL:url];
+    [request addFormData:name forKey:@"name"];
+    [request addFormData:key forKey:@"key"];
+    //Ignore Cookies
+    [request setUseCookies:NO];
+    //Perform Search
+    [request startJSONFormRequest:EasyNSURLConnectionJsonType];
+    // Get Status Code
+    long statusCode = [request getStatusCode];
     if (statusCode == 200) {
         NSError* jerror;
         NSDictionary *d = [NSJSONSerialization JSONObjectWithData:request.response.responsedata options:nil error:&jerror];
         int valid = ((NSNumber *)d[@"valid"]).intValue;
         if (valid == 1) {
             // Valid Key
+            if (d[@"newlicense"]) {
+                [[NSUserDefaults standardUserDefaults] setObject:d[@"newlicense"] forKey:@"donatekey"];
+            }
+            else {
+                [[NSUserDefaults standardUserDefaults] setObject:key forKey:@"donatekey"];
+            }
             return 1;
         }
         else {
