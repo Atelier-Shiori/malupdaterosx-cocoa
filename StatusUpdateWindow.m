@@ -43,8 +43,11 @@
     _completedairing = MALEngine.completedairing;
     _currentwatchedepisode = MALEngine.DetectedCurrentEpisode;
     _episodefield.stringValue = [NSString stringWithFormat:@"%i", MALEngine.DetectedCurrentEpisode];
-    if (MALEngine.TotalEpisodes !=0) {
+    if (MALEngine.TotalEpisodes != 0 ) {
         _epiformatter.maximum = @(MALEngine.TotalEpisodes);
+    }
+    else {
+        _epiformatter.maximum = @(9999999);
     }
     // Stop Timer temporarily if scrobbling is turned on
     MAL_Updater_OS_XAppDelegate *appdel = (MAL_Updater_OS_XAppDelegate *)[NSApplication sharedApplication].delegate;
@@ -77,7 +80,7 @@
         NSBeep();
         return;
     }
-    else if (_episodefield.intValue < _epiformatter.maximum.intValue || _episodefield.intValue < 0) {
+    else if (_episodefield.intValue > _epiformatter.maximum.intValue || _episodefield.intValue < 0) {
         NSBeep();
         _episodefield.intValue = _currentwatchedepisode;
         return;
