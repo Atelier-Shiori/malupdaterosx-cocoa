@@ -13,6 +13,12 @@ MAL Updater OS XTests/DonationKeyConstants.m
 TwitterConstants.m
 Frameworks/TorrentBrowser.framework.dSYM/**
 Frameworks/TorrentBrowser.framework/**
+Frameworks/Legacy/TorrentBrowser.framework/**
+Frameworks/Legacy/TorrentBrowser.framework
 
 MAL Updater OS X.xcodeproj/xcuserdata/takanashirikka.xcuserdatad/xcdebugger/Breakpoints_v2.xcbkptlist
 ClientConstants.m
+Frameworks/DonationCheck_KeyOnly.framework.dSYM
+Frameworks/DonationCheck_KeyOnly.framework
+Frameworks/DonationCheck_KeyOnly.framework.dSYM/**
+Frameworks/DonationCheck_KeyOnly.framework/**
