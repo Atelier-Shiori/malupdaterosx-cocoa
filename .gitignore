@@ -13,3 +13,7 @@ Frameworks/TorrentBrowser.framework.dSYM/**
 Frameworks/TorrentBrowser.framework
 Frameworks/TorrentBrowser.framework/**
 ClientConstants.m
+Frameworks/DonationCheck_KeyOnly.framework.dSYM
+Frameworks/DonationCheck_KeyOnly.framework
+Frameworks/DonationCheck_KeyOnly.framework.dSYM/**
+Frameworks/DonationCheck_KeyOnly.framework/**

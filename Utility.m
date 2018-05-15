@@ -10,6 +10,10 @@
 #import <CocoaOniguruma/OnigRegexp.h>
 #import <CocoaOniguruma/OnigRegexpUtility.h>
 #import <AFNetworking/AFNetworking.h>
+#ifdef oss
+#else
+#import <DonationCheck_KeyOnly/DonationKeyVerify.h>
+#endif
 
 @implementation Utility
 + (int)checkMatch:(NSString *)title
@@ -85,34 +89,36 @@
 + (NSString *)urlEncodeString:(NSString *)string{
     return [string stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLHostAllowedCharacterSet] ];
 }
+
 + (void)donateCheck:(MAL_Updater_OS_XAppDelegate*)delegate{
     if ([NSUserDefaults.standardUserDefaults boolForKey:@"MacAppStoreMigrated"]) {
+        [[NSUserDefaults standardUserDefaults] setObject:@NO forKey:@"donated"];
+        [[NSUserDefaults standardUserDefaults] setObject:@NO forKey:@"MacAppStoreMigrated"];
         return;
     }
     if (![[NSUserDefaults standardUserDefaults] objectForKey:@"donatereminderdate"]) {
         [Utility setReminderDate];
     }
+    if (((NSNumber *)[[NSUserDefaults standardUserDefaults] objectForKey:@"donated"]).boolValue) {
+        [Utility checkDonationKey:[[NSUserDefaults standardUserDefaults] objectForKey:@"donatekey"] name:[[NSUserDefaults standardUserDefaults] objectForKey:@"donor"] completion:^(int success) {
+            if (success == 1) {
+                //Reset check
+                [Utility setReminderDate];
+            }
+            else if (success == 2) {
+                //Try again when there is internet access
+            }
+            else {
+                //Invalid Key
+                [Utility showsheetmessage:@"Donation Key Error" explaination:@"This key has been revoked. Please contact the author of this program or enter a valid key." window:nil];
+                [Utility showDonateReminder:delegate];
+                [[NSUserDefaults standardUserDefaults] setObject:@NO forKey:@"donated"];
+            }
+        }];
+        return;
+    }
     if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"donatereminderdate"] timeIntervalSinceNow] < 0) {
-        if (((NSNumber *)[[NSUserDefaults standardUserDefaults] objectForKey:@"donated"]).boolValue) {
-            [Utility checkDonationKey:[[NSUserDefaults standardUserDefaults] objectForKey:@"donatekey"] name:[[NSUserDefaults standardUserDefaults] objectForKey:@"donor"] completion:^(int success) {
-                if (success == 1) {
-                    //Reset check
-                    [Utility setReminderDate];
-                }
-                else if (success == 2) {
-                    //Try again when there is internet access
-                }
-                else {
-                    //Invalid Key
-                    [Utility showsheetmessage:@"Donation Key Error" explaination:@"This key has been revoked. Please contact the author of this program or enter a valid key." window:nil];
-                    [Utility showDonateReminder:delegate];
-                    [[NSUserDefaults standardUserDefaults] setObject:@NO forKey:@"donated"];
-                }
-            }];
-        }
-        else {
-            [Utility showDonateReminder:delegate];
-        }
+        [Utility showDonateReminder:delegate];
     }
 }
 + (void)showDonateReminder:(MAL_Updater_OS_XAppDelegate*)delegate{
@@ -150,6 +156,12 @@
     [[NSUserDefaults standardUserDefaults] setObject:reminderdate forKey:@"donatereminderdate"];
 }
 + (void)checkDonationKey:(NSString *)key name:(NSString *)name completion:(void (^)(int success)) completionHandler {
+    // Check Cocoafob Keys
+    bool valid = [DonationKeyVerify checkMALULicense:name withDonationKey:key];
+    if (valid) {
+        completionHandler(1);
+        return;
+    }
     // Checks Donation Key validatity
     AFHTTPSessionManager *manager = [self manager];
     [manager POST:@"https://licensing.malupdaterosx.moe/keycheck.php" parameters:@{@"name" : name, @"key" : key} progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
