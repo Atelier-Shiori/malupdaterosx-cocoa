@@ -168,6 +168,12 @@
         int valid = ((NSNumber *)responseObject[@"valid"]).intValue;
         if (valid == 1) {
             // Valid Key
+            if (responseObject[@"newlicense"]) {
+                 [[NSUserDefaults standardUserDefaults] setObject:responseObject[@"newlicense"] forKey:@"donatekey"];
+            }
+            else {
+                [[NSUserDefaults standardUserDefaults] setObject:key forKey:@"donatekey"];
+            }
             completionHandler(1);
         }
         else {

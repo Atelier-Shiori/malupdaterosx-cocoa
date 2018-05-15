@@ -40,7 +40,6 @@
                 [Utility showsheetmessage:@"Registered" explaination:@"Thank you for donating. The donation reminder will no longer appear and exclusive features are unlocked." window:nil];
                 // Add to the preferences
                 [[NSUserDefaults standardUserDefaults] setObject:name.stringValue forKey:@"donor"];
-                [[NSUserDefaults standardUserDefaults] setObject:key.stringValue forKey:@"donatekey"];
                 [[NSUserDefaults standardUserDefaults] setObject:@YES forKey:@"donated"];
                 //Close Window
                 [self.window orderOut:self];
