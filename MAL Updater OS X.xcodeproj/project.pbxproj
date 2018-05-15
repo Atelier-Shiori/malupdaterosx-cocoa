@@ -205,6 +205,9 @@
 		F842BB41202214A800A7A0A4 /* DiscordRPC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F842BB3F202214A800A7A0A4 /* DiscordRPC.framework */; };
 		F842BB442022158600A7A0A4 /* DiscordManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F842BB432022158600A7A0A4 /* DiscordManager.m */; };
 		F842BB452022158600A7A0A4 /* DiscordManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F842BB432022158600A7A0A4 /* DiscordManager.m */; };
+		F84F3D3520AB1E7000B9250F /* DonationCheck_KeyOnly.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F84F3D3420AB1E7000B9250F /* DonationCheck_KeyOnly.framework */; };
+		F84F3D3620AB1FE000B9250F /* DonationCheck_KeyOnly.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F84F3D3420AB1E7000B9250F /* DonationCheck_KeyOnly.framework */; };
+		F84F3D3720AB1FE000B9250F /* DonationCheck_KeyOnly.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = F84F3D3420AB1E7000B9250F /* DonationCheck_KeyOnly.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F8AF4832202A573200D559A3 /* TorrentBrowser.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8D07F46202A43910008F4E0 /* TorrentBrowser.framework */; };
 		F8AF4833202A573200D559A3 /* TorrentBrowser.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = F8D07F46202A43910008F4E0 /* TorrentBrowser.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F8D07F47202A43910008F4E0 /* TorrentBrowser.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8D07F46202A43910008F4E0 /* TorrentBrowser.framework */; };
@@ -268,6 +271,7 @@
 				2D6522711F7B50CD00A65BF8 /* GBPing.framework in CopyFiles */,
 				916D042B20190AF6001F7E10 /* TwitterManagerKit.framework in CopyFiles */,
 				2D6313731EDA293B00C3CB6B /* Reachability.framework in CopyFiles */,
+				F84F3D3720AB1FE000B9250F /* DonationCheck_KeyOnly.framework in CopyFiles */,
 				59D503791CB004BA0002532D /* Sparkle.framework in CopyFiles */,
 				2D3CBE4C1F1532A20085888D /* SAMKeychain.framework in CopyFiles */,
 				2D9C3AE31E6A0C07007D8F68 /* EasyNSURLConnection.framework in CopyFiles */,
@@ -522,7 +526,8 @@
 		F842BB3F202214A800A7A0A4 /* DiscordRPC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DiscordRPC.framework; path = Frameworks/DiscordRPC.framework; sourceTree = "<group>"; };
 		F842BB422022158600A7A0A4 /* DiscordManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DiscordManager.h; sourceTree = "<group>"; };
 		F842BB432022158600A7A0A4 /* DiscordManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DiscordManager.m; sourceTree = "<group>"; };
-		F8D07F46202A43910008F4E0 /* TorrentBrowser.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TorrentBrowser.framework; path = Frameworks/TorrentBrowser.framework; sourceTree = "<group>"; };
+		F84F3D3420AB1E7000B9250F /* DonationCheck_KeyOnly.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DonationCheck_KeyOnly.framework; path = Frameworks/DonationCheck_KeyOnly.framework; sourceTree = "<group>"; };
+		F8D07F46202A43910008F4E0 /* TorrentBrowser.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TorrentBrowser.framework; path = Frameworks/legacy/TorrentBrowser.framework; sourceTree = "<group>"; };
 		F8D07F48202A43D60008F4E0 /* MAL_Updater_OS_X_DataModel 6.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "MAL_Updater_OS_X_DataModel 6.xcdatamodel"; sourceTree = "<group>"; };
 		F8E2188520222AB7002E9F70 /* MyAnimeList+Discord.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MyAnimeList+Discord.h"; sourceTree = "<group>"; };
 		F8E2188620222AB7002E9F70 /* MyAnimeList+Discord.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "MyAnimeList+Discord.m"; sourceTree = "<group>"; };
@@ -562,6 +567,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F8E2188320222424002E9F70 /* DiscordRPC.framework in Frameworks */,
+				F84F3D3520AB1E7000B9250F /* DonationCheck_KeyOnly.framework in Frameworks */,
 				91206C1D1E75F3F00050E9C5 /* MASPreferences.framework in Frameworks */,
 				2D3CBE3E1F15312E0085888D /* SAMKeychain.framework in Frameworks */,
 				2D63136D1EDA284A00C3CB6B /* DetectionKit.framework in Frameworks */,
@@ -577,6 +583,7 @@
 				59D503781CB004B10002532D /* Sparkle.framework in Frameworks */,
 				9161B2021E90246200FBF52F /* Crashlytics.framework in Frameworks */,
 				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
+				F84F3D3620AB1FE000B9250F /* DonationCheck_KeyOnly.framework in Frameworks */,
 				916D042820190AEA001F7E10 /* TwitterManagerKit.framework in Frameworks */,
 				2D6522721F7B50CD00A65BF8 /* PingNotifier.framework in Frameworks */,
 				2D6522701F7B50CD00A65BF8 /* GBPing.framework in Frameworks */,
@@ -745,6 +752,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F84F3D3420AB1E7000B9250F /* DonationCheck_KeyOnly.framework */,
 				914375121EA41BBB00ECC683 /* ScriptingBridge.framework */,
 				6F28DC1A1A67092F00AF063F /* Carbon.framework */,
 				1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */,
