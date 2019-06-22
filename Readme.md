@@ -1,4 +1,6 @@
  [![License](https://img.shields.io/badge/license-BSD-green.svg)](http://opensource.org/licenses/BSD-3-Clause)
+ 
+ *** Note: This project is retired as of June 22, 2019. MyAnimeList support will be implemented in Hachidori instead. Users who have a donation key for MAL Updater OS X can use it in Hachidori. (Upgrade to 2.4.5 to see updated donation key for use in Hachidori ***
 
 # MAL Updater OS X 2.4
 MAL Updater OS X is an open source OS X scrobbler that automatically detects what's playing and updates the user's MyAnimeList.
